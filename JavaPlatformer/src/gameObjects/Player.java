@@ -1,44 +1,46 @@
 package gameObjects;
 
 import static org.lwjgl.opengl.GL11.glColor3f;
+import helpers.Point;
+import interfaces.Controllable;
+import interfaces.Crasher;
+import interfaces.MotionInterface;
+import interfaces.RectangleInterface;
+import interfaces.Renderable;
+import interfaces.Updateable;
+
+import java.util.ArrayList;
+
+import objects.GameObject;
+import objects.Motion;
+import objects.Rectangle;
 
 import org.lwjgl.input.Keyboard;
 
-import abstracts.Controllable;
-import abstracts.Rectangle;
-import abstracts.Updateable;
-
-public class Player extends Rectangle implements Controllable, Updateable
+public class Player extends GameObject implements Controllable, Updateable, Renderable, Crasher, RectangleInterface, MotionInterface
 {
-	static int s = 6;
+	static int s = 2;
 
-	int vx, vy;
-	int kx, ky;
+	Rectangle rectangle;
+	Motion motion;
 
-	boolean jump;
+	boolean onGround, keyRight, keyLeft;
 
 	public Player(int x, int y)
 	{
-		this.x = x;
-		this.y = y;
+		rectangle = new Rectangle(x, y, 16, 32);
+		motion = new Motion();
 
-		w = 16;
-		h = 32;
-
-		vx = 0;
-		vy = 0;
-
-		kx = 0;
-		ky = 0;
-
-		jump = false;
+		onGround = false;
+		keyRight = false;
+		keyLeft = false;
 	}
 
 	@Override
 	public void render(int dx, int dy)
 	{
 		glColor3f(1f, 1f, 1f);
-		super.render(dx, dy);
+		rectangle.render(dx, dy);
 	}
 
 	@Override
@@ -48,40 +50,29 @@ public class Player extends Rectangle implements Controllable, Updateable
 			switch (k)
 			{
 			case Keyboard.KEY_RIGHT:
-			case Keyboard.KEY_D:
-				kx += s;
+				keyRight = true;
 				break;
 			case Keyboard.KEY_LEFT:
-			case Keyboard.KEY_A:
-				kx -= s;
+				keyLeft = true;
 				break;
 			case Keyboard.KEY_UP:
-				if (jump)
-					vy += s * 3;
+				if (onGround)
+					motion.addVY(s * 10);
 				break;
-			case Keyboard.KEY_W:
-				ky += s;
-				break;
-			case Keyboard.KEY_S:
-				ky -= s;
+			case Keyboard.KEY_R:
+				rectangle.setX(500);
+				rectangle.setY(500);
+				motion = new Motion();
 				break;
 			}
 		else
 			switch (k)
 			{
 			case Keyboard.KEY_RIGHT:
-			case Keyboard.KEY_D:
-				kx -= s;
+				keyRight = false;
 				break;
 			case Keyboard.KEY_LEFT:
-			case Keyboard.KEY_A:
-				kx += s;
-				break;
-			case Keyboard.KEY_W:
-				ky -= s;
-				break;
-			case Keyboard.KEY_S:
-				ky += s;
+				keyLeft = false;
 				break;
 			}
 
@@ -90,16 +81,24 @@ public class Player extends Rectangle implements Controllable, Updateable
 	@Override
 	public void update()
 	{
-		x += kx;
-		y += ky;
+		if (keyRight)
+			motion.addAX(s);
+		if (keyLeft)
+			motion.addAX(-s);
 
-		x += vx;
-		y += vy;
+		if (motion.getVX() > 0)
+			motion.addAX(-1);
+		else if (motion.getVX() < 0)
+			motion.addAX(1);
 
-		if (vy > 20)
-			vy = 20;
+		motion.update(onGround);
 
-		jump = false;
+		rectangle.move(motion);
+
+		onGround = false;
+
+		motion.setAX(0);
+		motion.setAY(0);
 	}
 
 	@Override
@@ -109,29 +108,27 @@ public class Player extends Rectangle implements Controllable, Updateable
 			((Block) obj).setColor(1);
 	}
 
-	public void setVx(int vx)
+	public void setOnGroundTrue()
 	{
-		this.vx = vx;
+		onGround = true;
 	}
 
-	public void setVy(int vy)
+	@Override
+	public ArrayList<Point> getPoints()
 	{
-		this.vy = vy;
+		return rectangle.getPoints();
 	}
 
-	public int getVx()
+	@Override
+	public Rectangle getRectangle()
 	{
-		return vx + kx;
+		return rectangle;
 	}
 
-	public int getVy()
+	@Override
+	public Motion getMotion()
 	{
-		return vy + ky;
-	}
-
-	public void setJumpTrue()
-	{
-		jump = true;
+		return motion;
 	}
 
 }

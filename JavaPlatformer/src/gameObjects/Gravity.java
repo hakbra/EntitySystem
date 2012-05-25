@@ -1,34 +1,39 @@
 package gameObjects;
 
 import helpers.Point;
+import interfaces.Controllable;
+import interfaces.Crashable;
+import interfaces.MotionInterface;
+import objects.GameObject;
 
-import java.util.ArrayList;
+import org.lwjgl.input.Keyboard;
 
-import abstracts.Crashable;
-import abstracts.GameObject;
-
-public class Gravity extends GameObject implements Crashable
+public class Gravity extends GameObject implements Crashable, Controllable
 {
+	boolean active = true;
 
 	@Override
 	public void handleCollision(Object obj)
 	{
-		if (obj instanceof Player)
-		{
-			Player p = (Player) obj;
-			p.setVy(p.getVy() - 1);
-		}
-	}
+		if (!active)
+			return;
 
-	@Override
-	public ArrayList<Point> getPoints()
-	{
-		return new ArrayList<Point>();
+		if (obj instanceof MotionInterface)
+		{
+			((MotionInterface) obj).getMotion().addAY(-1);
+		}
 	}
 
 	@Override
 	public boolean contains(Point p)
 	{
 		return true;
+	}
+
+	@Override
+	public void input(int k, boolean pressed)
+	{
+		if (k == Keyboard.KEY_G && pressed)
+			active = !active;
 	}
 }

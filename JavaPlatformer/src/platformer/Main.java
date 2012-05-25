@@ -47,10 +47,12 @@ public class Main
 
 	public Main()
 	{
-		game.addObject(new Player(500, 500));
-		game.addObject(new Block(400, 450, 50, 100));
-		game.addObject(new Block(600, 450, 50, 100));
-		game.addObject(new MovingBlock(400, 400, 250, 50));
+		game.addObject(new Player(200, 500));
+		game.addObject(new Block(100, 450, 50, 100));
+		game.addObject(new Block(600, 400, 50, 150));
+		game.addObject(new Block(100, 400, 500, 50));
+		game.addObject(new MovingBlock(650, 400, 200, 50));
+		game.addObject(new Block(1050, 400, 50, 150));
 		game.addObject(new Gravity());
 	}
 

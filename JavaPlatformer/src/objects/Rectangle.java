@@ -1,19 +1,27 @@
-package abstracts;
+package objects;
 
 import static org.lwjgl.opengl.GL11.GL_QUADS;
 import static org.lwjgl.opengl.GL11.glBegin;
 import static org.lwjgl.opengl.GL11.glEnd;
 import static org.lwjgl.opengl.GL11.glVertex2f;
 import helpers.Point;
+import interfaces.Crashable;
 
 import java.util.ArrayList;
 
-public abstract class Rectangle extends GameObject implements Renderable, Crashable
+public class Rectangle implements Crashable
 {
 	protected int x, y;
 	protected int w, h;
 
-	@Override
+	public Rectangle(int x, int y, int w, int h)
+	{
+		this.x = x;
+		this.y = y;
+		this.w = w;
+		this.h = h;
+	}
+
 	public void render(int dx, int dy)
 	{
 		glBegin(GL_QUADS);
@@ -24,7 +32,6 @@ public abstract class Rectangle extends GameObject implements Renderable, Crasha
 		glEnd();
 	}
 
-	@Override
 	public ArrayList<Point> getPoints()
 	{
 		ArrayList<Point> points = new ArrayList<Point>();
@@ -45,6 +52,11 @@ public abstract class Rectangle extends GameObject implements Renderable, Crasha
 		this.x = x;
 	}
 
+	public void addX(int d)
+	{
+		x += d;
+	}
+
 	public int getY()
 	{
 		return y;
@@ -53,6 +65,11 @@ public abstract class Rectangle extends GameObject implements Renderable, Crasha
 	public void setY(int y)
 	{
 		this.y = y;
+	}
+
+	public void addY(int d)
+	{
+		y += d;
 	}
 
 	public int getW()
@@ -75,7 +92,6 @@ public abstract class Rectangle extends GameObject implements Renderable, Crasha
 		this.h = h;
 	}
 
-	@Override
 	public boolean contains(Point p)
 	{
 		if (p.x <= x || p.x >= x + w)
@@ -84,5 +100,16 @@ public abstract class Rectangle extends GameObject implements Renderable, Crasha
 			return false;
 
 		return true;
+	}
+
+	public void move(Motion m)
+	{
+		x += m.getVX();
+		y += m.getVY();
+	}
+
+	@Override
+	public void handleCollision(Object obj)
+	{
 	}
 }

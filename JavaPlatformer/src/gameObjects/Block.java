@@ -2,20 +2,23 @@ package gameObjects;
 
 import static org.lwjgl.opengl.GL11.glColor3f;
 import helpers.Collision;
-import abstracts.Crashable;
-import abstracts.Rectangle;
-import abstracts.Updateable;
+import helpers.Point;
+import interfaces.Crashable;
+import interfaces.RectangleInterface;
+import interfaces.Renderable;
+import interfaces.Updateable;
+import objects.GameObject;
+import objects.Rectangle;
 
-public class Block extends Rectangle implements Crashable, Updateable
+public class Block extends GameObject implements Crashable, Updateable, Renderable, RectangleInterface
 {
+	Rectangle rectangle;
+
 	float color = 0;
 
 	public Block(int x, int y, int w, int h)
 	{
-		this.x = x;
-		this.y = y;
-		this.w = w;
-		this.h = h;
+		rectangle = new Rectangle(x, y, w, h);
 	}
 
 	public void setColor(int n)
@@ -27,18 +30,19 @@ public class Block extends Rectangle implements Crashable, Updateable
 	public void render(int dx, int dy)
 	{
 		glColor3f(1f, color, 0f);
-		super.render(dx, dy);
+		rectangle.render(dx, dy);
 	}
 
 	@Override
 	public void handleCollision(Object obj)
 	{
-		if (obj instanceof Player)
+		if (obj instanceof RectangleInterface)
 		{
-			Player p = (Player) obj;
-
-			int d = Collision.blockPlayerReaction(this, (Player) obj);
-			p.setJumpTrue();
+			int d = Collision.blockPlayerReaction((RectangleInterface) this, (RectangleInterface) obj);
+			if (d == 1 && obj instanceof Player)
+			{
+				((Player) obj).setOnGroundTrue();
+			}
 		}
 	}
 
@@ -46,5 +50,17 @@ public class Block extends Rectangle implements Crashable, Updateable
 	public void update()
 	{
 		color = 0;
+	}
+
+	@Override
+	public boolean contains(Point p)
+	{
+		return rectangle.contains(p);
+	}
+
+	@Override
+	public Rectangle getRectangle()
+	{
+		return rectangle;
 	}
 }

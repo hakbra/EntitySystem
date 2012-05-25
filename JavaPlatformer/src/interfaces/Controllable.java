@@ -1,4 +1,4 @@
-package abstracts;
+package interfaces;
 
 public interface Controllable
 {
