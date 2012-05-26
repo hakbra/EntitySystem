@@ -43,8 +43,8 @@ public class Collision
 		if (b instanceof MotionInterface)
 			bm = ((MotionInterface) b).getMotion();
 
-		int vx = am.getVX() + bm.getVX();
-		int vy = am.getVY() + bm.getVY();
+		int vx = am.getVX() - bm.getVX();
+		int vy = am.getVY() - bm.getVY();
 
 		if (cPoints.size() == 0)
 			return 0;

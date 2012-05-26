@@ -24,14 +24,15 @@ public class Player extends GameObject implements Controllable, Updateable, Rend
 	Rectangle rectangle;
 	Motion motion;
 
-	boolean onGround, keyRight, keyLeft;
+	boolean keyRight, keyLeft, keyJump;
+	int jump;
 
 	public Player(int x, int y)
 	{
 		rectangle = new Rectangle(x, y, 16, 32);
 		motion = new Motion();
 
-		onGround = false;
+		jump = -1;
 		keyRight = false;
 		keyLeft = false;
 	}
@@ -56,11 +57,14 @@ public class Player extends GameObject implements Controllable, Updateable, Rend
 				keyLeft = true;
 				break;
 			case Keyboard.KEY_UP:
-				if (onGround)
-					motion.addVY(s * 10);
+				if (jump == 0)
+				{
+					motion.setVY(10);
+					jump = 1;
+				}
 				break;
 			case Keyboard.KEY_R:
-				rectangle.setX(500);
+				rectangle.setX(200);
 				rectangle.setY(500);
 				motion = new Motion();
 				break;
@@ -74,6 +78,9 @@ public class Player extends GameObject implements Controllable, Updateable, Rend
 			case Keyboard.KEY_LEFT:
 				keyLeft = false;
 				break;
+			case Keyboard.KEY_UP:
+				jump = -1;
+				break;
 			}
 
 	}
@@ -81,24 +88,20 @@ public class Player extends GameObject implements Controllable, Updateable, Rend
 	@Override
 	public void update()
 	{
+		if (jump > 0 && jump < 15)
+		{
+			motion.addVY(1);
+			jump++;
+		}
+
 		if (keyRight)
 			motion.addAX(s);
 		if (keyLeft)
 			motion.addAX(-s);
 
-		if (motion.getVX() > 0)
-			motion.addAX(-1);
-		else if (motion.getVX() < 0)
-			motion.addAX(1);
-
-		motion.update(onGround);
+		motion.update(jump == 0);
 
 		rectangle.move(motion);
-
-		onGround = false;
-
-		motion.setAX(0);
-		motion.setAY(0);
 	}
 
 	@Override
@@ -110,7 +113,7 @@ public class Player extends GameObject implements Controllable, Updateable, Rend
 
 	public void setOnGroundTrue()
 	{
-		onGround = true;
+		jump = 0;
 	}
 
 	@Override

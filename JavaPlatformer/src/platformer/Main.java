@@ -18,8 +18,8 @@ import static org.lwjgl.opengl.GL11.glViewport;
 import static org.lwjgl.util.glu.GLU.gluOrtho2D;
 import static org.lwjgl.util.glu.GLU.gluPerspective;
 import gameObjects.Block;
+import gameObjects.CameraArea;
 import gameObjects.Gravity;
-import gameObjects.MovingBlock;
 import gameObjects.Player;
 
 import org.lwjgl.LWJGLException;
@@ -49,11 +49,12 @@ public class Main
 	{
 		game.addObject(new Player(200, 500));
 		game.addObject(new Block(100, 450, 50, 100));
-		game.addObject(new Block(600, 400, 50, 150));
-		game.addObject(new Block(100, 400, 500, 50));
-		game.addObject(new MovingBlock(650, 400, 200, 50));
-		game.addObject(new Block(1050, 400, 50, 150));
+		game.addObject(new Block(600, 400, 200, 150));
+		game.addObject(new Block(-200, 400, 1500, 50));
+		//game.addObject(new MovingBlock(650, 400, 200, 50));
+		//game.addObject(new Block(1050, 400, 50, 150));
 		game.addObject(new Gravity());
+		game.addObject(new CameraArea());
 	}
 
 	public void create()

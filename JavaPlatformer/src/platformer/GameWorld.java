@@ -23,8 +23,11 @@ public class GameWorld
 	List<Crashable> crashables = new ArrayList<Crashable>();
 	List<Crasher> crashers = new ArrayList<Crasher>();
 
+	int deltaX, deltaY;
+
 	public void addObject(GameObject obj)
 	{
+		obj.setParent(this);
 		objects.add(obj);
 
 		if (obj instanceof Renderable)
@@ -67,6 +70,26 @@ public class GameWorld
 	public void render()
 	{
 		for (Renderable r : renders)
-			r.render(0, 0);
+			r.render(deltaX, deltaY);
+	}
+
+	public int getDeltaX()
+	{
+		return deltaX;
+	}
+
+	public int getDeltaY()
+	{
+		return deltaY;
+	}
+
+	public void addDX(int d)
+	{
+		deltaX += d;
+	}
+
+	public void addDY(int d)
+	{
+		deltaY += d;
 	}
 }

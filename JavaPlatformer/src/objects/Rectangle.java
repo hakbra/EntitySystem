@@ -25,10 +25,10 @@ public class Rectangle implements Crashable
 	public void render(int dx, int dy)
 	{
 		glBegin(GL_QUADS);
-		glVertex2f(x, y);
-		glVertex2f(x + w, y);
-		glVertex2f(x + w, y + h);
-		glVertex2f(x, y + h);
+		glVertex2f(x - dx, y - dy);
+		glVertex2f(x + w - dx, y - dy);
+		glVertex2f(x + w - dx, y + h - dy);
+		glVertex2f(x - dx, y + h - dy);
 		glEnd();
 	}
 

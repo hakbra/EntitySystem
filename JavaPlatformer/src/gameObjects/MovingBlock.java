@@ -5,10 +5,10 @@ import interfaces.MotionInterface;
 import interfaces.RectangleInterface;
 import objects.Motion;
 
-public class MovingBlock extends Block
+public class MovingBlock extends Block implements MotionInterface
 {
 	public final Motion motion;
-	int x0, y0, lx, ly;
+	int x0, lx;
 	boolean playerOn;
 
 	public MovingBlock(int x, int y, int w, int h)
@@ -18,8 +18,6 @@ public class MovingBlock extends Block
 
 		lx = 200;
 		x0 = x;
-		ly = 100;
-		y0 = y;
 
 		playerOn = false;
 	}
@@ -29,18 +27,12 @@ public class MovingBlock extends Block
 	{
 		super.update();
 
+		rectangle.move(motion);
+
 		if (rectangle.getX() == x0 + lx)
 			motion.setVX(-1);
 		else if (rectangle.getX() == x0)
 			motion.setVX(1);
-
-		if (rectangle.getY() == y0 + ly)
-			motion.setVY(-1);
-		else if (rectangle.getY() == y0)
-			motion.setVY(1);
-
-		if (playerOn)
-			rectangle.move(motion);
 
 		playerOn = false;
 	}
@@ -56,13 +48,17 @@ public class MovingBlock extends Block
 				if (d == 1 && obj instanceof Player)
 				{
 					((Player) obj).setOnGroundTrue();
-					((Player) obj).getRectangle().addX(motion.getVX());
-					if (motion.getVY() < 0)
-						((Player) obj).getRectangle().addY(motion.getVY());
+					((Player) obj).getMotion().setRX(motion.getVX());
 
 					playerOn = true;
 				}
 			}
 		}
+	}
+
+	@Override
+	public Motion getMotion()
+	{
+		return motion;
 	}
 }
