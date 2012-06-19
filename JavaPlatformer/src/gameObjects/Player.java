@@ -19,7 +19,7 @@ import org.lwjgl.input.Keyboard;
 
 public class Player extends GameObject implements Controllable, Updateable, Renderable, Crasher, RectangleInterface, MotionInterface
 {
-	static int s = 2;
+	static int s = 3;
 
 	Rectangle rectangle;
 	Motion motion;

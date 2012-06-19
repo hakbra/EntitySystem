@@ -31,6 +31,8 @@ public class Collision
 		Motion am = new Motion();
 		Motion bm = new Motion();
 
+		int ret = 0;
+
 		ArrayList<Point> cPoints = br.getPoints();
 		for (int i = 0; i < cPoints.size();)
 			if (!ar.contains(cPoints.get(i)))
@@ -43,8 +45,8 @@ public class Collision
 		if (b instanceof MotionInterface)
 			bm = ((MotionInterface) b).getMotion();
 
-		int vx = am.getVX() - bm.getVX();
-		int vy = am.getVY() - bm.getVY();
+		int vx = bm.getVX() - am.getVX();
+		int vy = bm.getVY() - am.getVY();
 
 		if (cPoints.size() == 0)
 			return 0;
@@ -58,26 +60,19 @@ public class Collision
 			{
 				if (dy < ar.getH() / 2)
 				{
-					br.setY(ar.getY() - br.getH());
-					return 3;
+					ret = 3;
 				} else
 				{
-					br.setY(ar.getY() + ar.getH());
-					bm.setVY(0);
-					return 1;
+					ret = 1;
 				}
 			} else if (vy == 0)
 			{
 				if (dx < ar.getW() / 2)
 				{
-					br.setX(ar.getX() - br.getW());
-					bm.setVX(0);
-					return 4;
+					ret = 4;
 				} else
 				{
-					br.setX(ar.getX() + ar.getW());
-					bm.setVX(0);
-					return 2;
+					ret = 2;
 				}
 			} else
 			{
@@ -92,26 +87,19 @@ public class Collision
 				if (dxc < dyc)
 					if (dx < ar.getW() / 2)
 					{
-						br.setX(ar.getX() - br.getW());
-						bm.setVX(0);
-						return 4;
+						ret = 4;
 					} else
 					{
-						br.setX(ar.getX() + ar.getW());
-						bm.setVX(0);
-						return 2;
+						ret = 2;
 					}
 				else
 				{
 					if (dy < ar.getH() / 2)
 					{
-						br.setY(ar.getY() - br.getH());
-						return 3;
+						ret = 3;
 					} else
 					{
-						br.setY(ar.getY() + ar.getH());
-						bm.setVY(0);
-						return 1;
+						ret = 1;
 					}
 				}
 			}
@@ -128,30 +116,37 @@ public class Collision
 			{
 				if (dx1 < ar.getW() / 2)
 				{
-					br.setX(ar.getX() - br.getW());
-					bm.setVX(0);
-					return 4;
+					ret = 4;
 				} else
 				{
-					br.setX(ar.getX() + ar.getW());
-					bm.setVX(0);
-					return 2;
+					ret = 2;
 				}
 			} else if (dy1 == dy2)
 			{
 				if (dy1 < ar.getH() / 2)
 				{
-					br.setY(ar.getY() - br.getH());
-					return 3;
+					ret = 3;
 				} else
 				{
-					br.setY(ar.getY() + ar.getH());
-					bm.setVY(0);
-					return 1;
+					ret = 1;
 				}
 			}
 		}
 
-		return 0;
+		if (ret == 1)
+		{
+			br.setY(ar.getY() + ar.getH());
+		} else if (ret == 2)
+		{
+			br.setX(ar.getX() + ar.getW());
+		} else if (ret == 3)
+		{
+			br.setY(ar.getY() - br.getH());
+		} else if (ret == 4)
+		{
+			br.setX(ar.getX() - br.getW());
+		}
+
+		return ret;
 	}
 }
