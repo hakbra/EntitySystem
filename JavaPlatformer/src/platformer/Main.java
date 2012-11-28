@@ -1,188 +1,123 @@
 package platformer;
 
-import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
-import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
-import static org.lwjgl.opengl.GL11.GL_DEPTH_TEST;
-import static org.lwjgl.opengl.GL11.GL_LEQUAL;
-import static org.lwjgl.opengl.GL11.GL_MODELVIEW;
-import static org.lwjgl.opengl.GL11.GL_PROJECTION;
-import static org.lwjgl.opengl.GL11.glClear;
-import static org.lwjgl.opengl.GL11.glClearColor;
-import static org.lwjgl.opengl.GL11.glClearDepth;
-import static org.lwjgl.opengl.GL11.glDepthFunc;
-import static org.lwjgl.opengl.GL11.glDisable;
-import static org.lwjgl.opengl.GL11.glEnable;
-import static org.lwjgl.opengl.GL11.glLoadIdentity;
-import static org.lwjgl.opengl.GL11.glMatrixMode;
-import static org.lwjgl.opengl.GL11.glViewport;
-import static org.lwjgl.util.glu.GLU.gluOrtho2D;
-import static org.lwjgl.util.glu.GLU.gluPerspective;
-import gameObjects.Block;
-import gameObjects.CameraArea;
-import gameObjects.Gravity;
-import gameObjects.Player;
+import helpers.Point;
+import helpers.Time;
 
-import org.lwjgl.LWJGLException;
+import java.util.ArrayList;
+
 import org.lwjgl.input.Keyboard;
-import org.lwjgl.input.Mouse;
-import org.lwjgl.opengl.Display;
-import org.lwjgl.opengl.DisplayMode;
-import org.lwjgl.opengl.GL11;
 
-// Simple main application entry point
+import engine.GLEngine;
+import framework.CoreSystem;
+import framework.Entity;
+import framework.EntityManager;
+import framework.components.Angle;
+import framework.components.Circle;
+import framework.components.Damage;
+import framework.components.Followable;
+import framework.components.Follower;
+import framework.components.Gun;
+import framework.components.Health;
+import framework.components.Hero;
+import framework.components.KeyInput;
+import framework.components.Obstacle;
+import framework.components.Polygon;
+import framework.components.Position;
+import framework.components.Velocity;
+import framework.components.Zombie;
+import framework.systems.CollisionSystem;
+import framework.systems.DamageSystem;
+import framework.systems.FollowerSystem;
+import framework.systems.KeyInputSystem;
+import framework.systems.PhysicsSystem;
+import framework.systems.RenderSystem;
+
 public class Main
 {
-	// Default settings
-	public static final int HEIGHT = 900;
-	public static final int WIDTH = 1400;
-
-	GameWorld game = new GameWorld();
+	EntityManager em;
+	ArrayList<CoreSystem> systems;
+	Time t;
 
 	public static void main(String[] args)
 	{
 		Main main = new Main();
-		main.create();
 		main.run();
 	}
-
+	
 	public Main()
 	{
-		game.addObject(new Player(200, 500));
-		game.addObject(new Block(100, 450, 50, 100));
-		game.addObject(new Block(600, 400, 50, 150));
-		game.addObject(new Block(-200, 400, 1500, 50));
-		game.addObject(new Block(250, 600, 250, 50));
-		//game.addObject(new MovingBlock(650, 400, 200, 50));
-		game.addObject(new Gravity());
-		game.addObject(new CameraArea());
-	}
+		em = new EntityManager();
+		systems = new ArrayList<CoreSystem>();
+		t = new Time();
+		GLEngine.init();
+		
+		systems.add(new RenderSystem(em));
+		systems.add(new PhysicsSystem(em, Position.class, Velocity.class));
+		systems.add(new KeyInputSystem(em, KeyInput.class));
+		systems.add(new FollowerSystem(em, Follower.class));
+		systems.add(new CollisionSystem(em, Position.class, Circle.class, Velocity.class));
+		systems.add(new DamageSystem(em, Damage.class));
+		
+		Entity player = em.newEntity();
+		player.name = "Player";
+		em.addComponent(player, new Hero());
+		em.addComponent(player, new Circle(40, "Blue"));
+		em.addComponent(player, new Position(new Point(1000, 350)));
+		em.addComponent(player, new Velocity(new Point(0, 0)));
+		em.addComponent(player, new Angle(180));
+		em.addComponent(player, new Followable());
+		em.addComponent(player, new KeyInput(Keyboard.KEY_A, Keyboard.KEY_D, Keyboard.KEY_W, Keyboard.KEY_S));
+		em.addComponent(player, new Gun(10, 5, 10, 500, 20));
+		em.addComponent(player, new Health());
+		
+		Entity circle = em.newEntity();
+		circle.name = "circle1";
+		em.addComponent(circle, new Circle(50, "Red"));
+		em.addComponent(circle, new Position(new Point(700, 200 + 200)));
+		em.addComponent(circle, new Obstacle());
 
-	public void create()
-	{
-		try
-		{
-			//Display
-			Display.setDisplayMode(new DisplayMode(WIDTH, HEIGHT));
-			Display.setVSyncEnabled(true);
-			Display.setFullscreen(false);
-			Display.setTitle("platformer");
-			Display.create();
+		Entity polygon = em.newEntity();
+		polygon.name = "polygon";
+		em.addComponent(polygon, Polygon.rectangle("Red", new Point(200, 100)));
+		em.addComponent(polygon, new Position(new Point(600, 100)));
+		em.addComponent(polygon, new Obstacle());
 
-			//Keyboard
-			Keyboard.create();
+		Entity polygon2 = em.newEntity();
+		polygon2.name = "polygon2";
+		em.addComponent(polygon2, new Polygon("Red",
+				new Point(), new Point(0, 50), new Point(50, 100), new Point(100, 50), new Point(100, 0), new Point(50, -50)));
+		em.addComponent(polygon2, new Position(new Point(400, 500)));
+		em.addComponent(polygon2, new Obstacle());
+		
 
-			//Mouse
-			Mouse.setGrabbed(false);
-			Mouse.create();
-
-			//OpenGL
-			initGL();
-			resizeGL2D();
-
-		} catch (LWJGLException e)
-		{
-			e.printStackTrace();
+		for (int i = 0; i < 2; i++) {
+			Entity zombie = em.newEntity();
+			zombie.name = "Zombie" + i;
+			em.addComponent(zombie, new Zombie());
+			em.addComponent(zombie, new Circle(20, "White"));
+			em.addComponent(zombie, new Position(new Point(200 - i*10, 350 + i*10)));
+			em.addComponent(zombie, new Velocity(new Point(0, 0)));
+			em.addComponent(zombie, new Health());
+			em.addComponent(zombie, new Follower());
+			em.addComponent(zombie, new Damage(5, 1000));
 		}
 	}
-
-	public void destroy()
-	{
-		//Methods already check if created before destroying.
-		Mouse.destroy();
-		Keyboard.destroy();
-		Display.destroy();
-	}
-
-	public void initGL()
-	{
-		//2D Initialization
-		glClearColor(0.0f, 0.0f, 0.0f, 0.0f); // Black
-		glDisable(GL_DEPTH_TEST);
-	}
-
-	// 2D mode
-	public void resizeGL2D()
-	{
-		// 2D Scene
-		glViewport(0, 0, WIDTH, HEIGHT);
-
-		glMatrixMode(GL_PROJECTION);
-		glLoadIdentity();
-		gluOrtho2D(0.0f, (float) WIDTH, 0.0f, (float) HEIGHT);
-		glMatrixMode(GL_MODELVIEW);
-
-		// Set depth buffer elements
-		glDisable(GL_DEPTH_TEST);
-	}
-
-	// 3D mode
-	public void resizeGL3D()
-	{
-		// 3D Scene
-		glViewport(0, 0, WIDTH, HEIGHT);
-
-		glMatrixMode(GL_PROJECTION);
-		glLoadIdentity();
-		gluPerspective(45.0f, ((float) WIDTH / (float) HEIGHT), 0.1f, 1000.0f);
-		glMatrixMode(GL_MODELVIEW);
-
-		// Set depth buffer elements
-		glClearDepth(1.0f);
-		glEnable(GL_DEPTH_TEST);
-		glDepthFunc(GL_LEQUAL);
-
-		//Texture
-		GL11.glEnable(GL11.GL_TEXTURE_2D);
-	}
-
+	
 	public void run()
 	{
-		// Keep looping until we hit a quit event
-		while (!Display.isCloseRequested() && !Keyboard.isKeyDown(Keyboard.KEY_ESCAPE))
+		while (GLEngine.running())
 		{
-			if (Display.isVisible())
-			{
-				input();
-				update();
-				render();
-			} else
-			{
-				if (Display.isDirty())
-					render();
-				try
-				{
-					Thread.sleep(100);
-				} catch (InterruptedException ex)
-				{
-				}
-			}
-			Display.update();
-			Display.sync(60);
+			GLEngine.clearState();
+			GLEngine.prepare2D();
+			
+			for(CoreSystem s: systems)
+				s.run(em);
+			
+			em.doRemoval();
+			
+			GLEngine.endRender();
+			
+			t.sync(60);
 		}
-	}
-
-	public void render()
-	{
-		// Clear screen and load up the 3D matrix state
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		glLoadIdentity();
-
-		// 3D render
-		// resizeGL3D();
-
-		// 2D GUI
-		resizeGL2D();
-
-		game.render();
-	}
-
-	public void update()
-	{
-		game.update();
-	}
-
-	public void input()
-	{
-		game.input();
 	}
 }
