@@ -11,7 +11,12 @@ public class EntityManager {
     private HashMap<Class<?>, HashMap<Entity, ? extends Component>> entities = new HashMap<Class<?>, HashMap<Entity, ? extends Component>>();
     private ArrayList<Entity> deleties = new ArrayList<Entity>();
     
-    public State state = State.MENU;
+    public StateManager sm;
+    
+    public EntityManager(StateManager sm)
+    {
+    	this.sm = sm;
+    }
 
     public <T extends Component> Entity addComponent(Entity e, T component) {
 		HashMap<Entity, T> HashMap = (HashMap<Entity, T>) entities.get(component .getClass());
@@ -129,4 +134,9 @@ public class EntityManager {
     	
     	deleties.clear();
     }
+
+	public void setState(State s)
+	{
+		sm.setState(s);
+	}
 }

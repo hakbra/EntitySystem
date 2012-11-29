@@ -8,7 +8,7 @@ import framework.CoreSystem;
 import framework.Entity;
 import framework.EntityManager;
 import framework.components.Angle;
-import framework.components.Button;
+import framework.components.StateButton;
 import framework.components.Circle;
 import framework.components.Gun;
 import framework.components.Health;
@@ -28,6 +28,7 @@ public class GameRenderSystem extends CoreSystem{
 	{
 		for (Entity e : em.get(Circle.class))
 		{
+			
 			Point position 		= 	em.getComponent(e, Position.class).position;
 			Circle circle 		= 	em.getComponent(e, Circle.class);
 			
@@ -56,9 +57,6 @@ public class GameRenderSystem extends CoreSystem{
 		}
 		for (Entity e : em.get(Polygon.class))
 		{
-			if (em.hasComponent(e, Button.class))
-				continue;
-
 			Point position 		= 	em.getComponent(e, Position.class).position;
 			Polygon poly 		= 	em.getComponent(e, Polygon.class);
 			

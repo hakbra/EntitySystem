@@ -59,11 +59,6 @@ public class PlayerInputSystem extends CoreSystem{
 				vel.set( new Point(angle.angle).mult(-4));
 			else
 				vel.set(0, 0);
-			
-			if (Keyboard.isKeyDown(Keyboard.KEY_J))
-				em.state = State.MENU;
-			if (Keyboard.isKeyDown(Keyboard.KEY_K))
-				em.state = State.RUN;
 
 			if (Keyboard.isKeyDown(Keyboard.KEY_SPACE) && gun.canFire())
 			{

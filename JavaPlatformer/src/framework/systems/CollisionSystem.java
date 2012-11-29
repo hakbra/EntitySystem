@@ -77,17 +77,14 @@ public class CollisionSystem extends CoreSystem {
 				if (poly.isInside(polyPos, p1))
 					collision = p1.sub(s1);
 				
-				for (int i = 0; i < poly.points.size(); i++)
-				{
-					Point col = p1.pointOnLine(polyPos.add(poly.points.get(i)), polyPos.add(poly.points.get((i+1) % poly.points.size())));
-					double d = p1.dist(col);
-					Point line = p1.sub(col).norm();
+				Point closest = poly.getClosest(polyPos, p1);
+				double distance = p1.dist(closest);
 					
-					if (d < r1)
-					{
-						p1.iadd(line.mult(r1 - d));
-						collision = col;
-					}
+				if (distance < r1)
+				{
+					Point line = p1.sub(closest).norm();
+					p1.iadd(line.mult(r1 - p1.dist(closest)));
+					collision = closest;
 				}
 			}
 			

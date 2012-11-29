@@ -36,7 +36,7 @@ public class EmitterSystem extends CoreSystem{
 			{
 				Random r = new Random();
 				float angle = r.nextInt() % 360;
-				float speed = 2 + r.nextFloat() * 2;
+				float speed = r.nextFloat() * 4;
 				Color c = new Color(1, r.nextFloat(), 0);
 				
 				Entity particle = new Entity();

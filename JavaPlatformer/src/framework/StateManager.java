@@ -2,6 +2,7 @@ package framework;
 
 import helpers.State;
 
+import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -9,49 +10,86 @@ public class StateManager {
 	
 	State state = State.MENU;
 	
-    private HashMap<State, ArrayList<CoreSystem>> systemlists = new HashMap<State, ArrayList<CoreSystem>>();
-    private HashMap<State, EntityManager> managers = new HashMap<State, EntityManager>();
+    private HashMap<State, ArrayList<CoreSystem>> systemlists;
+    private HashMap<State, EntityManager> managers;
+    
+    public StateManager(State s)
+    {
+    	this.state = s;
+    	this.systemlists = new HashMap<State, ArrayList<CoreSystem>>();
+    	this.managers = new HashMap<State, EntityManager>();
+    }
+    
+    public boolean run()
+    {
+    	return state != State.EXIT;
+    }
     
     public void setState(State s)
     {
     	this.state = s;
+    	System.out.println("State is now " + s);
+    	System.out.println("Systems");
+    	System.out.println(getSysList(s));
     }
     
-    public void addSystem(State state, CoreSystem system)
+    private EntityManager getManager(State s)
     {
-    	ArrayList<CoreSystem> systemlist = systemlists.get(state);
+    	EntityManager em = managers.get(s);
+    	if (em == null)
+    	{
+    		em = new EntityManager(this);
+    		managers.put(s, em);
+    	}
+    	return em;
+    }
+    
+    private ArrayList<CoreSystem> getSysList(State s)
+    {
+    	ArrayList<CoreSystem> systemlist = systemlists.get(s);
     	if (systemlist == null)
     	{
     		systemlist = new ArrayList<CoreSystem>();
-    		systemlists.put(state, systemlist);
+    		systemlists.put(s, systemlist);
     	}
-    	systemlist.add(system);
+    	return systemlist;
+    }
+    
+    public void addSystem(State s, Class system)
+    {
+    	EntityManager em = getManager(s);
+    	ArrayList<CoreSystem> systemlist = getSysList(s);
+    	try
+    	{
+		    Constructor ctor = system.getDeclaredConstructor(EntityManager.class);
+		    CoreSystem newSystem = (CoreSystem)ctor.newInstance(em);
+	    	systemlist.add(newSystem);
+	    	System.out.println("Added system " + system.getSimpleName());
+    	} catch (Exception e)
+    	{
+    		System.out.println("Kunne ikke opprette system " + system.getSimpleName());
+    	}
     }
 
-    public void addComponent(State state, Entity entity, Component component)
+    public void addComponent(State s, Entity entity, Component component)
     {
-    	EntityManager em = managers.get(state);
-    	if (em == null)
-    	{
-    		em = new EntityManager();
-    		managers.put(state, em);
-    	}
-    	
+    	EntityManager em = getManager(s);
     	em.addComponent(entity, component);
+
+    	System.out.println("Added component " + component.getClass().getSimpleName() + " to " + entity.name + " in " + s);
     }
     
     public void runSystems()
     {
-    	ArrayList<CoreSystem> systemlist = systemlists.get(state);
-    	if (systemlist == null)
-    		systemlist = new ArrayList<CoreSystem>();
-
-    	EntityManager em = managers.get(state);
-    	if (em == null)
-    		em = new EntityManager();
+    	ArrayList<CoreSystem> systemlist = getSysList(state);
+    	EntityManager em = getManager(state);
     	
     	for (CoreSystem sys : systemlist)
+    	{
     		sys.run(em);
+    	}
+    	
+    	em.doRemoval();
     }
 
 }

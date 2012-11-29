@@ -5,16 +5,12 @@ import helpers.Point;
 import helpers.State;
 import helpers.Time;
 
-import java.util.ArrayList;
-
 import org.lwjgl.input.Keyboard;
 
 import engine.GLEngine;
-import framework.CoreSystem;
 import framework.Entity;
-import framework.EntityManager;
+import framework.StateManager;
 import framework.components.Angle;
-import framework.components.Button;
 import framework.components.Circle;
 import framework.components.Collider;
 import framework.components.Damage;
@@ -27,6 +23,8 @@ import framework.components.KeyInput;
 import framework.components.Obstacle;
 import framework.components.Polygon;
 import framework.components.Position;
+import framework.components.StateButton;
+import framework.components.StringButton;
 import framework.components.Velocity;
 import framework.components.Zombie;
 import framework.systems.CollisionSystem;
@@ -35,14 +33,12 @@ import framework.systems.EmitterSystem;
 import framework.systems.FollowerSystem;
 import framework.systems.GameRenderSystem;
 import framework.systems.MenuInputSystem;
-import framework.systems.MenuRenderSystem;
 import framework.systems.PhysicsSystem;
 import framework.systems.PlayerInputSystem;
 
 public class Main
 {
-	EntityManager em;
-	ArrayList<ArrayList<CoreSystem>> systems;
+	StateManager sm;
 	Time t;
 
 	public static void main(String[] args)
@@ -53,91 +49,96 @@ public class Main
 	
 	public Main()
 	{
-		em = new EntityManager();
-		systems = new ArrayList<ArrayList<CoreSystem>>();
-		systems.add(new ArrayList<CoreSystem>());
-		systems.add(new ArrayList<CoreSystem>());
+		sm = new StateManager(State.RUN);
 		t = new Time();
 		GLEngine.init();
 		
-		systems.get(State.MENU.c()).add(new MenuRenderSystem(em));
-		systems.get(State.MENU.c()).add(new MenuInputSystem(em));
+		// Menu-state
+		sm.addSystem(State.MENU, MenuInputSystem.class);
+		sm.addSystem(State.MENU, GameRenderSystem.class);
+
+		Entity runButton = new Entity();
+		runButton.name = "runButton";
+		sm.addComponent(State.MENU, runButton, Polygon.rectangle(Color.GREEN, new Point(200, 100)));
+		sm.addComponent(State.MENU, runButton, new Position(new Point(500, 300)));
+		sm.addComponent(State.MENU, runButton, new StateButton(State.RUN));
 		
-		systems.get(State.RUN.c()).add(new GameRenderSystem(em));
-		systems.get(State.RUN.c()).add(new PhysicsSystem(em));
-		systems.get(State.RUN.c()).add(new PlayerInputSystem(em));
-		systems.get(State.RUN.c()).add(new FollowerSystem(em));
-		systems.get(State.RUN.c()).add(new CollisionSystem(em));
-		systems.get(State.RUN.c()).add(new DamageSystem(em));
-		systems.get(State.RUN.c()).add(new EmitterSystem(em));
+		Entity exitButton = new Entity();
+		exitButton.name = "exitButton";
+		sm.addComponent(State.MENU, exitButton, Polygon.rectangle(Color.GREEN, new Point(200, 100)));
+		sm.addComponent(State.MENU, exitButton, new Position(new Point(500, 150)));
+		sm.addComponent(State.MENU, exitButton, new StateButton(State.EXIT));
+		
+		//Run-state
+		sm.addSystem(State.RUN, GameRenderSystem.class);
+		sm.addSystem(State.RUN, PhysicsSystem.class);
+		sm.addSystem(State.RUN, PlayerInputSystem.class);
+		sm.addSystem(State.RUN, FollowerSystem.class);
+		sm.addSystem(State.RUN, CollisionSystem.class);
+		sm.addSystem(State.RUN, DamageSystem.class);
+		sm.addSystem(State.RUN, EmitterSystem.class);
+		sm.addSystem(State.RUN, MenuInputSystem.class);
 		
 		Entity player = new Entity();
 		player.name = "Player";
-		em.addComponent(player, new Hero());
-		em.addComponent(player, new Circle(40, Color.BLUE));
-		em.addComponent(player, new Position(new Point(1000, 350)));
-		em.addComponent(player, new Velocity(new Point(0, 0)));
-		em.addComponent(player, new Angle(180));
-		em.addComponent(player, new Followable());
-		em.addComponent(player, new KeyInput(Keyboard.KEY_A, Keyboard.KEY_D, Keyboard.KEY_W, Keyboard.KEY_S));
-		em.addComponent(player, new Gun(10, 5, 10, 500, 20));
-		em.addComponent(player, new Health());
-		em.addComponent(player, new Collider());
-		em.addComponent(player, new Obstacle());
+		sm.addComponent(State.RUN, player, new Hero());
+		sm.addComponent(State.RUN, player, new Circle(40, Color.BLUE));
+		sm.addComponent(State.RUN, player, new Position(new Point(1000, 350)));
+		sm.addComponent(State.RUN, player, new Velocity(new Point(0, 0)));
+		sm.addComponent(State.RUN, player, new Angle(180));
+		sm.addComponent(State.RUN, player, new Followable());
+		sm.addComponent(State.RUN, player, new KeyInput(Keyboard.KEY_A, Keyboard.KEY_D, Keyboard.KEY_W, Keyboard.KEY_S));
+		sm.addComponent(State.RUN, player, new Gun(10, 5, 10, 500, 20));
+		sm.addComponent(State.RUN, player, new Health());
+		sm.addComponent(State.RUN, player, new Collider());
+		sm.addComponent(State.RUN, player, new Obstacle());
 		
 		Entity circle = new Entity();
 		circle.name = "circle1";
-		em.addComponent(circle, new Circle(50, Color.RED));
-		em.addComponent(circle, new Position(new Point(700, 200 + 200)));
-		em.addComponent(circle, new Obstacle());
+		sm.addComponent(State.RUN, circle, new Circle(50, Color.RED));
+		sm.addComponent(State.RUN, circle, new Position(new Point(700, 200 + 200)));
+		sm.addComponent(State.RUN, circle, new Obstacle());
 
 		Entity rectangle = new Entity();
 		rectangle.name = "rectangle";
-		em.addComponent(rectangle, Polygon.rectangle(Color.RED, new Point(200, 100)));
-		em.addComponent(rectangle, new Position(new Point(600, 100)));
-		em.addComponent(rectangle, new Obstacle());
+		sm.addComponent(State.RUN, rectangle, Polygon.rectangle(Color.RED, new Point(200, 100)));
+		sm.addComponent(State.RUN, rectangle, new Position(new Point(600, 100)));
+		sm.addComponent(State.RUN, rectangle, new Obstacle());
 
-		Entity polygon2 = new Entity();
-		polygon2.name = "polygon2";
-		em.addComponent(polygon2, new Polygon(Color.RED,
+		Entity polygon = new Entity();
+		polygon.name = "polygon";
+		sm.addComponent(State.RUN, polygon, new Polygon(Color.RED,
 				new Point(), new Point(0, 50), new Point(50, 100), new Point(100, 50), new Point(100, 0), new Point(50, -50)));
-		em.addComponent(polygon2, new Position(new Point(400, 500)));
-		em.addComponent(polygon2, new Obstacle());
+		sm.addComponent(State.RUN, polygon, new Position(new Point(400, 500)));
+		sm.addComponent(State.RUN, polygon, new Obstacle());
+
+		Entity menuButton = new Entity();
+		menuButton.name = "button";
+		sm.addComponent(State.RUN, menuButton, Polygon.rectangle(Color.GREEN, new Point(100, 50)));
+		sm.addComponent(State.RUN, menuButton, new Position(new Point(1150, 650)));
+		sm.addComponent(State.RUN, menuButton, new StateButton(State.MENU));
+
+		Entity exitButton2 = new Entity();
+		exitButton2.name = "exitButton";
+		sm.addComponent(State.RUN, exitButton2, Polygon.rectangle(Color.GREEN, new Point(100, 50)));
+		sm.addComponent(State.RUN, exitButton2, new Position(new Point(50, 650)));
+		sm.addComponent(State.RUN, exitButton2, new StateButton(State.EXIT));
 		
-
-		for (int i = 0; i < 20; i++) {
-			Entity zombie = new Entity();
-			zombie.name = "Zombie" + i;
-			em.addComponent(zombie, new Zombie());
-			em.addComponent(zombie, new Circle(20, Color.YELLOW));
-			em.addComponent(zombie, new Position(new Point(200 - i*10, 350 + i*10)));
-			em.addComponent(zombie, new Velocity(new Point(0, 0)));
-			em.addComponent(zombie, new Health());
-			em.addComponent(zombie, new Follower());
-			em.addComponent(zombie, new Damage(5, 1000));
-			em.addComponent(zombie, new Obstacle());
-			em.addComponent(zombie, new Collider());
-		}
-
-		Entity button = new Entity();
-		button.name = "button";
-		em.addComponent(button, new Polygon(Color.GREEN,
-				new Point(), new Point(0, 50), new Point(100, 50), new Point(100, 0)));
-		em.addComponent(button, new Position(new Point(600, 300)));
-		em.addComponent(button, new Button(State.RUN));
+		Entity zombieButton = new Entity();
+		zombieButton.name = "zombieButton";
+		sm.addComponent(State.RUN, zombieButton, Polygon.rectangle(Color.GREEN, new Point(100, 50)));
+		sm.addComponent(State.RUN, zombieButton, new Position(new Point(600, 650)));
+		sm.addComponent(State.RUN, zombieButton, new StringButton("Zombie"));
 	}
 	
 	public void run()
 	{
-		while (GLEngine.running())
+		while (GLEngine.running() && sm.run())
 		{
 			GLEngine.clearState();
 			GLEngine.prepare2D();
 			
-			for(CoreSystem s: systems.get(em.state.c()))
-				s.run(em);
-			
-			em.doRemoval();
+			sm.runSystems();
 			
 			GLEngine.endRender();
 			
