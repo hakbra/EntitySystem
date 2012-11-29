@@ -77,7 +77,7 @@ public class PlayerInputSystem extends CoreSystem{
 					
 					Color c = Color.WHITE;
 					
-					Entity bullet = em.newEntity();
+					Entity bullet = new Entity();
 					bullet.name = "Bullet";
 					em.addComponent(bullet, new Bullet());
 					em.addComponent(bullet, new Position(new Point(pos.add(origin))));

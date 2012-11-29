@@ -75,7 +75,7 @@ public class CollisionSystem extends CoreSystem {
 				Polygon poly = em.getComponent(e2, Polygon.class);
 				
 				if (poly.isInside(polyPos, p1))
-					collision = p1;
+					collision = p1.sub(s1);
 				
 				for (int i = 0; i < poly.points.size(); i++)
 				{
@@ -97,7 +97,7 @@ public class CollisionSystem extends CoreSystem {
 
 				if (em.hasComponent(e1, Bullet.class))
 				{
-					Entity emitter = em.newEntity();
+					Entity emitter = new Entity();
 					emitter.name = "emitter";
 					em.addComponent(emitter, new Position(collision));
 					em.addComponent(emitter, new Timer(10));

@@ -18,7 +18,6 @@ import framework.components.Button;
 import framework.components.Circle;
 import framework.components.Collider;
 import framework.components.Damage;
-import framework.components.Emitter;
 import framework.components.Followable;
 import framework.components.Follower;
 import framework.components.Gun;
@@ -72,7 +71,7 @@ public class Main
 		systems.get(State.RUN.c()).add(new DamageSystem(em));
 		systems.get(State.RUN.c()).add(new EmitterSystem(em));
 		
-		Entity player = em.newEntity();
+		Entity player = new Entity();
 		player.name = "Player";
 		em.addComponent(player, new Hero());
 		em.addComponent(player, new Circle(40, Color.BLUE));
@@ -86,19 +85,19 @@ public class Main
 		em.addComponent(player, new Collider());
 		em.addComponent(player, new Obstacle());
 		
-		Entity circle = em.newEntity();
+		Entity circle = new Entity();
 		circle.name = "circle1";
 		em.addComponent(circle, new Circle(50, Color.RED));
 		em.addComponent(circle, new Position(new Point(700, 200 + 200)));
 		em.addComponent(circle, new Obstacle());
 
-		Entity rectangle = em.newEntity();
+		Entity rectangle = new Entity();
 		rectangle.name = "rectangle";
 		em.addComponent(rectangle, Polygon.rectangle(Color.RED, new Point(200, 100)));
 		em.addComponent(rectangle, new Position(new Point(600, 100)));
 		em.addComponent(rectangle, new Obstacle());
 
-		Entity polygon2 = em.newEntity();
+		Entity polygon2 = new Entity();
 		polygon2.name = "polygon2";
 		em.addComponent(polygon2, new Polygon(Color.RED,
 				new Point(), new Point(0, 50), new Point(50, 100), new Point(100, 50), new Point(100, 0), new Point(50, -50)));
@@ -107,7 +106,7 @@ public class Main
 		
 
 		for (int i = 0; i < 20; i++) {
-			Entity zombie = em.newEntity();
+			Entity zombie = new Entity();
 			zombie.name = "Zombie" + i;
 			em.addComponent(zombie, new Zombie());
 			em.addComponent(zombie, new Circle(20, Color.YELLOW));
@@ -120,7 +119,7 @@ public class Main
 			em.addComponent(zombie, new Collider());
 		}
 
-		Entity button = em.newEntity();
+		Entity button = new Entity();
 		button.name = "button";
 		em.addComponent(button, new Polygon(Color.GREEN,
 				new Point(), new Point(0, 50), new Point(100, 50), new Point(100, 0)));

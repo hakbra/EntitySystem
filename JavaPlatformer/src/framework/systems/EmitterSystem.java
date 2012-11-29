@@ -39,7 +39,7 @@ public class EmitterSystem extends CoreSystem{
 				float speed = 2 + r.nextFloat() * 2;
 				Color c = new Color(1, r.nextFloat(), 0);
 				
-				Entity particle = em.newEntity();
+				Entity particle = new Entity();
 				particle.name = "particle";
 				em.addComponent(particle, new Position(new Point(position)));
 				em.addComponent(particle, new Velocity(new Point(angle).mult(speed)));
@@ -63,7 +63,7 @@ public class EmitterSystem extends CoreSystem{
 			float elapsed = (Time.getTime() - timer.start);
 			float full = timer.time;
 			
-			c.mult(Math.pow(1 - elapsed/full, 0.1));
+			c.mult(Math.pow(1 - elapsed/full, 2/3));
 			
 		}
 	}

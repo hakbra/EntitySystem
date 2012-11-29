@@ -13,10 +13,6 @@ public class EntityManager {
     
     public State state = State.MENU;
 
-    public Entity newEntity() {
-		return new Entity();
-    }
-
     public <T extends Component> Entity addComponent(Entity e, T component) {
 		HashMap<Entity, T> HashMap = (HashMap<Entity, T>) entities.get(component .getClass());
 		if (HashMap == null) {
