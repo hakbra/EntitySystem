@@ -67,7 +67,7 @@ public class MenuInputSystem extends CoreSystem{
 						zombie.name = "Zombie";
 						em.addComponent(zombie, new Zombie());
 						em.addComponent(zombie, new Circle(20, Color.YELLOW));
-						em.addComponent(zombie, new Position(new Point(200, 350+i)));
+						em.addComponent(zombie, new Position(new Point(200, 350+40*i)));
 						em.addComponent(zombie, new Velocity(new Point(0, 0)));
 						em.addComponent(zombie, new Health());
 						em.addComponent(zombie, new Follower());

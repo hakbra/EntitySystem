@@ -44,14 +44,14 @@ public class DamageSystem extends CoreSystem{
 				
 				if (thisDam.parent == e2)
 						continue;
+				
+				if (em.hasComponent(e, Zombie.class) && em.hasComponent(e2, Zombie.class))
+					continue;
 					
 				Point otherPos = em.getComponent(e2, Position.class).position;
 				Circle otherCirc = em.getComponent(e2, Circle.class);
 				Health otherHealth = em.getComponent(e2, Health.class);
 				float otherRad = otherCirc.radius;
-				
-				if (em.hasComponent(e, Zombie.class) && em.hasComponent(e2, Zombie.class))
-					continue;
 				
 				if (thisPos.dist(otherPos) < (thisRad + otherRad) * 1.1)
 				{

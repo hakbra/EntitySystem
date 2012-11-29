@@ -49,10 +49,6 @@ public class EmitterSystem extends CoreSystem{
 				em.addComponent(particle, new Collider());
 				em.addComponent(particle, new DestroyOnImpact());
 			}
-			
-			Timer timer = em.getComponent(e, Timer.class);
-			if (Time.getTime() - timer.start > timer.time)
-				em.removeLater(e);
 		}
 
 		for (Entity e : em.get(Particle.class))
@@ -63,8 +59,7 @@ public class EmitterSystem extends CoreSystem{
 			float elapsed = (Time.getTime() - timer.start);
 			float full = timer.time;
 			
-			c.mult(Math.pow(1 - elapsed/full, 2/3));
-			
+			c.mult(1 - elapsed/full);
 		}
 	}
 }

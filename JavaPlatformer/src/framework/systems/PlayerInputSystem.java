@@ -18,6 +18,7 @@ import framework.components.Circle;
 import framework.components.Collider;
 import framework.components.Damage;
 import framework.components.DestroyOnImpact;
+import framework.components.Emitter;
 import framework.components.Gun;
 import framework.components.KeyInput;
 import framework.components.Position;
@@ -69,19 +70,22 @@ public class PlayerInputSystem extends CoreSystem{
 				for (int i = 0; i < gun.bullets; i++) {
 					float deltaAngle = r.nextFloat()*2*gun.spread-gun.spread;
 					Point origin = new Point(angle.angle).mult(circle.radius+4);
+					Point position = new Point(pos.add(origin));
+					int time = 1000 + r.nextInt(200) - 400;
 					
 					Color c = Color.WHITE;
 					
 					Entity bullet = new Entity();
 					bullet.name = "Bullet";
 					em.addComponent(bullet, new Bullet());
-					em.addComponent(bullet, new Position(new Point(pos.add(origin))));
+					em.addComponent(bullet, new Position(position));
 					em.addComponent(bullet, new Velocity(new Point(angle.angle + deltaAngle).mult(gun.speed+(r.nextFloat()-0.5))));
 					em.addComponent(bullet, new Circle(3, c));
-					em.addComponent(bullet, new Timer(1000 + r.nextInt(200) - 400));
+					em.addComponent(bullet, new Timer(time));
 					em.addComponent(bullet, new Damage(gun.damage, e));
 					em.addComponent(bullet, new Collider());
 					em.addComponent(bullet, new DestroyOnImpact());
+					em.addComponent(bullet, new Emitter());
 				}
 			}
 			

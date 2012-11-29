@@ -13,9 +13,7 @@ import framework.StateManager;
 import framework.components.Angle;
 import framework.components.Circle;
 import framework.components.Collider;
-import framework.components.Damage;
 import framework.components.Followable;
-import framework.components.Follower;
 import framework.components.Gun;
 import framework.components.Health;
 import framework.components.Hero;
@@ -26,7 +24,6 @@ import framework.components.Position;
 import framework.components.StateButton;
 import framework.components.StringButton;
 import framework.components.Velocity;
-import framework.components.Zombie;
 import framework.systems.CollisionSystem;
 import framework.systems.DamageSystem;
 import framework.systems.EmitterSystem;
@@ -35,6 +32,7 @@ import framework.systems.GameRenderSystem;
 import framework.systems.MenuInputSystem;
 import framework.systems.PhysicsSystem;
 import framework.systems.PlayerInputSystem;
+import framework.systems.TimerSystem;
 
 public class Main
 {
@@ -78,6 +76,7 @@ public class Main
 		sm.addSystem(State.RUN, DamageSystem.class);
 		sm.addSystem(State.RUN, EmitterSystem.class);
 		sm.addSystem(State.RUN, MenuInputSystem.class);
+		sm.addSystem(State.RUN, TimerSystem.class);
 		
 		Entity player = new Entity();
 		player.name = "Player";
