@@ -1,5 +1,6 @@
 package framework.components;
 
+import helpers.Color;
 import helpers.Point;
 
 import java.util.ArrayList;
@@ -9,9 +10,9 @@ import framework.Component;
 public class Polygon extends Component{
 	
 	public ArrayList<Point> points;
-	public String color;
+	public Color color;
 	
-	public Polygon(String c, Point... ps)
+	public Polygon(Color c, Point... ps)
 	{
 		points = new ArrayList<Point>();
 		this.color = c;
@@ -20,7 +21,7 @@ public class Polygon extends Component{
 			points.add(p);
 	}
 	
-	public static Polygon rectangle(String c, Point dim)
+	public static Polygon rectangle(Color c, Point dim)
 	{
 
 		Point p = new Point(0, 0);

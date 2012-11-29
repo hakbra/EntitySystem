@@ -1,6 +1,8 @@
 
 package framework;
 
+import helpers.State;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -8,6 +10,8 @@ import java.util.HashMap;
 public class EntityManager {
     private HashMap<Class<?>, HashMap<Entity, ? extends Component>> entities = new HashMap<Class<?>, HashMap<Entity, ? extends Component>>();
     private ArrayList<Entity> deleties = new ArrayList<Entity>();
+    
+    public State state = State.MENU;
 
     public Entity newEntity() {
 		return new Entity();

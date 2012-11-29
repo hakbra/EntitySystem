@@ -30,6 +30,10 @@ public class Time {
 	 * @return The system time in milliseconds
 	 */
 	public static long getTime() {
+		 return (Sys.getTime() * 1000) / Sys.getTimerResolution();
+	}
+
+	public static long getHighTime() {
 		 return (Sys.getTime() * 1000000000) / Sys.getTimerResolution();
 	}
  
@@ -48,7 +52,7 @@ public class Time {
 	
 	public void sync(int fps) {
 		if (lastFrame < 0){
-			lastFrame = getTime();
+			lastFrame = getHighTime();
 			return;
 		}
 		if (fps <= 0) return;
@@ -63,7 +67,7 @@ public class Time {
 		
 		try {
 			while (true) {
-				long t = getTime() - lastFrame;
+				long t = getHighTime() - lastFrame;
 				
 				if (t < sleepTime - burnTime) {
 					Thread.sleep(1);
@@ -79,6 +83,6 @@ public class Time {
 			}
 		} catch (InterruptedException e) {}
 		
-		lastFrame = getTime() - overSleep;
+		lastFrame = getHighTime() - overSleep;
 	}
 }

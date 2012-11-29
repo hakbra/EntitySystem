@@ -13,18 +13,9 @@ public class Draw {
 		glVertex3f((float)p.x, (float)p.y, 0);
 	}
 	
-	public static void setColor(String c)
+	public static void setColor(Color d)
 	{
-		if      (c == "Red")
-			glColor3f(1, 0, 0);
-		else if (c == "Green")
-			glColor3f(0, 1, 0);
-		else if (c == "Blue")
-			glColor3f(0, 0, 1);
-		else if (c == "White")
-			glColor3f(1, 1, 1);
-		else if (c == "Black")
-			glColor3f(0, 0, 0);
+		glColor3f(d.a, d.b, d.c);
 	}
 	
 	public static void point(Point p)

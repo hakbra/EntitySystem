@@ -13,15 +13,15 @@ import helpers.Point;
 
 public class FollowerSystem extends CoreSystem{
 
-	public FollowerSystem(EntityManager em, Class<? extends Component>... types)
+	public FollowerSystem(EntityManager em)
 	{
-		super(em, types);
+		super(em);
 	}
 	
 	@Override
 	public void run(EntityManager em)
 	{
-		for (Entity e : entities())
+		for (Entity e : em.getAll(Follower.class))
 		{
 			Point thisPos = em.getComponent(e, Position.class).position;
 			Point target = em.getComponent(e, Follower.class).target;

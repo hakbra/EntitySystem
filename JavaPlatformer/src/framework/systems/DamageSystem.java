@@ -17,9 +17,9 @@ import framework.components.Zombie;
 
 public class DamageSystem extends CoreSystem{
 
-	public DamageSystem(EntityManager em, Class<? extends Component>... types)
+	public DamageSystem(EntityManager em)
 	{
-		super(em, types);
+		super(em);
 	}
 	
 	@Override
@@ -27,7 +27,7 @@ public class DamageSystem extends CoreSystem{
 	{
 		long now = Time.getTime();
 		
-		for (Entity e : entities())
+		for (Entity e : em.get(Damage.class))
 		{
 			Point thisPos = em.getComponent(e, Position.class).position;
 			Circle thisCirc = em.getComponent(e, Circle.class);
@@ -63,8 +63,6 @@ public class DamageSystem extends CoreSystem{
 					
 					if (thisDam.timeDelta == 0)
 						em.removeLater(e);
-					
-					
 				}
 			}
 		}

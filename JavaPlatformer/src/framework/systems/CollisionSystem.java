@@ -1,36 +1,39 @@
 package framework.systems;
 
 import helpers.Point;
-import framework.Component;
 import framework.CoreSystem;
 import framework.Entity;
 import framework.EntityManager;
 import framework.components.Bullet;
 import framework.components.Circle;
-import framework.components.Hero;
+import framework.components.Collider;
+import framework.components.DestroyOnImpact;
+import framework.components.Emitter;
 import framework.components.Obstacle;
 import framework.components.Polygon;
 import framework.components.Position;
+import framework.components.Timer;
 import framework.components.Velocity;
 
 
 public class CollisionSystem extends CoreSystem {
 
-	public CollisionSystem(EntityManager em, Class<? extends Component>... types)
+	public CollisionSystem(EntityManager em)
 	{
-		super(em, types);
+		super(em);
 	}
 	
 	@Override
 	public void run(EntityManager em)
 	{
-		for (Entity e1 : entities())
+		for (Entity e1 : em.get(Collider.class))
 		{
 			Point p1 = em.getComponent(e1, Position.class).position;
 			float r1 = em.getComponent(e1, Circle.class).radius;
 			Point s1 = em.getComponent(e1, Velocity.class).velocity;
+			Point collision = null;
 			
-			for (Entity e2 : em.getAll(Position.class, Circle.class))
+			for (Entity e2 : em.getAll(Circle.class, Obstacle.class))
 			{
 				Point p2 = em.getComponent(e2, Position.class).position;
 				float r2 = em.getComponent(e2, Circle.class).radius;
@@ -62,18 +65,17 @@ public class CollisionSystem extends CoreSystem {
 						p1.iadd(diff.mult(p1move));
 					}
 					
-					if (em.hasComponent(e1, Bullet.class) && em.hasComponent(e2, Obstacle.class))
-						em.removeLater(e1);
+					collision = p1.add(diff.div(2));
 				}
 			}
 			
-			for (Entity e2 : em.getAll(Position.class, Polygon.class))
+			for (Entity e2 : em.getAll(Polygon.class, Obstacle.class))
 			{
 				Point polyPos = em.getComponent(e2, Position.class).position;
 				Polygon poly = em.getComponent(e2, Polygon.class);
 				
 				if (poly.isInside(polyPos, p1))
-					em.removeLater(e1);
+					collision = p1;
 				
 				for (int i = 0; i < poly.points.size(); i++)
 				{
@@ -84,9 +86,22 @@ public class CollisionSystem extends CoreSystem {
 					if (d < r1)
 					{
 						p1.iadd(line.mult(r1 - d));
-						if (em.hasComponent(e1, Bullet.class) && em.hasComponent(e2, Obstacle.class))
-							em.removeLater(e1);
+						collision = col;
 					}
+				}
+			}
+			
+			if (collision != null && em.hasComponent(e1, DestroyOnImpact.class))
+			{
+				em.removeLater(e1);
+
+				if (em.hasComponent(e1, Bullet.class))
+				{
+					Entity emitter = em.newEntity();
+					emitter.name = "emitter";
+					em.addComponent(emitter, new Position(collision));
+					em.addComponent(emitter, new Timer(10));
+					em.addComponent(emitter, new Emitter());
 				}
 			}
 		}

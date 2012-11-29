@@ -18,7 +18,7 @@ public class Damage extends Component{
 		this.parent = null;
 		this.amount = a;
 		this.time = -1;
-		this.timeDelta = t * 1000000;
+		this.timeDelta = t;
 		this.name = "Damage";
 	}
 

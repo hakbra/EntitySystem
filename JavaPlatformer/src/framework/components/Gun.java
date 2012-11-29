@@ -18,7 +18,7 @@ public class Gun extends Component{
 		this.damage = da;
 		this.spread = s;
 		this.speed = sp;
-		this.delay = de * 1000*1000;
+		this.delay = de;
 		this.bullets = b;
 		this.name = "Gun";
 	}

@@ -1,7 +1,6 @@
 package framework.components;
 
-import java.util.Date;
-
+import helpers.Time;
 import framework.Component;
 
 
@@ -15,7 +14,7 @@ public class Timer extends Component{
 	{
 		name = "Time";
 		this.time = t;
-		this.start = new Date().getTime();
+		this.start = Time.getTime();
 	}
 	
 }
