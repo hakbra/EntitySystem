@@ -14,9 +14,9 @@ public class Polygon extends Component{
 	
 	public Polygon(Color c, Point... ps)
 	{
-		points = new ArrayList<Point>();
 		this.color = c;
-		
+
+		points = new ArrayList<Point>();
 		for (Point p: ps)
 			points.add(p);
 	}

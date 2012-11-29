@@ -15,4 +15,6 @@ public abstract class Shape extends Component{
 	public  abstract boolean isInside(Point pos, Point p);
 
 	public  abstract Point getClosest(Point pos, Point p);
+	
+	public abstract void render(Point p);
 }

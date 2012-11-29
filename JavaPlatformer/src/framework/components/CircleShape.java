@@ -1,6 +1,7 @@
 package framework.components;
 
 import helpers.Color;
+import helpers.Draw;
 import helpers.Point;
 
 public class CircleShape extends Shape {
@@ -27,4 +28,8 @@ public class CircleShape extends Shape {
 		return pos.add(dir.mult(this.radius));
 	}
 
+	@Override
+	public void render(Point pos) {
+		Draw.circle(this.radius, pos);
+	}
 }
