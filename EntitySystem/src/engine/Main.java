@@ -1,4 +1,4 @@
-package platformer;
+package engine;
 
 import helpers.Color;
 import helpers.Point;
@@ -7,7 +7,6 @@ import helpers.Time;
 
 import org.lwjgl.input.Keyboard;
 
-import engine.GLEngine;
 import framework.Entity;
 import framework.StateManager;
 import framework.components.Angle;

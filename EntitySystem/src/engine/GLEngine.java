@@ -32,7 +32,7 @@ public class GLEngine {
 			//Display
 			setWindow(false);
 			Display.setVSyncEnabled(true);
-			Display.setTitle("platformer");
+			Display.setTitle("entitySystem");
 			Display.create();
 
 			//OpenGL
