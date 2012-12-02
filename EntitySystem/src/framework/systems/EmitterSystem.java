@@ -59,7 +59,7 @@ public class EmitterSystem extends CoreSystem{
 			float elapsed = (Time.getTime() - timer.start);
 			float full = timer.time;
 			
-			c.mult(1 - elapsed/full);
+			//c.mult(1 - elapsed/full);
 		}
 	}
 }

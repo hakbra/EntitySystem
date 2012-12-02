@@ -50,6 +50,7 @@ public class Main
 		t = new Time();
 		GLEngine.init();
 		
+		
 		// Menu-state
 		sm.addSystem(State.MENU, MenuInputSystem.class);
 		sm.addSystem(State.MENU, GameRenderSystem.class);

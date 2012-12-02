@@ -85,7 +85,7 @@ public class PlayerInputSystem extends CoreSystem{
 					em.addComponent(bullet, new Damage(gun.damage, e));
 					em.addComponent(bullet, new Collider());
 					em.addComponent(bullet, new DestroyOnImpact());
-					em.addComponent(bullet, new Emitter());
+					//em.addComponent(bullet, new Emitter());
 				}
 			}
 			
