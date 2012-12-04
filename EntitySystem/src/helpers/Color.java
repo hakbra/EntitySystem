@@ -10,18 +10,21 @@ public class Color {
 	
 	
 	public float a, b, c;
+	public float brightness;
 	
 	public Color(float a, float b, float c)
 	{
 		this.a = a;
 		this.b = b;
 		this.c = c;
+		brightness = 1;
 	}
 	
-	public void mult(double m)
+	public void set(float a, float b, float c)
 	{
-		this.a *= m;
-		this.b *= m;
-		this.c *= m;
+		this.a = a;
+		this.b = b;
+		this.c = c;
+		brightness = 1;
 	}
 }

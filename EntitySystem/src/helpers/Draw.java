@@ -15,7 +15,7 @@ public class Draw {
 	
 	public static void setColor(Color d)
 	{
-		glColor3f(d.a, d.b, d.c);
+		glColor3f(d.a*d.brightness, d.b*d.brightness, d.c*d.brightness);
 	}
 	
 	public static void point(Point p)
