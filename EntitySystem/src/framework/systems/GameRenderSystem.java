@@ -41,7 +41,7 @@ public class GameRenderSystem extends CoreSystem{
 				Point dir = new Point(angle).mult(circle.radius);
 				
 				Draw.setColor(Color.BLACK);
-				Draw.triangle(position, position.add(dir.rot(gun.spread)), position.add(dir.rot(-gun.spread)));
+				Draw.triangle(position, position.add(dir.rot(5)), position.add(dir.rot(-5)));
 			}
 
 			if (em.hasComponent(e, Health.class))
@@ -49,12 +49,15 @@ public class GameRenderSystem extends CoreSystem{
 				Health health = em.getComponent(e, Health.class);
 				float d = health.current / health.max;
 
+				Draw.setColor(Color.GREEN);
+				Draw.ring(position, circle.radius, 5);
+
 				Draw.setColor(Color.RED);
-				Draw.circle(circle.radius * (1-d*d), position);
+				Draw.ring(position, circle.radius, 5, (int) (360 - 360 * d));
 			}
 		}
 		for (Entity e : em.get(Polygon.class))
-		{
+		{	
 			Point position 		= 	em.getComponent(e, Position.class).position;
 			Polygon poly 		= 	em.getComponent(e, Polygon.class);
 			

@@ -19,6 +19,7 @@ import framework.components.Collider;
 import framework.components.Damage;
 import framework.components.DestroyOnImpact;
 import framework.components.Emitter;
+import framework.components.EmitterOnImpact;
 import framework.components.Gun;
 import framework.components.KeyInput;
 import framework.components.Position;
@@ -61,7 +62,7 @@ public class PlayerInputSystem extends CoreSystem{
 			else
 				vel.set(0, 0);
 
-			if (Keyboard.isKeyDown(Keyboard.KEY_SPACE) && gun.canFire())
+			if (Keyboard.isKeyDown(keyInput.shoot) && gun.canFire())
 			{
 				gun.lastFired = Time.getTime();
 				
@@ -71,7 +72,8 @@ public class PlayerInputSystem extends CoreSystem{
 					float deltaAngle = r.nextFloat()*2*gun.spread-gun.spread;
 					Point origin = new Point(angle.angle).mult(circle.radius+4);
 					Point position = new Point(pos.add(origin));
-					int time = 1000 + r.nextInt(200) - 400;
+					int time = 500 + r.nextInt(100);
+					float speed = gun.speed + r.nextFloat()*2 - 1;
 					
 					Color c = Color.WHITE;
 					
@@ -79,13 +81,13 @@ public class PlayerInputSystem extends CoreSystem{
 					bullet.name = "Bullet";
 					em.addComponent(bullet, new Bullet());
 					em.addComponent(bullet, new Position(position));
-					em.addComponent(bullet, new Velocity(new Point(angle.angle + deltaAngle).mult(gun.speed+(r.nextFloat()-0.5))));
+					em.addComponent(bullet, new Velocity(new Point(angle.angle + deltaAngle).mult(speed)));
 					em.addComponent(bullet, new Circle(3, c));
 					em.addComponent(bullet, new Timer(time));
 					em.addComponent(bullet, new Damage(gun.damage, e));
 					em.addComponent(bullet, new Collider());
 					em.addComponent(bullet, new DestroyOnImpact());
-					//em.addComponent(bullet, new Emitter());
+					em.addComponent(bullet, new EmitterOnImpact());
 				}
 			}
 			

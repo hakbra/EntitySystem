@@ -42,12 +42,11 @@ public class EmitterSystem extends CoreSystem{
 				Entity particle = new Entity();
 				particle.name = "particle";
 				em.addComponent(particle, new Position(new Point(position)));
-				em.addComponent(particle, new Velocity(new Point(angle).mult(speed)));
+				em.addComponent(particle, new Velocity(new Point(angle).mult(1)));
 				em.addComponent(particle, new Circle(3, c));
 				em.addComponent(particle, new Timer(170 + r.nextInt(50)));
 				em.addComponent(particle, new Particle());
 				em.addComponent(particle, new Collider());
-				em.addComponent(particle, new DestroyOnImpact());
 			}
 		}
 
@@ -59,7 +58,7 @@ public class EmitterSystem extends CoreSystem{
 			float elapsed = (Time.getTime() - timer.start);
 			float full = timer.time;
 			
-			c.brightness = 1 - elapsed/full;
+			c.brightness = (float) (1 - Math.pow(elapsed/full, 2));
 		}
 	}
 }

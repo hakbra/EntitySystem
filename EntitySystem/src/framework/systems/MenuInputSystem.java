@@ -6,6 +6,7 @@ import helpers.State;
 
 import org.lwjgl.input.Mouse;
 
+import engine.GLEngine;
 import framework.CoreSystem;
 import framework.Entity;
 import framework.EntityManager;
@@ -61,13 +62,13 @@ public class MenuInputSystem extends CoreSystem{
 			{
 				if (button.type == "Zombie")
 				{
-					for (int i = 0; i < 4; i++)
+					for (int i = 0; i < 1; i++)
 					{
 						Entity zombie = new Entity();
 						zombie.name = "Zombie";
 						em.addComponent(zombie, new Zombie());
-						em.addComponent(zombie, new Circle(20, Color.YELLOW));
-						em.addComponent(zombie, new Position(new Point(200, 350+40*i)));
+						em.addComponent(zombie, new Circle(20, Color.BLUE));
+						em.addComponent(zombie, new Position(new Point(50, 350+40*i)));
 						em.addComponent(zombie, new Velocity(new Point(0, 0)));
 						em.addComponent(zombie, new Health());
 						em.addComponent(zombie, new Follower());
@@ -75,6 +76,10 @@ public class MenuInputSystem extends CoreSystem{
 						em.addComponent(zombie, new Obstacle());
 						em.addComponent(zombie, new Collider());
 					}
+				}
+				else if (button.type == "Screen")
+				{
+					GLEngine.switchFullscreen();
 				}
 			}
 		}

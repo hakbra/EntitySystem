@@ -1,21 +1,23 @@
 package framework.systems;
 
-import helpers.Color;
-import helpers.Draw;
 import helpers.Point;
+import helpers.Time;
 import framework.CoreSystem;
 import framework.Entity;
 import framework.EntityManager;
-import framework.components.Bullet;
 import framework.components.Circle;
 import framework.components.Collider;
+import framework.components.Damage;
 import framework.components.DestroyOnImpact;
 import framework.components.Emitter;
+import framework.components.EmitterOnImpact;
+import framework.components.Health;
 import framework.components.Obstacle;
 import framework.components.Polygon;
 import framework.components.Position;
 import framework.components.Timer;
 import framework.components.Velocity;
+import framework.components.Zombie;
 
 
 public class CollisionSystem extends CoreSystem {
@@ -43,25 +45,14 @@ public class CollisionSystem extends CoreSystem {
 				Point circle2pos = em.getComponent(e2, Position.class).position;
 				Circle circle2 = em.getComponent(e2, Circle.class);
 
-				Point s2 = null;
-				if (em.hasComponent(e2, Velocity.class))
-					s2 = em.getComponent(e2, Velocity.class).velocity;
-
-				Point closest = circle2.getClosest(circle2pos, circle1pos);
-				double moveDist = circle1pos.dist(closest) - circle1.radius;
+				double moveDist = circle1pos.dist(circle2pos) - circle1.radius - circle2.radius;
+				Point dir = circle1pos.sub(circle2pos).norm();
 				
 				if (moveDist < 0)
 				{
-					Point line = circle1pos.sub(closest).norm().mult(moveDist);
+					Point line = dir.mult(moveDist);
 
-
-					int c1 = 1 + (s1.len() > 0 ? 1 : 0);
-					int c2 = s2 != null ? 1 : 0;			// 0: no speed, 1: speed = 0, 2: cSpeed > 0
-					c2 += s2 != null && s2.len() > 0 ? 1 : 0;
-
-					if (c2 > c1)
-						circle2pos.iadd(line);
-					else if (c1 > c2)
+					if (!em.hasComponent(e2, Velocity.class) || em.hasComponent(e1, Zombie.class))
 						circle1pos.isub(line);
 					else
 					{
@@ -74,11 +65,9 @@ public class CollisionSystem extends CoreSystem {
 						circle1pos.isub(line.mult(p1move));
 					}
 
-					collision = closest;
+					collision = circle2pos.add(dir.mult(circle2.radius));
+					handleCollision(em, e1, e2, collision);
 				}
-
-				if (circle2.isInside(circle2pos, circle1pos))
-					collision = circle1pos.sub(s1);
 			}
 			
 			for (Entity e2 : em.getAll(Polygon.class, Obstacle.class))
@@ -91,28 +80,57 @@ public class CollisionSystem extends CoreSystem {
 				
 				Point closest = poly.getClosest(polyPos, circle1pos);
 				double moveDist = circle1pos.dist(closest) - circle1.radius;
+				if (poly.isInside(polyPos, circle1pos))
+				{
+					moveDist *= -1;
+					moveDist += circle1.radius*2;
+				}
 				
 				if (moveDist < 0)
 				{
 					Point line = circle1pos.sub(closest).norm();
 					circle1pos.isub(line.mult(moveDist));
-					collision = closest;
+					handleCollision(em, e1, e2, closest);
 				}
 			}
-			
-			if (collision != null && em.hasComponent(e1, DestroyOnImpact.class))
-			{
-				em.removeLater(e1);
+		}
+	}
+	
+	private void handleCollision(EntityManager em, Entity a, Entity b, Point poi)
+	{
+		if (em.hasComponent(a, DestroyOnImpact.class))
+			em.removeLater(a);
 
-				if (em.hasComponent(e1, Bullet.class))
-				{
-					Entity emitter = new Entity();
-					emitter.name = "emitter";
-					em.addComponent(emitter, new Position(collision));
-					em.addComponent(emitter, new Timer(10));
-					em.addComponent(emitter, new Emitter());
-				}
-			}
+		if (em.hasComponent(a, EmitterOnImpact.class))
+		{
+			Entity emitter = new Entity();
+			emitter.name = "emitter";
+			em.addComponent(emitter, new Position(poi));
+			em.addComponent(emitter, new Timer(0));
+			em.addComponent(emitter, new Emitter());
+		}
+
+		if (em.hasComponent(a, Zombie.class) && em.hasComponent(b, Zombie.class))
+			return;
+
+		if (em.hasComponent(a, Damage.class) && em.hasComponent(b, Health.class))
+		{
+			Damage dam = em.getComponent(a, Damage.class);
+			Health health = em.getComponent(b, Health.class);
+			
+			if (b == dam.parent)
+				return;
+			
+			if (!dam.canDamage())
+				return;
+			
+			dam.time = Time.getTime();
+			
+			health.current -= dam.amount;
+			if (health.current <= 0)
+				em.removeLater(b);
+
+			dam.time = Time.getTime();
 		}
 	}
 }

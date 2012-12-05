@@ -26,15 +26,6 @@ public class PhysicsSystem extends CoreSystem{
 			Point position 	= 	em.getComponent(e, Position.class).position;
 			Point vel 		= em.getComponent(e, Velocity.class).velocity;
 			position.iadd(vel);
-			
-			if (em.hasComponent(e, Timer.class))
-			{
-				Timer timer = em.getComponent(e, Timer.class);
-				if (now - timer.start > timer.time)
-				{
-					em.removeLater(e);
-				}
-			}
 		}
 	}
 }

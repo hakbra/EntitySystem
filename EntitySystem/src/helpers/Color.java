@@ -9,10 +9,10 @@ public class Color {
 	public static Color YELLOW = new Color(1, 1, 0);
 	
 	
-	public float a, b, c;
-	public float brightness;
+	public double a, b, c;
+	public double brightness;
 	
-	public Color(float a, float b, float c)
+	public Color(double a, double b, double c)
 	{
 		this.a = a;
 		this.b = b;
@@ -20,7 +20,7 @@ public class Color {
 		brightness = 1;
 	}
 	
-	public void set(float a, float b, float c)
+	public void set(double a, double b, double c)
 	{
 		this.a = a;
 		this.b = b;
