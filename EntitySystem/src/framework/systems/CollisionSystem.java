@@ -30,14 +30,14 @@ public class CollisionSystem extends CoreSystem {
 	@Override
 	public void run(EntityManager em)
 	{
-		for (Entity e1 : em.get(Collider.class))
+		for (Entity e1 : em.getEntity(Collider.class))
 		{
 			Point circle1pos = em.getComponent(e1, Position.class).position;
 			Circle circle1 = em.getComponent(e1, Circle.class);
 			Point s1 = em.getComponent(e1, Velocity.class).velocity;
 			Point collision = null;
 			
-			for (Entity e2 : em.getAll(Circle.class, Obstacle.class))
+			for (Entity e2 : em.getEntityAll(Circle.class, Obstacle.class))
 			{
 				if (e1 == e2)
 					continue;
@@ -70,7 +70,7 @@ public class CollisionSystem extends CoreSystem {
 				}
 			}
 			
-			for (Entity e2 : em.getAll(Polygon.class, Obstacle.class))
+			for (Entity e2 : em.getEntityAll(Polygon.class, Obstacle.class))
 			{
 				Point polyPos = em.getComponent(e2, Position.class).position;
 				Polygon poly = em.getComponent(e2, Polygon.class);
@@ -99,7 +99,7 @@ public class CollisionSystem extends CoreSystem {
 	private void handleCollision(EntityManager em, Entity a, Entity b, Point poi)
 	{
 		if (em.hasComponent(a, DestroyOnImpact.class))
-			em.removeLater(a);
+			em.removeEntity(a);
 
 		if (em.hasComponent(a, EmitterOnImpact.class))
 		{
@@ -128,7 +128,7 @@ public class CollisionSystem extends CoreSystem {
 			
 			health.current -= dam.amount;
 			if (health.current <= 0)
-				em.removeLater(b);
+				em.removeEntity(b);
 
 			dam.time = Time.getTime();
 		}

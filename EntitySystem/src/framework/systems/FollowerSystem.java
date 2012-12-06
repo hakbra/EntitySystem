@@ -21,10 +21,10 @@ public class FollowerSystem extends CoreSystem{
 	@Override
 	public void run(EntityManager em)
 	{
-		Entity pfEntity = em.get(Pathfinder.class).remove(0);
+		Entity pfEntity = em.getEntity(Pathfinder.class).remove(0);
 		Pathfinder pf = em.getComponent(pfEntity, Pathfinder.class);
 		
-		for (Entity e : em.getAll(Follower.class))
+		for (Entity e : em.getEntityAll(Follower.class))
 		{
 			Point thisPos = em.getComponent(e, Position.class).position;
 			Point thisSpeed = em.getComponent(e, Velocity.class).velocity;

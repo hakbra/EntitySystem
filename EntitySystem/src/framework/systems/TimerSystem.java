@@ -21,11 +21,11 @@ public class TimerSystem extends CoreSystem{
 	{
 		long now = Time.getTime();
 		
-		for (Entity e : em.getAll(Timer.class))
+		for (Entity e : em.getEntityAll(Timer.class))
 		{
 			Timer timer = em.getComponent(e, Timer.class);
 			if (now - timer.start > timer.time)
-				em.removeLater(e);
+				em.removeEntity(e);
 		}
 	}
 }

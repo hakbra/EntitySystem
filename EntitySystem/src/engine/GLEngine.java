@@ -4,17 +4,15 @@ package engine;
 import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.GL_DEPTH_TEST;
-import static org.lwjgl.opengl.GL11.GL_FRONT_AND_BACK;
-import static org.lwjgl.opengl.GL11.GL_LINE;
 import static org.lwjgl.opengl.GL11.GL_MODELVIEW;
 import static org.lwjgl.opengl.GL11.GL_PROJECTION;
 import static org.lwjgl.opengl.GL11.glClear;
 import static org.lwjgl.opengl.GL11.glClearColor;
 import static org.lwjgl.opengl.GL11.glDisable;
+import static org.lwjgl.opengl.GL11.glEnable;
 import static org.lwjgl.opengl.GL11.glLoadIdentity;
 import static org.lwjgl.opengl.GL11.glMatrixMode;
 import static org.lwjgl.opengl.GL11.glPointSize;
-import static org.lwjgl.opengl.GL11.glPolygonMode;
 import static org.lwjgl.opengl.GL11.glViewport;
 import static org.lwjgl.util.glu.GLU.gluOrtho2D;
 
@@ -41,8 +39,6 @@ public class GLEngine {
 			//OpenGL
 			glClearColor(0.0f, 0.0f, 0.0f, 0.0f); // Black
 			glDisable(GL_DEPTH_TEST);
-			//glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
-			glPointSize(1);
 			
 			prepare2D();
 
@@ -63,7 +59,7 @@ public class GLEngine {
 		glMatrixMode(GL_MODELVIEW);
 
 		// Set depth buffer elements
-		glDisable(GL_DEPTH_TEST);
+		glEnable(GL_DEPTH_TEST);
 		glPointSize(5);
 	}
 	

@@ -21,7 +21,7 @@ public class PhysicsSystem extends CoreSystem{
 	{
 		long now = Time.getTime();
 		
-		for (Entity e : em.getAll(Position.class, Velocity.class))
+		for (Entity e : em.getEntityAll(Position.class, Velocity.class))
 		{
 			Point position 	= 	em.getComponent(e, Position.class).position;
 			Point vel 		= em.getComponent(e, Velocity.class).velocity;

@@ -42,7 +42,7 @@ public class MenuInputSystem extends CoreSystem{
 	    if (mouse == null)
 	    	return;
 		
-		for (Entity e : em.get(StateButton.class))
+		for (Entity e : em.getEntity(StateButton.class))
 		{
 			Point position 		= 	em.getComponent(e, Position.class).position;
 			Polygon poly 		= 	em.getComponent(e, Polygon.class);
@@ -52,7 +52,7 @@ public class MenuInputSystem extends CoreSystem{
 				em.setState(button.state);
 		}
 
-		for (Entity e : em.get(StringButton.class))
+		for (Entity e : em.getEntity(StringButton.class))
 		{
 			Point position 		= 	em.getComponent(e, Position.class).position;
 			Polygon poly 		= 	em.getComponent(e, Polygon.class);

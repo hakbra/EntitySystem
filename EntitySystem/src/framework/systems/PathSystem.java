@@ -26,13 +26,13 @@ public class PathSystem extends CoreSystem{
 	@Override
 	public void run(EntityManager em)
 	{
-		Entity pfEntity = em.get(Pathfinder.class).remove(0);
+		Entity pfEntity = em.getEntity(Pathfinder.class).remove(0);
 		Pathfinder pf = em.getComponent(pfEntity, Pathfinder.class);
 
 
 		if (!pf.updated)
 		{
-			for (Entity e : em.getAll(Obstacle.class, Polygon.class))
+			for (Entity e : em.getEntityAll(Obstacle.class, Polygon.class))
 			{
 				Polygon poly = em.getComponent(e, Polygon.class);
 				Point pos = em.getComponent(e, Position.class).position;
@@ -51,7 +51,7 @@ public class PathSystem extends CoreSystem{
 							pf.map[i][j].dist = dist;
 					}
 			}
-			for (Entity e : em.getAll(Obstacle.class, Circle.class))
+			for (Entity e : em.getEntityAll(Obstacle.class, Circle.class))
 			{
 				if (em.hasComponent(e, Hero.class))
 					continue;
@@ -79,7 +79,7 @@ public class PathSystem extends CoreSystem{
 
 		PriorityQueue<Node> queue = new PriorityQueue<Pathfinder.Node>();
 		
-		for (Entity hero : em.get(Hero.class))
+		for (Entity hero : em.getEntity(Hero.class))
 		{
 			Point pos = em.getComponent(hero, Position.class).position;
 			Node n = pf.getNode(pos);

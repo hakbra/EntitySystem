@@ -28,7 +28,7 @@ public class EmitterSystem extends CoreSystem{
 	@Override
 	public void run(EntityManager em)
 	{
-		for (Entity e : em.get(Emitter.class))
+		for (Entity e : em.getEntity(Emitter.class))
 		{
 			Point position 	= 	em.getComponent(e, Position.class).position;
 			
@@ -50,7 +50,7 @@ public class EmitterSystem extends CoreSystem{
 			}
 		}
 
-		for (Entity e : em.get(Particle.class))
+		for (Entity e : em.getEntity(Particle.class))
 		{
 			Color c 	= 	em.getComponent(e, Circle.class).color;
 			Timer timer = 	em.getComponent(e, Timer.class);

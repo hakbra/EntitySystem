@@ -41,7 +41,7 @@ public class PlayerInputSystem extends CoreSystem{
 	@Override
 	public void run(EntityManager em)
 	{
-		for (Entity e : em.get(KeyInput.class))
+		for (Entity e : em.getEntity(KeyInput.class))
 		{
 			KeyInput keyInput 	= em.getComponent(e, KeyInput.class);
 			Point pos	 		= em.getComponent(e, Position.class).position;

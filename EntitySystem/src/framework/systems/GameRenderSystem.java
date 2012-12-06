@@ -24,7 +24,7 @@ public class GameRenderSystem extends CoreSystem{
 	@Override
 	public void run(EntityManager em)
 	{
-		for (Entity e : em.get(Circle.class))
+		for (Entity e : em.getEntity(Circle.class))
 		{
 			
 			Point position 		= 	em.getComponent(e, Position.class).position;
@@ -56,7 +56,7 @@ public class GameRenderSystem extends CoreSystem{
 				Draw.ring(position, circle.radius, 5, (int) (360 - 360 * d));
 			}
 		}
-		for (Entity e : em.get(Polygon.class))
+		for (Entity e : em.getEntity(Polygon.class))
 		{	
 			Point position 		= 	em.getComponent(e, Position.class).position;
 			Polygon poly 		= 	em.getComponent(e, Polygon.class);

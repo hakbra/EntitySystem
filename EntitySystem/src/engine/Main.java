@@ -34,6 +34,7 @@ import framework.systems.MenuInputSystem;
 import framework.systems.PathSystem;
 import framework.systems.PhysicsSystem;
 import framework.systems.PlayerInputSystem;
+import framework.systems.RenderSystem;
 import framework.systems.TimerSystem;
 
 public class Main
@@ -70,7 +71,8 @@ public class Main
 		sm.addComponent(State.MENU, exitButton, new StateButton(State.EXIT));
 
 		//Run-state
-		sm.addSystem(State.RUN, GameRenderSystem.class);
+		sm.addSystem(State.RUN, RenderSystem.class);
+		//sm.addSystem(State.RUN, GameRenderSystem.class);
 		sm.addSystem(State.RUN, PhysicsSystem.class);
 		sm.addSystem(State.RUN, PlayerInputSystem.class);
 		sm.addSystem(State.RUN, FollowerSystem.class);
@@ -84,7 +86,7 @@ public class Main
 		Entity player = new Entity();
 		player.name = "Player";
 		sm.addComponent(State.RUN, player, new Hero());
-		sm.addComponent(State.RUN, player, new Circle(40, Color.BLUE));
+		sm.addComponent(State.RUN, player, new Circle(40, Color.YELLOW));
 		sm.addComponent(State.RUN, player, new Position(new Point(1000, 250)));
 		sm.addComponent(State.RUN, player, new Velocity(new Point(0, 0)));
 		sm.addComponent(State.RUN, player, new Angle(180));

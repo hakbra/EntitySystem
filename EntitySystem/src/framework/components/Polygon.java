@@ -1,13 +1,16 @@
 package framework.components;
 
 import helpers.Color;
+import helpers.Draw;
 import helpers.Point;
 
 import java.util.ArrayList;
 
 import framework.Component;
+import framework.Entity;
+import framework.EntityManager;
 
-public class Polygon extends Component{
+public class Polygon extends Component implements Render{
 
 	public ArrayList<Point> points;
 	public Color color;
@@ -71,5 +74,12 @@ public class Polygon extends Component{
 		}
 
 		return closest;
+	}
+
+	@Override
+	public void render(EntityManager em, Entity e) {
+		Draw.setColor(color);
+		Draw.polygon(points);
+		
 	}
 }

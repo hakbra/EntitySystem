@@ -1,9 +1,13 @@
 package framework.components;
 
-import framework.Component;
+import helpers.Color;
+import helpers.Draw;
 import helpers.Time;
+import framework.Component;
+import framework.Entity;
+import framework.EntityManager;
 
-public class Gun extends Component{
+public class Gun extends Component implements Render{
 	
 	public float damage;
 	public float spread;
@@ -30,4 +34,9 @@ public class Gun extends Component{
 		return false;
 	}
 
+	//@Override
+	public void render(EntityManager em, Entity e) {
+		Draw.setColor(Color.GREEN);
+		Draw.circle(10);
+	}
 }
