@@ -40,12 +40,9 @@ public class PathSystem extends CoreSystem{
 				for (int i = 0; i < pf.width / pf.step; i++)
 					for (int j = 0; j < pf.height / pf.step; j++)
 					{
-						Point p = new Point(i*pf.step, j*pf.step);
-						pf.map[i][j].pos = p;
-						pf.map[i][j].i = new Point(i, j);
-						double dist = p.dist(poly.getClosest(pos, p));
+						double dist = pf.map[i][j].pos.dist(poly.getClosest(pos, pf.map[i][j].pos));
 
-						if (poly.isInside(pos, p))
+						if (poly.isInside(pos, pf.map[i][j].pos))
 							pf.map[i][j].blocked = true;
 						if (dist < pf.map[i][j].dist)
 							pf.map[i][j].dist = dist;
@@ -142,7 +139,5 @@ public class PathSystem extends CoreSystem{
 		}
 
 		//pf.render();
-
-
 	}
 }

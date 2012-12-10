@@ -1,8 +1,7 @@
 package framework.systems;
 
-import helpers.Color;
+import helpers.MyColor;
 import helpers.Point;
-import helpers.State;
 import helpers.Time;
 
 import java.util.Random;
@@ -18,7 +17,6 @@ import framework.components.Circle;
 import framework.components.Collider;
 import framework.components.Damage;
 import framework.components.DestroyOnImpact;
-import framework.components.Emitter;
 import framework.components.EmitterOnImpact;
 import framework.components.Gun;
 import framework.components.KeyInput;
@@ -75,7 +73,7 @@ public class PlayerInputSystem extends CoreSystem{
 					int time = 500 + r.nextInt(100);
 					float speed = gun.speed + r.nextFloat()*2 - 1;
 					
-					Color c = Color.WHITE;
+					MyColor c = MyColor.WHITE;
 					
 					Entity bullet = new Entity();
 					bullet.name = "Bullet";

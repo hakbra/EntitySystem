@@ -224,4 +224,9 @@ public class Point
 		
 		return null;
 	}
+
+	public void idiv(double d) {
+		this.x /= d;
+		this.y /= d;
+	}
 }

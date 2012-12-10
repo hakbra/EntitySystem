@@ -20,6 +20,7 @@ import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
+import org.lwjgl.opengl.GL11;
 
 public class GLEngine {
 	// Default settings
@@ -38,7 +39,12 @@ public class GLEngine {
 
 			//OpenGL
 			glClearColor(0.0f, 0.0f, 0.0f, 0.0f); // Black
-			glDisable(GL_DEPTH_TEST);
+			GL11.glClearStencil(1);
+			glPointSize(5);
+
+
+			GL11.glEnable(GL11.GL_BLEND);
+			GL11.glBlendFunc(GL11.GL_SRC_ALPHA,GL11.GL_ONE_MINUS_SRC_ALPHA);
 			
 			prepare2D();
 
@@ -57,15 +63,11 @@ public class GLEngine {
 		glLoadIdentity();
 		gluOrtho2D(0.0f, (float) WIDTH, 0.0f, (float) HEIGHT);
 		glMatrixMode(GL_MODELVIEW);
-
-		// Set depth buffer elements
-		glEnable(GL_DEPTH_TEST);
-		glPointSize(5);
 	}
 	
 	public static void clearState()
 	{	
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL11.GL_STENCIL_BUFFER_BIT);
 		glLoadIdentity();
 	}
 	

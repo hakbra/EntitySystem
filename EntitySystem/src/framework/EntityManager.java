@@ -1,21 +1,30 @@
 
 package framework;
 
+import helpers.MyFont;
 import helpers.State;
 
+import java.awt.Font;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 
 
 public class EntityManager {
     private HashMap<Class<?>, HashMap<Entity, ? extends Component>> entities = new HashMap<Class<?>, HashMap<Entity, ? extends Component>>();
+    private HashMap<Class<?>, HashSet<Class<?>>> interfaces = new HashMap<Class<?>, HashSet<Class<?>>>();
     private ArrayList<Entity> deleties = new ArrayList<Entity>();
     
     public StateManager sm;
     
+    public MyFont font;
+    
     public EntityManager(StateManager sm)
     {
     	this.sm = sm;
+
+		Font awtFont = new Font("Times New Roman", Font.BOLD, 24);
+		font = new MyFont(awtFont, false);
     }
 
     public <T extends Component> void addComponent(Entity e, T component) {
@@ -27,14 +36,15 @@ public class EntityManager {
 		componentMap.put(e, component);
 		
 		Class<?>[] ints = component.getClass().getInterfaces();
-		for (Class c: ints)
+		for (Class c : ints)
 		{
-			HashMap<Entity, T> interfaceMap = (HashMap<Entity, T>) entities.get(c);
-			if (interfaceMap == null) {
-				interfaceMap = new HashMap<Entity, T>();
-				entities.put(c, interfaceMap);
+			HashSet<Class<?>> comps = interfaces.get(c);
+			if (comps == null)
+			{
+				comps = new HashSet<Class<?>>();
+				interfaces.put(c, comps);
 			}
-			interfaceMap.put(e, component);
+			comps.add(component.getClass());
 		}
     }
     
@@ -98,6 +108,13 @@ public class EntityManager {
 		for (HashMap<Entity, ? extends Component> HashMap : entities.values()) {
 			HashMap.remove(e);
 		}
+    }
+    
+    public HashSet<Class<?>> getInterfaces(Class<?> type)
+    {
+    	HashSet<Class<?>> comps = new HashSet<Class<?>>();
+    	comps.addAll(interfaces.get(type));
+    	return comps;
     }
     
     public void removeEntity(Entity e)

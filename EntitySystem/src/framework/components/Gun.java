@@ -1,13 +1,17 @@
 package framework.components;
 
-import helpers.Color;
 import helpers.Draw;
+import helpers.MyColor;
+import helpers.Point;
 import helpers.Time;
+
+import org.lwjgl.opengl.GL11;
+
 import framework.Component;
 import framework.Entity;
 import framework.EntityManager;
 
-public class Gun extends Component implements Render{
+public class Gun extends Component implements RenderInterface{
 	
 	public float damage;
 	public float spread;
@@ -34,9 +38,13 @@ public class Gun extends Component implements Render{
 		return false;
 	}
 
-	//@Override
-	public void render(EntityManager em, Entity e) {
-		Draw.setColor(Color.GREEN);
-		Draw.circle(10);
+	public void render(EntityManager em, Entity e)
+	{
+		float r = em.getComponent(e, Circle.class).radius;
+		GL11.glPushMatrix();
+		Draw.setColor(new MyColor(1, 1, 1, 1));
+		Draw.translate(-0.5f);
+		Draw.quad(new Point(0, 5), new Point(r+5, 5), new Point(r+5, -5), new Point(0, -5));
+		GL11.glPopMatrix();
 	}
 }

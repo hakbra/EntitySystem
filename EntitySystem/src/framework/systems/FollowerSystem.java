@@ -9,6 +9,7 @@ import framework.components.Follower;
 import framework.components.Pathfinder;
 import framework.components.Position;
 import framework.components.Velocity;
+import framework.components.Zombie;
 
 
 public class FollowerSystem extends CoreSystem{
@@ -31,7 +32,7 @@ public class FollowerSystem extends CoreSystem{
 			float rad = em.getComponent(e, Circle.class).radius;
 			
 			Point dir = pf.getDir(thisPos, rad);
-			thisSpeed.set(dir.mult(3));
+			thisSpeed.set(dir);
 		}
 	}
 }

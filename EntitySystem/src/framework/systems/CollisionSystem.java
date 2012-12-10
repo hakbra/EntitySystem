@@ -13,6 +13,7 @@ import framework.components.Emitter;
 import framework.components.EmitterOnImpact;
 import framework.components.Health;
 import framework.components.Obstacle;
+import framework.components.Particle;
 import framework.components.Polygon;
 import framework.components.Position;
 import framework.components.Timer;
@@ -26,7 +27,7 @@ public class CollisionSystem extends CoreSystem {
 	{
 		super(em);
 	}
-	
+
 	@Override
 	public void run(EntityManager em)
 	{
@@ -36,23 +37,40 @@ public class CollisionSystem extends CoreSystem {
 			Circle circle1 = em.getComponent(e1, Circle.class);
 			Point s1 = em.getComponent(e1, Velocity.class).velocity;
 			Point collision = null;
-			
+
 			for (Entity e2 : em.getEntityAll(Circle.class, Obstacle.class))
 			{
 				if (e1 == e2)
 					continue;
-				
+
 				Point circle2pos = em.getComponent(e2, Position.class).position;
 				Circle circle2 = em.getComponent(e2, Circle.class);
+				Point s2  = null;
+				Velocity vel2 = em.getComponent(e2, Velocity.class);
+				if (vel2 != null)
+					s2 = vel2.velocity;
 
 				double moveDist = circle1pos.dist(circle2pos) - circle1.radius - circle2.radius;
 				Point dir = circle1pos.sub(circle2pos).norm();
-				
+
 				if (moveDist < 0)
 				{
 					Point line = dir.mult(moveDist);
 
-					if (!em.hasComponent(e2, Velocity.class) || em.hasComponent(e1, Zombie.class))
+					int c1 = 1;
+					if (s1.len() > 0)
+						c1 = 2;
+					
+					int c2 = 0;
+					if (s2 != null)
+						if (s2.len() > 0)
+							c2 = 2;
+						else
+							c2 = 1;
+
+					if (c2 > c1)
+						circle2pos.iadd(line);
+					else if (c1 > c2)
 						circle1pos.isub(line);
 					else
 					{
@@ -69,33 +87,36 @@ public class CollisionSystem extends CoreSystem {
 					handleCollision(em, e1, e2, collision);
 				}
 			}
-			
+
 			for (Entity e2 : em.getEntityAll(Polygon.class, Obstacle.class))
 			{
 				Point polyPos = em.getComponent(e2, Position.class).position;
 				Polygon poly = em.getComponent(e2, Polygon.class);
-				
+
 				if (poly.isInside(polyPos, circle1pos))
 					collision = circle1pos.sub(s1);
-				
+
 				Point closest = poly.getClosest(polyPos, circle1pos);
 				double moveDist = circle1pos.dist(closest) - circle1.radius;
+				Point line = null;
+				
 				if (poly.isInside(polyPos, circle1pos))
 				{
-					moveDist *= -1;
-					moveDist += circle1.radius*2;
+					moveDist += 2*circle1.radius;
+					line = closest.sub(circle1pos).norm();
 				}
+				else if (moveDist < 0)
+					line = closest.sub(circle1pos).norm();
 				
-				if (moveDist < 0)
+				if (line != null)
 				{
-					Point line = circle1pos.sub(closest).norm();
-					circle1pos.isub(line.mult(moveDist));
+					circle1pos.iadd(line.mult(moveDist));
 					handleCollision(em, e1, e2, closest);
 				}
 			}
 		}
 	}
-	
+
 	private void handleCollision(EntityManager em, Entity a, Entity b, Point poi)
 	{
 		if (em.hasComponent(a, DestroyOnImpact.class))
@@ -117,15 +138,15 @@ public class CollisionSystem extends CoreSystem {
 		{
 			Damage dam = em.getComponent(a, Damage.class);
 			Health health = em.getComponent(b, Health.class);
-			
+
 			if (b == dam.parent)
 				return;
-			
+
 			if (!dam.canDamage())
 				return;
-			
+
 			dam.time = Time.getTime();
-			
+
 			health.current -= dam.amount;
 			if (health.current <= 0)
 				em.removeEntity(b);

@@ -23,11 +23,10 @@ public class Draw {
 		glVertex3f((float)p.x, (float)p.y, 0);
 	}
 	
-	public static void setColor(Color d)
+	public static void setColor(MyColor c)
 	{
-		glColor3f((float) (d.a*d.brightness), (float) (d.b*d.brightness), (float) (d.c*d.brightness));
+		glColor4f((float) (c.r), (float) (c.g), (float) (c.b), (float) c.alpha);
 	}
-	
 	public static void point(Point p)
 	{
 		glBegin(GL_POINTS);
@@ -83,13 +82,13 @@ public class Draw {
 
 	public static void ring(float r, float t)
 	{
-		ring(r, t, 360);
+		ring(r, t, 180);
 	}
 
 	public static void ring(float r, float t, int g)
 	{
 		glBegin(GL_TRIANGLE_STRIP);
-		for (int i = 0; i <= g; i += 1)
+		for (int i = -g; i <= g; i += 1)
 		{
 			double rad = i*PI/180;
 			Point a = new Point(Math.cos(rad)*r, Math.sin(rad)*r);

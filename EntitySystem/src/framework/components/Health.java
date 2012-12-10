@@ -1,9 +1,11 @@
 package framework.components;
 
-import helpers.Color;
+import helpers.MyColor;
 import helpers.Draw;
 
 import java.util.Random;
+
+import org.lwjgl.opengl.GL11;
 
 import framework.Component;
 import framework.Entity;
@@ -11,7 +13,7 @@ import framework.EntityManager;
 
 
 
-public class Health extends Component{// implements Render{
+public class Health extends Component implements RenderInterface{
 	
 	public float current;
 	public float max;
@@ -23,17 +25,17 @@ public class Health extends Component{// implements Render{
 		this.name = "Health";
 	}
 
-	//@Override
 	public void render(EntityManager em, Entity e) {
-		/*
 		float r = em.getComponent(e, Circle.class).radius;
 		float d = 1 - current / max;
 
-		Draw.setColor(Color.GREEN);
+		GL11.glPushMatrix();
+		
+		Draw.setColor(MyColor.GREEN);
 		Draw.ring(r, 5);
 
-		Draw.setColor(Color.RED);
-		Draw.ring(r, 5, (int) (360 * d));
-		*/
+		Draw.setColor(MyColor.RED);
+		Draw.ring(r, 5, (int) (180 * d));
+		GL11.glPopMatrix();
 	}
 }

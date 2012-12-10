@@ -5,9 +5,10 @@ import helpers.Time;
 import framework.CoreSystem;
 import framework.Entity;
 import framework.EntityManager;
+import framework.components.Angle;
 import framework.components.Position;
-import framework.components.Timer;
 import framework.components.Velocity;
+import framework.components.Zombie;
 
 public class PhysicsSystem extends CoreSystem{
 	
@@ -26,6 +27,11 @@ public class PhysicsSystem extends CoreSystem{
 			Point position 	= 	em.getComponent(e, Position.class).position;
 			Point vel 		= em.getComponent(e, Velocity.class).velocity;
 			position.iadd(vel);
+			
+			if (em.hasComponent(e, Zombie.class))
+			{
+				em.getComponent(e, Angle.class).angle = (float) vel.angle();
+			}
 		}
 	}
 }
