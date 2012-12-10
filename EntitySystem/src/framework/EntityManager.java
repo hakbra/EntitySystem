@@ -9,10 +9,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
+import org.newdawn.slick.opengl.Texture;
+import org.newdawn.slick.opengl.TextureLoader;
+import org.newdawn.slick.util.ResourceLoader;
+
 
 public class EntityManager {
     private HashMap<Class<?>, HashMap<Entity, ? extends Component>> entities = new HashMap<Class<?>, HashMap<Entity, ? extends Component>>();
-    private HashMap<Class<?>, HashSet<Class<?>>> interfaces = new HashMap<Class<?>, HashSet<Class<?>>>();
+    private HashMap<String, Texture> textures = new HashMap<String, Texture>();
     private ArrayList<Entity> deleties = new ArrayList<Entity>();
     
     public StateManager sm;
@@ -34,18 +38,6 @@ public class EntityManager {
 			entities.put(component.getClass(), componentMap);
 		}
 		componentMap.put(e, component);
-		
-		Class<?>[] ints = component.getClass().getInterfaces();
-		for (Class c : ints)
-		{
-			HashSet<Class<?>> comps = interfaces.get(c);
-			if (comps == null)
-			{
-				comps = new HashSet<Class<?>>();
-				interfaces.put(c, comps);
-			}
-			comps.add(component.getClass());
-		}
     }
     
     public <T> void removeComponent(Entity e, T component) {
@@ -110,13 +102,6 @@ public class EntityManager {
 		}
     }
     
-    public HashSet<Class<?>> getInterfaces(Class<?> type)
-    {
-    	HashSet<Class<?>> comps = new HashSet<Class<?>>();
-    	comps.addAll(interfaces.get(type));
-    	return comps;
-    }
-    
     public void removeEntity(Entity e)
     {
     	deleties.add(e);
@@ -133,5 +118,23 @@ public class EntityManager {
 	public void setState(State s)
 	{
 		sm.setState(s);
+	}
+
+	public Texture getTexture(String name) {
+		Texture t = textures.get(name);
+		if (t != null)
+			return t;
+		
+		try
+		{
+			t = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("res/" + name));
+		}
+		catch (Exception e)
+		{
+			System.out.println("Couldn't load " + name);
+			System.exit(0);
+		}
+		textures.put(name, t);
+		return t;
 	}
 }

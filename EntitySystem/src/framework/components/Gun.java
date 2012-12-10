@@ -1,7 +1,7 @@
 package framework.components;
 
 import helpers.Draw;
-import helpers.MyColor;
+import helpers.Color;
 import helpers.Point;
 import helpers.Time;
 
@@ -11,7 +11,7 @@ import framework.Component;
 import framework.Entity;
 import framework.EntityManager;
 
-public class Gun extends Component implements RenderInterface{
+public class Gun extends Component{
 	
 	public float damage;
 	public float spread;
@@ -42,7 +42,7 @@ public class Gun extends Component implements RenderInterface{
 	{
 		float r = em.getComponent(e, Circle.class).radius;
 		GL11.glPushMatrix();
-		Draw.setColor(new MyColor(1, 1, 1, 1));
+		Draw.setColor(new Color(1, 1, 1, 1));
 		Draw.translate(-0.5f);
 		Draw.quad(new Point(0, 5), new Point(r+5, 5), new Point(r+5, -5), new Point(0, -5));
 		GL11.glPopMatrix();

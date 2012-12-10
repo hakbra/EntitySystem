@@ -1,6 +1,6 @@
 package framework.systems;
 
-import helpers.MyColor;
+import helpers.Color;
 import helpers.Point;
 import helpers.Time;
 
@@ -73,7 +73,7 @@ public class PlayerInputSystem extends CoreSystem{
 					int time = 500 + r.nextInt(100);
 					float speed = gun.speed + r.nextFloat()*2 - 1;
 					
-					MyColor c = MyColor.WHITE;
+					Color c = Color.WHITE;
 					
 					Entity bullet = new Entity();
 					bullet.name = "Bullet";

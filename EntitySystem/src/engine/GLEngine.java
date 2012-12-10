@@ -38,7 +38,7 @@ public class GLEngine {
 			Display.create();
 
 			//OpenGL
-			glClearColor(0.0f, 0.0f, 0.0f, 0.0f); // Black
+			glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Black
 			GL11.glClearStencil(1);
 			glPointSize(5);
 

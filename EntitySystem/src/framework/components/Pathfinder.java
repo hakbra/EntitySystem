@@ -1,6 +1,6 @@
 package framework.components;
 
-import helpers.MyColor;
+import helpers.Color;
 import helpers.Draw;
 import helpers.Point;
 import framework.Component;
@@ -57,7 +57,7 @@ public class Pathfinder extends Component{
 
 	public void render()
 	{
-		MyColor c = new MyColor(1, 0, 0);
+		Color c = new Color(1, 0, 0);
 		for (int i = 0; i < width / step; i++)
 			for (int j = 0; j < height / step; j++)
 			{

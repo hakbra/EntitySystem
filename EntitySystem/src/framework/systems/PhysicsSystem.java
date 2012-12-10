@@ -30,7 +30,8 @@ public class PhysicsSystem extends CoreSystem{
 			
 			if (em.hasComponent(e, Zombie.class))
 			{
-				em.getComponent(e, Angle.class).angle = (float) vel.angle();
+				Angle a = em.getComponent(e, Angle.class);
+				a.angle = (float) (a.angle + vel.angle()) / 2;
 			}
 		}
 	}

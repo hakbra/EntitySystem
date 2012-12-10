@@ -1,12 +1,9 @@
 package framework.components;
 
 import helpers.Draw;
-import helpers.MyColor;
+import helpers.Color;
 import helpers.Point;
-import helpers.MyFont;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.util.ArrayList;
 
 import org.lwjgl.opengl.GL11;
@@ -15,13 +12,13 @@ import framework.Component;
 import framework.Entity;
 import framework.EntityManager;
 
-public class Polygon extends Component implements RenderInterface{
+public class Polygon extends Component{
 
 	public ArrayList<Point> points;
-	public MyColor color;
+	public Color color;
 	public Point mid;
 
-	public Polygon(MyColor c, Point... ps)
+	public Polygon(Color c, Point... ps)
 	{
 		this.color = c;
 		mid = new Point();
@@ -35,7 +32,7 @@ public class Polygon extends Component implements RenderInterface{
 		mid.idiv(points.size());
 	}
 
-	public static Polygon rectangle(MyColor c, Point dim)
+	public static Polygon rectangle(Color c, Point dim)
 	{
 
 		Point p = new Point(0, 0);
@@ -95,16 +92,9 @@ public class Polygon extends Component implements RenderInterface{
 		
 		if (em.hasComponent(e, Button.class))
 		{
+			Draw.setColor(Color.WHITE);
 			String text = em.getComponent(e, Button.class).type;
-			double w = em.font.getWidth(text) - 8*text.length();
-			double h = em.font.getHeight();
-			
-			Draw.setColor(MyColor.WHITE);
-			GL11.glEnable(GL11.GL_TEXTURE_2D);
-			
-			em.font.drawString((float) (mid.x - w/2), (float) (mid.y - h / 2), text, 1, 1);
-			
-			GL11.glDisable(GL11.GL_TEXTURE_2D);
+			Draw.write(em.font, mid, text);
 		}
 		
 		GL11.glPopMatrix();

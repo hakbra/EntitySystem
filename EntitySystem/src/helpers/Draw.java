@@ -14,6 +14,8 @@ import static org.lwjgl.opengl.GL11.glVertex3f;
 
 import java.util.ArrayList;
 
+import org.lwjgl.opengl.GL11;
+
 public class Draw {
 
 	static double PI = 3.141592;
@@ -23,7 +25,7 @@ public class Draw {
 		glVertex3f((float)p.x, (float)p.y, 0);
 	}
 	
-	public static void setColor(MyColor c)
+	public static void setColor(Color c)
 	{
 		glColor4f((float) (c.r), (float) (c.g), (float) (c.b), (float) c.alpha);
 	}
@@ -148,5 +150,18 @@ public class Draw {
 			vertex(a);
 		}
 		glEnd();
+	}
+	
+	public static void write(MyFont f, Point p, String t)
+	{
+
+		double w = f.getWidth(t) - 8*t.length();
+		double h = f.getHeight();
+		
+		GL11.glEnable(GL11.GL_TEXTURE_2D);
+		
+		f.drawString((float) (p.x - w / 2), (float) (p.y - h / 2), t, 1, 1);
+		
+		GL11.glDisable(GL11.GL_TEXTURE_2D);
 	}
 }

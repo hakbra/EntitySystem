@@ -1,6 +1,6 @@
 package framework.systems;
 
-import helpers.MyColor;
+import helpers.Color;
 import helpers.Point;
 import helpers.Time;
 
@@ -35,7 +35,7 @@ public class EmitterSystem extends CoreSystem{
 			{
 				Random r = new Random();
 				
-				MyColor c = new MyColor(1, r.nextFloat(), 0);
+				Color c = new Color(1, r.nextFloat(), 0);
 				float angle = r.nextInt() % 360;
 				float speed =  r.nextFloat() * 4;
 				int size = 3 + r.nextInt(2);

@@ -1,6 +1,6 @@
 package framework.components;
 
-import helpers.MyColor;
+import helpers.Color;
 import helpers.Draw;
 import helpers.Line;
 import helpers.Point;
@@ -13,7 +13,7 @@ import framework.Component;
 import framework.Entity;
 import framework.EntityManager;
 
-public class Light extends Component implements RenderInterface{
+public class Light extends Component{
 
 	ArrayList<Line> edges;
 	double radius;
@@ -23,7 +23,6 @@ public class Light extends Component implements RenderInterface{
 		this.radius = r;
 	}
 
-	@Override
 	public void render(EntityManager em, Entity e) {
 		Point pos = em.getComponent(e, Position.class).position;
 		
@@ -65,14 +64,14 @@ public class Light extends Component implements RenderInterface{
 			points.add( pos.add(ray.mult(min)));
 		}
 		
-		MyColor c = new MyColor(1, 1, 0, 0.5);
+		Color c = new Color(1, 1, 1, 1);
 		Draw.setColor(c);
 		GL11.glBegin(GL11.GL_TRIANGLE_FAN);
 		Draw.vertex(pos);
 		for (Point p : points)
 		{
 			double d = pos.dist(p);
-			c.alpha = 0.5 - d/(2*radius);
+			c.alpha = 1 - d/radius;
 			Draw.setColor(c);
 			Draw.vertex(p);
 		}

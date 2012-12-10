@@ -1,6 +1,6 @@
 package framework.systems;
 
-import helpers.MyColor;
+import helpers.Color;
 import helpers.Point;
 import helpers.State;
 
@@ -22,6 +22,7 @@ import framework.components.Health;
 import framework.components.Obstacle;
 import framework.components.Polygon;
 import framework.components.Position;
+import framework.components.TextureComp;
 import framework.components.Velocity;
 import framework.components.Zombie;
 
@@ -70,7 +71,7 @@ public class MenuInputSystem extends CoreSystem{
 						Entity zombie = new Entity();
 						zombie.name = "Zombie";
 						em.addComponent(zombie, new Zombie());
-						em.addComponent(zombie, new Circle(20, MyColor.YELLOW));
+						em.addComponent(zombie, new Circle(20, Color.YELLOW));
 						em.addComponent(zombie, new Position(p));
 						em.addComponent(zombie, new Velocity(new Point(0, 0)));
 						em.addComponent(zombie, new Health());
@@ -79,6 +80,7 @@ public class MenuInputSystem extends CoreSystem{
 						em.addComponent(zombie, new Obstacle());
 						em.addComponent(zombie, new Collider());
 						em.addComponent(zombie, new Angle(0));
+						em.addComponent(zombie, new TextureComp("zombie.png"));
 					}
 				}
 				else if (button.type == "Screen")

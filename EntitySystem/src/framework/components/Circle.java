@@ -1,21 +1,21 @@
 package framework.components;
 
+import helpers.Draw;
+import helpers.Color;
+import helpers.Point;
+
 import org.lwjgl.opengl.GL11;
 
-import helpers.MyColor;
-import helpers.Draw;
-import helpers.Point;
-import helpers.Time;
 import framework.Component;
 import framework.Entity;
 import framework.EntityManager;
 
-public class Circle extends Component implements RenderInterface{
+public class Circle extends Component{
 	
-	public MyColor color;
+	public Color color;
 	public float radius;
 	
-	public Circle(float r, MyColor c)
+	public Circle(float r, Color c)
 	{
 		this.color = c;
 		this.radius = r;
