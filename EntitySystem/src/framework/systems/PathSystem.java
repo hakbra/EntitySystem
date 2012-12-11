@@ -26,7 +26,7 @@ public class PathSystem extends CoreSystem{
 	@Override
 	public void run(EntityManager em)
 	{
-		Entity pfEntity = em.getEntity(Pathfinder.class).remove(0);
+		Entity pfEntity = em.getByStringID("pathfinder");
 		Pathfinder pf = em.getComponent(pfEntity, Pathfinder.class);
 
 
@@ -46,25 +46,8 @@ public class PathSystem extends CoreSystem{
 							pf.map[i][j].blocked = true;
 						if (dist < pf.map[i][j].dist)
 							pf.map[i][j].dist = dist;
-					}
-			}
-			for (Entity e : em.getEntityAll(Obstacle.class, Circle.class))
-			{
-				if (em.hasComponent(e, Hero.class))
-					continue;
-				
-				Circle circle = em.getComponent(e, Circle.class);
-				Point pos = em.getComponent(e, Position.class).position;
-
-				for (int i = 0; i < pf.width / pf.step; i++)
-					for (int j = 0; j < pf.height / pf.step; j++)
-					{
-						double dist = pf.map[i][j].pos.dist(circle.getClosest(pos, pf.map[i][j].pos));
-
-						if (circle.isInside(pos, pf.map[i][j].pos))
+						if (dist < 20)
 							pf.map[i][j].blocked = true;
-						if (dist < pf.map[i][j].dist)
-							pf.map[i][j].dist = dist;
 					}
 			}
 
@@ -72,6 +55,7 @@ public class PathSystem extends CoreSystem{
 		}
 
 		long now = Time.getTime();
+		pf.update = now;
 		pf.max = 0;
 
 		PriorityQueue<Node> queue = new PriorityQueue<Pathfinder.Node>();

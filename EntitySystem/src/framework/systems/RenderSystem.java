@@ -10,12 +10,9 @@ import static org.lwjgl.opengl.GL11.GL_INT;
 import static org.lwjgl.opengl.GL11.GL_LINEAR;
 import static org.lwjgl.opengl.GL11.GL_RGBA;
 import static org.lwjgl.opengl.GL11.GL_RGBA8;
-import static org.lwjgl.opengl.GL11.GL_SRC_ALPHA;
 import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
 import static org.lwjgl.opengl.GL11.GL_TEXTURE_MIN_FILTER;
-import static org.lwjgl.opengl.GL11.GL_ZERO;
 import static org.lwjgl.opengl.GL11.glBindTexture;
-import static org.lwjgl.opengl.GL11.glBlendFunc;
 import static org.lwjgl.opengl.GL11.glClear;
 import static org.lwjgl.opengl.GL11.glClearColor;
 import static org.lwjgl.opengl.GL11.glColorMask;
@@ -26,8 +23,8 @@ import static org.lwjgl.opengl.GL11.glPopMatrix;
 import static org.lwjgl.opengl.GL11.glPushMatrix;
 import static org.lwjgl.opengl.GL11.glTexImage2D;
 import static org.lwjgl.opengl.GL11.glTexParameterf;
-import helpers.Draw;
 import helpers.Color;
+import helpers.Draw;
 import helpers.Point;
 
 import org.lwjgl.opengl.GL11;
@@ -41,14 +38,15 @@ import framework.EntityManager;
 import framework.components.Angle;
 import framework.components.Button;
 import framework.components.Circle;
-import framework.components.Gun;
 import framework.components.Health;
 import framework.components.Hero;
+import framework.components.Item;
 import framework.components.Light;
 import framework.components.Obstacle;
 import framework.components.Polygon;
 import framework.components.Position;
 import framework.components.TextureComp;
+import framework.components.Velocity;
 
 public class RenderSystem extends CoreSystem {
 
@@ -83,6 +81,7 @@ public class RenderSystem extends CoreSystem {
 	public void run(EntityManager em)
 	{
 		renderGround(em);
+		renderItems(em);
 		renderCircles(em);
 		renderLights(em);
 		renderWalls(em);
@@ -150,7 +149,7 @@ public class RenderSystem extends CoreSystem {
 
 	private void renderCircles(EntityManager em)
 	{
-		for (Entity e : em.getEntityAll(Circle.class))
+		for (Entity e : em.getEntityAll(Circle.class, Velocity.class))
 		{
 			glPushMatrix();
 
@@ -170,9 +169,29 @@ public class RenderSystem extends CoreSystem {
 			{
 				Circle circ = em.getComponent(e, Circle.class);
 				circ.render(em, e);
+			}
 
-				if (em.hasComponent(e, Gun.class))
-					em.getComponent(e, Gun.class).render(em, e);
+			glPopMatrix();
+		}
+	}
+
+	private void renderItems(EntityManager em)
+	{
+		for (Entity e : em.getEntityAll(Item.class))
+		{
+			glPushMatrix();
+
+			if (em.hasComponent(e, Position.class))
+				Draw.translate(em.getComponent(e, Position.class).position);
+
+			if (em.hasComponent(e, Angle.class))
+				Draw.rotate(em.getComponent(e, Angle.class).angle);
+
+
+			if (em.hasComponent(e, TextureComp.class))
+			{
+				TextureComp t = em.getComponent(e, TextureComp.class);
+				t.render(em, e);
 			}
 
 			glPopMatrix();

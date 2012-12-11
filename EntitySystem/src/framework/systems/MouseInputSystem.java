@@ -26,9 +26,9 @@ import framework.components.TextureComp;
 import framework.components.Velocity;
 import framework.components.Zombie;
 
-public class MenuInputSystem extends CoreSystem{
+public class MouseInputSystem extends CoreSystem{
 
-	public MenuInputSystem(EntityManager em)
+	public MouseInputSystem(EntityManager em)
 	{
 		super(em);
 	}

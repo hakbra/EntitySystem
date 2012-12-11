@@ -6,6 +6,7 @@ import framework.CoreSystem;
 import framework.Entity;
 import framework.EntityManager;
 import framework.components.Angle;
+import framework.components.AngleSpeed;
 import framework.components.Position;
 import framework.components.Velocity;
 import framework.components.Zombie;
@@ -27,12 +28,13 @@ public class PhysicsSystem extends CoreSystem{
 			Point position 	= 	em.getComponent(e, Position.class).position;
 			Point vel 		= em.getComponent(e, Velocity.class).velocity;
 			position.iadd(vel);
-			
-			if (em.hasComponent(e, Zombie.class))
-			{
-				Angle a = em.getComponent(e, Angle.class);
-				a.angle = (float) (a.angle + vel.angle()) / 2;
-			}
+		}
+		
+		for (Entity e : em.getEntityAll(Angle.class, AngleSpeed.class))
+		{
+			Angle angle 	= 	em.getComponent(e, Angle.class);
+			AngleSpeed angleSpeed 		= em.getComponent(e, AngleSpeed.class);
+			angle.angle += angleSpeed.speed;
 		}
 	}
 }

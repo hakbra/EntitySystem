@@ -12,8 +12,9 @@ import framework.components.DestroyOnImpact;
 import framework.components.Emitter;
 import framework.components.EmitterOnImpact;
 import framework.components.Health;
+import framework.components.Hero;
+import framework.components.Item;
 import framework.components.Obstacle;
-import framework.components.Particle;
 import framework.components.Polygon;
 import framework.components.Position;
 import framework.components.Timer;
@@ -38,7 +39,7 @@ public class CollisionSystem extends CoreSystem {
 			Point s1 = em.getComponent(e1, Velocity.class).velocity;
 			Point collision = null;
 
-			for (Entity e2 : em.getEntityAll(Circle.class, Obstacle.class))
+			for (Entity e2 : em.getEntityAll(Circle.class))
 			{
 				if (e1 == e2)
 					continue;
@@ -55,34 +56,36 @@ public class CollisionSystem extends CoreSystem {
 
 				if (moveDist < 0)
 				{
-					Point line = dir.mult(moveDist);
-
-					int c1 = 1;
-					if (s1.len() > 0)
-						c1 = 2;
-					
-					int c2 = 0;
-					if (s2 != null)
-						if (s2.len() > 0)
-							c2 = 2;
-						else
-							c2 = 1;
-
-					if (c2 > c1)
-						circle2pos.iadd(line);
-					else if (c1 > c2)
-						circle1pos.isub(line);
-					else
+					if (em.hasComponent(e2, Obstacle.class))
 					{
-						float r1squared = circle1.radius * circle1.radius;
-						float r2squared = circle2.radius * circle2.radius;
-						float sum = r1squared + r2squared;
-						float p1move = r2squared / sum;
-						float p2move = r1squared / sum;
-						circle2pos.iadd(line.mult(p2move));
-						circle1pos.isub(line.mult(p1move));
-					}
+						Point line = dir.mult(moveDist);
 
+						int c1 = 1;
+						if (s1.len() > 0)
+							c1 = 2;
+
+						int c2 = 0;
+						if (s2 != null)
+							if (s2.len() > 0)
+								c2 = 2;
+							else
+								c2 = 1;
+
+						if (c2 > c1)
+							circle2pos.iadd(line);
+						else if (c1 > c2)
+							circle1pos.isub(line);
+						else
+						{
+							float r1squared = circle1.radius * circle1.radius;
+							float r2squared = circle2.radius * circle2.radius;
+							float sum = r1squared + r2squared;
+							float p1move = r2squared / sum;
+							float p2move = r1squared / sum;
+							circle2pos.iadd(line.mult(p2move));
+							circle1pos.isub(line.mult(p1move));
+						}
+					}
 					collision = circle2pos.add(dir.mult(circle2.radius));
 					handleCollision(em, e1, e2, collision);
 				}
@@ -99,7 +102,7 @@ public class CollisionSystem extends CoreSystem {
 				Point closest = poly.getClosest(polyPos, circle1pos);
 				double moveDist = circle1pos.dist(closest) - circle1.radius;
 				Point line = null;
-				
+
 				if (poly.isInside(polyPos, circle1pos))
 				{
 					moveDist += 2*circle1.radius;
@@ -107,7 +110,7 @@ public class CollisionSystem extends CoreSystem {
 				}
 				else if (moveDist < 0)
 					line = closest.sub(circle1pos).norm();
-				
+
 				if (line != null)
 				{
 					circle1pos.iadd(line.mult(moveDist));
@@ -119,16 +122,35 @@ public class CollisionSystem extends CoreSystem {
 
 	private void handleCollision(EntityManager em, Entity a, Entity b, Point poi)
 	{
-		if (em.hasComponent(a, DestroyOnImpact.class))
-			em.removeEntity(a);
-
-		if (em.hasComponent(a, EmitterOnImpact.class))
+		if (em.hasComponent(b, Obstacle.class))
 		{
-			Entity emitter = new Entity();
-			emitter.name = "emitter";
-			em.addComponent(emitter, new Position(poi));
-			em.addComponent(emitter, new Timer(0));
-			em.addComponent(emitter, new Emitter());
+			if (em.hasComponent(a, DestroyOnImpact.class))
+				em.removeEntity(a);
+
+			if (em.hasComponent(a, EmitterOnImpact.class))
+			{
+				Entity emitter = new Entity();
+				emitter.name = "emitter";
+				em.addComponent(emitter, new Position(poi));
+				em.addComponent(emitter, new Timer(0));
+				em.addComponent(emitter, new Emitter());
+			}
+		}
+		else if (em.hasComponent(b, Item.class))
+		{
+			Item item = em.getComponent(b, Item.class);
+			if (item.type == "health" && em.hasComponents(a, Health.class, Hero.class))
+			{
+				Health health = em.getComponent(a, Health.class);
+				if (health.current < health.max)
+				{
+					health.current += item.value;
+					if (health.current > health.max)
+						health.current = health.max;
+					em.removeEntity(b);
+				}
+					
+			}
 		}
 
 		if (em.hasComponent(a, Zombie.class) && em.hasComponent(b, Zombie.class))

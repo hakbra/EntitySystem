@@ -12,6 +12,7 @@ import org.lwjgl.input.Keyboard;
 import framework.Entity;
 import framework.StateManager;
 import framework.components.Angle;
+import framework.components.AngleSpeed;
 import framework.components.Button;
 import framework.components.Circle;
 import framework.components.Collider;
@@ -19,6 +20,7 @@ import framework.components.Followable;
 import framework.components.Gun;
 import framework.components.Health;
 import framework.components.Hero;
+import framework.components.Item;
 import framework.components.KeyInput;
 import framework.components.Light;
 import framework.components.Obstacle;
@@ -30,7 +32,8 @@ import framework.components.Velocity;
 import framework.systems.CollisionSystem;
 import framework.systems.EmitterSystem;
 import framework.systems.FollowerSystem;
-import framework.systems.MenuInputSystem;
+import framework.systems.KeyInputSystem;
+import framework.systems.MouseInputSystem;
 import framework.systems.PathSystem;
 import framework.systems.PhysicsSystem;
 import framework.systems.PlayerInputSystem;
@@ -50,13 +53,13 @@ public class Main
 
 	public Main()
 	{
-		sm = new StateManager(State.RUN);
+		sm = new StateManager(State.MENU);
 		t = new Time();
 		GLEngine.init();
 
 		// Menu-state
 		sm.addSystem(State.MENU, RenderSystem.class);
-		sm.addSystem(State.MENU, MenuInputSystem.class);
+		sm.addSystem(State.MENU, MouseInputSystem.class);
 
 		Entity runButton = new Entity();
 		runButton.name = "runButton";
@@ -79,13 +82,14 @@ public class Main
 		sm.addSystem(State.RUN, FollowerSystem.class);
 		sm.addSystem(State.RUN, CollisionSystem.class);
 		sm.addSystem(State.RUN, EmitterSystem.class);
-		sm.addSystem(State.RUN, MenuInputSystem.class);
+		sm.addSystem(State.RUN, MouseInputSystem.class);
+		sm.addSystem(State.RUN, KeyInputSystem.class);
 		sm.addSystem(State.RUN, TimerSystem.class);
 		sm.addSystem(State.RUN, PathSystem.class);
 
 
 		Entity player = new Entity();
-		player.name = "Player";
+		player.name = "player1";
 		sm.addComponent(State.RUN, player, new Hero());
 		sm.addComponent(State.RUN, player, new Circle(25, Color.BLUE));
 		sm.addComponent(State.RUN, player, new Position(new Point(300, 250)));
@@ -99,29 +103,14 @@ public class Main
 		sm.addComponent(State.RUN, player, new Obstacle());
 		sm.addComponent(State.RUN, player, new Light(400));
 		sm.addComponent(State.RUN, player, new TextureComp("hero.png"));
+		sm.addStringID(State.RUN, player);
 
-		/*
-		Entity player2 = new Entity();
-		player2.name = "player2";
-		sm.addComponent(State.RUN, player2, new Hero());
-		sm.addComponent(State.RUN, player2, new Circle(25, Color.YELLOW));
-		sm.addComponent(State.RUN, player2, new Position(new Point(1000, 450)));
-		sm.addComponent(State.RUN, player2, new Velocity(new Point(0, 0)));
-		sm.addComponent(State.RUN, player2, new Angle(180));
-		sm.addComponent(State.RUN, player2, new Followable());
-		sm.addComponent(State.RUN, player2, new KeyInput(
-				Keyboard.KEY_LEFT, Keyboard.KEY_RIGHT, Keyboard.KEY_UP, Keyboard.KEY_DOWN, Keyboard.KEY_RCONTROL));
-		sm.addComponent(State.RUN, player2, new Gun(2, 2, 10, 50, 2));
-		sm.addComponent(State.RUN, player2, new Health());
-		sm.addComponent(State.RUN, player2, new Collider());
-		sm.addComponent(State.RUN, player2, new Obstacle());
-		sm.addComponent(State.RUN, player2, new Light(400));
-		sm.addComponent(State.RUN, player2, new TextureComp("hero.png"));
-		/**/
-		
+		addHealth(sm);
+
 		Entity path = new Entity();
-		path.name = "path";
+		path.name = "pathfinder";
 		sm.addComponent(State.RUN, path, new Pathfinder(GLEngine.WIDTH, GLEngine.HEIGHT, 15));
+		sm.addStringID(State.RUN, path);
 
 		createMaze(sm);
 
@@ -154,21 +143,55 @@ public class Main
 		sm.addComponent(State.RUN, screenButton, new Position(new Point(1150, 25)));
 		sm.addComponent(State.RUN, screenButton, new Button("Screen"));
 		sm.addComponent(State.RUN, screenButton, new TextureComp("button.png"));
-		
+
 		sm.addComponent(State.MENU, screenButton, Polygon.rectangle(new Color(0, 1, 0, 0.5), new Point(100, 50)));
 		sm.addComponent(State.MENU, screenButton, new Position(new Point(1150, 25)));
 		sm.addComponent(State.MENU, screenButton, new Button("Screen"));
 		sm.addComponent(State.MENU, screenButton, new TextureComp("button.png"));
 	}
 
+	private void addHealth(StateManager sm)
+	{
+		ArrayList<Point> points = new ArrayList<Point>();
+		
+		points.add( new Point(75, 					GLEngine.HEIGHT / 2));
+		points.add( new Point(GLEngine.WIDTH - 75, 	GLEngine.HEIGHT / 2));
+
+		for (Point p : points)
+		{
+			Entity health = new Entity();
+			health.name = "health";
+			sm.addComponent(State.RUN, health, new Circle(15, Color.BLUE));
+			sm.addComponent(State.RUN, health, new Position(p));
+			sm.addComponent(State.RUN, health, new TextureComp("health.png"));
+			sm.addComponent(State.RUN, health, new Item("health", 100));
+			sm.addComponent(State.RUN, health, new Angle(0));
+			sm.addComponent(State.RUN, health, new AngleSpeed(1));
+		}
+	}
+
 	private void createMaze(StateManager sm) {
 		ArrayList<Point> p = new ArrayList<Point>();
-		
+
 		p.add(  new Point(400, 50)  );
 		p.add(  new Point(150, 100)  );
 
-		p.add(  new Point(50, 400)  );
+		/**/
+		p.add(  new Point(50, 130)  );
+		p.add(  new Point(150, 420)  );
+
+		p.add(  new Point(50, 20)  );
+		p.add(  new Point(150, 380)  );
+
+		p.add(  new Point(50, 20)  );
+		p.add(  new Point(150, 340)  );
+
+		p.add(  new Point(50, 20)  );
+		p.add(  new Point(150, 300)  );
+
+		p.add(  new Point(50, 130)  );
 		p.add(  new Point(150, 150)  );
+		/**/
 
 		p.add(  new Point(400, 50)  );
 		p.add(  new Point(150, 550)  );
@@ -176,8 +199,22 @@ public class Main
 		p.add(  new Point(400, 50)  );
 		p.add(  new Point(730, 100)  );
 
-		p.add(  new Point(50, 400)  );
+		/**/
+		p.add(  new Point(50, 130)  );
+		p.add(  new Point(1080, 420)  );
+
+		p.add(  new Point(50, 20)  );
+		p.add(  new Point(1080, 380)  );
+
+		p.add(  new Point(50, 20)  );
+		p.add(  new Point(1080, 340)  );
+
+		p.add(  new Point(50, 20)  );
+		p.add(  new Point(1080, 300)  );
+
+		p.add(  new Point(50, 130)  );
 		p.add(  new Point(1080, 150)  );
+		/**/
 
 		p.add(  new Point(400, 50)  );
 		p.add(  new Point(730, 550)  );

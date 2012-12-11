@@ -21,13 +21,13 @@ public class Gun extends Component{
 	
 	public long lastFired;
 	
-	public Gun(float da, float s, float sp, float de, int b)
+	public Gun(float damage, float spread, float speed, float delay, int bullets)
 	{
-		this.damage = da;
-		this.spread = s;
-		this.speed = sp;
-		this.delay = de;
-		this.bullets = b;
+		this.damage = damage;
+		this.spread = spread;
+		this.speed = speed;
+		this.delay = delay;
+		this.bullets = bullets;
 		this.name = "Gun";
 	}
 	
@@ -36,15 +36,5 @@ public class Gun extends Component{
 		if (Time.getTime() - delay > lastFired)
 			return true;
 		return false;
-	}
-
-	public void render(EntityManager em, Entity e)
-	{
-		float r = em.getComponent(e, Circle.class).radius;
-		GL11.glPushMatrix();
-		Draw.setColor(new Color(1, 1, 1, 1));
-		Draw.translate(-0.5f);
-		Draw.quad(new Point(0, 5), new Point(r+5, 5), new Point(r+5, -5), new Point(0, -5));
-		GL11.glPopMatrix();
 	}
 }

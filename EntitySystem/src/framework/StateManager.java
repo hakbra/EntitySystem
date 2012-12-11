@@ -20,6 +20,12 @@ public class StateManager {
 		this.systemlists = new HashMap<State, ArrayList<CoreSystem>>();
 		this.managers = new HashMap<State, EntityManager>();
 	}
+	
+	public void addStringID(State s, Entity e)
+	{
+		EntityManager em = getManager(s);
+		em.addStringID(e);
+	}
 
 	public boolean run()
 	{

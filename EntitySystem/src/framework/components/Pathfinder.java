@@ -31,6 +31,7 @@ public class Pathfinder extends Component{
 	public int step;
 	public Node[][] map;
 	public double max;
+	public long update;
 
 	public boolean updated;
 
@@ -61,11 +62,11 @@ public class Pathfinder extends Component{
 		for (int i = 0; i < width / step; i++)
 			for (int j = 0; j < height / step; j++)
 			{
-				if (map[i][j].blocked)
-					continue;
+				if (map[i][j].dist < 20)
+					Draw.setColor(Color.RED);
+				else
+					Draw.setColor(Color.GREEN);
 				
-				c.set(map[i][j].value / max, 1 - map[i][j].value / max, 0);
-				Draw.setColor(c);
 				Draw.point( map[i][j].pos);
 			}
 	}
@@ -96,7 +97,7 @@ public class Pathfinder extends Component{
 				//if (i == ix && j == iy)
 				//	continue;
 				
-				if (isLegal(i, j) && (min < 0 || map[i][j].value < min) && map[i][j].dist > r)
+				if (isLegal(i, j) && map[i][j].done == update && (min < 0 || map[i][j].value < min) && map[i][j].dist > r)
 				{
 					min = map[i][j].value;
 					dir = map[i][j].pos.sub(p).norm();

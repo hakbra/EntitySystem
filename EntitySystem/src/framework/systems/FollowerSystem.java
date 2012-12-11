@@ -4,6 +4,7 @@ import helpers.Point;
 import framework.CoreSystem;
 import framework.Entity;
 import framework.EntityManager;
+import framework.components.Angle;
 import framework.components.Circle;
 import framework.components.Follower;
 import framework.components.Pathfinder;
@@ -22,7 +23,7 @@ public class FollowerSystem extends CoreSystem{
 	@Override
 	public void run(EntityManager em)
 	{
-		Entity pfEntity = em.getEntity(Pathfinder.class).remove(0);
+		Entity pfEntity = em.getByStringID("pathfinder");
 		Pathfinder pf = em.getComponent(pfEntity, Pathfinder.class);
 		
 		for (Entity e : em.getEntityAll(Follower.class))
@@ -33,6 +34,12 @@ public class FollowerSystem extends CoreSystem{
 			
 			Point dir = pf.getDir(thisPos, rad);
 			thisSpeed.set(dir);
+
+			if (em.hasComponent(e, Angle.class))
+			{
+				Angle a = em.getComponent(e, Angle.class);
+				a.angle = (float) thisSpeed.norm().add( new Point(a.angle)).angle();
+			}
 		}
 	}
 }

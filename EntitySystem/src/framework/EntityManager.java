@@ -18,9 +18,9 @@ public class EntityManager {
     private HashMap<Class<?>, HashMap<Entity, ? extends Component>> entities = new HashMap<Class<?>, HashMap<Entity, ? extends Component>>();
     private HashMap<String, Texture> textures = new HashMap<String, Texture>();
     private ArrayList<Entity> deleties = new ArrayList<Entity>();
+    public HashMap<String, Entity> stringIDs = new HashMap<String, Entity>();
     
     public StateManager sm;
-    
     public MyFont font;
     
     public EntityManager(StateManager sm)
@@ -29,6 +29,27 @@ public class EntityManager {
 
 		Font awtFont = new Font("Times New Roman", Font.BOLD, 24);
 		font = new MyFont(awtFont, false);
+    }
+
+    public void addStringID(Entity e)
+    {
+    	if (e.name == null)
+    	{
+    		System.out.println("EntityManager: Cannot add empty name");
+    		return;
+    	}
+    	
+    	if (stringIDs.get(e.name) != null)
+    	{
+    		System.out.println("EntityManager: " + e.name + " already added");
+    		return;
+    	}
+    	
+    	stringIDs.put(e.name, e);
+    }
+    public Entity getByStringID(String s)
+    {
+    	return stringIDs.get(s);
     }
 
     public <T extends Component> void addComponent(Entity e, T component) {
@@ -99,6 +120,7 @@ public class EntityManager {
     private void remove(Entity e) {
 		for (HashMap<Entity, ? extends Component> HashMap : entities.values()) {
 			HashMap.remove(e);
+			stringIDs.remove(e.name);
 		}
     }
     
