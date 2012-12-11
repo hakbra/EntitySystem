@@ -65,8 +65,9 @@ public class TextureComp extends Component{
 		}
 		else if (em.hasComponent(e, Polygon.class))
 		{
+			Polygon poly = em.getComponent(e, Polygon.class);
 			GL11.glBegin(GL11.GL_POLYGON);
-			ArrayList<Point> points = em.getComponent(e, Polygon.class).points;
+			ArrayList<Point> points = poly.points;
 			for (Point p : points)
 			{
 				GL11.glTexCoord2f((float) p.x / 50,(float) 	p.y / 50);

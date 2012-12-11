@@ -29,29 +29,12 @@ public class PathSystem extends CoreSystem{
 		Entity pfEntity = em.getByStringID("pathfinder");
 		Pathfinder pf = em.getComponent(pfEntity, Pathfinder.class);
 
-
-		if (!pf.updated)
+		for (Entity e : em.getEntityAll(Obstacle.class, Polygon.class))
 		{
-			for (Entity e : em.getEntityAll(Obstacle.class, Polygon.class))
-			{
-				Polygon poly = em.getComponent(e, Polygon.class);
-				Point pos = em.getComponent(e, Position.class).position;
+			Polygon poly = em.getComponent(e, Polygon.class);
+			Point pos = em.getComponent(e, Position.class).position;
 
-				for (int i = 0; i < pf.width / pf.step; i++)
-					for (int j = 0; j < pf.height / pf.step; j++)
-					{
-						double dist = pf.map[i][j].pos.dist(poly.getClosest(pos, pf.map[i][j].pos));
-
-						if (poly.isInside(pos, pf.map[i][j].pos))
-							pf.map[i][j].blocked = true;
-						if (dist < pf.map[i][j].dist)
-							pf.map[i][j].dist = dist;
-						if (dist < 20)
-							pf.map[i][j].blocked = true;
-					}
-			}
-
-			pf.updated = true;
+			pf.mask(pos.add(poly.min), pos.add(poly.max));
 		}
 
 		long now = Time.getTime();
@@ -59,7 +42,7 @@ public class PathSystem extends CoreSystem{
 		pf.max = 0;
 
 		PriorityQueue<Node> queue = new PriorityQueue<Pathfinder.Node>();
-		
+
 		for (Entity hero : em.getEntity(Hero.class))
 		{
 			Point pos = em.getComponent(hero, Position.class).position;
@@ -91,7 +74,7 @@ public class PathSystem extends CoreSystem{
 					{					
 						if (pf.map[i][j].blocked)
 							continue;
-						
+
 						if (pf.map[i][j].done == now)
 							continue;
 

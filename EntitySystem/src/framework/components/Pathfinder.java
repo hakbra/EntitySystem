@@ -33,8 +33,6 @@ public class Pathfinder extends Component{
 	public double max;
 	public long update;
 
-	public boolean updated;
-
 	public Pathfinder(int w, int h, int s)
 	{
 		this.width = w;
@@ -43,17 +41,14 @@ public class Pathfinder extends Component{
 
 		map = new Node[w / s + 1][h / s + 1 ];
 
-		for (int i = 0; i < w / s; i++)
-			for (int j = 0; j < h / s; j++)
+		for (int i = 0; i <= w / s; i++)
+			for (int j = 0; j <= h / s; j++)
 			{
 				Point p = new Point(i*s, j*s);
 				map[i][j] = new Node();
 				map[i][j].pos = p;
 				map[i][j].i = new Point(i, j);
 			}
-
-
-		updated = false;
 	}
 
 	public void render()
@@ -62,7 +57,7 @@ public class Pathfinder extends Component{
 		for (int i = 0; i < width / step; i++)
 			for (int j = 0; j < height / step; j++)
 			{
-				if (map[i][j].dist < 20)
+				if (map[i][j].blocked)
 					Draw.setColor(Color.RED);
 				else
 					Draw.setColor(Color.GREEN);
@@ -119,6 +114,45 @@ public class Pathfinder extends Component{
 		else
 			return null;
 		
+	}
+	
+	public void mask(Point a, Point b)
+	{
+		int ax = (int)(a.x / step);
+		int ay = (int)(a.y / step);
+		int bx = (int)(b.x / step);
+		int by = (int)(b.y / step);
+		
+		if (ax > width / step)
+			ax = width / step;
+		if (bx > width / step)
+			bx = width / step;
+
+		if (ay > height / step)
+			ay = height / step;
+		if (by > height / step)
+			by = height / step;
+		
+		if (ax < 0)
+			ax = 0;
+		if (bx < 0)
+			bx = 0;
+
+		if (ay < 0)
+			ay = 0;
+		if (by < 0)
+			by = 0;
+		
+		int n = (int) (20 / step);
+
+		for (int i = ax-n; i <= bx+n; i++)
+		{
+			for (int j = ay-n; j <= by+n; j++)
+			{
+				if (isLegal(i, j))
+					map[i][j].blocked = true;
+			}
+		}
 	}
 
 }

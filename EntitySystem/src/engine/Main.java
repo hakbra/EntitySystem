@@ -109,7 +109,7 @@ public class Main
 
 		Entity path = new Entity();
 		path.name = "pathfinder";
-		sm.addComponent(State.RUN, path, new Pathfinder(GLEngine.WIDTH, GLEngine.HEIGHT, 15));
+		sm.addComponent(State.RUN, path, new Pathfinder(GLEngine.WIDTH, GLEngine.HEIGHT, 10));
 		sm.addStringID(State.RUN, path);
 
 		createMaze(sm);

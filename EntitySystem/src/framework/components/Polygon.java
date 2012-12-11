@@ -17,6 +17,7 @@ public class Polygon extends Component{
 	public ArrayList<Point> points;
 	public Color color;
 	public Point mid;
+	public Point min, max;
 
 	public Polygon(Color c, Point... ps)
 	{
@@ -24,10 +25,21 @@ public class Polygon extends Component{
 		mid = new Point();
 
 		points = new ArrayList<Point>();
+		min = new Point(ps[0]);
+		max = new Point(ps[0]);
 		for (Point p: ps)
 		{
 			points.add(p);
 			mid.iadd(p);
+			
+			if (p.x < this.min.x)
+				this.min.x = p.x;
+			if (p.x > this.max.x)
+				this.max.x = p.x;
+			if (p.y < min.y)
+				min.y = p.y;
+			if (p.y > max.y)
+				max.y = p.y;
 		}
 		mid.idiv(points.size());
 	}
