@@ -78,16 +78,16 @@ public class Main
 
 		//Run-state
 		sm.addSystem(State.RUN, CameraSystem.class);
-		sm.addSystem(State.RUN, RenderSystem.class);
-		sm.addSystem(State.RUN, PhysicsSystem.class);
-		sm.addSystem(State.RUN, PlayerInputSystem.class);
+		sm.addSystem(State.RUN, PathSystem.class);
 		sm.addSystem(State.RUN, FollowerSystem.class);
+		sm.addSystem(State.RUN, PhysicsSystem.class);
+		sm.addSystem(State.RUN, RenderSystem.class);
+		sm.addSystem(State.RUN, PlayerInputSystem.class);
 		sm.addSystem(State.RUN, CollisionSystem.class);
 		sm.addSystem(State.RUN, EmitterSystem.class);
 		sm.addSystem(State.RUN, MouseInputSystem.class);
 		sm.addSystem(State.RUN, KeyInputSystem.class);
 		sm.addSystem(State.RUN, TimerSystem.class);
-		sm.addSystem(State.RUN, PathSystem.class);
 
 
 		Entity player = new Entity();
@@ -112,7 +112,7 @@ public class Main
 		Entity world = new Entity();
 		world.name = "world";
 		sm.addComponent(State.RUN, world, new Position( new Point()));
-		sm.addComponent(State.RUN, world, new Pathfinder(GLEngine.WIDTH, GLEngine.HEIGHT, 5));
+		sm.addComponent(State.RUN, world, new Pathfinder(GLEngine.WIDTH*2, GLEngine.HEIGHT*2, 10));
 		sm.addStringID(State.RUN, world);
 
 		createMaze(sm);

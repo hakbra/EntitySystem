@@ -3,6 +3,7 @@ package framework.components;
 import helpers.Color;
 import helpers.Draw;
 import helpers.Point;
+import engine.GLEngine;
 import framework.Component;
 
 public class Pathfinder extends Component{
@@ -15,6 +16,7 @@ public class Pathfinder extends Component{
 		public Point i;
 		public long visited;
 		public long done;
+		public Node prev;
 		@Override
 		public int compareTo(Object o) {
 			Node n = (Node) o;
@@ -22,7 +24,7 @@ public class Pathfinder extends Component{
 		}
 		public String toString()
 		{
-			return (int)i.x + ", " + (int)i.y + ": " + value; 
+			return (int)i.x + ", " + (int)i.y + ": " + value + ", blocked: " + blocked; 
 		}
 	}
 
@@ -31,19 +33,24 @@ public class Pathfinder extends Component{
 	public int step;
 	public Node[][] map;
 	public long update;
+	public Point offset;
 
-	public Pathfinder(int w, int h, int s)
+	public Pathfinder(double w, int h, int s)
 	{
-		this.width = w;
-		this.height = h;
 		this.step = s;
+		this.width = (int) w / s;
+		this.height = (int) h / s;
+		System.out.println("Width: " + width);
 
-		map = new Node[w / s + 1][h / s + 1 ];
+		this.offset = new Point(w / 2 - GLEngine.WIDTH / 2, h / 2 - GLEngine.HEIGHT / 2);
+		System.out.println("Offset: " + offset);
 
-		for (int i = 0; i <= w / s; i++)
-			for (int j = 0; j <= h / s; j++)
+		map = new Node[width][height];
+
+		for (int i = 0; i < width; i++)
+			for (int j = 0; j < height; j++)
 			{
-				Point p = new Point(i*s, j*s);
+				Point p = new Point(i*s, j*s).sub(offset);
 				map[i][j] = new Node();
 				map[i][j].pos = p;
 				map[i][j].i = new Point(i, j);
@@ -52,27 +59,28 @@ public class Pathfinder extends Component{
 
 	public void render()
 	{
-		double max = 100;
 		Color c = new Color(1, 0, 0);
-		for (int i = 0; i < width / step; i++)
-			for (int j = 0; j < height / step; j++)
+		double max = 100;
+		for (int i = 0; i < width; i++)
+			for (int j = 0; j < height; j++)
 			{
 				if (map[i][j].blocked)
 					continue;
 				if (map[i][j].done != update)
 					continue;
+
 				c.r = map[i][j].value / max;
 				c.g = 1 - map[i][j].value / max;
 				Draw.setColor(c);
-				Draw.point( map[i][j].pos);
+				Draw.point(map[i][j].pos);
 			}
 	}
 
 	public boolean isLegal(int i, int j)
 	{
-		if (i < 0 || i >= width / step)
+		if (i < 0 || i >= width)
 			return false;
-		if (j < 0 || j >= height / step)
+		if (j < 0 || j >= height)
 			return false;
 
 		return true;
@@ -80,21 +88,24 @@ public class Pathfinder extends Component{
 
 	public Point getDir(Point p)
 	{
+		Point p2 = p.add(offset);
 		Point dir = null;
 		double min = -1;
 		int n = 2;
 
-		int ix = (int) (p.x / step);
-		int iy = (int) (p.y / step);
+		int ix = (int) (p2.x / step);
+		int iy = (int) (p2.y / step);
 
 		for (int i = ix-n; i <= ix+n; i++)
 		{
 			for (int j = iy-n; j <= iy+n; j++)
 			{
-				if (isLegal(i, j) && map[i][j].done == update && !map[i][j].blocked && (min < 0 || map[i][j].value < min))
+				if (!isLegal(i, j))
+					continue;
+				if (map[i][j].done == update && !map[i][j].blocked && (min < 0 || map[i][j].value < min))
 				{
 					min = map[i][j].value;
-					dir = map[i][j].pos.sub(p).norm();
+					dir = map[i][j].pos.sub(p2).add(offset).norm();
 				}
 			}
 		}
@@ -102,36 +113,39 @@ public class Pathfinder extends Component{
 			return new Point();
 		return dir;
 	}
-	
+
 	public Node getNode(Point p)
 	{
 		int ix = (int) (p.x / step);
 		int iy = (int) (p.y / step);
-		
+
 		if (isLegal(ix, iy))
 			return map[ix][iy];
 		else
 			return null;
-		
+
 	}
-	
+
 	public void mask(Point a, Point b, long time)
 	{
-		int ax = (int)(a.x / step);
-		int ay = (int)(a.y / step);
-		int bx = (int)(b.x / step);
-		int by = (int)(b.y / step);
-		
-		if (ax > width / step)
-			ax = width / step;
-		if (bx > width / step)
-			bx = width / step;
+		Point a2 = a.add(offset);
+		Point b2 = b.add(offset);
 
-		if (ay > height / step)
-			ay = height / step;
-		if (by > height / step)
-			by = height / step;
-		
+		int ax = (int)(a2.x / step);
+		int ay = (int)(a2.y / step);
+		int bx = (int)(b2.x / step);
+		int by = (int)(b2.y / step);
+
+		if (ax >= width)
+			ax = width-1;
+		if (bx >= width)
+			bx = width-1;
+
+		if (ay >= height)
+			ay = height - 1;
+		if (by >= height)
+			by = height - 1;
+
 		if (ax < 0)
 			ax = 0;
 		if (bx < 0)
@@ -141,8 +155,8 @@ public class Pathfinder extends Component{
 			ay = 0;
 		if (by < 0)
 			by = 0;
-		
-		int n = (int) (20 / step + 0.5f);
+
+		int n = (int) (20 / step);
 
 		for (int i = ax-n; i <= bx+n; i++)
 		{

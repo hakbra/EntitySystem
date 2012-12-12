@@ -92,9 +92,9 @@ public class RenderSystem extends CoreSystem {
 		renderItems(em);
 		renderCircles(em);
 		
-		//renderLights(em);
+		renderLights(em);
 
-		//Draw.translate(trans);
+		Draw.translate(trans);
 		renderWalls(em);
 		glPopMatrix();
 		

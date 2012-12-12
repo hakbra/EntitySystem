@@ -47,7 +47,7 @@ public class PathSystem extends CoreSystem{
 		for (Entity hero : em.getEntity(Hero.class))
 		{
 			Point pos = em.getComponent(hero, Position.class).position;
-			Node n = pf.getNode(pos.add(worldPos));
+			Node n = pf.getNode(pos.add(worldPos).add(pf.offset));
 			if (n != null)
 			{
 				n.value = 0.0;
@@ -80,6 +80,7 @@ public class PathSystem extends CoreSystem{
 							pf.map[i][j].visited = now;
 							pf.map[i][j].blocked = false;
 							pf.map[i][j].dist = 0;
+							pf.map[i][j].prev = null;
 						}
 
 						double newDist = current.value + Math.sqrt( (ix-i)*(ix-i) + (iy-j)*(iy-j) );
@@ -89,6 +90,7 @@ public class PathSystem extends CoreSystem{
 								queue.remove(pf.map[i][j]);
 
 							pf.map[i][j].value = newDist;
+							pf.map[i][j].prev = current;
 
 							queue.add(pf.map[i][j]);
 						}
@@ -100,6 +102,6 @@ public class PathSystem extends CoreSystem{
 			current.done = now;
 		}
 
-		pf.render();
+		//pf.render();
 	}
 }
