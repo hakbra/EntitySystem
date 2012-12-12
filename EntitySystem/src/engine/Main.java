@@ -112,7 +112,7 @@ public class Main
 		Entity world = new Entity();
 		world.name = "world";
 		sm.addComponent(State.RUN, world, new Position( new Point()));
-		sm.addComponent(State.RUN, world, new Pathfinder(GLEngine.WIDTH, GLEngine.HEIGHT, 10));
+		sm.addComponent(State.RUN, world, new Pathfinder(GLEngine.WIDTH, GLEngine.HEIGHT, 5));
 		sm.addStringID(State.RUN, world);
 
 		createMaze(sm);

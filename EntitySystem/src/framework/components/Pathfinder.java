@@ -30,7 +30,6 @@ public class Pathfinder extends Component{
 	public int height;
 	public int step;
 	public Node[][] map;
-	public double max;
 	public long update;
 
 	public Pathfinder(int w, int h, int s)
@@ -53,15 +52,18 @@ public class Pathfinder extends Component{
 
 	public void render()
 	{
+		double max = 100;
 		Color c = new Color(1, 0, 0);
 		for (int i = 0; i < width / step; i++)
 			for (int j = 0; j < height / step; j++)
 			{
 				if (map[i][j].blocked)
-					Draw.setColor(Color.RED);
-				else
-					Draw.setColor(Color.GREEN);
-				
+					continue;
+				if (map[i][j].done != update)
+					continue;
+				c.r = map[i][j].value / max;
+				c.g = 1 - map[i][j].value / max;
+				Draw.setColor(c);
 				Draw.point( map[i][j].pos);
 			}
 	}
@@ -76,7 +78,7 @@ public class Pathfinder extends Component{
 		return true;
 	}
 
-	public Point getDir(Point p, float r)
+	public Point getDir(Point p)
 	{
 		Point dir = null;
 		double min = -1;
@@ -89,10 +91,7 @@ public class Pathfinder extends Component{
 		{
 			for (int j = iy-n; j <= iy+n; j++)
 			{
-				//if (i == ix && j == iy)
-				//	continue;
-				
-				if (isLegal(i, j) && map[i][j].done == update && (min < 0 || map[i][j].value < min) && map[i][j].dist > r)
+				if (isLegal(i, j) && map[i][j].done == update && !map[i][j].blocked && (min < 0 || map[i][j].value < min))
 				{
 					min = map[i][j].value;
 					dir = map[i][j].pos.sub(p).norm();
@@ -116,7 +115,7 @@ public class Pathfinder extends Component{
 		
 	}
 	
-	public void mask(Point a, Point b)
+	public void mask(Point a, Point b, long time)
 	{
 		int ax = (int)(a.x / step);
 		int ay = (int)(a.y / step);
@@ -143,14 +142,17 @@ public class Pathfinder extends Component{
 		if (by < 0)
 			by = 0;
 		
-		int n = (int) (20 / step);
+		int n = (int) (20 / step + 0.5f);
 
 		for (int i = ax-n; i <= bx+n; i++)
 		{
 			for (int j = ay-n; j <= by+n; j++)
 			{
 				if (isLegal(i, j))
+				{
+					map[i][j].done = time;
 					map[i][j].blocked = true;
+				}
 			}
 		}
 	}

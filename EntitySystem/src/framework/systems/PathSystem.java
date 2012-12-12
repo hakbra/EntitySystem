@@ -28,25 +28,26 @@ public class PathSystem extends CoreSystem{
 	{
 		Entity world = em.getByStringID("world");
 		Pathfinder pf = em.getComponent(world, Pathfinder.class);
+		Point worldPos = em.getComponent(world, Position.class).position;
+
+		long now = Time.getTime();
+		pf.update = now;
 
 		for (Entity e : em.getEntityAll(Obstacle.class, Polygon.class))
 		{
 			Polygon poly = em.getComponent(e, Polygon.class);
 			Point pos = em.getComponent(e, Position.class).position;
 
-			pf.mask(pos.add(poly.min), pos.add(poly.max));
+			pf.mask(pos.add(poly.min).add(worldPos), pos.add(poly.max).add(worldPos), now);
 		}
 
-		long now = Time.getTime();
-		pf.update = now;
-		pf.max = 0;
 
 		PriorityQueue<Node> queue = new PriorityQueue<Pathfinder.Node>();
 
 		for (Entity hero : em.getEntity(Hero.class))
 		{
 			Point pos = em.getComponent(hero, Position.class).position;
-			Node n = pf.getNode(pos);
+			Node n = pf.getNode(pos.add(worldPos));
 			if (n != null)
 			{
 				n.value = 0.0;
@@ -69,10 +70,7 @@ public class PathSystem extends CoreSystem{
 						continue;
 
 					if (pf.isLegal(i, j))
-					{					
-						if (pf.map[i][j].blocked)
-							continue;
-
+					{
 						if (pf.map[i][j].done == now)
 							continue;
 
@@ -80,6 +78,8 @@ public class PathSystem extends CoreSystem{
 						{
 							pf.map[i][j].value = 1000.0;
 							pf.map[i][j].visited = now;
+							pf.map[i][j].blocked = false;
+							pf.map[i][j].dist = 0;
 						}
 
 						double newDist = current.value + Math.sqrt( (ix-i)*(ix-i) + (iy-j)*(iy-j) );
@@ -98,11 +98,8 @@ public class PathSystem extends CoreSystem{
 			}
 
 			current.done = now;
-			if (current.value > pf.max)
-				pf.max = current.value;
-
 		}
 
-		//pf.render();
+		pf.render();
 	}
 }

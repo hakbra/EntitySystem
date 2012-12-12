@@ -25,6 +25,7 @@ public class FollowerSystem extends CoreSystem{
 	{
 		Entity world = em.getByStringID("world");
 		Pathfinder pf = em.getComponent(world, Pathfinder.class);
+		Point worldPos = em.getComponent(world, Position.class).position;
 		
 		for (Entity e : em.getEntityAll(Follower.class))
 		{
@@ -32,7 +33,7 @@ public class FollowerSystem extends CoreSystem{
 			Point thisSpeed = em.getComponent(e, Velocity.class).velocity;
 			float rad = em.getComponent(e, Circle.class).radius;
 			
-			Point dir = pf.getDir(thisPos, rad);
+			Point dir = pf.getDir(thisPos.add(worldPos));
 			thisSpeed.set(dir);
 
 			if (em.hasComponent(e, Angle.class))
