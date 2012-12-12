@@ -15,13 +15,11 @@ import framework.EntityManager;
 public class Polygon extends Component{
 
 	public ArrayList<Point> points;
-	public Color color;
 	public Point mid;
 	public Point min, max;
 
-	public Polygon(Color c, Point... ps)
+	public Polygon(Point... ps)
 	{
-		this.color = c;
 		mid = new Point();
 
 		points = new ArrayList<Point>();
@@ -44,14 +42,14 @@ public class Polygon extends Component{
 		mid.idiv(points.size());
 	}
 
-	public static Polygon rectangle(Color c, Point dim)
+	public static Polygon rectangle(Point dim)
 	{
 
 		Point p = new Point(0, 0);
 		Point w = new Point(dim.x, 0);
 		Point h = new Point(0, dim.y);
 
-		return new Polygon(c, p, p.add(h), p.add(h).add(w), p.add(w));
+		return new Polygon(p, p.add(h), p.add(h).add(w), p.add(w));
 	}
 
 	public boolean isInside(Point pos, Point p)
@@ -99,7 +97,6 @@ public class Polygon extends Component{
 	public void render(EntityManager em, Entity e) {
 		GL11.glPushMatrix();
 		Draw.translate(0.5f);
-		Draw.setColor(color);
 		Draw.polygon(points);
 		
 		if (em.hasComponent(e, Button.class))

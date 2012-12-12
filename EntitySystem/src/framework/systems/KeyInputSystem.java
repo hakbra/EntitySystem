@@ -51,7 +51,7 @@ public class KeyInputSystem extends CoreSystem{
 			Entity player = new Entity();
 			player.name = "player1";
 			em.addComponent(player, new Hero());
-			em.addComponent(player, new Circle(25, Color.BLUE));
+			em.addComponent(player, new Circle(25));
 			em.addComponent(player, new Position(new Point(300, 250)));
 			em.addComponent(player, new Velocity(new Point(0, 0)));
 			em.addComponent(player, new Angle(0));
@@ -70,7 +70,7 @@ public class KeyInputSystem extends CoreSystem{
 			Entity player = new Entity();
 			player.name = "player2";
 			em.addComponent(player, new Hero());
-			em.addComponent(player, new Circle(25, Color.BLUE));
+			em.addComponent(player, new Circle(25));
 			em.addComponent(player, new Position(new Point(1000, 450)));
 			em.addComponent(player, new Velocity(new Point(0, 0)));
 			em.addComponent(player, new Angle(180));

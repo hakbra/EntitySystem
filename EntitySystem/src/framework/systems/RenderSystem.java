@@ -38,6 +38,7 @@ import framework.EntityManager;
 import framework.components.Angle;
 import framework.components.Button;
 import framework.components.Circle;
+import framework.components.ColorComp;
 import framework.components.Health;
 import framework.components.Hero;
 import framework.components.Item;
@@ -170,6 +171,8 @@ public class RenderSystem extends CoreSystem {
 			if (em.hasComponent(e, Angle.class))
 				Draw.rotate(em.getComponent(e, Angle.class).angle);
 
+			if (em.hasComponent(e, ColorComp.class))
+				Draw.setColor(em.getComponent(e, ColorComp.class).color);
 
 			if (em.hasComponent(e, TextureComp.class))
 			{

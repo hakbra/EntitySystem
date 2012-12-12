@@ -64,14 +64,14 @@ public class Main
 
 		Entity runButton = new Entity();
 		runButton.name = "runButton";
-		sm.addComponent(State.MENU, runButton, Polygon.rectangle(new Color(0, 1, 0, 0.5), new Point(200, 100)));
+		sm.addComponent(State.MENU, runButton, Polygon.rectangle(new Point(200, 100)));
 		sm.addComponent(State.MENU, runButton, new Position(new Point(500, 300)));
 		sm.addComponent(State.MENU, runButton, new Button("Play"));
 		sm.addComponent(State.MENU, runButton, new TextureComp("button.png"));
 
 		Entity exitButton = new Entity();
 		exitButton.name = "exitButton";
-		sm.addComponent(State.MENU, exitButton, Polygon.rectangle(new Color(0, 1, 0, 0.5), new Point(200, 100)));
+		sm.addComponent(State.MENU, exitButton, Polygon.rectangle(new Point(200, 100)));
 		sm.addComponent(State.MENU, exitButton, new Position(new Point(500, 150)));
 		sm.addComponent(State.MENU, exitButton, new Button("Exit"));
 		sm.addComponent(State.MENU, exitButton, new TextureComp("button.png"));
@@ -93,7 +93,7 @@ public class Main
 		Entity player = new Entity();
 		player.name = "player1";
 		sm.addComponent(State.RUN, player, new Hero());
-		sm.addComponent(State.RUN, player, new Circle(25, Color.BLUE));
+		sm.addComponent(State.RUN, player, new Circle(25));
 		sm.addComponent(State.RUN, player, new Position(new Point(300, 250)));
 		sm.addComponent(State.RUN, player, new Velocity(new Point(0, 0)));
 		sm.addComponent(State.RUN, player, new Angle(0));
@@ -112,6 +112,7 @@ public class Main
 		Entity world = new Entity();
 		world.name = "world";
 		sm.addComponent(State.RUN, world, new Position( new Point()));
+		sm.addComponent(State.RUN, world, new Polygon( new Point(0, 0), new Point(GLEngine.WIDTH, 0)));
 		sm.addComponent(State.RUN, world, new Pathfinder(GLEngine.WIDTH*2, GLEngine.HEIGHT*2, 10));
 		sm.addStringID(State.RUN, world);
 
@@ -119,7 +120,7 @@ public class Main
 
 		Entity menuButton = new Entity();
 		menuButton.name = "button";
-		sm.addComponent(State.RUN, menuButton, Polygon.rectangle(new Color(0, 1, 0, 0.5), new Point(100, 50)));
+		sm.addComponent(State.RUN, menuButton, Polygon.rectangle(new Point(100, 50)));
 		sm.addComponent(State.RUN, menuButton, new Position(new Point(1150, 650)));
 		sm.addComponent(State.RUN, menuButton, new Button("Menu"));
 		sm.addComponent(State.RUN, menuButton, new TextureComp("button.png"));
@@ -127,7 +128,7 @@ public class Main
 		//*
 		Entity exitButton2 = new Entity();
 		exitButton2.name = "exitButton";
-		sm.addComponent(State.RUN, exitButton2, Polygon.rectangle(new Color(0, 1, 0, 0.5), new Point(100, 50)));
+		sm.addComponent(State.RUN, exitButton2, Polygon.rectangle(new Point(100, 50)));
 		sm.addComponent(State.RUN, exitButton2, new Position(new Point(25, 650)));
 		sm.addComponent(State.RUN, exitButton2, new Button("Exit"));
 		sm.addComponent(State.RUN, exitButton2, new TextureComp("button.png"));
@@ -135,19 +136,19 @@ public class Main
 
 		Entity zombieButton = new Entity();
 		zombieButton.name = "zombieButton";
-		sm.addComponent(State.RUN, zombieButton, Polygon.rectangle(new Color(0, 1, 0, 0.5), new Point(100, 50)));
+		sm.addComponent(State.RUN, zombieButton, Polygon.rectangle(new Point(100, 50)));
 		sm.addComponent(State.RUN, zombieButton, new Position(new Point(590, 650)));
 		sm.addComponent(State.RUN, zombieButton, new Button("Zombie"));
 		sm.addComponent(State.RUN, zombieButton, new TextureComp("button.png"));
 
 		Entity screenButton = new Entity();
 		screenButton.name = "screenButton";
-		sm.addComponent(State.RUN, screenButton, Polygon.rectangle(new Color(0, 1, 0, 0.5), new Point(100, 50)));
+		sm.addComponent(State.RUN, screenButton, Polygon.rectangle(new Point(100, 50)));
 		sm.addComponent(State.RUN, screenButton, new Position(new Point(1150, 25)));
 		sm.addComponent(State.RUN, screenButton, new Button("Screen"));
 		sm.addComponent(State.RUN, screenButton, new TextureComp("button.png"));
 
-		sm.addComponent(State.MENU, screenButton, Polygon.rectangle(new Color(0, 1, 0, 0.5), new Point(100, 50)));
+		sm.addComponent(State.MENU, screenButton, Polygon.rectangle(new Point(100, 50)));
 		sm.addComponent(State.MENU, screenButton, new Position(new Point(1150, 25)));
 		sm.addComponent(State.MENU, screenButton, new Button("Screen"));
 		sm.addComponent(State.MENU, screenButton, new TextureComp("button.png"));
@@ -164,7 +165,7 @@ public class Main
 		{
 			Entity health = new Entity();
 			health.name = "health";
-			sm.addComponent(State.RUN, health, new Circle(15, Color.BLUE));
+			sm.addComponent(State.RUN, health, new Circle(15));
 			sm.addComponent(State.RUN, health, new Position(p));
 			sm.addComponent(State.RUN, health, new TextureComp("health.png"));
 			sm.addComponent(State.RUN, health, new Item("health", 100));
@@ -241,7 +242,7 @@ public class Main
 		{
 			Entity rectangle = new Entity();
 			rectangle.name = "rectangle";
-			sm.addComponent(State.RUN, rectangle, Polygon.rectangle(new Color(0.5f, 0, 0), p.remove(0)));
+			sm.addComponent(State.RUN, rectangle, Polygon.rectangle(p.remove(0)));
 			sm.addComponent(State.RUN, rectangle, new Position(p.remove(0)));
 			sm.addComponent(State.RUN, rectangle, new Obstacle());
 			sm.addComponent(State.RUN, rectangle, new TextureComp("bush.png"));

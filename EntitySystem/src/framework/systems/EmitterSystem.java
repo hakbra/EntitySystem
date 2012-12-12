@@ -11,6 +11,7 @@ import framework.Entity;
 import framework.EntityManager;
 import framework.components.Circle;
 import framework.components.Collider;
+import framework.components.ColorComp;
 import framework.components.Emitter;
 import framework.components.Particle;
 import framework.components.Position;
@@ -45,7 +46,8 @@ public class EmitterSystem extends CoreSystem{
 				particle.name = "particle";
 				em.addComponent(particle, new Position(new Point(position)));
 				em.addComponent(particle, new Velocity(new Point(angle).mult(speed)));
-				em.addComponent(particle, new Circle(size, c));
+				em.addComponent(particle, new Circle(size));
+				em.addComponent(particle, new ColorComp(c));
 				em.addComponent(particle, new Timer(time));
 				em.addComponent(particle, new Particle());
 				em.addComponent(particle, new Collider());
@@ -54,13 +56,13 @@ public class EmitterSystem extends CoreSystem{
 
 		for (Entity e : em.getEntity(Particle.class))
 		{
-			Circle circ 	= 	em.getComponent(e, Circle.class);
+			Color c 	= 	em.getComponent(e, ColorComp.class).color;
 			Timer timer = 	em.getComponent(e, Timer.class);
 
 			float elapsed = (Time.getTime() - timer.start);
 			float full = timer.time;
 
-			circ.color.alpha = (float) (1 - elapsed/full);
+			c.alpha = (float) (1 - elapsed/full);
 		}
 	}
 }

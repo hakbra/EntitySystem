@@ -73,7 +73,7 @@ public class MouseInputSystem extends CoreSystem{
 						Entity zombie = new Entity();
 						zombie.name = "Zombie";
 						em.addComponent(zombie, new Zombie());
-						em.addComponent(zombie, new Circle(20, Color.YELLOW));
+						em.addComponent(zombie, new Circle(20));
 						em.addComponent(zombie, new Position(p));
 						em.addComponent(zombie, new Velocity(new Point(0, 0)));
 						em.addComponent(zombie, new Health());

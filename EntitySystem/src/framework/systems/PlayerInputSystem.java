@@ -2,7 +2,6 @@ package framework.systems;
 
 import helpers.Color;
 import helpers.Point;
-import helpers.State;
 import helpers.Time;
 
 import java.util.Random;
@@ -16,18 +15,13 @@ import framework.components.Angle;
 import framework.components.Bullet;
 import framework.components.Circle;
 import framework.components.Collider;
+import framework.components.ColorComp;
 import framework.components.Damage;
 import framework.components.DestroyOnImpact;
 import framework.components.EmitterOnImpact;
-import framework.components.Followable;
 import framework.components.Gun;
-import framework.components.Health;
-import framework.components.Hero;
 import framework.components.KeyInput;
-import framework.components.Light;
-import framework.components.Obstacle;
 import framework.components.Position;
-import framework.components.TextureComp;
 import framework.components.Timer;
 import framework.components.Velocity;
 
@@ -87,7 +81,8 @@ public class PlayerInputSystem extends CoreSystem{
 					em.addComponent(bullet, new Bullet());
 					em.addComponent(bullet, new Position(position));
 					em.addComponent(bullet, new Velocity(new Point(angle.angle + deltaAngle).mult(speed)));
-					em.addComponent(bullet, new Circle(3, c));
+					em.addComponent(bullet, new Circle(3));
+					em.addComponent(bullet, new ColorComp(c));
 					em.addComponent(bullet, new Timer(time));
 					em.addComponent(bullet, new Damage(gun.damage, e));
 					em.addComponent(bullet, new Collider());
