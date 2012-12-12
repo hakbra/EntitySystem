@@ -26,8 +26,8 @@ public class PathSystem extends CoreSystem{
 	@Override
 	public void run(EntityManager em)
 	{
-		Entity pfEntity = em.getByStringID("pathfinder");
-		Pathfinder pf = em.getComponent(pfEntity, Pathfinder.class);
+		Entity world = em.getByStringID("world");
+		Pathfinder pf = em.getComponent(world, Pathfinder.class);
 
 		for (Entity e : em.getEntityAll(Obstacle.class, Polygon.class))
 		{
@@ -53,8 +53,6 @@ public class PathSystem extends CoreSystem{
 				queue.add(n);
 			}
 		}
-
-
 
 		while (queue.size() > 0)
 		{

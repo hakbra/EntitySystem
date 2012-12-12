@@ -23,24 +23,24 @@ public class EmitterSystem extends CoreSystem{
 	{
 		super(em);
 	}
-	
+
 	@Override
 	public void run(EntityManager em)
 	{
 		for (Entity e : em.getEntity(Emitter.class))
 		{
 			Point position 	= 	em.getComponent(e, Position.class).position;
-			
+
 			for (int i = 0; i < 4; i++)
 			{
 				Random r = new Random();
-				
+
 				Color c = new Color(1, r.nextFloat(), 0);
 				float angle = r.nextInt() % 360;
 				float speed =  r.nextFloat() * 4;
 				int size = 3 + r.nextInt(2);
 				int time = 150 + r.nextInt(100);
-				
+
 				Entity particle = new Entity();
 				particle.name = "particle";
 				em.addComponent(particle, new Position(new Point(position)));
@@ -56,7 +56,7 @@ public class EmitterSystem extends CoreSystem{
 		{
 			Circle circ 	= 	em.getComponent(e, Circle.class);
 			Timer timer = 	em.getComponent(e, Timer.class);
-			
+
 			float elapsed = (Time.getTime() - timer.start);
 			float full = timer.time;
 

@@ -23,8 +23,8 @@ public class FollowerSystem extends CoreSystem{
 	@Override
 	public void run(EntityManager em)
 	{
-		Entity pfEntity = em.getByStringID("pathfinder");
-		Pathfinder pf = em.getComponent(pfEntity, Pathfinder.class);
+		Entity world = em.getByStringID("world");
+		Pathfinder pf = em.getComponent(world, Pathfinder.class);
 		
 		for (Entity e : em.getEntityAll(Follower.class))
 		{

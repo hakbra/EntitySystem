@@ -80,11 +80,24 @@ public class RenderSystem extends CoreSystem {
 	@Override
 	public void run(EntityManager em)
 	{
+		Entity world = em.getByStringID("world");
+		Point trans = new Point();
+		
+		if (world != null)
+			trans = em.getComponent(world, Position.class).position;
+
+		glPushMatrix();
+		Draw.translate(trans);
 		renderGround(em);
 		renderItems(em);
 		renderCircles(em);
+		
 		renderLights(em);
+
+		Draw.translate(trans);
 		renderWalls(em);
+		glPopMatrix();
+		
 		renderHUD(em);
 	}
 	
@@ -94,8 +107,6 @@ public class RenderSystem extends CoreSystem {
 		{
 			TextureComp t = em.getComponent(e, TextureComp.class);
 			t.render(em, e);
-
-			glPopMatrix();
 		}
 	}
 
@@ -127,7 +138,7 @@ public class RenderSystem extends CoreSystem {
 
 		glBindTexture(GL_TEXTURE_2D, colorTextureID);
 		Draw.setColor(Color.WHITE);
-
+		GL11.glLoadIdentity();
 		//*
 		GL14.glBlendEquation(GL14.GL_FUNC_ADD);
 		GL11.glBlendFunc(GL11.GL_ONE_MINUS_SRC_ALPHA,GL11.GL_SRC_ALPHA);

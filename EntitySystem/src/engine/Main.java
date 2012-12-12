@@ -29,6 +29,7 @@ import framework.components.Polygon;
 import framework.components.Position;
 import framework.components.TextureComp;
 import framework.components.Velocity;
+import framework.systems.CameraSystem;
 import framework.systems.CollisionSystem;
 import framework.systems.EmitterSystem;
 import framework.systems.FollowerSystem;
@@ -76,6 +77,7 @@ public class Main
 		sm.addComponent(State.MENU, exitButton, new TextureComp("button.png"));
 
 		//Run-state
+		sm.addSystem(State.RUN, CameraSystem.class);
 		sm.addSystem(State.RUN, RenderSystem.class);
 		sm.addSystem(State.RUN, PhysicsSystem.class);
 		sm.addSystem(State.RUN, PlayerInputSystem.class);
@@ -107,10 +109,11 @@ public class Main
 
 		addHealth(sm);
 
-		Entity path = new Entity();
-		path.name = "pathfinder";
-		sm.addComponent(State.RUN, path, new Pathfinder(GLEngine.WIDTH, GLEngine.HEIGHT, 10));
-		sm.addStringID(State.RUN, path);
+		Entity world = new Entity();
+		world.name = "world";
+		sm.addComponent(State.RUN, world, new Position( new Point()));
+		sm.addComponent(State.RUN, world, new Pathfinder(GLEngine.WIDTH, GLEngine.HEIGHT, 10));
+		sm.addStringID(State.RUN, world);
 
 		createMaze(sm);
 
