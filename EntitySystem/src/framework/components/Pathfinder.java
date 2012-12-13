@@ -33,24 +33,19 @@ public class Pathfinder extends Component{
 	public int step;
 	public Node[][] map;
 	public long update;
-	public Point offset;
 
-	public Pathfinder(double w, int h, int s)
+	public Pathfinder(Point min, Point max, int s)
 	{
 		this.step = s;
-		this.width = (int) w / s;
-		this.height = (int) h / s;
-		System.out.println("Width: " + width);
-
-		this.offset = new Point(w / 2 - GLEngine.WIDTH / 2, h / 2 - GLEngine.HEIGHT / 2);
-		System.out.println("Offset: " + offset);
+		this.width = (int) (max.x - min.x) / s;
+		this.height = (int) (max.y - min.y) / s;
 
 		map = new Node[width][height];
 
 		for (int i = 0; i < width; i++)
 			for (int j = 0; j < height; j++)
 			{
-				Point p = new Point(i*s, j*s).sub(offset);
+				Point p = new Point(i*s, j*s);
 				map[i][j] = new Node();
 				map[i][j].pos = p;
 				map[i][j].i = new Point(i, j);
@@ -88,13 +83,12 @@ public class Pathfinder extends Component{
 
 	public Point getDir(Point p)
 	{
-		Point p2 = p.add(offset);
 		Point dir = null;
 		double min = -1;
 		int n = 2;
 
-		int ix = (int) (p2.x / step);
-		int iy = (int) (p2.y / step);
+		int ix = (int) (p.x / step);
+		int iy = (int) (p.y / step);
 
 		for (int i = ix-n; i <= ix+n; i++)
 		{
@@ -105,7 +99,7 @@ public class Pathfinder extends Component{
 				if (map[i][j].done == update && !map[i][j].blocked && (min < 0 || map[i][j].value < min))
 				{
 					min = map[i][j].value;
-					dir = map[i][j].pos.sub(p2).add(offset).norm();
+					dir = map[i][j].pos.sub(p).norm();
 				}
 			}
 		}
@@ -128,13 +122,11 @@ public class Pathfinder extends Component{
 
 	public void mask(Point a, Point b, long time)
 	{
-		Point a2 = a.add(offset);
-		Point b2 = b.add(offset);
 
-		int ax = (int)(a2.x / step);
-		int ay = (int)(a2.y / step);
-		int bx = (int)(b2.x / step);
-		int by = (int)(b2.y / step);
+		int ax = (int)(a.x / step);
+		int ay = (int)(a.y / step);
+		int bx = (int)(b.x / step);
+		int by = (int)(b.y / step);
 
 		if (ax >= width)
 			ax = width-1;

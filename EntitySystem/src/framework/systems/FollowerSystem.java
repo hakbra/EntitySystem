@@ -33,7 +33,7 @@ public class FollowerSystem extends CoreSystem{
 			Point thisSpeed = em.getComponent(e, Velocity.class).velocity;
 			float rad = em.getComponent(e, Circle.class).radius;
 			
-			Point dir = pf.getDir(thisPos.add(worldPos));
+			Point dir = pf.getDir(thisPos);
 			thisSpeed.set(dir);
 
 			if (em.hasComponent(e, Angle.class))

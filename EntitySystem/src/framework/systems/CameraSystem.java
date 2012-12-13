@@ -34,8 +34,9 @@ public class CameraSystem extends CoreSystem{
 		}
 		
 		mid.idiv(c);
+		mid = mid.neg();
 
-		mid.iadd( new Point(GLEngine.WIDTH/2, GLEngine.HEIGHT/2));
+		mid.isub( new Point(GLEngine.WIDTH/2, GLEngine.HEIGHT/2));
 		
 		if (mid.x < poly.min.x)
 			mid.x = poly.min.x;
@@ -46,9 +47,6 @@ public class CameraSystem extends CoreSystem{
 			mid.y = poly.min.y;
 		if (mid.y > poly.max.y)
 			mid.y = poly.max.y;
-		
-		System.out.println(mid.x);
-		
 		
 		pos.set(mid);
 	}

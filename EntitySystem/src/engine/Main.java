@@ -77,13 +77,13 @@ public class Main
 		sm.addComponent(State.MENU, exitButton, new TextureComp("button.png"));
 
 		//Run-state
+		sm.addSystem(State.RUN, PlayerInputSystem.class);
 		sm.addSystem(State.RUN, CameraSystem.class);
 		sm.addSystem(State.RUN, PathSystem.class);
 		sm.addSystem(State.RUN, FollowerSystem.class);
 		sm.addSystem(State.RUN, PhysicsSystem.class);
-		sm.addSystem(State.RUN, RenderSystem.class);
-		sm.addSystem(State.RUN, PlayerInputSystem.class);
 		sm.addSystem(State.RUN, CollisionSystem.class);
+		sm.addSystem(State.RUN, RenderSystem.class);
 		sm.addSystem(State.RUN, EmitterSystem.class);
 		sm.addSystem(State.RUN, MouseInputSystem.class);
 		sm.addSystem(State.RUN, KeyInputSystem.class);
@@ -113,7 +113,7 @@ public class Main
 		world.name = "world";
 		sm.addComponent(State.RUN, world, new Position( new Point()));
 		sm.addComponent(State.RUN, world, new Polygon( new Point(0, 0), new Point(GLEngine.WIDTH, 0)));
-		sm.addComponent(State.RUN, world, new Pathfinder(GLEngine.WIDTH*2, GLEngine.HEIGHT*2, 10));
+		sm.addComponent(State.RUN, world, new Pathfinder(new Point(0, 0), new Point(GLEngine.WIDTH*2, GLEngine.HEIGHT), 10));
 		sm.addStringID(State.RUN, world);
 
 		createMaze(sm);
@@ -226,16 +226,16 @@ public class Main
 		p.add(  new Point(600, 50)  );
 		p.add(  new Point(340, 335)  );
 
-		p.add(  new Point(GLEngine.WIDTH, 50)  );  //Left
+		p.add(  new Point(GLEngine.WIDTH*2, 50)  );  //Bottom
 		p.add(  new Point(0, -50)  );
 
 		p.add(  new Point(50, GLEngine.HEIGHT)  ); //LEFT
 		p.add(  new Point(-50, 0)  );
 
 		p.add(  new Point(50, GLEngine.HEIGHT)  ); //Right
-		p.add(  new Point(GLEngine.WIDTH, 0)  );
+		p.add(  new Point(GLEngine.WIDTH*2, 0)  );
 
-		p.add(  new Point(GLEngine.WIDTH, 50)  );  //Top
+		p.add(  new Point(GLEngine.WIDTH*2, 50)  );  //Top
 		p.add(  new Point(0, GLEngine.HEIGHT)  );
 
 		while (p.size() > 0)

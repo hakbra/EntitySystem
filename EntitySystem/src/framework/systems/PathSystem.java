@@ -38,7 +38,7 @@ public class PathSystem extends CoreSystem{
 			Polygon poly = em.getComponent(e, Polygon.class);
 			Point pos = em.getComponent(e, Position.class).position;
 
-			pf.mask(pos.add(poly.min).add(worldPos), pos.add(poly.max).add(worldPos), now);
+			pf.mask(pos.add(poly.min), pos.add(poly.max), now);
 		}
 
 
@@ -47,7 +47,7 @@ public class PathSystem extends CoreSystem{
 		for (Entity hero : em.getEntity(Hero.class))
 		{
 			Point pos = em.getComponent(hero, Position.class).position;
-			Node n = pf.getNode(pos.add(worldPos).add(pf.offset));
+			Node n = pf.getNode(pos);
 			if (n != null)
 			{
 				n.value = 0.0;
@@ -101,7 +101,5 @@ public class PathSystem extends CoreSystem{
 
 			current.done = now;
 		}
-
-		//pf.render();
 	}
 }

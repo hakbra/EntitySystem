@@ -56,7 +56,7 @@ public class MouseInputSystem extends CoreSystem{
 				if (button.type == "Zombie")
 				{
 					ArrayList<Point> spawns = new ArrayList<Point>();
-					/*
+
 					spawns.add(  new Point(50, 50));
 					spawns.add(  new Point(GLEngine.WIDTH - 50, 50));
 					spawns.add(  new Point(50, GLEngine.HEIGHT - 50));
@@ -65,7 +65,6 @@ public class MouseInputSystem extends CoreSystem{
 					spawns.add(  new Point(GLEngine.WIDTH / 2, 50));
 					spawns.add(  new Point(GLEngine.WIDTH / 2, GLEngine.HEIGHT - 50));
 					spawns.add(  new Point(GLEngine.WIDTH - 50, GLEngine.HEIGHT / 2));
-					*/
 					spawns.add(  new Point(50, GLEngine.HEIGHT / 2));
 					
 					for (Point p : spawns)

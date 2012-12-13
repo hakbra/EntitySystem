@@ -44,6 +44,7 @@ import framework.components.Hero;
 import framework.components.Item;
 import framework.components.Light;
 import framework.components.Obstacle;
+import framework.components.Pathfinder;
 import framework.components.Polygon;
 import framework.components.Position;
 import framework.components.TextureComp;
@@ -83,25 +84,27 @@ public class RenderSystem extends CoreSystem {
 	{
 		Entity world = em.getByStringID("world");
 		Point trans = new Point();
-		
-		if (world != null)
-			trans = em.getComponent(world, Position.class).position;
 
+		if (world != null)
+			trans = em.getComponent(world, Position.class).position.neg();
+
+		renderGround(em);
+		
 		glPushMatrix();
 		Draw.translate(trans);
-		renderGround(em);
 		renderItems(em);
+		//renderPath(em);
 		renderCircles(em);
-		
+
 		renderLights(em);
 
 		Draw.translate(trans);
 		renderWalls(em);
 		glPopMatrix();
-		
+
 		renderHUD(em);
 	}
-	
+
 	private void renderTextures(EntityManager em)
 	{
 		for (Entity e : em.getEntityAll(TextureComp.class))
@@ -154,7 +157,7 @@ public class RenderSystem extends CoreSystem {
 		GL11.glVertex2f(	0,							GLEngine.HEIGHT);
 		GL11.glEnd();
 		/**/
-		
+
 		glDisable(GL_TEXTURE_2D);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA,GL11.GL_ONE_MINUS_SRC_ALPHA);
 	}
@@ -282,6 +285,15 @@ public class RenderSystem extends CoreSystem {
 
 			glPopMatrix();
 			i++;
+		}
+	}
+	private void renderPath(EntityManager em)
+	{
+		Entity world = em.getByStringID("world");
+		if (world != null)
+		{
+			Pathfinder pf = em.getComponent(world, Pathfinder.class);
+			pf.render();
 		}
 	}
 }
