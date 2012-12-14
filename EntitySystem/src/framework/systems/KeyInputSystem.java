@@ -9,6 +9,7 @@ import java.util.Random;
 
 import org.lwjgl.input.Keyboard;
 
+import engine.GLEngine;
 import framework.CoreSystem;
 import framework.Entity;
 import framework.EntityManager;
@@ -83,6 +84,15 @@ public class KeyInputSystem extends CoreSystem{
 			em.addComponent(player, new Light(400));
 			em.addComponent(player, new TextureComp("hero.png"));
 			em.addStringID(player);
+		}
+		if (Keyboard.isKeyDown(Keyboard.KEY_T))
+		{
+			Entity player = em.getByStringID("player1");
+			if (player != null)
+			{
+				Point pos = em.getComponent(player, Position.class).position;
+				pos.set(GLEngine.WIDTH*2 - 50, GLEngine.HEIGHT / 2);
+			}
 		}
 	}
 }

@@ -60,6 +60,20 @@ public class Light extends Component{
 						min = tempMin;
 				}
 			}
+			/*
+			for (Entity zombie : em.getEntity(Zombie.class))
+			{
+				Point zombiePos = em.getComponent(zombie, Position.class).position;
+				Circle circ = em.getComponent(zombie, Circle.class);
+				Point col = seg.pointOnCircle(zombiePos, circ.radius, false);
+				if (col != null)
+				{
+					double tempMin = pos.dist(col);
+					if (tempMin < min)
+						min = tempMin;
+				}
+			}
+			*/
 			
 			points.add( pos.add(ray.mult(min)));
 		}

@@ -30,11 +30,15 @@ public class FollowerSystem extends CoreSystem{
 		for (Entity e : em.getEntityAll(Follower.class))
 		{
 			Point thisPos = em.getComponent(e, Position.class).position;
+			Follower follower = em.getComponent(e, Follower.class);
 			Point thisSpeed = em.getComponent(e, Velocity.class).velocity;
 			float rad = em.getComponent(e, Circle.class).radius;
 			
-			Point dir = pf.getDir(thisPos);
+			Point dir = pf.getDir(thisPos, follower.limit);
 			thisSpeed.set(dir);
+			
+			if (follower.limit > 0 && dir.len() > 0)
+				follower.limit = -1;
 
 			if (em.hasComponent(e, Angle.class))
 			{

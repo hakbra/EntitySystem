@@ -103,7 +103,7 @@ public class Main
 		sm.addComponent(State.RUN, player, new Health());
 		sm.addComponent(State.RUN, player, new Collider());
 		sm.addComponent(State.RUN, player, new Obstacle());
-		sm.addComponent(State.RUN, player, new Light(400));
+		sm.addComponent(State.RUN, player, new Light(200));
 		sm.addComponent(State.RUN, player, new TextureComp("hero.png"));
 		sm.addStringID(State.RUN, player);
 
@@ -160,6 +160,10 @@ public class Main
 		
 		points.add( new Point(75, 					GLEngine.HEIGHT / 2));
 		points.add( new Point(GLEngine.WIDTH - 75, 	GLEngine.HEIGHT / 2));
+		
+
+		points.add( new Point(GLEngine.WIDTH * 2 - 50, 	GLEngine.HEIGHT - 50));
+		points.add( new Point(GLEngine.WIDTH * 2 - 50, 	50));
 
 		for (Point p : points)
 		{
@@ -238,6 +242,37 @@ public class Main
 		p.add(  new Point(GLEngine.WIDTH*2, 50)  );  //Top
 		p.add(  new Point(0, GLEngine.HEIGHT)  );
 
+		p.add(  new Point(50, 300) );
+		p.add(  new Point(GLEngine.WIDTH + 50, 0)  );
+
+		p.add(  new Point(50, 300) );
+		p.add(  new Point(GLEngine.WIDTH + 50, 420)  );
+		
+
+		p.add(  new Point(200, 200) );
+		p.add(  new Point(GLEngine.WIDTH + 250, 100)  );
+
+		p.add(  new Point(200, 200) );
+		p.add(  new Point(GLEngine.WIDTH + 250, 420)  );
+
+		p.add(  new Point(200, 200) );
+		p.add(  new Point(GLEngine.WIDTH + 610, 100)  );
+
+		p.add(  new Point(200, 200) );
+		p.add(  new Point(GLEngine.WIDTH + 610, 420)  );
+
+		p.add(  new Point(50, 200) );
+		p.add(  new Point(GLEngine.WIDTH*2 - 200, 0)  );
+
+		p.add(  new Point(50, 200) );
+		p.add(  new Point(GLEngine.WIDTH*2 - 200, 520)  );
+
+		p.add(  new Point(100, 50) );
+		p.add(  new Point(GLEngine.WIDTH*2 - 100, 150)  );
+
+		p.add(  new Point(100, 50) );
+		p.add(  new Point(GLEngine.WIDTH*2 - 100, 520)  );
+
 		while (p.size() > 0)
 		{
 			Entity rectangle = new Entity();
@@ -247,6 +282,15 @@ public class Main
 			sm.addComponent(State.RUN, rectangle, new Obstacle());
 			sm.addComponent(State.RUN, rectangle, new TextureComp("bush.png"));
 		}
+
+		Entity polygon = new Entity();
+		polygon.name = "polygon";
+		sm.addComponent(State.RUN, polygon, new Polygon(
+				new Point(0, 100), new Point(100, 0), new Point(0, -100), new Point(-100, 0)
+				));
+		sm.addComponent(State.RUN, polygon, new Position(new Point(GLEngine.WIDTH*2 - 250, GLEngine.HEIGHT / 2)));
+		sm.addComponent(State.RUN, polygon, new Obstacle());
+		sm.addComponent(State.RUN, polygon, new TextureComp("bush.png"));
 	}
 
 	public void run()

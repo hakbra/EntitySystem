@@ -11,7 +11,6 @@ public class Pathfinder extends Component{
 	public class Node implements Comparable{
 		public boolean blocked = false;
 		public Double value = 10000.0;
-		public double dist = 100;
 		public Point pos;
 		public Point i;
 		public long visited;
@@ -55,7 +54,7 @@ public class Pathfinder extends Component{
 	public void render()
 	{
 		Color c = new Color(1, 0, 0);
-		double max = 100;
+		double max = 700;
 		for (int i = 0; i < width; i++)
 			for (int j = 0; j < height; j++)
 			{
@@ -81,10 +80,10 @@ public class Pathfinder extends Component{
 		return true;
 	}
 
-	public Point getDir(Point p)
+	public Point getDir(Point p, double limit)
 	{
-		Point dir = null;
 		double min = -1;
+		Node node = null;
 		int n = 2;
 
 		int ix = (int) (p.x / step);
@@ -96,16 +95,20 @@ public class Pathfinder extends Component{
 			{
 				if (!isLegal(i, j))
 					continue;
-				if (map[i][j].done == update && !map[i][j].blocked && (min < 0 || map[i][j].value < min))
+				if (map[i][j].done == update && !map[i][j].blocked && (min < 0|| map[i][j].value < min))
 				{
 					min = map[i][j].value;
-					dir = map[i][j].pos.sub(p).norm();
+					node = map[i][j];
 				}
 			}
 		}
-		if (dir == null)
+		
+		if (node == null)
 			return new Point();
-		return dir;
+		if (limit > 0 && node.value > limit)
+			return new Point();
+		
+		return node.pos.sub(p).norm();
 	}
 
 	public Node getNode(Point p)
@@ -120,8 +123,10 @@ public class Pathfinder extends Component{
 
 	}
 
-	public void mask(Point a, Point b, long time)
+	public void mask(Polygon poly, Point pos, long time)
 	{
+		Point a = poly.min.add(pos);
+		Point b = poly.max.add(pos);
 
 		int ax = (int)(a.x / step);
 		int ay = (int)(a.y / step);
@@ -156,8 +161,11 @@ public class Pathfinder extends Component{
 			{
 				if (isLegal(i, j))
 				{
-					map[i][j].done = time;
-					map[i][j].blocked = true;
+					if (poly.isInside(pos, map[i][j].pos) || map[i][j].pos.dist(poly.getClosest(pos, map[i][j].pos)) < 20)
+					{
+						map[i][j].done = time;
+						map[i][j].blocked = true;
+					}
 				}
 			}
 		}

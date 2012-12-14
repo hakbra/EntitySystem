@@ -66,6 +66,21 @@ public class MouseInputSystem extends CoreSystem{
 					spawns.add(  new Point(GLEngine.WIDTH / 2, GLEngine.HEIGHT - 50));
 					spawns.add(  new Point(GLEngine.WIDTH - 50, GLEngine.HEIGHT / 2));
 					spawns.add(  new Point(50, GLEngine.HEIGHT / 2));
+
+					spawns.add(  new Point(GLEngine.WIDTH + 520, 500));
+					spawns.add(  new Point(GLEngine.WIDTH + 560, 500));
+					spawns.add(  new Point(GLEngine.WIDTH + 600, 500));
+
+					spawns.add(  new Point(GLEngine.WIDTH + 520, 225));
+					spawns.add(  new Point(GLEngine.WIDTH + 560, 225));
+					spawns.add(  new Point(GLEngine.WIDTH + 600, 225));
+
+					spawns.add(  new Point(GLEngine.WIDTH + 700, 400));
+					spawns.add(  new Point(GLEngine.WIDTH + 700, 360));
+					spawns.add(  new Point(GLEngine.WIDTH + 700, 320));
+					
+					spawns.add(  new Point(GLEngine.WIDTH*2 -20, 100));
+					spawns.add(  new Point(GLEngine.WIDTH*2 -20, GLEngine.HEIGHT - 100));
 					
 					for (Point p : spawns)
 					{

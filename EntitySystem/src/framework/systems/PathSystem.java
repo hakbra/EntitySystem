@@ -38,7 +38,7 @@ public class PathSystem extends CoreSystem{
 			Polygon poly = em.getComponent(e, Polygon.class);
 			Point pos = em.getComponent(e, Position.class).position;
 
-			pf.mask(pos.add(poly.min), pos.add(poly.max), now);
+			pf.mask(poly, pos, now);
 		}
 
 
@@ -76,14 +76,13 @@ public class PathSystem extends CoreSystem{
 
 						if (pf.map[i][j].visited != now)
 						{
-							pf.map[i][j].value = 1000.0;
+							pf.map[i][j].value = 10000.0;
 							pf.map[i][j].visited = now;
 							pf.map[i][j].blocked = false;
-							pf.map[i][j].dist = 0;
 							pf.map[i][j].prev = null;
 						}
 
-						double newDist = current.value + Math.sqrt( (ix-i)*(ix-i) + (iy-j)*(iy-j) );
+						double newDist = pf.map[i][j].pos.dist(current.pos) + current.value;
 						if (pf.map[i][j].value > newDist )
 						{
 							if (queue.contains(pf.map[i][j]))

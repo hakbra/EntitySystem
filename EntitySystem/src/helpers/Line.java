@@ -55,4 +55,51 @@ public class Line {
 		
 		return this.p1.add(ab.mult(r));
 	}
+
+	public Point pointOnCircle(Point C, double r, boolean first)
+	{
+		Point E = this.p1;
+		Point L = this.p2;
+		Point d = L.sub(E);
+		Point f = E.sub(C);
+		
+		double a = d.dot(d);
+		double b = 2*f.dot(d);
+		double c = f.dot(f) - r*r;
+		
+		double disc = b*b-4*a*c;
+		
+		if (disc < 0)
+			return null;
+		if (disc == 0)
+		{
+			double t = -b / (2*a);
+			
+			if (t < 0 || t > 1)
+				return null;
+			
+			return E.add(d.mult(t));
+		}
+		else
+		{
+			disc = Math.sqrt(disc);
+			
+			double t1 = (-b - disc)/ (2*a);
+			double t2 = (-b + disc)/ (2*a);
+			
+			if ((t1 < 0 || t1 > 1) && first)
+				return null;
+			else if (first)
+				return E.add(d.mult(t1));
+			
+			if ((t2 < 0 || t2 > 1) && !first)
+				return null;
+			else if (!first)
+				return E.add(d.mult(t2));
+			
+			return null;
+		}
+		
+		
+	}
 }
