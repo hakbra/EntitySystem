@@ -33,14 +33,6 @@ public class PathSystem extends CoreSystem{
 
 		long now = Time.getTime();
 		pf.update = now;
-
-		for (Entity zombie : em.getEntity(Zombie.class))
-		{
-			Point zombiePos = em.getComponent(zombie, Position.class).position;
-			Circle circ = em.getComponent(zombie, Circle.class);
-
-			pf.mask(circ, zombiePos, now);
-		}
 		for (Entity e : em.getEntityAll(Obstacle.class, Polygon.class))
 		{
 			Polygon poly = em.getComponent(e, Polygon.class);
