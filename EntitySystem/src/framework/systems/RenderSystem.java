@@ -93,12 +93,12 @@ public class RenderSystem extends CoreSystem {
 		glPushMatrix();
 		Draw.translate(trans);
 		renderItems(em);
-		renderPath(em);
+		//renderPath(em);
 		renderCircles(em);
 
-		//renderLights(em);
-
-		//Draw.translate(trans);
+		renderLights(em);
+		Draw.translate(trans);
+		
 		renderWalls(em);
 		glPopMatrix();
 

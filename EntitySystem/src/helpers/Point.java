@@ -150,6 +150,14 @@ public class Point
 			n = this.div(this.len());
 		return n;
 	}
+	public Point norm(double p)
+	{
+		Point n = new Point();
+		double l = this.len();
+		if (l != 0)
+			n = this.div(this.len()).mult(p);
+		return n;
+	}
 	
 	public Point pointOnLine(Point a, Point b)
 	{
