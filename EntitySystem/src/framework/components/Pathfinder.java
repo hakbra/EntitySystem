@@ -16,6 +16,7 @@ public class Pathfinder extends Component{
 		public long visited;
 		public long done;
 		public Node prev;
+		public double weight;
 		@Override
 		public int compareTo(Object o) {
 			Node n = (Node) o;
@@ -54,7 +55,6 @@ public class Pathfinder extends Component{
 	public void render()
 	{
 		Color c = new Color(1, 0, 0);
-		double max = 700;
 		for (int i = 0; i < width; i++)
 			for (int j = 0; j < height; j++)
 			{
@@ -62,9 +62,12 @@ public class Pathfinder extends Component{
 					continue;
 				if (map[i][j].done != update)
 					continue;
-
-				c.r = map[i][j].value / max;
-				c.g = 1 - map[i][j].value / max;
+				
+					int max = 200;
+					double w = map[i][j].weight + map[i][j].value;
+					c.r = w / max;
+					c.g = 1 - w / max;
+					
 				Draw.setColor(c);
 				Draw.point(map[i][j].pos);
 			}
@@ -95,19 +98,19 @@ public class Pathfinder extends Component{
 			{
 				if (!isLegal(i, j))
 					continue;
-				if (map[i][j].done == update && !map[i][j].blocked && (min < 0|| map[i][j].value < min))
+				if (map[i][j].done == update && !map[i][j].blocked && (min < 0|| map[i][j].value + map[i][j].weight < min))
 				{
-					min = map[i][j].value;
+					min = map[i][j].value + map[i][j].weight;
 					node = map[i][j];
 				}
 			}
 		}
-		
+
 		if (node == null)
 			return new Point();
 		if (limit > 0 && node.value > limit)
 			return new Point();
-		
+
 		return node.pos.sub(p).norm();
 	}
 
@@ -165,6 +168,60 @@ public class Pathfinder extends Component{
 					{
 						map[i][j].done = time;
 						map[i][j].blocked = true;
+					}
+				}
+			}
+		}
+	}
+
+
+	public void mask(Circle circ, Point pos, long time)
+	{
+		Point a = new Point(pos.x - circ.radius, pos.y - circ.radius);
+		Point b = new Point(pos.x + circ.radius, pos.y + circ.radius);
+
+		int ax = (int)(a.x / step);
+		int ay = (int)(a.y / step);
+		int bx = (int)(b.x / step);
+		int by = (int)(b.y / step);
+
+		if (ax >= width)
+			ax = width-1;
+		if (bx >= width)
+			bx = width-1;
+
+		if (ay >= height)
+			ay = height - 1;
+		if (by >= height)
+			by = height - 1;
+
+		if (ax < 0)
+			ax = 0;
+		if (bx < 0)
+			bx = 0;
+
+		if (ay < 0)
+			ay = 0;
+		if (by < 0)
+			by = 0;
+
+		int n = 4;
+
+		for (int i = ax-n; i <= bx+n; i++)
+		{
+			for (int j = ay-n; j <= by+n; j++)
+			{
+				if (isLegal(i, j))
+				{
+					double dist = map[i][j].pos.dist(pos);
+					if (dist < 100)
+					{
+
+						map[i][j].value = 10000.0;
+						map[i][j].visited = time;
+						map[i][j].weight = 100 - dist;
+						map[i][j].blocked = false;
+						map[i][j].prev = null;
 					}
 				}
 			}

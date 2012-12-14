@@ -99,11 +99,11 @@ public class Main
 		sm.addComponent(State.RUN, player, new Angle(0));
 		sm.addComponent(State.RUN, player, new Followable());
 		sm.addComponent(State.RUN, player, new KeyInput(Keyboard.KEY_A, Keyboard.KEY_D, Keyboard.KEY_W, Keyboard.KEY_S, Keyboard.KEY_SPACE));
-		sm.addComponent(State.RUN, player, new Gun(2, 2, 10, 50, 2));
+		sm.addComponent(State.RUN, player, new Gun(6, 2, 10, 150, 2));
 		sm.addComponent(State.RUN, player, new Health());
 		sm.addComponent(State.RUN, player, new Collider());
 		sm.addComponent(State.RUN, player, new Obstacle());
-		sm.addComponent(State.RUN, player, new Light(200));
+		sm.addComponent(State.RUN, player, new Light(300));
 		sm.addComponent(State.RUN, player, new TextureComp("hero.png"));
 		sm.addStringID(State.RUN, player);
 

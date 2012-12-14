@@ -15,6 +15,8 @@ import framework.components.Pathfinder;
 import framework.components.Pathfinder.Node;
 import framework.components.Polygon;
 import framework.components.Position;
+import framework.components.Velocity;
+import framework.components.Zombie;
 
 public class PathSystem extends CoreSystem{
 
@@ -28,11 +30,17 @@ public class PathSystem extends CoreSystem{
 	{
 		Entity world = em.getByStringID("world");
 		Pathfinder pf = em.getComponent(world, Pathfinder.class);
-		Point worldPos = em.getComponent(world, Position.class).position;
 
 		long now = Time.getTime();
 		pf.update = now;
 
+		for (Entity zombie : em.getEntity(Zombie.class))
+		{
+			Point zombiePos = em.getComponent(zombie, Position.class).position;
+			Circle circ = em.getComponent(zombie, Circle.class);
+
+			pf.mask(circ, zombiePos, now);
+		}
 		for (Entity e : em.getEntityAll(Obstacle.class, Polygon.class))
 		{
 			Polygon poly = em.getComponent(e, Polygon.class);
@@ -78,11 +86,12 @@ public class PathSystem extends CoreSystem{
 						{
 							pf.map[i][j].value = 10000.0;
 							pf.map[i][j].visited = now;
+							pf.map[i][j].weight = 0;
 							pf.map[i][j].blocked = false;
 							pf.map[i][j].prev = null;
 						}
 
-						double newDist = pf.map[i][j].pos.dist(current.pos) + current.value;
+						double newDist = pf.map[i][j].pos.dist(current.pos) + current.value;// + pf.map[i][j].weight;
 						if (pf.map[i][j].value > newDist )
 						{
 							if (queue.contains(pf.map[i][j]))
