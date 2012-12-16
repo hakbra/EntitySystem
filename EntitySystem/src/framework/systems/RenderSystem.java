@@ -231,8 +231,9 @@ public class RenderSystem extends CoreSystem {
 				TextureComp t = em.getComponent(e, TextureComp.class);
 				t.render(em, e);
 			}
-			else
+			else if(em.hasComponent(e, ColorComp.class))
 			{
+				Draw.setColor(em.getComponent(e, ColorComp.class).color);
 				Polygon poly = em.getComponent(e, Polygon.class);
 				poly.render(em, e);
 			}

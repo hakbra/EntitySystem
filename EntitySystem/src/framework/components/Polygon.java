@@ -17,6 +17,7 @@ public class Polygon extends Component{
 	public ArrayList<Point> points;
 	public Point mid;
 	public Point min, max;
+	public boolean inverted;
 
 	public Polygon(Point... ps)
 	{
@@ -40,6 +41,8 @@ public class Polygon extends Component{
 				max.y = p.y;
 		}
 		mid.idiv(points.size());
+		
+		inverted = false;
 	}
 
 	public static Polygon rectangle(Point dim)
@@ -50,6 +53,19 @@ public class Polygon extends Component{
 		Point h = new Point(0, dim.y);
 
 		return new Polygon(p, p.add(h), p.add(h).add(w), p.add(w));
+	}
+
+	public static Polygon invertedRectangle(Point dim)
+	{
+
+		Point p = new Point(0, 0);
+		Point w = new Point(dim.x, 0);
+		Point h = new Point(0, dim.y);
+		
+		Polygon poly = new Polygon(p, p.add(h), p.add(h).add(w), p.add(w));
+		poly.inverted = true;
+
+		return poly; 
 	}
 
 	public boolean isInside(Point pos, Point p)
@@ -68,7 +84,11 @@ public class Polygon extends Component{
 			if (col != null)
 				sum += 1;
 		}
-		return sum % 2 != 0;
+		boolean inside = sum % 2 != 0;
+		if (inverted)
+			inside = !inside;
+		
+		return inside;
 	}
 	
 	public Point getClosest(Point pos, Point p)

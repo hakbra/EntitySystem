@@ -37,8 +37,9 @@ public class PathSystem extends CoreSystem{
 		{
 			Polygon poly = em.getComponent(e, Polygon.class);
 			Point pos = em.getComponent(e, Position.class).position;
-
-			pf.mask(poly, pos, now);
+			
+			if (!poly.inverted)
+				pf.mask(poly, pos, now);
 		}
 
 

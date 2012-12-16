@@ -230,6 +230,7 @@ public class Main
 		p.add(  new Point(600, 50)  );
 		p.add(  new Point(340, 335)  );
 
+		/*
 		p.add(  new Point(GLEngine.WIDTH*2, 50)  );  //Bottom
 		p.add(  new Point(0, -50)  );
 
@@ -241,6 +242,7 @@ public class Main
 
 		p.add(  new Point(GLEngine.WIDTH*2, 50)  );  //Top
 		p.add(  new Point(0, GLEngine.HEIGHT)  );
+		*/
 
 		p.add(  new Point(50, 300) );
 		p.add(  new Point(GLEngine.WIDTH + 50, 0)  );
@@ -291,6 +293,12 @@ public class Main
 		sm.addComponent(State.RUN, polygon, new Position(new Point(GLEngine.WIDTH*2 - 250, GLEngine.HEIGHT / 2)));
 		sm.addComponent(State.RUN, polygon, new Obstacle());
 		sm.addComponent(State.RUN, polygon, new TextureComp("bush.png"));
+
+		Entity border = new Entity();
+		border.name = "border";
+		sm.addComponent(State.RUN, border, Polygon.invertedRectangle(new Point(GLEngine.WIDTH*2, GLEngine.HEIGHT)));
+		sm.addComponent(State.RUN, border, new Position(new Point(0, 0)));
+		sm.addComponent(State.RUN, border, new Obstacle());
 	}
 
 	public void run()
