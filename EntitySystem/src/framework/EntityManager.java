@@ -59,6 +59,11 @@ public class EntityManager {
 			entities.put(component.getClass(), componentMap);
 		}
 		componentMap.put(e, component);
+		
+		for (Component c : e.components)
+			c.entityUpdated(this, e);
+		
+		e.components.add(component);
     }
     
     public <T> void removeComponent(Entity e, T component) {
@@ -66,6 +71,12 @@ public class EntityManager {
 		HashMap.remove(e);
 		if (entities.get(component.getClass()).isEmpty())
 			entities.remove(component.getClass());
+
+		
+		e.components.remove(component);
+		
+		for (Component c : e.components)
+			c.entityUpdated(this, e);
     }
 
     public <T> T getComponent(Entity e, Class<T> type) {

@@ -14,7 +14,7 @@ import framework.EntityManager;
 
 public class Polygon extends Component{
 
-	public ArrayList<Point> points;
+	public ArrayList<Point> localPoints;
 	public Point mid;
 	public Point min, max;
 	public boolean inverted;
@@ -23,12 +23,12 @@ public class Polygon extends Component{
 	{
 		mid = new Point();
 
-		points = new ArrayList<Point>();
+		localPoints = new ArrayList<Point>();
 		min = new Point(ps[0]);
 		max = new Point(ps[0]);
 		for (Point p: ps)
 		{
-			points.add(p);
+			localPoints.add(p);
 			mid.iadd(p);
 			
 			if (p.x < this.min.x)
@@ -40,7 +40,7 @@ public class Polygon extends Component{
 			if (p.y > max.y)
 				max.y = p.y;
 		}
-		mid.idiv(points.size());
+		mid.idiv(localPoints.size());
 		
 		inverted = false;
 	}
@@ -74,10 +74,10 @@ public class Polygon extends Component{
 		Point ray = p.add(Point.Y);
 
 		int sum = 0;
-		for (int i = 0; i < points.size(); i++)
+		for (int i = 0; i < localPoints.size(); i++)
 		{
-			Point p1 = pos.add(points.get(i));
-			Point p2 = pos.add(points.get((i+1)%points.size()));
+			Point p1 = pos.add(localPoints.get(i));
+			Point p2 = pos.add(localPoints.get((i+1)%localPoints.size()));
 
 			Point col = Point.rayToSegment(source, ray, p1, p2);
 
@@ -96,10 +96,10 @@ public class Polygon extends Component{
 		Point closest = pos;
 		double dist = pos.dist(p);
 
-		for (int i = 0; i < points.size(); i++)
+		for (int i = 0; i < localPoints.size(); i++)
 		{
-			Point p1 = pos.add(points.get(i));
-			Point p2 = pos.add(points.get((i+1)%points.size()));
+			Point p1 = pos.add(localPoints.get(i));
+			Point p2 = pos.add(localPoints.get((i+1)%localPoints.size()));
 
 			Point tempClosest = p.pointOnLine(p1, p2);
 			double tempDist = tempClosest.dist(p);
@@ -116,8 +116,7 @@ public class Polygon extends Component{
 
 	public void render(EntityManager em, Entity e) {
 		GL11.glPushMatrix();
-		Draw.translate(0.5f);
-		Draw.polygon(points);
+		Draw.polygon(localPoints);
 		
 		if (em.hasComponent(e, Button.class))
 		{
@@ -127,6 +126,5 @@ public class Polygon extends Component{
 		}
 		
 		GL11.glPopMatrix();
-		
 	}
 }

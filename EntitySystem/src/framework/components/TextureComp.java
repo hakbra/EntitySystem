@@ -47,7 +47,7 @@ public class TextureComp extends Component{
 		else if (em.hasComponents(e, Polygon.class, Button.class))
 		{
 			Polygon poly = em.getComponent(e, Polygon.class);
-			ArrayList<Point> points = poly.points;
+			ArrayList<Point> points = poly.localPoints;
 			String text = em.getComponent(e, Button.class).type;
 
 			Draw.setColor(new Color(1, 1, 1, 0.5));
@@ -67,7 +67,7 @@ public class TextureComp extends Component{
 		{
 			Polygon poly = em.getComponent(e, Polygon.class);
 			GL11.glBegin(GL11.GL_POLYGON);
-			ArrayList<Point> points = poly.points;
+			ArrayList<Point> points = poly.localPoints;
 			for (Point p : points)
 			{
 				GL11.glTexCoord2f((float) p.x / 50,(float) 	p.y / 50);

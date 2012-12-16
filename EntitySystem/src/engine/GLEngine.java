@@ -35,6 +35,7 @@ public class GLEngine {
 			setWindow(false);
 			Display.setVSyncEnabled(true);
 			Display.setTitle("entitySystem");
+			System.setProperty("org.lwjgl.opengl.Window.undecorated","true");
 			Display.create();
 
 			//OpenGL

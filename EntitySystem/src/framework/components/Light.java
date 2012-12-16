@@ -33,8 +33,8 @@ public class Light extends Component{
 			{
 				Polygon poly = em.getComponent(p, Polygon.class);
 				Point polyPos = em.getComponent(p, Position.class).position;
-				for (int i = 0; i < poly.points.size(); i++)
-					edges.add( new Line( polyPos.add(poly.points.get(i)), polyPos.add(poly.points.get((i+1) % poly.points.size()))));
+				for (int i = 0; i < poly.localPoints.size(); i++)
+					edges.add( new Line( polyPos.add(poly.localPoints.get(i)), polyPos.add(poly.localPoints.get((i+1) % poly.localPoints.size()))));
 			}
 		}
 		
