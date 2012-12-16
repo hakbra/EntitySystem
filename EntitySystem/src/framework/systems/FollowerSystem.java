@@ -43,7 +43,7 @@ public class FollowerSystem extends CoreSystem{
 			if (em.hasComponent(e, Angle.class))
 			{
 				Angle a = em.getComponent(e, Angle.class);
-				a.angle = (float) thisSpeed.norm(0.1).add( new Point(a.angle)).angle();
+				a.angle = thisSpeed.norm(0.1).add( new Point(a.angle)).angle();
 			}
 		}
 	}

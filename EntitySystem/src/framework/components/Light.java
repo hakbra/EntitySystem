@@ -52,7 +52,7 @@ public class Light extends Component{
 			
 			for (Line l : cands)
 			{
-				Point col = l.intersection(seg);
+				Point col = l.intersectionLine(seg);
 				if (col != null)
 				{
 					double tempMin = pos.dist(col);

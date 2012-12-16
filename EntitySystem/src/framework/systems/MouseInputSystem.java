@@ -1,6 +1,5 @@
 package framework.systems;
 
-import helpers.Color;
 import helpers.Point;
 import helpers.State;
 
@@ -47,11 +46,10 @@ public class MouseInputSystem extends CoreSystem{
 
 		for (Entity e : em.getEntity(Button.class))
 		{
-			Point position 		= 	em.getComponent(e, Position.class).position;
 			Polygon poly 		= 	em.getComponent(e, Polygon.class);
 			Button button = 	em.getComponent(e, Button.class);
 			
-			if (poly.isInside(position, mouse))
+			if (poly.isInside(mouse))
 			{
 				if (button.type == "Zombie")
 				{

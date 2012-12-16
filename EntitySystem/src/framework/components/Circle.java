@@ -11,7 +11,8 @@ import framework.Entity;
 import framework.EntityManager;
 
 public class Circle extends Component{
-	
+
+	Point position;
 	public float radius;
 	
 	public Circle(float r)
@@ -19,15 +20,25 @@ public class Circle extends Component{
 		this.radius = r;
 		this.name = "Circle";
 	}
-	public boolean isInside(Point pos, Point p)
+	
+	@Override
+	public void entityUpdated(EntityManager em, Entity e)
 	{
-		return pos.dist(p) < this.radius;
+		if (em.hasComponent(e, Position.class))
+			position = em.getComponent(e, Position.class).position;
+		else
+			position = new Point();
 	}
 	
-	public Point getClosest(Point pos, Point p)
+	public boolean isInside(Point p)
 	{
-		Point dir = p.sub(pos).norm();
-		return pos.add(dir.mult(this.radius));
+		return position.dist(p) < this.radius;
+	}
+	
+	public Point getClosest(Point p)
+	{
+		Point dir = p.sub(position).norm();
+		return position.add(dir.mult(this.radius));
 	}
 
 	public void render(EntityManager em, Entity e) {

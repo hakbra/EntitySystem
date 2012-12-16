@@ -164,7 +164,7 @@ public class Pathfinder extends Component{
 			{
 				if (isLegal(i, j))
 				{
-					if (poly.isInside(pos, map[i][j].pos) || map[i][j].pos.dist(poly.getClosest(pos, map[i][j].pos)) < 20)
+					if (poly.isInside(map[i][j].pos) || map[i][j].pos.dist(poly.getClosest(map[i][j].pos)) < 20)
 					{
 						map[i][j].done = time;
 						map[i][j].blocked = true;

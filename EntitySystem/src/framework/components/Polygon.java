@@ -1,7 +1,8 @@
 package framework.components;
 
-import helpers.Draw;
 import helpers.Color;
+import helpers.Draw;
+import helpers.Line;
 import helpers.Point;
 
 import java.util.ArrayList;
@@ -14,6 +15,9 @@ import framework.EntityManager;
 
 public class Polygon extends Component{
 
+	Point position;
+	Double angle;
+	
 	public ArrayList<Point> localPoints;
 	public Point mid;
 	public Point min, max;
@@ -67,44 +71,52 @@ public class Polygon extends Component{
 
 		return poly; 
 	}
-
-	public boolean isInside(Point pos, Point p)
+	
+	@Override
+	public void entityUpdated(EntityManager em, Entity e)
 	{
-		Point source = p;
-		Point ray = p.add(Point.Y);
+		if (em.hasComponent(e, Position.class))
+			position = em.getComponent(e, Position.class).position;
+		else
+			position = new Point();
+
+		if (em.hasComponent(e, Angle.class))
+			angle = em.getComponent(e, Angle.class).angle;
+		else
+			angle = 0.0;
+	}
+
+	public boolean isInside(Point p)
+	{
+		Line ray = new Line(p, p.add(Point.Y));
 
 		int sum = 0;
-		for (int i = 0; i < localPoints.size(); i++)
+		for (Line l : getLines())
 		{
-			Point p1 = pos.add(localPoints.get(i));
-			Point p2 = pos.add(localPoints.get((i+1)%localPoints.size()));
-
-			Point col = Point.rayToSegment(source, ray, p1, p2);
+			Point col = l.intersectionRay(ray);
 
 			if (col != null)
 				sum += 1;
 		}
 		boolean inside = sum % 2 != 0;
+		
 		if (inverted)
 			inside = !inside;
 		
 		return inside;
 	}
 	
-	public Point getClosest(Point pos, Point p)
+	public Point getClosest(Point p)
 	{
-		Point closest = pos;
-		double dist = pos.dist(p);
+		Point closest = null;
+		double dist = -1;
 
-		for (int i = 0; i < localPoints.size(); i++)
+		for (Line l : getLines())
 		{
-			Point p1 = pos.add(localPoints.get(i));
-			Point p2 = pos.add(localPoints.get((i+1)%localPoints.size()));
-
-			Point tempClosest = p.pointOnLine(p1, p2);
+			Point tempClosest = l.pointOnLine(p);
 			double tempDist = tempClosest.dist(p);
 
-			if (tempDist < dist)
+			if (dist < 0 || tempDist < dist)
 			{
 				closest = tempClosest;
 				dist = tempDist;
@@ -126,5 +138,36 @@ public class Polygon extends Component{
 		}
 		
 		GL11.glPopMatrix();
+	}
+	
+	public ArrayList<Point> getPoints()
+	{
+		ArrayList<Point> worldPoints = new ArrayList<Point>();
+		
+		for (Point p : localPoints)
+		{
+			Point t = p.rot(angle);
+			t = t.add(position);
+			worldPoints.add(t);
+		}
+		
+		return worldPoints;
+	}
+	
+	public ArrayList<Line> getLines()
+	{
+		ArrayList<Point> worldPoints = getPoints();
+		ArrayList<Line> worldLines = new ArrayList<Line>();
+		
+
+		for (int i = 0; i < worldPoints.size(); i++)
+		{
+			Point p1 = worldPoints.get(i);
+			Point p2 = worldPoints.get((i+1)%worldPoints.size());
+
+			worldLines.add( new Line(p1, p2));
+		}
+		
+		return worldLines;
 	}
 }

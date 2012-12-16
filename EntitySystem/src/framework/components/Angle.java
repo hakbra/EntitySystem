@@ -3,9 +3,9 @@ package framework.components;
 import framework.Component;
 
 public class Angle extends Component{
-	public float angle;
+	public Double angle;
 	
-	public Angle(float a)
+	public Angle(double a)
 	{
 		this.angle = a;
 	}

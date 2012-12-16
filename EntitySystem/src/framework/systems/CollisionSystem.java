@@ -93,17 +93,16 @@ public class CollisionSystem extends CoreSystem {
 
 			for (Entity e2 : em.getEntityAll(Polygon.class, Obstacle.class))
 			{
-				Point polyPos = em.getComponent(e2, Position.class).position;
 				Polygon poly = em.getComponent(e2, Polygon.class);
 
-				if (poly.isInside(polyPos, circle1pos))
+				if (poly.isInside(circle1pos))
 					collision = circle1pos.sub(s1);
 
-				Point closest = poly.getClosest(polyPos, circle1pos);
+				Point closest = poly.getClosest(circle1pos);
 				double moveDist = circle1pos.dist(closest) - circle1.radius;
 				Point line = null;
 
-				if (poly.isInside(polyPos, circle1pos))
+				if (poly.isInside(circle1pos))
 				{
 					moveDist += 2*circle1.radius;
 					line = closest.sub(circle1pos).norm();
