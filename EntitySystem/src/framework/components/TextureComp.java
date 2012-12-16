@@ -15,7 +15,7 @@ import framework.World;
 
 public class TextureComp extends Component{
 
-	String texture;
+	public String texture;
 	Point coords;
 	
 	public TextureComp(String name)

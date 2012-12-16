@@ -23,7 +23,12 @@ public class TimerSystem extends CoreSystem{
 		{
 			Timer timer = em.getComponent(e, Timer.class);
 			if (now - timer.start > timer.time)
-				em.removeEntity(e);
+			{
+				if (timer.type == "destruct")
+					em.removeEntity(e);
+				else if (timer.type == "selfDestruct")
+					em.removeComponent(e, timer);
+			}
 		}
 	}
 }

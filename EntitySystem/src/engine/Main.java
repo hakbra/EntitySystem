@@ -28,6 +28,7 @@ import framework.components.Pathfinder;
 import framework.components.Polygon;
 import framework.components.Position;
 import framework.components.TextureComp;
+import framework.components.Trigger;
 import framework.components.Velocity;
 import framework.systems.CameraSystem;
 import framework.systems.CollisionSystem;
@@ -89,7 +90,7 @@ public class Main
 		player.components.add(new Velocity(new Point(0, 0)));
 		player.components.add(new Angle(0));
 		player.components.add(new KeyInput(Keyboard.KEY_A, Keyboard.KEY_D, Keyboard.KEY_W, Keyboard.KEY_S, Keyboard.KEY_SPACE));
-		player.components.add(new Gun(2, 0, 10, 20, 1));
+		player.components.add(new Gun(2, 0, 10, 20, 1, "gun1.png"));
 		player.components.add(new Health());
 		player.components.add(new Collider(4));
 		player.components.add(new Obstacle());
@@ -111,6 +112,17 @@ public class Main
 		ground.components.add(new ColorComp( new Color(0.4, 0.4, 0.4)));
 		world.addEntityAndID(ground, State.RUN);
 		
+		Entity gun = new Entity();
+		gun.name = "gun";
+		gun.components.add(new Position(new Point(GLEngine.WIDTH * 2 - 75, 75)));
+		gun.components.add(new Circle(30));
+		gun.components.add(new Item("gun"));
+		gun.components.add(new TextureComp("gun2.png"));
+		gun.components.add(new Gun(3, 10, 10, 400, 20, "gun2.png"));
+		gun.components.add(new Angle(0));
+		gun.components.add(new AngleSpeed(1));
+		world.addEntity(gun, State.RUN);
+		
 		createButtons(world);
 		createHealth(world);
 		createWalls(world);
@@ -120,12 +132,7 @@ public class Main
 	{
 		ArrayList<Point> points = new ArrayList<Point>();
 		
-		points.add( new Point(75, 					GLEngine.HEIGHT / 2));
-		points.add( new Point(GLEngine.WIDTH - 75, 	GLEngine.HEIGHT / 2));
-		
-
-		points.add( new Point(GLEngine.WIDTH * 2 - 50, 	GLEngine.HEIGHT - 50));
-		points.add( new Point(GLEngine.WIDTH * 2 - 50, 	50));
+		points.add( new Point(GLEngine.WIDTH * 2 - 75	, 	GLEngine.HEIGHT - 75));
 
 		for (Point p : points)
 		{
@@ -252,6 +259,14 @@ public class Main
 		border.components.add(new Position(new Point(0, 0)));
 		border.components.add(new Obstacle());
 		world.addEntity(border, State.RUN);
+
+		Entity trigger = new Entity();
+		trigger.name = "trigger";
+		trigger.components.add(Polygon.rectangle(new Point(150, 150)));
+		trigger.components.add(new Position( new Point(GLEngine.WIDTH*2-150, 0)));
+		trigger.components.add(new Trigger("spawner"));
+		trigger.components.add(new Trigger("spawner"));
+		world.addEntity(trigger, State.RUN);
 	}
 	
 	private void createButtons(World world)
@@ -260,7 +275,7 @@ public class Main
 		Entity menuButton = new Entity();
 		menuButton.name = "button";
 		menuButton.components.add(Polygon.rectangle(new Point(100, 50)));
-		menuButton.components.add(new Position(new Point(1150, 650)));
+		menuButton.components.add(new Position(new Point(150, 650)));
 		menuButton.components.add(new Button("Menu"));
 		menuButton.components.add(new TextureComp("button.png"));
 		world.addEntity(menuButton, State.RUN);
@@ -276,25 +291,32 @@ public class Main
 		Entity zombieButton = new Entity();
 		zombieButton.name = "zombieButton";
 		zombieButton.components.add(Polygon.rectangle(new Point(100, 50)));
-		zombieButton.components.add(new Position(new Point(590, 650)));
-		zombieButton.components.add(new Button("Zombie"));
+		zombieButton.components.add(new Position(new Point(400, 650)));
+		zombieButton.components.add(new Button("Zombies"));
 		zombieButton.components.add(new TextureComp("button.png"));
 		world.addEntity(zombieButton, State.RUN);
 
 		Entity screenButton = new Entity();
 		screenButton.name = "screenButton";
 		screenButton.components.add(Polygon.rectangle(new Point(100, 50)));
-		screenButton.components.add(new Position(new Point(1150, 25)));
+		screenButton.components.add(new Position(new Point(525, 650)));
 		screenButton.components.add(new Button("Screen"));
 		screenButton.components.add(new TextureComp("button.png"));
 		world.addEntity(screenButton, State.RUN);
-		world.addEntity(screenButton, State.MENU);
+
+		Entity screenButton2 = new Entity();
+		screenButton2.name = "screenButton2";
+		screenButton2.components.add(Polygon.rectangle(new Point(100, 50)));
+		screenButton2.components.add(new Position(new Point(GLEngine.WIDTH - 125, 25)));
+		screenButton2.components.add(new Button("Screen"));
+		screenButton2.components.add(new TextureComp("button.png"));
+		world.addEntity(screenButton2, State.MENU);
 
 		Entity lightButton = new Entity();
 		lightButton.name = "lightButton";
 		lightButton.components.add(Polygon.rectangle(new Point(100, 50)));
-		lightButton.components.add(new Position(new Point(1150, 100)));
-		lightButton.components.add(new Button("Light"));
+		lightButton.components.add(new Position(new Point(275, 650)));
+		lightButton.components.add(new Button("Lights"));
 		lightButton.components.add(new TextureComp("button.png"));
 		world.addEntity(lightButton, State.RUN);
 

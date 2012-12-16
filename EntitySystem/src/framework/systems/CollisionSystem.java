@@ -2,23 +2,32 @@ package framework.systems;
 
 import helpers.Point;
 import helpers.Time;
+
+import org.lwjgl.input.Keyboard;
+
+import engine.GLEngine;
 import framework.CoreSystem;
 import framework.Entity;
 import framework.EntityManager;
 import framework.World;
+import framework.components.Angle;
 import framework.components.Circle;
 import framework.components.Collider;
 import framework.components.Damage;
 import framework.components.DestroyOnImpact;
 import framework.components.Emitter;
 import framework.components.EmitterOnImpact;
+import framework.components.Follower;
+import framework.components.Gun;
 import framework.components.Health;
 import framework.components.Hero;
 import framework.components.Item;
 import framework.components.Obstacle;
 import framework.components.Polygon;
 import framework.components.Position;
+import framework.components.TextureComp;
 import framework.components.Timer;
+import framework.components.Trigger;
 import framework.components.Velocity;
 import framework.components.Zombie;
 
@@ -68,7 +77,7 @@ public class CollisionSystem extends CoreSystem {
 					handleCollision( em, new Collision(e1, e2, col, inside) );
 			}
 
-			for (Entity e2 : em.getEntityAll(Polygon.class, Obstacle.class))
+			for (Entity e2 : em.getEntityAll(Polygon.class))
 			{
 				Polygon poly = em.getComponent(e2, Polygon.class);
 
@@ -133,7 +142,8 @@ public class CollisionSystem extends CoreSystem {
 		else if (em.hasComponent(c.b, Item.class))
 		{
 			Item item = em.getComponent(c.b, Item.class);
-			if (item.type == "health" && em.hasComponents(c.a, Health.class, Hero.class))
+			if (item.type == "health" &&
+				em.hasComponents(c.a, Health.class, Hero.class))
 			{
 				Health health = em.getComponent(c.a, Health.class);
 				if (health.current < health.max)
@@ -145,6 +155,43 @@ public class CollisionSystem extends CoreSystem {
 				}
 					
 			}
+			if (item.type == "gun" &&
+				Keyboard.isKeyDown(Keyboard.KEY_E) &&
+				em.hasComponents(c.a, Gun.class, Hero.class) &&
+				!em.hasComponent(c.b, Timer.class))
+			{
+				Gun oldGun = em.getComponent(c.a, Gun.class);
+				em.removeComponent(c.a, oldGun);
+				
+				Gun newGun = em.getComponent(c.b, Gun.class);
+				em.addComponent(c.a, newGun);
+
+				em.addComponent(c.b, oldGun);
+				em.addComponent(c.b, new Timer(500, "selfDestruct"));
+				em.getComponent(c.b, TextureComp.class).texture = oldGun.tex;
+			}
+		}
+		else if (em.hasComponent(c.b, Trigger.class) && em.hasComponent(c.a, Hero.class))
+		{
+			for (int i = 0; i < 2; i++)
+				for (int j = 0; j < 2; j++)
+				{
+
+					Entity zombie = new Entity();
+					zombie.name = "Zombie";
+					em.addComponent(zombie, new Zombie());
+					em.addComponent(zombie, new Circle(20));
+					em.addComponent(zombie, new Position(new Point(GLEngine.WIDTH*2 - 200 + i * 40, GLEngine.HEIGHT / 2 - 50 + j*40)));
+					em.addComponent(zombie, new Velocity(new Point(0, 0)));
+					em.addComponent(zombie, new Health());
+					em.addComponent(zombie, new Follower());
+					em.addComponent(zombie, new Damage(1, 200));
+					em.addComponent(zombie, new Obstacle());
+					em.addComponent(zombie, new Collider(4));
+					em.addComponent(zombie, new Angle(0));
+					em.addComponent(zombie, new TextureComp("zombie.png"));
+				}
+			em.removeEntity(c.b);
 		}
 
 		if (em.hasComponent(c.a, Zombie.class) && em.hasComponent(c.b, Zombie.class))

@@ -76,8 +76,12 @@ public class HudRenderSystem extends CoreSystem {
 
 			TextureComp t = em.getComponent(e, TextureComp.class);
 			t.render(world, e);
-
-			Draw.setColor(Color.WHITE);
+			
+			if (!button.active)
+				Draw.setColor(Color.WHITE);
+			else
+				Draw.setColor(new Color(0.5, 0.5, 0.5));
+				
 			GL11.glEnable(GL11.GL_TEXTURE_2D);
 			Draw.write(world.getDataManager().font, poly.mid, button.type);
 			GL11.glDisable(GL11.GL_TEXTURE_2D);
@@ -95,7 +99,7 @@ public class HudRenderSystem extends CoreSystem {
 
 			Draw.setColor(Color.WHITE);
 			GL11.glEnable(GL11.GL_TEXTURE_2D);
-			world.getDataManager().font.drawString(25, 25 + 50*i, "Health: " + d.toString(), 1, 1);
+			Draw.write(world.getDataManager().font, new Point(GLEngine.WIDTH - 75, GLEngine.HEIGHT - 40 - 50*i), "Health: " + d.toString());
 			GL11.glDisable(GL11.GL_TEXTURE_2D);
 			i++;
 		}

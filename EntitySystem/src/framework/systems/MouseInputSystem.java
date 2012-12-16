@@ -39,8 +39,7 @@ public class MouseInputSystem extends CoreSystem{
 		Point mouse = null;
 		
 		while (Mouse.next())
-		    if (Mouse.getEventButtonState())
-		    	mouse = new Point(Mouse.getEventX(), Mouse.getEventY());
+		    mouse = new Point(Mouse.getEventX(), Mouse.getEventY());
 	    	
 	    if (mouse == null)
 	    	return;
@@ -52,7 +51,12 @@ public class MouseInputSystem extends CoreSystem{
 			
 			if (poly.isInside(mouse))
 			{
-				if (button.type == "Zombie")
+				button.active = true;
+
+			    if (!Mouse.getEventButtonState())
+			    	continue;
+			    	
+				if (button.type == "Zombies")
 				{
 					ArrayList<Point> spawns = new ArrayList<Point>();
 
@@ -106,11 +110,13 @@ public class MouseInputSystem extends CoreSystem{
 				{
 					world.setState(State.MENU);
 				}
-				else if (button.type == "Light")
+				else if (button.type == "Lights")
 				{
 					world.getSystemManager().toggleSystem(LightSystem.class);
 				}
 			}
+			else
+				button.active = false;
 		}
 	}
 }

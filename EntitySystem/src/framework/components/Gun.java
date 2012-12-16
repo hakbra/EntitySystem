@@ -18,16 +18,18 @@ public class Gun extends Component{
 	public float delay;
 	public float speed;
 	public int bullets;
+	public String tex;
 	
 	public long lastFired;
 	
-	public Gun(float damage, float spread, float speed, float delay, int bullets)
+	public Gun(float damage, float spread, float speed, float delay, int bullets, String texture)
 	{
 		this.damage = damage;
 		this.spread = spread;
 		this.speed = speed;
 		this.delay = delay;
 		this.bullets = bullets;
+		this.tex = texture;
 		this.name = "Gun";
 	}
 	
