@@ -35,6 +35,7 @@ import engine.GLEngine;
 import framework.CoreSystem;
 import framework.Entity;
 import framework.EntityManager;
+import framework.World;
 import framework.components.Angle;
 import framework.components.Button;
 import framework.components.Circle;
@@ -44,6 +45,7 @@ import framework.components.Hero;
 import framework.components.Item;
 import framework.components.Light;
 import framework.components.Obstacle;
+import framework.components.Particle;
 import framework.components.Pathfinder;
 import framework.components.Polygon;
 import framework.components.Position;
@@ -55,9 +57,9 @@ public class RenderSystem extends CoreSystem {
 	int colorTextureID;
 	int framebufferID;
 
-	public RenderSystem(EntityManager em)
+	public RenderSystem(World w)
 	{
-		super(em);
+		super(w);
 
 		if (!GLContext.getCapabilities().GL_EXT_framebuffer_object) {
 			System.out.println("FBO not supported!!!");
@@ -110,7 +112,7 @@ public class RenderSystem extends CoreSystem {
 		for (Entity e : em.getEntityAll(TextureComp.class))
 		{
 			TextureComp t = em.getComponent(e, TextureComp.class);
-			t.render(em, e);
+			t.render(world, e);
 		}
 	}
 
@@ -180,7 +182,7 @@ public class RenderSystem extends CoreSystem {
 			if (em.hasComponent(e, TextureComp.class))
 			{
 				TextureComp t = em.getComponent(e, TextureComp.class);
-				t.render(em, e);
+				t.render(world, e);
 			}
 			else
 			{
@@ -208,7 +210,7 @@ public class RenderSystem extends CoreSystem {
 			if (em.hasComponent(e, TextureComp.class))
 			{
 				TextureComp t = em.getComponent(e, TextureComp.class);
-				t.render(em, e);
+				t.render(world, e);
 			}
 
 			glPopMatrix();
@@ -225,17 +227,20 @@ public class RenderSystem extends CoreSystem {
 			if (em.hasComponent(e, Position.class))
 				Draw.translate(em.getComponent(e, Position.class).position);
 
+			if (em.hasComponent(e, Angle.class))
+				Draw.rotate(em.getComponent(e, Angle.class).angle);
+
 
 			if (em.hasComponent(e, TextureComp.class))
 			{
 				TextureComp t = em.getComponent(e, TextureComp.class);
-				t.render(em, e);
+				t.render(world, e);
 			}
 			else if(em.hasComponent(e, ColorComp.class))
 			{
 				Draw.setColor(em.getComponent(e, ColorComp.class).color);
 				Polygon poly = em.getComponent(e, Polygon.class);
-				poly.render(em, e);
+				poly.render(world, e);
 			}
 
 			glPopMatrix();
@@ -255,12 +260,12 @@ public class RenderSystem extends CoreSystem {
 			if (em.hasComponent(e, TextureComp.class))
 			{
 				TextureComp t = em.getComponent(e, TextureComp.class);
-				t.render(em, e);
+				t.render(world, e);
 			}
 			else
 			{
 				Polygon poly = em.getComponent(e, Polygon.class);
-				poly.render(em, e);
+				poly.render(world, e);
 			}
 
 			glPopMatrix();
@@ -280,7 +285,7 @@ public class RenderSystem extends CoreSystem {
 			Draw.setColor(Color.WHITE);
 			GL11.glEnable(GL11.GL_TEXTURE_2D);
 
-			em.font.drawString(25, 25 + 50*i, "Health: " + d.toString(), 1, 1);
+			world.getDataManager().font.drawString(25, 25 + 50*i, "Health: " + d.toString(), 1, 1);
 
 			GL11.glDisable(GL11.GL_TEXTURE_2D);
 
@@ -290,10 +295,10 @@ public class RenderSystem extends CoreSystem {
 	}
 	private void renderPath(EntityManager em)
 	{
-		Entity world = em.getByStringID("world");
-		if (world != null)
+		Entity worldEntity = em.getByStringID("world");
+		if (worldEntity != null)
 		{
-			Pathfinder pf = em.getComponent(world, Pathfinder.class);
+			Pathfinder pf = em.getComponent(worldEntity, Pathfinder.class);
 			pf.render();
 		}
 	}

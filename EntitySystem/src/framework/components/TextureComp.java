@@ -1,6 +1,5 @@
 package framework.components;
 
-import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
 import helpers.Color;
 import helpers.Draw;
 import helpers.Point;
@@ -12,6 +11,7 @@ import org.lwjgl.opengl.GL11;
 import framework.Component;
 import framework.Entity;
 import framework.EntityManager;
+import framework.World;
 
 public class TextureComp extends Component{
 
@@ -22,10 +22,11 @@ public class TextureComp extends Component{
 		this.texture = name;
 	}
 	
-	public void render(EntityManager em, Entity e) {
+	public void render(World w, Entity e) {
+		EntityManager em = w.getEntityManager();
 		Draw.setColor(new Color(1, 1, 1, 1));
 		GL11.glEnable(GL11.GL_TEXTURE_2D);
-		GL11.glBindTexture(GL11.GL_TEXTURE_2D, em.getTexture(texture).getTextureID());
+		GL11.glBindTexture(GL11.GL_TEXTURE_2D, w.getDataManager().getTexture(texture).getTextureID());
 		
 		if (em.hasComponent(e, Circle.class))
 		{
@@ -61,7 +62,7 @@ public class TextureComp extends Component{
 			GL11.glEnd();
 
 			Draw.setColor(new Color(1, 1, 1, 1));
-			Draw.write(em.font, poly.mid, text);
+			Draw.write(w.getDataManager().font, poly.mid, text);
 		}
 		else if (em.hasComponent(e, Polygon.class))
 		{

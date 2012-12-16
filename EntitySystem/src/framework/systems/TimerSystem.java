@@ -1,19 +1,17 @@
 package framework.systems;
 
-import helpers.Point;
 import helpers.Time;
 import framework.CoreSystem;
 import framework.Entity;
 import framework.EntityManager;
-import framework.components.Position;
+import framework.World;
 import framework.components.Timer;
-import framework.components.Velocity;
 
 public class TimerSystem extends CoreSystem{
 
-	public TimerSystem(EntityManager em)
+	public TimerSystem(World w)
 	{
-		super(em);
+		super(w);
 	}
 	
 	@Override

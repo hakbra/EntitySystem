@@ -4,12 +4,12 @@ import java.util.ArrayList;
 
 
 public abstract class CoreSystem {
-	EntityManager em;
+	protected World world;
 	
 	public  void run(EntityManager em){}
 	
-	public CoreSystem(EntityManager em)
+	public CoreSystem(World w)
 	{
-		this.em = em;
+		this.world = w;
 	}
 }

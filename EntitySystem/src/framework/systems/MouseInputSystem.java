@@ -11,6 +11,7 @@ import engine.GLEngine;
 import framework.CoreSystem;
 import framework.Entity;
 import framework.EntityManager;
+import framework.World;
 import framework.components.Angle;
 import framework.components.Button;
 import framework.components.Circle;
@@ -27,9 +28,9 @@ import framework.components.Zombie;
 
 public class MouseInputSystem extends CoreSystem{
 
-	public MouseInputSystem(EntityManager em)
+	public MouseInputSystem(World w)
 	{
-		super(em);
+		super(w);
 	}
 	
 	@Override
@@ -95,15 +96,15 @@ public class MouseInputSystem extends CoreSystem{
 				}
 				else if (button.type == "Play")
 				{
-					em.setState(State.RUN);
+					world.setState(State.RUN);
 				}
 				else if (button.type == "Exit")
 				{
-					em.setState(State.EXIT);
+					world.setState(State.EXIT);
 				}
 				else if (button.type == "Menu")
 				{
-					em.setState(State.MENU);
+					world.setState(State.MENU);
 				}
 			}
 		}

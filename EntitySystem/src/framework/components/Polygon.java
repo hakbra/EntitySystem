@@ -12,11 +12,12 @@ import org.lwjgl.opengl.GL11;
 import framework.Component;
 import framework.Entity;
 import framework.EntityManager;
+import framework.World;
 
 public class Polygon extends Component{
 
-	Point position;
-	Double angle;
+	Position position;
+	Angle angle;
 	
 	public ArrayList<Point> localPoints;
 	public Point mid;
@@ -47,6 +48,8 @@ public class Polygon extends Component{
 		mid.idiv(localPoints.size());
 		
 		inverted = false;
+		angle = new Angle(0);
+		position = new Position(new Point());
 	}
 
 	public static Polygon rectangle(Point dim)
@@ -76,14 +79,10 @@ public class Polygon extends Component{
 	public void entityUpdated(EntityManager em, Entity e)
 	{
 		if (em.hasComponent(e, Position.class))
-			position = em.getComponent(e, Position.class).position;
-		else
-			position = new Point();
+			position = em.getComponent(e, Position.class);
 
 		if (em.hasComponent(e, Angle.class))
-			angle = em.getComponent(e, Angle.class).angle;
-		else
-			angle = 0.0;
+			angle = em.getComponent(e, Angle.class);
 	}
 
 	public boolean isInside(Point p)
@@ -126,15 +125,15 @@ public class Polygon extends Component{
 		return closest;
 	}
 
-	public void render(EntityManager em, Entity e) {
+	public void render(World w, Entity e) {
 		GL11.glPushMatrix();
 		Draw.polygon(localPoints);
 		
-		if (em.hasComponent(e, Button.class))
+		if (w.getEntityManager().hasComponent(e, Button.class))
 		{
 			Draw.setColor(Color.WHITE);
-			String text = em.getComponent(e, Button.class).type;
-			Draw.write(em.font, mid, text);
+			String text = w.getEntityManager().getComponent(e, Button.class).type;
+			Draw.write(w.getDataManager().font, mid, text);
 		}
 		
 		GL11.glPopMatrix();
@@ -146,8 +145,8 @@ public class Polygon extends Component{
 		
 		for (Point p : localPoints)
 		{
-			Point t = p.rot(angle);
-			t = t.add(position);
+			Point t = p.rot(angle.angle);
+			t = t.add(position.position);
 			worldPoints.add(t);
 		}
 		

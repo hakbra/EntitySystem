@@ -11,6 +11,7 @@ import org.lwjgl.input.Keyboard;
 import framework.CoreSystem;
 import framework.Entity;
 import framework.EntityManager;
+import framework.World;
 import framework.components.Angle;
 import framework.components.Bullet;
 import framework.components.Circle;
@@ -32,9 +33,9 @@ public class PlayerInputSystem extends CoreSystem{
 	
 	public static float s = 2f;
 
-	public PlayerInputSystem(EntityManager em)
+	public PlayerInputSystem(World w)
 	{
-		super(em);
+		super(w);
 	}
 	
 	@Override

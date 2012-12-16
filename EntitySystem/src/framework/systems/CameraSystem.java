@@ -5,15 +5,16 @@ import engine.GLEngine;
 import framework.CoreSystem;
 import framework.Entity;
 import framework.EntityManager;
+import framework.World;
 import framework.components.Hero;
 import framework.components.Polygon;
 import framework.components.Position;
 
 public class CameraSystem extends CoreSystem{
 
-	public CameraSystem(EntityManager em)
+	public CameraSystem(World w)
 	{
-		super(em);
+		super(w);
 	}
 
 	@Override

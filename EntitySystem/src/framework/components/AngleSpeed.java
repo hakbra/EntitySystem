@@ -4,9 +4,9 @@ import framework.Component;
 
 public class AngleSpeed extends Component {
 
-	public float speed;
+	public double speed;
 	
-	public AngleSpeed(float s)
+	public AngleSpeed(double s)
 	{
 		this.speed = s;
 	}

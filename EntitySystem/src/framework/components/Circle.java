@@ -19,6 +19,7 @@ public class Circle extends Component{
 	{
 		this.radius = r;
 		this.name = "Circle";
+		this.position = new Point();
 	}
 	
 	@Override

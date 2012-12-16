@@ -5,17 +5,17 @@ import helpers.Time;
 import framework.CoreSystem;
 import framework.Entity;
 import framework.EntityManager;
+import framework.World;
 import framework.components.Angle;
 import framework.components.AngleSpeed;
 import framework.components.Position;
 import framework.components.Velocity;
-import framework.components.Zombie;
 
 public class PhysicsSystem extends CoreSystem{
 	
-	public PhysicsSystem(EntityManager em)
+	public PhysicsSystem(World w)
 	{
-		super(em);
+		super(w);
 	}
 	
 	@Override

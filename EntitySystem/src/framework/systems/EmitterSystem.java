@@ -9,6 +9,7 @@ import java.util.Random;
 import framework.CoreSystem;
 import framework.Entity;
 import framework.EntityManager;
+import framework.World;
 import framework.components.Circle;
 import framework.components.Collider;
 import framework.components.ColorComp;
@@ -20,9 +21,9 @@ import framework.components.Velocity;
 
 public class EmitterSystem extends CoreSystem{
 
-	public EmitterSystem(EntityManager em)
+	public EmitterSystem(World w)
 	{
-		super(em);
+		super(w);
 	}
 
 	@Override

@@ -16,19 +16,15 @@ import org.newdawn.slick.util.ResourceLoader;
 
 public class EntityManager {
     private HashMap<Class<?>, HashMap<Entity, ? extends Component>> entities = new HashMap<Class<?>, HashMap<Entity, ? extends Component>>();
-    private HashMap<String, Texture> textures = new HashMap<String, Texture>();
-    private ArrayList<Entity> deleties = new ArrayList<Entity>();
     public HashMap<String, Entity> stringIDs = new HashMap<String, Entity>();
+    private ArrayList<Entity> deleties = new ArrayList<Entity>();
     
-    public StateManager sm;
-    public MyFont font;
+    public World world;
     
-    public EntityManager(StateManager sm)
+    public EntityManager(World w)
     {
-    	this.sm = sm;
+    	this.world = w;
 
-		Font awtFont = new Font("Times New Roman", Font.BOLD, 24);
-		font = new MyFont(awtFont, false);
     }
 
     public void addStringID(Entity e)
@@ -148,26 +144,19 @@ public class EntityManager {
     	deleties.clear();
     }
 
-	public void setState(State s)
-	{
-		sm.setState(s);
-	}
-
-	public Texture getTexture(String name) {
-		Texture t = textures.get(name);
-		if (t != null)
-			return t;
-		
-		try
+	public void addEntity(Entity e) {
+		for (Component c : e.components)
 		{
-			t = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("res/" + name));
+			HashMap<Entity, Component> componentMap = (HashMap<Entity, Component>) entities.get(c.getClass());
+			if (componentMap == null) {
+				componentMap = new HashMap<Entity, Component>();
+				entities.put(c.getClass(), componentMap);
+			}
+			componentMap.put(e, c);
 		}
-		catch (Exception e)
+		for (Component c : e.components)
 		{
-			System.out.println("Couldn't load " + name);
-			System.exit(0);
+			c.entityUpdated(this, e);
 		}
-		textures.put(name, t);
-		return t;
 	}
 }

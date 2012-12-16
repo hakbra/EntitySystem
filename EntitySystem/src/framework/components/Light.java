@@ -15,41 +15,35 @@ import framework.EntityManager;
 
 public class Light extends Component{
 
-	ArrayList<Line> edges;
 	double radius;
-	
+
 	public Light(double r)
 	{
 		this.radius = r;
 	}
 
 	public void render(EntityManager em, Entity e) {
+		ArrayList<Line> edges = new ArrayList<Line>();
 		Point pos = em.getComponent(e, Position.class).position;
-		
-		if (edges == null)
+
+		for (Entity p : em.getEntityAll(Polygon.class, Obstacle.class))
 		{
-			edges = new ArrayList<Line>();
-			for (Entity p : em.getEntityAll(Polygon.class, Obstacle.class))
-			{
-				Polygon poly = em.getComponent(p, Polygon.class);
-				Point polyPos = em.getComponent(p, Position.class).position;
-				for (int i = 0; i < poly.localPoints.size(); i++)
-					edges.add( new Line( polyPos.add(poly.localPoints.get(i)), polyPos.add(poly.localPoints.get((i+1) % poly.localPoints.size()))));
-			}
+			Polygon poly = em.getComponent(p, Polygon.class);
+			edges.addAll(poly.getLines());
 		}
-		
+
 		ArrayList<Line> cands = new ArrayList<Line>();
 		for (Line l : edges)
 			if (l.dist(pos) < radius)
 				cands.add(l);
-		
+
 		ArrayList<Point> points = new ArrayList<Point>();
 		for (double i = 0; i <= 360.01; i += 150 / radius)
 		{
 			Point ray = new Point(i);
 			Line seg = new Line(pos, pos.add(ray.mult(radius)));
 			double min = radius;
-			
+
 			for (Line l : cands)
 			{
 				Point col = l.intersectionLine(seg);
@@ -60,10 +54,10 @@ public class Light extends Component{
 						min = tempMin;
 				}
 			}
-			
+
 			points.add( pos.add(ray.mult(min)));
 		}
-		
+
 		Color c = new Color(1, 1, 1, 1);
 		Draw.setColor(c);
 		GL11.glBegin(GL11.GL_TRIANGLE_FAN);

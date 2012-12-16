@@ -1,6 +1,5 @@
 package engine;
 
-import helpers.Color;
 import helpers.Point;
 import helpers.State;
 import helpers.Time;
@@ -10,14 +9,13 @@ import java.util.ArrayList;
 import org.lwjgl.input.Keyboard;
 
 import framework.Entity;
-import framework.StateManager;
+import framework.EntityManager;
+import framework.World;
 import framework.components.Angle;
 import framework.components.AngleSpeed;
 import framework.components.Button;
 import framework.components.Circle;
 import framework.components.Collider;
-import framework.components.ColorComp;
-import framework.components.Followable;
 import framework.components.Gun;
 import framework.components.Health;
 import framework.components.Hero;
@@ -44,7 +42,7 @@ import framework.systems.TimerSystem;
 
 public class Main
 {
-	StateManager sm;
+	World world;
 	Time t;
 
 	public static void main(String[] args)
@@ -55,107 +53,103 @@ public class Main
 
 	public Main()
 	{
-		sm = new StateManager(State.MENU);
-		t = new Time();
 		GLEngine.init();
+		world = new World(State.MENU);
+		t = new Time();
 
-		// Menu-state
-		sm.addSystem(State.MENU, RenderSystem.class);
-		sm.addSystem(State.MENU, MouseInputSystem.class);
-
+		world.addSystem(new RenderSystem(world), State.MENU);
+		world.addSystem(new MouseInputSystem(world), State.MENU);
+		
 		Entity runButton = new Entity();
 		runButton.name = "runButton";
-		sm.addComponent(State.MENU, runButton, Polygon.rectangle(new Point(200, 100)));
-		sm.addComponent(State.MENU, runButton, new Position(new Point(500, 300)));
-		sm.addComponent(State.MENU, runButton, new Button("Play"));
-		sm.addComponent(State.MENU, runButton, new TextureComp("button.png"));
+		runButton.components.add(Polygon.rectangle(new Point(200, 100)));
+		runButton.components.add(new Position(new Point(500, 300)));
+		runButton.components.add(new Button("Play"));
+		runButton.components.add(new TextureComp("button.png"));
+		world.addEntity(runButton, State.MENU);
 
 		Entity exitButton = new Entity();
 		exitButton.name = "exitButton";
-		sm.addComponent(State.MENU, exitButton, Polygon.rectangle(new Point(200, 100)));
-		sm.addComponent(State.MENU, exitButton, new Position(new Point(500, 150)));
-		sm.addComponent(State.MENU, exitButton, new Button("Exit"));
-		sm.addComponent(State.MENU, exitButton, new TextureComp("button.png"));
-
-		//Run-state
-		sm.addSystem(State.RUN, PlayerInputSystem.class);
-		sm.addSystem(State.RUN, CameraSystem.class);
-		sm.addSystem(State.RUN, PathSystem.class);
-		sm.addSystem(State.RUN, FollowerSystem.class);
-		sm.addSystem(State.RUN, PhysicsSystem.class);
-		sm.addSystem(State.RUN, CollisionSystem.class);
-		sm.addSystem(State.RUN, RenderSystem.class);
-		sm.addSystem(State.RUN, EmitterSystem.class);
-		sm.addSystem(State.RUN, MouseInputSystem.class);
-		sm.addSystem(State.RUN, KeyInputSystem.class);
-		sm.addSystem(State.RUN, TimerSystem.class);
-
+		exitButton.components.add(Polygon.rectangle(new Point(200, 100)));
+		exitButton.components.add(new Position(new Point(500, 150)));
+		exitButton.components.add(new Button("Exit"));
+		exitButton.components.add(new TextureComp("button.png"));
+		world.addEntity(exitButton, State.MENU);
+		
+		world.addSystem(new PlayerInputSystem(world), State.RUN);
+		world.addSystem(new CameraSystem(world), State.RUN);
+		world.addSystem(new PathSystem(world), State.RUN);
+		world.addSystem(new FollowerSystem(world), State.RUN);
+		world.addSystem(new PhysicsSystem(world), State.RUN);
+		world.addSystem(new CollisionSystem(world), State.RUN);
+		world.addSystem(new RenderSystem(world), State.RUN);
+		world.addSystem(new EmitterSystem(world), State.RUN);
+		world.addSystem(new MouseInputSystem(world), State.RUN);
+		world.addSystem(new KeyInputSystem(world), State.RUN);
+		world.addSystem(new TimerSystem(world), State.RUN);
 
 		Entity player = new Entity();
 		player.name = "player1";
-		sm.addComponent(State.RUN, player, new Hero());
-		sm.addComponent(State.RUN, player, new Circle(25));
-		sm.addComponent(State.RUN, player, new Position(new Point(300, 250)));
-		sm.addComponent(State.RUN, player, new Velocity(new Point(0, 0)));
-		sm.addComponent(State.RUN, player, new Angle(0));
-		sm.addComponent(State.RUN, player, new Followable());
-		sm.addComponent(State.RUN, player, new KeyInput(Keyboard.KEY_A, Keyboard.KEY_D, Keyboard.KEY_W, Keyboard.KEY_S, Keyboard.KEY_SPACE));
-		sm.addComponent(State.RUN, player, new Gun(1, 0, 10, 20, 1));
-		sm.addComponent(State.RUN, player, new Health());
-		sm.addComponent(State.RUN, player, new Collider(4));
-		sm.addComponent(State.RUN, player, new Obstacle());
-		sm.addComponent(State.RUN, player, new Light(300));
-		sm.addComponent(State.RUN, player, new TextureComp("hero.png"));
-		sm.addStringID(State.RUN, player);
+		player.components.add(new Hero());
+		player.components.add(new Circle(25));
+		player.components.add(new Position(new Point(300, 250)));
+		player.components.add(new Velocity(new Point(0, 0)));
+		player.components.add(new Angle(0));
+		player.components.add(new KeyInput(Keyboard.KEY_A, Keyboard.KEY_D, Keyboard.KEY_W, Keyboard.KEY_S, Keyboard.KEY_SPACE));
+		player.components.add(new Gun(1, 0, 10, 20, 1));
+		player.components.add(new Health());
+		player.components.add(new Collider(4));
+		player.components.add(new Obstacle());
+		player.components.add(new Light(300));
+		player.components.add(new TextureComp("hero.png"));
+		world.addEntityAndID(player, State.RUN);
 
-		addHealth(sm);
+		addHealth(world);
 
-		Entity world = new Entity();
-		world.name = "world";
-		sm.addComponent(State.RUN, world, new Position( new Point()));
-		sm.addComponent(State.RUN, world, new Polygon( new Point(0, 0), new Point(GLEngine.WIDTH, 0)));
-		sm.addComponent(State.RUN, world, new Pathfinder(new Point(0, 0), new Point(GLEngine.WIDTH*2, GLEngine.HEIGHT), 10));
-		sm.addStringID(State.RUN, world);
+		Entity worldEntity = new Entity();
+		worldEntity.name = "world";
+		worldEntity.components.add(new Position( new Point()));
+		worldEntity.components.add(new Polygon( new Point(0, 0), new Point(GLEngine.WIDTH, 0)));
+		worldEntity.components.add(new Pathfinder(new Point(0, 0), new Point(GLEngine.WIDTH*2, GLEngine.HEIGHT), 10));
+		world.addEntityAndID(worldEntity, State.RUN);
 
-		createMaze(sm);
+		createMaze(world);
 
 		Entity menuButton = new Entity();
 		menuButton.name = "button";
-		sm.addComponent(State.RUN, menuButton, Polygon.rectangle(new Point(100, 50)));
-		sm.addComponent(State.RUN, menuButton, new Position(new Point(1150, 650)));
-		sm.addComponent(State.RUN, menuButton, new Button("Menu"));
-		sm.addComponent(State.RUN, menuButton, new TextureComp("button.png"));
+		menuButton.components.add(Polygon.rectangle(new Point(100, 50)));
+		menuButton.components.add(new Position(new Point(1150, 650)));
+		menuButton.components.add(new Button("Menu"));
+		menuButton.components.add(new TextureComp("button.png"));
+		world.addEntity(menuButton, State.RUN);
 
-		//*
 		Entity exitButton2 = new Entity();
 		exitButton2.name = "exitButton";
-		sm.addComponent(State.RUN, exitButton2, Polygon.rectangle(new Point(100, 50)));
-		sm.addComponent(State.RUN, exitButton2, new Position(new Point(25, 650)));
-		sm.addComponent(State.RUN, exitButton2, new Button("Exit"));
-		sm.addComponent(State.RUN, exitButton2, new TextureComp("button.png"));
-		/**/
+		exitButton2.components.add(Polygon.rectangle(new Point(100, 50)));
+		exitButton2.components.add(new Position(new Point(25, 650)));
+		exitButton2.components.add(new Button("Exit"));
+		exitButton2.components.add(new TextureComp("button.png"));
+		world.addEntity(exitButton2, State.RUN);
 
 		Entity zombieButton = new Entity();
 		zombieButton.name = "zombieButton";
-		sm.addComponent(State.RUN, zombieButton, Polygon.rectangle(new Point(100, 50)));
-		sm.addComponent(State.RUN, zombieButton, new Position(new Point(590, 650)));
-		sm.addComponent(State.RUN, zombieButton, new Button("Zombie"));
-		sm.addComponent(State.RUN, zombieButton, new TextureComp("button.png"));
+		zombieButton.components.add(Polygon.rectangle(new Point(100, 50)));
+		zombieButton.components.add(new Position(new Point(590, 650)));
+		zombieButton.components.add(new Button("Zombie"));
+		zombieButton.components.add(new TextureComp("button.png"));
+		world.addEntity(zombieButton, State.RUN);
 
 		Entity screenButton = new Entity();
 		screenButton.name = "screenButton";
-		sm.addComponent(State.RUN, screenButton, Polygon.rectangle(new Point(100, 50)));
-		sm.addComponent(State.RUN, screenButton, new Position(new Point(1150, 25)));
-		sm.addComponent(State.RUN, screenButton, new Button("Screen"));
-		sm.addComponent(State.RUN, screenButton, new TextureComp("button.png"));
-
-		sm.addComponent(State.MENU, screenButton, Polygon.rectangle(new Point(100, 50)));
-		sm.addComponent(State.MENU, screenButton, new Position(new Point(1150, 25)));
-		sm.addComponent(State.MENU, screenButton, new Button("Screen"));
-		sm.addComponent(State.MENU, screenButton, new TextureComp("button.png"));
+		screenButton.components.add(Polygon.rectangle(new Point(100, 50)));
+		screenButton.components.add(new Position(new Point(1150, 25)));
+		screenButton.components.add(new Button("Screen"));
+		screenButton.components.add(new TextureComp("button.png"));
+		world.addEntity(screenButton, State.RUN);
+		world.addEntity(screenButton, State.MENU);
 	}
 
-	private void addHealth(StateManager sm)
+	private void addHealth(World world)
 	{
 		ArrayList<Point> points = new ArrayList<Point>();
 		
@@ -170,16 +164,17 @@ public class Main
 		{
 			Entity health = new Entity();
 			health.name = "health";
-			sm.addComponent(State.RUN, health, new Circle(15));
-			sm.addComponent(State.RUN, health, new Position(p));
-			sm.addComponent(State.RUN, health, new TextureComp("health.png"));
-			sm.addComponent(State.RUN, health, new Item("health", 100));
-			sm.addComponent(State.RUN, health, new Angle(0));
-			sm.addComponent(State.RUN, health, new AngleSpeed(1));
+			health.components.add(new Circle(15));
+			health.components.add(new Position(p));
+			health.components.add(new TextureComp("health.png"));
+			health.components.add(new Item("health", 100));
+			health.components.add(new Angle(0));
+			health.components.add(new AngleSpeed(1));
+			world.addEntity(health, State.RUN);
 		}
 	}
 
-	private void createMaze(StateManager sm) {
+	private void createMaze(World world) {
 		ArrayList<Point> p = new ArrayList<Point>();
 
 		p.add(  new Point(400, 50)  );
@@ -280,36 +275,40 @@ public class Main
 		{
 			Entity rectangle = new Entity();
 			rectangle.name = "rectangle";
-			sm.addComponent(State.RUN, rectangle, Polygon.rectangle(p.remove(0)));
-			sm.addComponent(State.RUN, rectangle, new Position(p.remove(0)));
-			sm.addComponent(State.RUN, rectangle, new Obstacle());
-			sm.addComponent(State.RUN, rectangle, new TextureComp("bush.png"));
+			rectangle.components.add(Polygon.rectangle(p.remove(0)));
+			rectangle.components.add(new Position(p.remove(0)));
+			rectangle.components.add(new Obstacle());
+			rectangle.components.add(new TextureComp("bush.png"));
+			world.addEntity(rectangle, State.RUN);
+			
 		}
 
 		Entity polygon = new Entity();
 		polygon.name = "polygon";
-		sm.addComponent(State.RUN, polygon, new Polygon(
-				new Point(0, 100), new Point(100, 0), new Point(0, -100), new Point(-100, 0)
-				));
-		sm.addComponent(State.RUN, polygon, new Position(new Point(GLEngine.WIDTH*2 - 250, GLEngine.HEIGHT / 2)));
-		sm.addComponent(State.RUN, polygon, new Obstacle());
-		sm.addComponent(State.RUN, polygon, new TextureComp("bush.png"));
+		polygon.components.add(new Polygon(new Point(0, 100), new Point(100, 0), new Point(0, -100), new Point(-100, 0)				));
+		polygon.components.add(new Position(new Point(GLEngine.WIDTH*2 - 250, GLEngine.HEIGHT / 2)));
+		polygon.components.add(new Obstacle());
+		polygon.components.add(new TextureComp("bush.png"));
+		polygon.components.add(new Angle(45));
+		polygon.components.add(new AngleSpeed(0.2));
+		world.addEntity(polygon, State.RUN);
 
 		Entity border = new Entity();
 		border.name = "border";
-		sm.addComponent(State.RUN, border, Polygon.invertedRectangle(new Point(GLEngine.WIDTH*2, GLEngine.HEIGHT)));
-		sm.addComponent(State.RUN, border, new Position(new Point(0, 0)));
-		sm.addComponent(State.RUN, border, new Obstacle());
+		border.components.add(Polygon.invertedRectangle(new Point(GLEngine.WIDTH*2, GLEngine.HEIGHT)));
+		border.components.add(new Position(new Point(0, 0)));
+		border.components.add(new Obstacle());
+		world.addEntity(border, State.RUN);
 	}
 
 	public void run()
 	{
-		while (GLEngine.running() && sm.run())
+		while (GLEngine.running() && world.run())
 		{
 			GLEngine.clearState();
 			GLEngine.prepare2D();
 
-			sm.runSystems();
+			world.runSystems();
 
 			GLEngine.endRender();
 

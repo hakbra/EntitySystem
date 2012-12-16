@@ -4,6 +4,7 @@ import helpers.Point;
 import framework.CoreSystem;
 import framework.Entity;
 import framework.EntityManager;
+import framework.World;
 import framework.components.Angle;
 import framework.components.Circle;
 import framework.components.Follower;
@@ -15,9 +16,9 @@ import framework.components.Zombie;
 
 public class FollowerSystem extends CoreSystem{
 
-	public FollowerSystem(EntityManager em)
+	public FollowerSystem(World w)
 	{
-		super(em);
+		super(w);
 	}
 	
 	@Override

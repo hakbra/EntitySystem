@@ -8,6 +8,7 @@ import java.util.PriorityQueue;
 import framework.CoreSystem;
 import framework.Entity;
 import framework.EntityManager;
+import framework.World;
 import framework.components.Circle;
 import framework.components.Hero;
 import framework.components.Obstacle;
@@ -20,9 +21,9 @@ import framework.components.Zombie;
 
 public class PathSystem extends CoreSystem{
 
-	public PathSystem(EntityManager em)
+	public PathSystem(World w)
 	{
-		super(em);
+		super(w);
 	}
 
 	@Override

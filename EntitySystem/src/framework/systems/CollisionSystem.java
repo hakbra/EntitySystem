@@ -5,6 +5,7 @@ import helpers.Time;
 import framework.CoreSystem;
 import framework.Entity;
 import framework.EntityManager;
+import framework.World;
 import framework.components.Circle;
 import framework.components.Collider;
 import framework.components.Damage;
@@ -40,9 +41,9 @@ public class CollisionSystem extends CoreSystem {
 		}
 	}
 
-	public CollisionSystem(EntityManager em)
+	public CollisionSystem(World w)
 	{
-		super(em);
+		super(w);
 	}
 
 	@Override
