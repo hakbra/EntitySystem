@@ -42,7 +42,7 @@ public class GLEngine {
 			glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Black
 			GL11.glClearStencil(1);
 			glPointSize(2);
-
+			//GL11.glPolygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_LINE);
 
 			GL11.glEnable(GL11.GL_BLEND);
 			GL11.glBlendFunc(GL11.GL_SRC_ALPHA,GL11.GL_ONE_MINUS_SRC_ALPHA);

@@ -23,6 +23,22 @@ import framework.components.Zombie;
 
 
 public class CollisionSystem extends CoreSystem {
+	
+	private class Collision
+	{
+		public Entity a;
+		public Entity b;
+		public Point poi;
+		public boolean inside;
+		
+		public Collision(Entity e1, Entity e2, Point p, boolean i)
+		{
+			this.a = e1;
+			this.b = e2;
+			this.poi = p;
+			this.inside = i;
+		}
+	}
 
 	public CollisionSystem(EntityManager em)
 	{
@@ -36,131 +52,109 @@ public class CollisionSystem extends CoreSystem {
 		{
 			Point circle1pos = em.getComponent(e1, Position.class).position;
 			Circle circle1 = em.getComponent(e1, Circle.class);
-			Point s1 = em.getComponent(e1, Velocity.class).velocity;
-			Point collision = null;
 
 			for (Entity e2 : em.getEntityAll(Circle.class))
 			{
 				if (e1 == e2)
 					continue;
 
-				Point circle2pos = em.getComponent(e2, Position.class).position;
 				Circle circle2 = em.getComponent(e2, Circle.class);
-				Point s2  = null;
-				Velocity vel2 = em.getComponent(e2, Velocity.class);
-				if (vel2 != null)
-					s2 = vel2.velocity;
 
-				double moveDist = circle1pos.dist(circle2pos) - circle1.radius - circle2.radius;
-				Point dir = circle1pos.sub(circle2pos).norm();
+				Point col = circle2.getClosest(circle1pos);
+				boolean inside = circle2.isInside(circle1pos);
 
-				if (moveDist < 0)
-				{
-					if (em.hasComponent(e2, Obstacle.class))
-					{
-						Point line = dir.mult(moveDist);
-
-						int c1 = 1;
-						if (s1.len() > 0)
-							c1 = 2;
-
-						int c2 = 0;
-						if (s2 != null)
-							if (s2.len() > 0)
-								c2 = 2;
-							else
-								c2 = 1;
-
-						if (c2 > c1)
-							circle2pos.iadd(line);
-						else if (c1 > c2)
-							circle1pos.isub(line);
-						else
-						{
-							float r1squared = circle1.radius * circle1.radius;
-							float r2squared = circle2.radius * circle2.radius;
-							float sum = r1squared + r2squared;
-							float p1move = r2squared / sum;
-							float p2move = r1squared / sum;
-							circle2pos.iadd(line.mult(p2move));
-							circle1pos.isub(line.mult(p1move));
-						}
-					}
-					collision = circle2pos.add(dir.mult(circle2.radius));
-					handleCollision(em, e1, e2, collision);
-				}
+				if (circle1pos.dist(col) < circle1.radius || inside)
+					handleCollision( em, new Collision(e1, e2, col, inside) );
 			}
 
 			for (Entity e2 : em.getEntityAll(Polygon.class, Obstacle.class))
 			{
 				Polygon poly = em.getComponent(e2, Polygon.class);
 
-				if (poly.isInside(circle1pos))
-					collision = circle1pos.sub(s1);
+				Point col = poly.getClosest(circle1pos);
+				boolean inside = poly.isInside(circle1pos);
 
-				Point closest = poly.getClosest(circle1pos);
-				double moveDist = circle1pos.dist(closest) - circle1.radius;
-				Point line = null;
-
-				if (poly.isInside(circle1pos))
-				{
-					moveDist += 2*circle1.radius;
-					line = closest.sub(circle1pos).norm();
-				}
-				else if (moveDist < 0)
-					line = closest.sub(circle1pos).norm();
-
-				if (line != null)
-				{
-					circle1pos.iadd(line.mult(moveDist));
-					handleCollision(em, e1, e2, closest);
-				}
+				if (circle1pos.dist(col) < circle1.radius || inside)
+					handleCollision( em, new Collision(e1, e2, col, inside) );
 			}
 		}
 	}
 
-	private void handleCollision(EntityManager em, Entity a, Entity b, Point poi)
+	private void handleCollision(EntityManager em, Collision c)
 	{
-		if (em.hasComponent(b, Obstacle.class))
+		if (em.hasComponent(c.a, Collider.class) && em.hasComponent(c.b, Obstacle.class))
 		{
-			if (em.hasComponent(a, DestroyOnImpact.class))
-				em.removeEntity(a);
+			Point posA = em.getComponent(c.a, Position.class).position;
+			Point velA = em.getComponent(c.a, Velocity.class).velocity;
+			Circle circle = em.getComponent(c.a, Circle.class);
 
-			if (em.hasComponent(a, EmitterOnImpact.class))
+			if (c.inside)
+				c.poi.isub(velA);
+			double dist = posA.dist(c.poi) - circle.radius;
+			if (c.inside)
+				dist += 2*circle.radius;
+			Point mov = posA.sub(c.poi).norm(dist);
+			
+			if (em.hasComponent(c.b, Collider.class))
+			{
+				Point posB = em.getComponent(c.b, Position.class).position;
+				int levelA = em.getComponent(c.a, Collider.class).level;
+				int levelB = em.getComponent(c.b, Collider.class).level;
+				
+				if (levelA > levelB)
+					posB.iadd(mov);
+				else if (levelA < levelB)
+					posA.isub(mov);
+				else
+				{
+					posB.iadd(mov.div(2));
+					posA.isub(mov.div(2));
+				}
+			}
+			else
+				posA.isub(mov);
+		}
+		
+		if (em.hasComponent(c.b, Obstacle.class))
+		{
+			if (em.hasComponent(c.a, DestroyOnImpact.class))
+				em.removeEntity(c.a);
+
+			if (em.hasComponent(c.a, EmitterOnImpact.class))
 			{
 				Entity emitter = new Entity();
 				emitter.name = "emitter";
-				em.addComponent(emitter, new Position(poi));
+				em.addComponent(emitter, new Position(c.poi));
 				em.addComponent(emitter, new Timer(0));
 				em.addComponent(emitter, new Emitter());
 			}
 		}
-		else if (em.hasComponent(b, Item.class))
+		else if (em.hasComponent(c.b, Item.class))
 		{
-			Item item = em.getComponent(b, Item.class);
-			if (item.type == "health" && em.hasComponents(a, Health.class, Hero.class))
+			Item item = em.getComponent(c.b, Item.class);
+			if (item.type == "health" && em.hasComponents(c.a, Health.class, Hero.class))
 			{
-				Health health = em.getComponent(a, Health.class);
+				Health health = em.getComponent(c.a, Health.class);
 				if (health.current < health.max)
 				{
 					health.current += item.value;
 					if (health.current > health.max)
 						health.current = health.max;
-					em.removeEntity(b);
+					em.removeEntity(c.b);
 				}
 					
 			}
 		}
 
-		if (em.hasComponent(a, Zombie.class) && em.hasComponent(b, Zombie.class))
+		if (em.hasComponent(c.a, Zombie.class) && em.hasComponent(c.b, Zombie.class))
 			return;
 
-		if (em.hasComponent(a, Damage.class) && em.hasComponent(b, Health.class))
+		if (em.hasComponent(c.a, Damage.class) && em.hasComponent(c.b, Health.class))
 		{
-			Damage dam = em.getComponent(a, Damage.class);
-			Health health = em.getComponent(b, Health.class);
+			Damage dam = em.getComponent(c.a, Damage.class);
+			Health health = em.getComponent(c.b, Health.class);
 
-			if (b == dam.parent)
+			if (c.b == dam.parent)
 				return;
 
 			if (!dam.canDamage())
@@ -170,7 +164,7 @@ public class CollisionSystem extends CoreSystem {
 
 			health.current -= dam.amount;
 			if (health.current <= 0)
-				em.removeEntity(b);
+				em.removeEntity(c.b);
 
 			dam.time = Time.getTime();
 		}

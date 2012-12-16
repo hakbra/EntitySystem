@@ -50,7 +50,7 @@ public class EmitterSystem extends CoreSystem{
 				em.addComponent(particle, new ColorComp(c));
 				em.addComponent(particle, new Timer(time));
 				em.addComponent(particle, new Particle());
-				em.addComponent(particle, new Collider());
+				em.addComponent(particle, new Collider(1));
 			}
 		}
 

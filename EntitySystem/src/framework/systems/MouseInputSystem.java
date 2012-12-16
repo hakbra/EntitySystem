@@ -84,7 +84,7 @@ public class MouseInputSystem extends CoreSystem{
 						em.addComponent(zombie, new Follower());
 						em.addComponent(zombie, new Damage(1, 200));
 						em.addComponent(zombie, new Obstacle());
-						em.addComponent(zombie, new Collider());
+						em.addComponent(zombie, new Collider(4));
 						em.addComponent(zombie, new Angle(0));
 						em.addComponent(zombie, new TextureComp("zombie.png"));
 					}

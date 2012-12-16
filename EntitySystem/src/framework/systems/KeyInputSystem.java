@@ -60,7 +60,7 @@ public class KeyInputSystem extends CoreSystem{
 			em.addComponent(player, new KeyInput(Keyboard.KEY_A, Keyboard.KEY_D, Keyboard.KEY_W, Keyboard.KEY_S, Keyboard.KEY_SPACE));
 			em.addComponent(player, new Gun(2, 2, 10, 50, 2));
 			em.addComponent(player, new Health());
-			em.addComponent(player, new Collider());
+			em.addComponent(player, new Collider(4));
 			em.addComponent(player, new Obstacle());
 			em.addComponent(player, new Light(400));
 			em.addComponent(player, new TextureComp("hero.png"));
@@ -79,7 +79,7 @@ public class KeyInputSystem extends CoreSystem{
 			em.addComponent(player, new KeyInput(Keyboard.KEY_LEFT, Keyboard.KEY_RIGHT, Keyboard.KEY_UP, Keyboard.KEY_DOWN, Keyboard.KEY_RCONTROL));
 			em.addComponent(player, new Gun(2, 2, 10, 50, 2));
 			em.addComponent(player, new Health());
-			em.addComponent(player, new Collider());
+			em.addComponent(player, new Collider(4));
 			em.addComponent(player, new Obstacle());
 			em.addComponent(player, new Light(400));
 			em.addComponent(player, new TextureComp("hero.png"));
