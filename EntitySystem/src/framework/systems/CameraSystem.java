@@ -20,9 +20,9 @@ public class CameraSystem extends CoreSystem{
 	@Override
 	public void run(EntityManager em)
 	{
-		Entity world = em.getByStringID("world");
-		Point pos = em.getComponent(world, Position.class).position;
-		Polygon poly = em.getComponent(world, Polygon.class);
+		Entity cam = em.getByStringID("camera");
+		Point pos = em.getComponent(cam, Position.class).position;
+		Polygon poly = em.getComponent(cam, Polygon.class);
 		
 		Point mid = new Point();
 		int c = 0;

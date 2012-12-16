@@ -106,6 +106,10 @@ public class MouseInputSystem extends CoreSystem{
 				{
 					world.setState(State.MENU);
 				}
+				else if (button.type == "Light")
+				{
+					world.getSystemManager().toggleSystem(LightSystem.class);
+				}
 			}
 		}
 	}

@@ -124,20 +124,6 @@ public class Polygon extends Component{
 
 		return closest;
 	}
-
-	public void render(World w, Entity e) {
-		GL11.glPushMatrix();
-		Draw.polygon(localPoints);
-		
-		if (w.getEntityManager().hasComponent(e, Button.class))
-		{
-			Draw.setColor(Color.WHITE);
-			String text = w.getEntityManager().getComponent(e, Button.class).type;
-			Draw.write(w.getDataManager().font, mid, text);
-		}
-		
-		GL11.glPopMatrix();
-	}
 	
 	public ArrayList<Point> getPoints()
 	{

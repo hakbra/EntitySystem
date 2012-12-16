@@ -41,8 +41,4 @@ public class Circle extends Component{
 		Point dir = p.sub(position).norm();
 		return position.add(dir.mult(this.radius));
 	}
-
-	public void render(EntityManager em, Entity e) {
-		Draw.circle(radius);
-	}
 }

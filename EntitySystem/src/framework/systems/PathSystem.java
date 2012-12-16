@@ -29,8 +29,8 @@ public class PathSystem extends CoreSystem{
 	@Override
 	public void run(EntityManager em)
 	{
-		Entity world = em.getByStringID("world");
-		Pathfinder pf = em.getComponent(world, Pathfinder.class);
+		Entity cam = em.getByStringID("camera");
+		Pathfinder pf = em.getComponent(cam, Pathfinder.class);
 
 		long now = Time.getTime();
 		pf.update = now;

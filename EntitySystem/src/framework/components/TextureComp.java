@@ -16,15 +16,23 @@ import framework.World;
 public class TextureComp extends Component{
 
 	String texture;
+	Point coords;
 	
 	public TextureComp(String name)
 	{
 		this.texture = name;
+		this.coords = new Point(0, 0);
+	}
+
+	public TextureComp(String name, Point c)
+	{
+		this.texture = name;
+		this.coords = c;
 	}
 	
 	public void render(World w, Entity e) {
 		EntityManager em = w.getEntityManager();
-		Draw.setColor(new Color(1, 1, 1, 1));
+		Draw.setColor(new Color(1, 1, 1));
 		GL11.glEnable(GL11.GL_TEXTURE_2D);
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, w.getDataManager().getTexture(texture).getTextureID());
 		
@@ -45,33 +53,28 @@ public class TextureComp extends Component{
 			GL11.glVertex2f(	-rad,	rad);
 			GL11.glEnd();
 		}
-		else if (em.hasComponents(e, Polygon.class, Button.class))
-		{
-			Polygon poly = em.getComponent(e, Polygon.class);
-			ArrayList<Point> points = poly.localPoints;
-			String text = em.getComponent(e, Button.class).type;
-
-			Draw.setColor(new Color(1, 1, 1, 0.5));
-
-			GL11.glBegin(GL11.GL_POLYGON);
-			for (Point p : points)
-			{
-				GL11.glTexCoord2f((float) (p.x / (poly.mid.x*2)),(float) 	(p.y / (poly.mid.y*2)));
-				GL11.glVertex2f  ((float) p.x,(float)  p.y);
-			}
-			GL11.glEnd();
-
-			Draw.setColor(new Color(1, 1, 1, 1));
-			Draw.write(w.getDataManager().font, poly.mid, text);
-		}
 		else if (em.hasComponent(e, Polygon.class))
 		{
+			if (em.hasComponent(e, Button.class))
+				Draw.setColor(new Color(1, 1, 1, 0.5));
+			
 			Polygon poly = em.getComponent(e, Polygon.class);
 			GL11.glBegin(GL11.GL_POLYGON);
 			ArrayList<Point> points = poly.localPoints;
 			for (Point p : points)
 			{
-				GL11.glTexCoord2f((float) p.x / 50,(float) 	p.y / 50);
+				if (coords.x == 0 && coords.y == 0)
+				{
+					GL11.glTexCoord2f(
+							(float) ((p.x - poly.min.x) / (poly.max.x - poly.min.x)),
+							(float) ((p.y - poly.min.y) / (poly.max.y - poly.min.y)));
+				}
+				else
+				{
+					GL11.glTexCoord2f(
+							(float) ((p.x - poly.min.x) / coords.x),
+							(float) ((p.y - poly.min.y) / coords.y) );
+				}
 				GL11.glVertex2f  ((float) p.x,(float)  p.y);
 			}
 			GL11.glEnd();
