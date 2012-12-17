@@ -15,11 +15,13 @@ import framework.EntityManager;
 
 public class Light extends Component{
 
-	double radius;
+	public double mRad;
+	public double cRad;
 
 	public Light(double r)
 	{
-		this.radius = r;
+		this.mRad = r;
+		this.cRad = r;
 	}
 
 	public void render(EntityManager em, Entity e) {
@@ -34,15 +36,15 @@ public class Light extends Component{
 
 		ArrayList<Line> cands = new ArrayList<Line>();
 		for (Line l : edges)
-			if (l.dist(pos) < radius)
+			if (l.dist(pos) < cRad)
 				cands.add(l);
 
 		ArrayList<Point> points = new ArrayList<Point>();
-		for (double i = 0; i <= 360.01; i += 150 / radius)
+		for (double i = 0; i <= 360.01; i += 150 / cRad)
 		{
 			Point ray = new Point(i);
-			Line seg = new Line(pos, pos.add(ray.mult(radius)));
-			double min = radius;
+			Line seg = new Line(pos, pos.add(ray.mult(cRad)));
+			double min = cRad;
 
 			for (Line l : cands)
 			{
@@ -65,7 +67,7 @@ public class Light extends Component{
 		for (Point p : points)
 		{
 			double d = pos.dist(p);
-			c.alpha = 1 - d/radius;
+			c.alpha = 1 - d/cRad;
 			Draw.setColor(c);
 			Draw.vertex(p);
 		}

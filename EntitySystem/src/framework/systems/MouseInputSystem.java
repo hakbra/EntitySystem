@@ -3,7 +3,7 @@ package framework.systems;
 import helpers.Point;
 import helpers.State;
 
-import java.util.ArrayList;
+import java.util.Random;
 
 import org.lwjgl.input.Mouse;
 
@@ -58,32 +58,14 @@ public class MouseInputSystem extends CoreSystem{
 			    	
 				if (button.type == "Zombies")
 				{
-					ArrayList<Point> spawns = new ArrayList<Point>();
-
-					spawns.add(  new Point(50, 50));
-					spawns.add(  new Point(GLEngine.WIDTH - 50, 50));
-					spawns.add(  new Point(50, GLEngine.HEIGHT - 50));
-					spawns.add(  new Point(GLEngine.WIDTH - 50, GLEngine.HEIGHT - 50));
-
-					spawns.add(  new Point(GLEngine.WIDTH / 2, 50));
-					spawns.add(  new Point(GLEngine.WIDTH / 2, GLEngine.HEIGHT - 50));
-					spawns.add(  new Point(GLEngine.WIDTH - 50, GLEngine.HEIGHT / 2));
-					spawns.add(  new Point(50, GLEngine.HEIGHT / 2));
-
-					spawns.add(  new Point(GLEngine.WIDTH + 560, 500));
-					spawns.add(  new Point(GLEngine.WIDTH + 560, 225));
-					spawns.add(  new Point(GLEngine.WIDTH + 700, 360));
-					
-					spawns.add(  new Point(GLEngine.WIDTH*2 -20, 100));
-					spawns.add(  new Point(GLEngine.WIDTH*2 -20, GLEngine.HEIGHT - 100));
-					
-					for (Point p : spawns)
+					Random r = new Random();
+					for (int i = 0; i < 50; i++)
 					{
 						Entity zombie = new Entity();
 						zombie.name = "Zombie";
 						em.addComponent(zombie, new Zombie());
 						em.addComponent(zombie, new Circle(20));
-						em.addComponent(zombie, new Position(p));
+						em.addComponent(zombie, new Position(new Point(r.nextInt(GLEngine.WIDTH*2), r.nextInt(GLEngine.HEIGHT))));
 						em.addComponent(zombie, new Velocity(new Point(0, 0)));
 						em.addComponent(zombie, new Health());
 						em.addComponent(zombie, new Follower());

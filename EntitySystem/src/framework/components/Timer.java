@@ -25,5 +25,14 @@ public class Timer extends Component{
 		this.start = Time.getTime();
 		this.type = s;
 	}
-	
+	public double getPercent()
+	{
+		float elapsed = Time.getTime() - start;
+		float full = time;
+		
+		if (elapsed == 0)
+			return 0;
+		else
+			return elapsed / full;
+	}
 }

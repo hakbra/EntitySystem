@@ -17,6 +17,8 @@ import framework.components.Button;
 import framework.components.Circle;
 import framework.components.Collider;
 import framework.components.ColorComp;
+import framework.components.Damage;
+import framework.components.Follower;
 import framework.components.Gun;
 import framework.components.Health;
 import framework.components.Hero;
@@ -30,6 +32,7 @@ import framework.components.Position;
 import framework.components.TextureComp;
 import framework.components.Trigger;
 import framework.components.Velocity;
+import framework.components.Zombie;
 import framework.systems.CameraSystem;
 import framework.systems.CollisionSystem;
 import framework.systems.EmitterSystem;
@@ -126,6 +129,7 @@ public class Main
 		createButtons(world);
 		createHealth(world);
 		createWalls(world);
+		createZombies();
 	}
 
 	private void createHealth(World world)
@@ -207,51 +211,43 @@ public class Main
 		p.add(  new Point(GLEngine.WIDTH + 50, 420)  );
 		
 
-		p.add(  new Point(200, 200) );
-		p.add(  new Point(GLEngine.WIDTH + 250, 100)  );
+		p.add(  new Point(50, 335) );
+		p.add(  new Point(GLEngine.WIDTH*2 - 300, 0)  );
 
-		p.add(  new Point(200, 200) );
-		p.add(  new Point(GLEngine.WIDTH + 250, 420)  );
+		p.add(  new Point(50, 335) );
+		p.add(  new Point(GLEngine.WIDTH*2 - 300, GLEngine.HEIGHT - 335)  );
+		
+		p.add(  new Point(150, 150) );
+		p.add(  new Point(GLEngine.WIDTH + 400, 200)  );
 
-		p.add(  new Point(200, 200) );
-		p.add(  new Point(GLEngine.WIDTH + 610, 100)  );
+		p.add(  new Point(150, 150) );
+		p.add(  new Point(GLEngine.WIDTH + 400, 520)  );
 
-		p.add(  new Point(200, 200) );
-		p.add(  new Point(GLEngine.WIDTH + 610, 420)  );
+		p.add(  new Point(150, 150) );
+		p.add(  new Point(GLEngine.WIDTH + 760, 200)  );
 
-		p.add(  new Point(50, 200) );
-		p.add(  new Point(GLEngine.WIDTH*2 - 200, 0)  );
+		p.add(  new Point(150, 150) );
+		p.add(  new Point(GLEngine.WIDTH + 760, 520)  );
 
-		p.add(  new Point(50, 200) );
-		p.add(  new Point(GLEngine.WIDTH*2 - 200, 520)  );
-
-		p.add(  new Point(100, 50) );
-		p.add(  new Point(GLEngine.WIDTH*2 - 100, 150)  );
-
-		p.add(  new Point(100, 50) );
-		p.add(  new Point(GLEngine.WIDTH*2 - 100, 520)  );
 
 		while (p.size() > 0)
 		{
 			Entity rectangle = new Entity();
 			rectangle.name = "rectangle";
-			rectangle.components.add(Polygon.rectangle(p.remove(0)));
+			if (p.size() < 9)
+			{
+				rectangle.components.add(Polygon.centerRectangle(p.remove(0)));
+				rectangle.components.add(new Angle(45));
+				rectangle.components.add(new AngleSpeed(0.2));
+			}
+			else
+				rectangle.components.add(Polygon.rectangle(p.remove(0)));
 			rectangle.components.add(new Position(p.remove(0)));
 			rectangle.components.add(new Obstacle());
 			rectangle.components.add(new TextureComp("bush.png", new Point(256, 256)));
 			world.addEntity(rectangle, State.RUN);
 			
 		}
-
-		Entity polygon = new Entity();
-		polygon.name = "polygon";
-		polygon.components.add(new Polygon(new Point(100, 50), new Point(100, -50), new Point(-100, -50), new Point(-100, 50)				));
-		polygon.components.add(new Position(new Point(GLEngine.WIDTH*2 - 300, GLEngine.HEIGHT / 2)));
-		polygon.components.add(new Obstacle());
-		polygon.components.add(new TextureComp("bush.png", new Point(256, 256)));
-		polygon.components.add(new Angle(45));
-		polygon.components.add(new AngleSpeed(0.2));
-		world.addEntity(polygon, State.RUN);
 
 		Entity border = new Entity();
 		border.name = "border";
@@ -335,6 +331,47 @@ public class Main
 		exitButton.components.add(new Button("Exit"));
 		exitButton.components.add(new TextureComp("button.png"));
 		world.addEntity(exitButton, State.MENU);
+	}
+	
+	void createZombies()
+	{
+
+		ArrayList<Point> spawns = new ArrayList<Point>();
+
+		spawns.add(  new Point(50, 50));
+		spawns.add(  new Point(GLEngine.WIDTH - 50, 50));
+		spawns.add(  new Point(50, GLEngine.HEIGHT - 50));
+		spawns.add(  new Point(GLEngine.WIDTH - 50, GLEngine.HEIGHT - 50));
+
+		spawns.add(  new Point(GLEngine.WIDTH / 2, 50));
+		spawns.add(  new Point(GLEngine.WIDTH / 2, GLEngine.HEIGHT - 50));
+		spawns.add(  new Point(GLEngine.WIDTH - 50, GLEngine.HEIGHT / 2));
+		spawns.add(  new Point(50, GLEngine.HEIGHT / 2));
+
+		spawns.add(  new Point(GLEngine.WIDTH + 560, 500));
+		spawns.add(  new Point(GLEngine.WIDTH + 560, 225));
+		spawns.add(  new Point(GLEngine.WIDTH + 700, 360));
+		
+		spawns.add(  new Point(GLEngine.WIDTH*2 -20, 100));
+		spawns.add(  new Point(GLEngine.WIDTH*2 -20, GLEngine.HEIGHT - 100));
+		
+		for (Point p : spawns)
+		{
+			Entity zombie = new Entity();
+			zombie.name = "Zombie";
+			zombie.components.add(new Zombie());
+			zombie.components.add(new Circle(20));
+			zombie.components.add(new Position(p));
+			zombie.components.add(new Velocity(new Point(0, 0)));
+			zombie.components.add(new Health());
+			zombie.components.add(new Follower());
+			zombie.components.add(new Damage(1, 200));
+			zombie.components.add(new Obstacle());
+			zombie.components.add(new Collider(4));
+			zombie.components.add(new Angle(0));
+			zombie.components.add(new TextureComp("zombie.png"));
+			world.addEntity(zombie, State.RUN);
+		}
 	}
 
 	public void run()

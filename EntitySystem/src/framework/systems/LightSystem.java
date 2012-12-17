@@ -10,10 +10,10 @@ import static org.lwjgl.opengl.GL11.glClearColor;
 import static org.lwjgl.opengl.GL11.glColorMask;
 import static org.lwjgl.opengl.GL11.glDisable;
 import static org.lwjgl.opengl.GL11.glEnable;
-import static org.lwjgl.opengl.GL11.glPushMatrix;
 import helpers.Color;
 import helpers.Draw;
 import helpers.Point;
+import helpers.Time;
 
 import org.lwjgl.opengl.GL11;
 
@@ -24,6 +24,7 @@ import framework.EntityManager;
 import framework.World;
 import framework.components.Light;
 import framework.components.Position;
+import framework.components.Timer;
 
 public class LightSystem  extends CoreSystem{
 
@@ -81,6 +82,15 @@ public class LightSystem  extends CoreSystem{
 		for (Entity e : em.getEntityAll(Light.class))
 		{
 			Light l = em.getComponent(e, Light.class);
+			
+			/*
+			if (em.hasComponent(e, Timer.class))
+			{
+				Timer  t = em.getComponent(e, Timer.class);
+				l.cRad = (1 - t.getPercent()) * l.mRad;
+			}
+			*/
+			
 			l.render(em, e);
 		}
 		glColorMask(true, true, true, true);

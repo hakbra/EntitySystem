@@ -5,6 +5,7 @@ import framework.CoreSystem;
 import framework.Entity;
 import framework.EntityManager;
 import framework.World;
+import framework.components.Light;
 import framework.components.Timer;
 
 public class TimerSystem extends CoreSystem{
@@ -28,6 +29,11 @@ public class TimerSystem extends CoreSystem{
 					em.removeEntity(e);
 				else if (timer.type == "selfDestruct")
 					em.removeComponent(e, timer);
+				else if (timer.type == "light200")
+				{
+					em.addComponent(e, new Light(200));
+					em.addComponent(e, new Timer(15000));
+				}
 			}
 		}
 	}

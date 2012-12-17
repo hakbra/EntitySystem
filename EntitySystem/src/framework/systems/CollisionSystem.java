@@ -22,6 +22,7 @@ import framework.components.Gun;
 import framework.components.Health;
 import framework.components.Hero;
 import framework.components.Item;
+import framework.components.Light;
 import framework.components.Obstacle;
 import framework.components.Polygon;
 import framework.components.Position;
@@ -33,14 +34,14 @@ import framework.components.Zombie;
 
 
 public class CollisionSystem extends CoreSystem {
-	
+
 	private class Collision
 	{
 		public Entity a;
 		public Entity b;
 		public Point poi;
 		public boolean inside;
-		
+
 		public Collision(Entity e1, Entity e2, Point p, boolean i)
 		{
 			this.a = e1;
@@ -104,13 +105,13 @@ public class CollisionSystem extends CoreSystem {
 			if (c.inside)
 				dist += 2*circle.radius;
 			Point mov = posA.sub(c.poi).norm(dist);
-			
+
 			if (em.hasComponent(c.b, Collider.class))
 			{
 				Point posB = em.getComponent(c.b, Position.class).position;
 				int levelA = em.getComponent(c.a, Collider.class).level;
 				int levelB = em.getComponent(c.b, Collider.class).level;
-				
+
 				if (levelA > levelB)
 					posB.iadd(mov);
 				else if (levelA < levelB)
@@ -124,7 +125,7 @@ public class CollisionSystem extends CoreSystem {
 			else
 				posA.isub(mov);
 		}
-		
+
 		if (em.hasComponent(c.b, Obstacle.class))
 		{
 			if (em.hasComponent(c.a, DestroyOnImpact.class))
@@ -143,7 +144,7 @@ public class CollisionSystem extends CoreSystem {
 		{
 			Item item = em.getComponent(c.b, Item.class);
 			if (item.type == "health" &&
-				em.hasComponents(c.a, Health.class, Hero.class))
+					em.hasComponents(c.a, Health.class, Hero.class))
 			{
 				Health health = em.getComponent(c.a, Health.class);
 				if (health.current < health.max)
@@ -153,16 +154,16 @@ public class CollisionSystem extends CoreSystem {
 						health.current = health.max;
 					em.removeEntity(c.b);
 				}
-					
+
 			}
 			if (item.type == "gun" &&
-				Keyboard.isKeyDown(Keyboard.KEY_E) &&
-				em.hasComponents(c.a, Gun.class, Hero.class) &&
-				!em.hasComponent(c.b, Timer.class))
+					Keyboard.isKeyDown(Keyboard.KEY_E) &&
+					em.hasComponents(c.a, Gun.class, Hero.class) &&
+					!em.hasComponent(c.b, Timer.class))
 			{
 				Gun oldGun = em.getComponent(c.a, Gun.class);
 				em.removeComponent(c.a, oldGun);
-				
+
 				Gun newGun = em.getComponent(c.b, Gun.class);
 				em.addComponent(c.a, newGun);
 
@@ -173,24 +174,32 @@ public class CollisionSystem extends CoreSystem {
 		}
 		else if (em.hasComponent(c.b, Trigger.class) && em.hasComponent(c.a, Hero.class))
 		{
-			for (int i = 0; i < 2; i++)
-				for (int j = 0; j < 2; j++)
-				{
 
-					Entity zombie = new Entity();
-					zombie.name = "Zombie";
-					em.addComponent(zombie, new Zombie());
-					em.addComponent(zombie, new Circle(20));
-					em.addComponent(zombie, new Position(new Point(GLEngine.WIDTH*2 - 200 + i * 40, GLEngine.HEIGHT / 2 - 50 + j*40)));
-					em.addComponent(zombie, new Velocity(new Point(0, 0)));
-					em.addComponent(zombie, new Health());
-					em.addComponent(zombie, new Follower());
-					em.addComponent(zombie, new Damage(1, 200));
-					em.addComponent(zombie, new Obstacle());
-					em.addComponent(zombie, new Collider(4));
-					em.addComponent(zombie, new Angle(0));
-					em.addComponent(zombie, new TextureComp("zombie.png"));
-				}
+			for (int j = 0; j < 10; j++)
+			{
+				Entity zombie = new Entity();
+				zombie.name = "Zombie" + j;
+				em.addComponent(zombie, new Zombie());
+				em.addComponent(zombie, new Circle(20));
+				em.addComponent(zombie, new Position(new Point(GLEngine.WIDTH + 200 + j * 40, GLEngine.HEIGHT / 2)));
+				em.addComponent(zombie, new Velocity(new Point(0, 0)));
+				em.addComponent(zombie, new Health());
+				em.addComponent(zombie, new Follower(0));
+				em.addComponent(zombie, new Damage(1, 200));
+				em.addComponent(zombie, new Obstacle());
+				em.addComponent(zombie, new Collider(4));
+				em.addComponent(zombie, new Angle(0));
+				em.addComponent(zombie, new TextureComp("zombie.png"));
+				
+				if (j % 2 == 0)
+					continue;
+
+				Entity light = new Entity();
+				light.name = "light" + j;
+				em.addComponent(light, new Position(new Point(GLEngine.WIDTH + 200 + j * 80, GLEngine.HEIGHT / 2)));
+				em.addComponent(light, new Timer(2000 - 200*j, "light200"));
+			}
+			
 			em.removeEntity(c.b);
 		}
 

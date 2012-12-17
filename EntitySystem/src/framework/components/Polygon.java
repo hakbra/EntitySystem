@@ -62,6 +62,15 @@ public class Polygon extends Component{
 		return new Polygon(p, p.add(h), p.add(h).add(w), p.add(w));
 	}
 
+	public static Polygon centerRectangle(Point dim)
+	{
+
+		Point p = new Point(0, 0);
+		Point w = new Point(dim.x/2, 0);
+		Point h = new Point(0, dim.y/2);
+		return new Polygon(p.add(w).add(h), p.sub(w).add(h), p.sub(w).sub(h), p.add(w).sub(h));
+	}
+
 	public static Polygon invertedRectangle(Point dim)
 	{
 

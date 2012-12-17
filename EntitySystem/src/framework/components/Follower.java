@@ -13,5 +13,10 @@ public class Follower extends Component{
 		this.name = "Follower";
 		this.limit = 400;
 	}
+	public Follower(int l)
+	{
+		this.name = "Follower";
+		this.limit = l;
+	}
 
 }
