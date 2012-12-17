@@ -83,13 +83,13 @@ public class LightSystem  extends CoreSystem{
 		{
 			Light l = em.getComponent(e, Light.class);
 			
-			/*
 			if (em.hasComponent(e, Timer.class))
 			{
 				Timer  t = em.getComponent(e, Timer.class);
 				l.cRad = (1 - t.getPercent()) * l.mRad;
+				if (l.cRad <= 10)
+					l.cRad = 10;
 			}
-			*/
 			
 			l.render(em, e);
 		}

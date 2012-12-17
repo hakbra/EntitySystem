@@ -40,7 +40,10 @@ public class Light extends Component{
 				cands.add(l);
 
 		ArrayList<Point> points = new ArrayList<Point>();
-		for (double i = 0; i <= 360.01; i += 150 / cRad)
+		double step = 150 / cRad;
+		System.out.println(step);
+		double last = 0;
+		for (double i = 0;;)
 		{
 			Point ray = new Point(i);
 			Line seg = new Line(pos, pos.add(ray.mult(cRad)));
@@ -56,9 +59,18 @@ public class Light extends Component{
 						min = tempMin;
 				}
 			}
-
 			points.add( pos.add(ray.mult(min)));
+			
+			if (i + step <= 360)
+				i += step;
+			else if (i == 360)
+				break;
+			else
+				i = 360;
+			
+			last = i;
 		}
+		System.out.println(last);
 
 		Color c = new Color(1, 1, 1, 1);
 		Draw.setColor(c);

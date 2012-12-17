@@ -32,7 +32,13 @@ public class Timer extends Component{
 		
 		if (elapsed == 0)
 			return 0;
-		else
-			return elapsed / full;
+		
+		double ret = elapsed / full;
+		if (ret > 1)
+			return 1;
+		if (ret < 0)
+			return 0;
+		
+		return ret;
 	}
 }
