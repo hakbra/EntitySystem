@@ -13,6 +13,7 @@ import framework.Entity;
 import framework.EntityManager;
 import framework.World;
 import framework.components.Angle;
+import framework.components.AngleSpeed;
 import framework.components.Bullet;
 import framework.components.Circle;
 import framework.components.Collider;
@@ -46,14 +47,17 @@ public class PlayerInputSystem extends CoreSystem{
 			KeyInput keyInput 	= em.getComponent(e, KeyInput.class);
 			Point pos	 		= em.getComponent(e, Position.class).position;
 			Point vel 			= em.getComponent(e, Velocity.class).velocity;
-			Angle angle 			= em.getComponent(e, Angle.class);
+			Angle angle 		= em.getComponent(e, Angle.class);
+			AngleSpeed angleS 	= em.getComponent(e, AngleSpeed.class);
 			Gun gun 			= em.getComponent(e, Gun.class);
 			Circle circle 		= em.getComponent(e, Circle.class);
 			
 			if (Keyboard.isKeyDown(keyInput.left))
-				angle.angle += 3;
+				angleS.speed = 3;
 			else if (Keyboard.isKeyDown(keyInput.right))
-				angle.angle -= 3;
+				angleS.speed = -3;
+			else
+				angleS.speed = 0;
 
 			if (Keyboard.isKeyDown(keyInput.up))
 				vel.set( new Point(angle.angle).mult(4));

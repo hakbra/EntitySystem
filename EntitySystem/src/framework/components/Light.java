@@ -41,8 +41,6 @@ public class Light extends Component{
 
 		ArrayList<Point> points = new ArrayList<Point>();
 		double step = 150 / cRad;
-		System.out.println(step);
-		double last = 0;
 		for (double i = 0;;)
 		{
 			Point ray = new Point(i);
@@ -67,10 +65,7 @@ public class Light extends Component{
 				break;
 			else
 				i = 360;
-			
-			last = i;
 		}
-		System.out.println(last);
 
 		Color c = new Color(1, 1, 1, 1);
 		Draw.setColor(c);

@@ -2,7 +2,6 @@
 package framework;
 
 import helpers.MyFont;
-import helpers.State;
 
 import java.awt.Font;
 import java.util.ArrayList;
@@ -12,6 +11,8 @@ import java.util.HashSet;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
+
+import states.State;
 
 
 public class EntityManager {

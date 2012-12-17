@@ -31,11 +31,14 @@ public class SubLightRenderSystem extends CoreSystem{
 		Point camTrans = em.getComponent(worldComp, Position.class).position.neg();
 		
 		Entity ground = em.getByStringID("ground");
-		Polygon poly = em.getComponent(ground, Polygon.class);
-		ColorComp color = em.getComponent(ground, ColorComp.class);
-		
-		Draw.setColor(color.color);
-		Draw.polygon(poly.localPoints);
+		if (ground != null)
+		{
+			Polygon poly = em.getComponent(ground, Polygon.class);
+			ColorComp color = em.getComponent(ground, ColorComp.class);
+			
+			Draw.setColor(color.color);
+			Draw.polygon(poly.localPoints);
+		}
 		
 		glPushMatrix();
 		Draw.translate(camTrans);
@@ -60,7 +63,7 @@ public class SubLightRenderSystem extends CoreSystem{
 			glPopMatrix();
 		}
 		
-		for (Entity e : em.getEntityAll(Circle.class, Velocity.class))
+		for (Entity e : em.getEntityAll(Circle.class))
 		{
 			glPushMatrix();
 

@@ -75,7 +75,9 @@ public class HudRenderSystem extends CoreSystem {
 				Draw.translate(em.getComponent(e, Position.class).position);
 
 			TextureComp t = em.getComponent(e, TextureComp.class);
-			t.render(world, e);
+			
+			if (t != null)
+				t.render(world, e);
 			
 			if (!button.active)
 				Draw.setColor(Color.WHITE);

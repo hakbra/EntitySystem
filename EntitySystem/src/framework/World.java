@@ -1,10 +1,11 @@
 package framework;
 
-import helpers.State;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import states.State;
 
 public class World {
 	public State state;
@@ -99,5 +100,12 @@ public class World {
 	public void runSystems() {
 		getSystemManager().runSystems();
 		getEntityManager().removeEntities();
+	}
+	
+	public void clear(State s)
+	{
+		eManagers.remove(s);
+		sManagers.remove(s);
+		dManagers.remove(s);
 	}
 }

@@ -1,9 +1,15 @@
 package framework.systems;
 
+import java.util.Random;
+
 import helpers.Point;
 import helpers.Time;
 
 import org.lwjgl.input.Keyboard;
+
+import states.CutsceneState;
+import states.Level3State;
+import states.State;
 
 import engine.GLEngine;
 import framework.CoreSystem;
@@ -11,6 +17,7 @@ import framework.Entity;
 import framework.EntityManager;
 import framework.World;
 import framework.components.Angle;
+import framework.components.AngleSpeed;
 import framework.components.Circle;
 import framework.components.Collider;
 import framework.components.Damage;
@@ -171,36 +178,100 @@ public class CollisionSystem extends CoreSystem {
 				em.addComponent(c.b, new Timer(500, "selfDestruct"));
 				em.getComponent(c.b, TextureComp.class).texture = oldGun.tex;
 			}
+			if (item.type == "exit1" &&
+					em.hasComponents(c.a, Gun.class, Hero.class))
+			{
+				int i = 0;
+				for (Entity h : em.getEntity(Hero.class))
+				{
+					em.getComponent(h, Position.class).position.set(GLEngine.WIDTH - 50, GLEngine.HEIGHT / 2 - 40 + 80*i);
+					em.getComponent(h, Velocity.class).velocity.set(-4, 0);
+					em.getComponent(h, Angle.class).angle = 180.0;
+					em.getComponent(h, AngleSpeed.class).speed = 0.0;
+					world.addEntity(h, State.CUTSCENE);
+					i++;
+				}
+				world.clear(world.state);
+				CutsceneState.init(world);
+				world.state = State.CUTSCENE;
+			}
+			if (item.type == "exit2" &&
+					em.hasComponents(c.a, Gun.class, Hero.class))
+			{
+				int i = 0;
+				for (Entity h : em.getEntity(Hero.class))
+				{
+					em.getComponent(h, Position.class).position.set(GLEngine.WIDTH - 50, GLEngine.HEIGHT / 2 - 40 + 80*i);
+					em.getComponent(h, Velocity.class).velocity.set(0, 0);
+					em.getComponent(h, Angle.class).angle = 180.0;
+					em.getComponent(h, AngleSpeed.class).speed = 0.0;
+					world.addEntity(h, State.LEVEL2);
+					i++;
+				}
+				world.clear(world.state);
+				Level3State.init(world);
+				world.state = State.LEVEL2;
+			}
 		}
 		else if (em.hasComponent(c.b, Trigger.class) && em.hasComponent(c.a, Hero.class))
 		{
-
-			for (int j = 0; j < 10; j++)
+			Trigger trigger = em.getComponent(c.b, Trigger.class);
+			if (trigger.type == "gun")
 			{
-				Entity zombie = new Entity();
-				zombie.name = "Zombie" + j;
-				em.addComponent(zombie, new Zombie());
-				em.addComponent(zombie, new Circle(20));
-				em.addComponent(zombie, new Position(new Point(GLEngine.WIDTH + 200 + j * 40, GLEngine.HEIGHT / 2)));
-				em.addComponent(zombie, new Velocity(new Point(0, 0)));
-				em.addComponent(zombie, new Health());
-				em.addComponent(zombie, new Follower(0));
-				em.addComponent(zombie, new Damage(1, 200));
-				em.addComponent(zombie, new Obstacle());
-				em.addComponent(zombie, new Collider(4));
-				em.addComponent(zombie, new Angle(0));
-				em.addComponent(zombie, new TextureComp("zombie.png"));
-				
-				if (j % 2 == 0)
-					continue;
+				Random r = new Random();
+				for (int i = 0; i < 20; i++)
+				{
+					Entity zombie = new Entity();
+					zombie.name = "Zombie";
+					em.addComponent(zombie, new Zombie());
+					em.addComponent(zombie, new Circle(20));
+					em.addComponent(zombie, new Position(new Point(r.nextInt(GLEngine.WIDTH), r.nextInt(GLEngine.HEIGHT))));
+					em.addComponent(zombie, new Velocity(new Point(0, 0)));
+					em.addComponent(zombie, new Health());
+					em.addComponent(zombie, new Follower());
+					em.addComponent(zombie, new Damage(1, 200));
+					em.addComponent(zombie, new Obstacle());
+					em.addComponent(zombie, new Collider(4));
+					em.addComponent(zombie, new Angle(0));
+					em.addComponent(zombie, new AngleSpeed(0));
+					em.addComponent(zombie, new TextureComp("zombie.png"));
+				}
 
-				Entity light = new Entity();
-				light.name = "light" + j;
-				em.addComponent(light, new Position(new Point(GLEngine.WIDTH + 200 + j * 80, GLEngine.HEIGHT / 2)));
-				em.addComponent(light, new Timer(2000 - 200*j, "light200"));
-			}
-			
-			em.removeEntity(c.b);
+				for (int j = 0; j < 10; j++)
+				{
+					Entity zombie = new Entity();
+					zombie.name = "Zombie" + j;
+					em.addComponent(zombie, new Zombie());
+					em.addComponent(zombie, new Circle(20));
+					em.addComponent(zombie, new Position(new Point(GLEngine.WIDTH + 200 + j * 40, GLEngine.HEIGHT / 2)));
+					em.addComponent(zombie, new Velocity(new Point(0, 0)));
+					em.addComponent(zombie, new Health());
+					em.addComponent(zombie, new Follower(0));
+					em.addComponent(zombie, new Damage(1, 200));
+					em.addComponent(zombie, new Obstacle());
+					em.addComponent(zombie, new Collider(4));
+					em.addComponent(zombie, new Angle(0));
+					em.addComponent(zombie, new TextureComp("zombie.png"));
+
+					if (j % 2 == 0)
+						continue;
+
+					Entity light = new Entity();
+					light.name = "light" + j;
+					em.addComponent(light, new Position(new Point(GLEngine.WIDTH + 200 + j * 80, GLEngine.HEIGHT / 2)));
+					em.addComponent(light, new Timer(2000 - 200*j, "light200"));
+				}
+
+				em.removeEntity(c.b);
+
+				Entity exit = new Entity();
+				exit.name = "exit1";
+				em.addComponent(exit, new Position(new Point(250, 200)));
+				em.addComponent(exit, Polygon.centerRectangle(new Point(50, 50)));
+				em.addComponent(exit, new Item("exit1"));
+				em.addComponent(exit, new TextureComp("exit.png"));
+				em.addComponent(exit, new Angle(180));
+			}	
 		}
 
 		if (em.hasComponent(c.a, Zombie.class) && em.hasComponent(c.b, Zombie.class))

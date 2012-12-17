@@ -1,11 +1,13 @@
 package framework.systems;
 
 import helpers.Point;
-import helpers.State;
 
 import java.util.Random;
 
 import org.lwjgl.input.Mouse;
+
+import states.Level1State;
+import states.State;
 
 import engine.GLEngine;
 import framework.CoreSystem;
@@ -13,6 +15,7 @@ import framework.Entity;
 import framework.EntityManager;
 import framework.World;
 import framework.components.Angle;
+import framework.components.AngleSpeed;
 import framework.components.Button;
 import framework.components.Circle;
 import framework.components.Collider;
@@ -65,7 +68,7 @@ public class MouseInputSystem extends CoreSystem{
 						zombie.name = "Zombie";
 						em.addComponent(zombie, new Zombie());
 						em.addComponent(zombie, new Circle(20));
-						em.addComponent(zombie, new Position(new Point(r.nextInt(GLEngine.WIDTH*2), r.nextInt(GLEngine.HEIGHT))));
+						em.addComponent(zombie, new Position(new Point(r.nextInt(GLEngine.WIDTH*2-300), r.nextInt(GLEngine.HEIGHT))));
 						em.addComponent(zombie, new Velocity(new Point(0, 0)));
 						em.addComponent(zombie, new Health());
 						em.addComponent(zombie, new Follower());
@@ -73,6 +76,7 @@ public class MouseInputSystem extends CoreSystem{
 						em.addComponent(zombie, new Obstacle());
 						em.addComponent(zombie, new Collider(4));
 						em.addComponent(zombie, new Angle(0));
+						em.addComponent(zombie, new AngleSpeed(0));
 						em.addComponent(zombie, new TextureComp("zombie.png"));
 					}
 				}
@@ -80,9 +84,13 @@ public class MouseInputSystem extends CoreSystem{
 				{
 					GLEngine.switchFullscreen();
 				}
-				else if (button.type == "Play")
+				else if (button.type == "Level 1")
 				{
-					world.setState(State.RUN);
+					world.setState(State.LEVEL1);
+				}
+				else if (button.type == "Level 3")
+				{
+					world.setState(State.LEVEL2);
 				}
 				else if (button.type == "Exit")
 				{
@@ -90,11 +98,23 @@ public class MouseInputSystem extends CoreSystem{
 				}
 				else if (button.type == "Menu")
 				{
+					State oldState = world.state;
 					world.setState(State.MENU);
+					
+					EntityManager newEm = world.getEntityManager();
+					Entity runButton = newEm.getByStringID("runButton");
+					newEm.getComponent(runButton, Button.class).type = oldState.str;
+					
 				}
 				else if (button.type == "Lights")
 				{
 					world.getSystemManager().toggleSystem(LightSystem.class);
+				}
+				else if (button.type == "Restart")
+				{
+					world.clear(world.state);
+					Level1State.init(world);
+					world.state = State.LEVEL1;
 				}
 			}
 			else

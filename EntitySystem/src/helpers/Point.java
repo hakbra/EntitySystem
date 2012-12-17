@@ -131,6 +131,10 @@ public class Point
 	{
 		return Math.atan2(this.y, this.x) * 180/PI;
 	}
+	public double angle(Point other)
+	{
+	      return Math.atan2(other.cross(this), other.dot(this)) * 180/PI;
+	}
 
 	public double mag()
 	{
