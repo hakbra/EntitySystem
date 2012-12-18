@@ -111,6 +111,17 @@ public class Level1State {
 		gun.components.add(new AngleSpeed(1));
 		world.addEntity(gun, State.LEVEL1);
 
+		Entity gun2 = new Entity();
+		gun2.name = "gun2";
+		gun2.components.add(new Position(new Point(75, GLEngine.HEIGHT - 75)));
+		gun2.components.add(new Circle(30));
+		gun2.components.add(new Item("gun"));
+		gun2.components.add(new Tex("gun3.png"));
+		gun2.components.add(new Gun(5, 35, 10, 400, 10, "gun3.png"));
+		gun2.components.add(new Angle(0));
+		gun2.components.add(new AngleSpeed(1));
+		world.addEntity(gun2, State.LEVEL1);
+
 		createButtons(world);
 		createHealth(world);
 		createWalls(world);

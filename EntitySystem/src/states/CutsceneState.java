@@ -1,18 +1,16 @@
 package states;
 
-import helpers.Color;
 import helpers.Point;
 import engine.GLEngine;
 import framework.Entity;
 import framework.World;
 import framework.components.Angle;
 import framework.components.Circle;
-import framework.components.ColorComp;
 import framework.components.Item;
-import framework.components.Light;
 import framework.components.Polygon;
 import framework.components.Position;
 import framework.components.Tex;
+import framework.components.Velocity;
 import framework.systems.CollisionSystem;
 import framework.systems.LightSystem;
 import framework.systems.PhysicsSystem;
@@ -43,7 +41,7 @@ public class CutsceneState {
 		ground.name = "ground";
 		ground.components.add(new Position( new Point()));
 		ground.components.add(Polygon.rectangle(new Point(GLEngine.WIDTH*2, GLEngine.HEIGHT)));
-		ground.components.add(new Tex("bush.png", new Point(128, 128)));
+		ground.components.add(new Tex("bricks.png", new Point(128, 128)));
 		world.addEntityAndID(ground, State.CUTSCENE);
 
 		Entity exit = new Entity();
@@ -70,6 +68,7 @@ public class CutsceneState {
 			zombie.name = "Zombie";
 			zombie.components.add(new Circle(20));
 			zombie.components.add(new Position(new Point(i, 250)));
+			zombie.components.add(new Velocity(new Point()));
 			zombie.components.add(new Angle(90));
 			zombie.components.add(new Tex("zombie.png"));
 			world.addEntity(zombie, State.CUTSCENE);
@@ -78,6 +77,7 @@ public class CutsceneState {
 			zombie2.name = "Zombie";
 			zombie2.components.add(new Circle(20));
 			zombie2.components.add(new Position(new Point(i, GLEngine.HEIGHT - 250)));
+			zombie2.components.add(new Velocity(new Point()));
 			zombie2.components.add(new Angle(-90));
 			zombie2.components.add(new Tex("zombie.png"));
 			world.addEntity(zombie2, State.CUTSCENE);

@@ -1,16 +1,15 @@
 package framework.systems;
 
-import java.util.Random;
-
 import helpers.Point;
 import helpers.Time;
+
+import java.util.Random;
 
 import org.lwjgl.input.Keyboard;
 
 import states.CutsceneState;
 import states.Level2State;
 import states.State;
-
 import engine.GLEngine;
 import framework.CoreSystem;
 import framework.Entity;
@@ -29,7 +28,6 @@ import framework.components.Gun;
 import framework.components.Health;
 import framework.components.Hero;
 import framework.components.Item;
-import framework.components.Light;
 import framework.components.Obstacle;
 import framework.components.Polygon;
 import framework.components.Position;
@@ -106,8 +104,8 @@ public class CollisionSystem extends CoreSystem {
 			Point velA = em.getComponent(c.a, Velocity.class).velocity;
 			Circle circle = em.getComponent(c.a, Circle.class);
 
-			if (c.inside)
-				c.poi.isub(velA);
+			//if (c.inside)
+			//	c.poi.isub(velA);
 			double dist = posA.dist(c.poi) - circle.radius;
 			if (c.inside)
 				dist += 2*circle.radius;
@@ -251,6 +249,7 @@ public class CollisionSystem extends CoreSystem {
 					em.addComponent(zombie, new Obstacle());
 					em.addComponent(zombie, new Collider(4));
 					em.addComponent(zombie, new Angle(0));
+					em.addComponent(zombie, new AngleSpeed(0));
 					em.addComponent(zombie, new Tex("zombie.png"));
 
 					if (j % 2 == 0)

@@ -29,6 +29,7 @@ public class SubLightRenderSystem extends CoreSystem{
 	{
 		Entity worldComp = em.getByStringID("camera");
 		Point camTrans = em.getComponent(worldComp, Position.class).position.neg();
+		
 		glPushMatrix();
 		Draw.translate(camTrans);
 		
@@ -45,21 +46,17 @@ public class SubLightRenderSystem extends CoreSystem{
 
 			if (em.hasComponent(e, Position.class))
 				Draw.translate(em.getComponent(e, Position.class).position);
-
+			
 			if (em.hasComponent(e, Angle.class))
 				Draw.rotate(em.getComponent(e, Angle.class).angle);
 
-
-			if (em.hasComponent(e, Tex.class))
-			{
-				Tex t = em.getComponent(e, Tex.class);
-				t.render(world, e);
-			}
+			Tex t = em.getComponent(e, Tex.class);
+			t.render(world, e);
 
 			glPopMatrix();
 		}
 		
-		for (Entity e : em.getEntityAll(Circle.class))
+		for (Entity e : em.getEntityAll(Circle.class, Velocity.class))
 		{
 			glPushMatrix();
 
@@ -69,9 +66,6 @@ public class SubLightRenderSystem extends CoreSystem{
 			if (em.hasComponent(e, Angle.class))
 				Draw.rotate(em.getComponent(e, Angle.class).angle);
 
-			if (em.hasComponent(e, ColorComp.class))
-				Draw.setColor(em.getComponent(e, ColorComp.class).color);
-
 			if (em.hasComponent(e, Tex.class))
 			{
 				Tex t = em.getComponent(e, Tex.class);
@@ -79,6 +73,10 @@ public class SubLightRenderSystem extends CoreSystem{
 			}
 			else
 			{
+
+				if (em.hasComponent(e, ColorComp.class))
+					Draw.setColor(em.getComponent(e, ColorComp.class).color);
+				
 				Circle circ = em.getComponent(e, Circle.class);
 				Draw.circle(circ.radius);
 			}

@@ -46,6 +46,7 @@ public class GLEngine {
 
 			GL11.glEnable(GL11.GL_BLEND);
 			GL11.glBlendFunc(GL11.GL_SRC_ALPHA,GL11.GL_ONE_MINUS_SRC_ALPHA);
+			GL11.glDisable(GL11.GL_DEPTH_TEST);
 			
 			prepare2D();
 
@@ -68,7 +69,7 @@ public class GLEngine {
 	
 	public static void clearState()
 	{	
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL11.GL_STENCIL_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT);
 		glLoadIdentity();
 	}
 	
