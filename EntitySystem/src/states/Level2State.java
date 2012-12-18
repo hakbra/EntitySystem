@@ -1,17 +1,16 @@
 package states;
 
-import helpers.Color;
 import helpers.Point;
 import engine.GLEngine;
 import framework.Entity;
 import framework.World;
 import framework.components.Button;
-import framework.components.ColorComp;
 import framework.components.Obstacle;
 import framework.components.Pathfinder;
 import framework.components.Polygon;
 import framework.components.Position;
 import framework.components.Tex;
+import framework.components.Timer;
 import framework.systems.CameraSystem;
 import framework.systems.CollisionSystem;
 import framework.systems.EmitterSystem;
@@ -128,6 +127,7 @@ public class Level2State {
 		wonButton.components.add(Polygon.centerRectangle(new Point(100, 50)));
 		wonButton.components.add(new Position(new Point(GLEngine.WIDTH / 2, GLEngine.HEIGHT / 2)));
 		wonButton.components.add(new Button("You Won!"));
+		wonButton.components.add(new Timer(5000));
 		world.addEntity(wonButton, State.LEVEL2);
 	}
 }
