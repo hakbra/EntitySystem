@@ -1,6 +1,5 @@
 package framework.systems;
 
-import helpers.Color;
 import helpers.Point;
 import helpers.Time;
 
@@ -17,13 +16,13 @@ import framework.components.AngleSpeed;
 import framework.components.Bullet;
 import framework.components.Circle;
 import framework.components.Collider;
-import framework.components.ColorComp;
 import framework.components.Damage;
 import framework.components.DestroyOnImpact;
 import framework.components.EmitterOnImpact;
 import framework.components.Gun;
 import framework.components.KeyInput;
 import framework.components.Position;
+import framework.components.Tex;
 import framework.components.Timer;
 import framework.components.Velocity;
 
@@ -74,21 +73,20 @@ public class PlayerInputSystem extends CoreSystem{
 				
 				for (int i = 0; i < gun.bullets; i++) {
 					float deltaAngle = r.nextFloat()*2*gun.spread-gun.spread;
-					Point origin = new Point(angle.angle).mult(circle.radius+4);
+					Point origin = new Point(angle.angle).mult(circle.radius);
 					Point position = new Point(pos.add(origin));
 					int time = 500 + r.nextInt(100);
 					float speed = gun.speed + r.nextFloat()*2 - 1;
-					
-					Color c = Color.WHITE;
 					
 					Entity bullet = new Entity();
 					bullet.name = "Bullet";
 					em.addComponent(bullet, new Bullet());
 					em.addComponent(bullet, new Position(position));
 					em.addComponent(bullet, new Velocity(new Point(angle.angle + deltaAngle).mult(speed)));
-					em.addComponent(bullet, new Circle(3));
-					em.addComponent(bullet, new ColorComp(c));
+					em.addComponent(bullet, new Circle(5));
+					em.addComponent(bullet, new Tex("bullet.png"));
 					em.addComponent(bullet, new Timer(time));
+					em.addComponent(bullet, new Angle(angle.angle + deltaAngle));
 					em.addComponent(bullet, new Damage(gun.damage, e));
 					em.addComponent(bullet, new Collider(2));
 					em.addComponent(bullet, new DestroyOnImpact());

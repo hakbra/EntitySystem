@@ -25,7 +25,7 @@ import framework.components.Health;
 import framework.components.Obstacle;
 import framework.components.Polygon;
 import framework.components.Position;
-import framework.components.TextureComp;
+import framework.components.Tex;
 import framework.components.Velocity;
 import framework.components.Zombie;
 
@@ -62,13 +62,13 @@ public class MouseInputSystem extends CoreSystem{
 				if (button.type == "Zombies")
 				{
 					Random r = new Random();
-					for (int i = 0; i < 50; i++)
+					for (int i = 0; i < 20; i++)
 					{
 						Entity zombie = new Entity();
 						zombie.name = "Zombie";
 						em.addComponent(zombie, new Zombie());
 						em.addComponent(zombie, new Circle(20));
-						em.addComponent(zombie, new Position(new Point(r.nextInt(GLEngine.WIDTH*2-300), r.nextInt(GLEngine.HEIGHT))));
+						em.addComponent(zombie, new Position(new Point(r.nextInt(GLEngine.WIDTH), r.nextInt(GLEngine.HEIGHT))));
 						em.addComponent(zombie, new Velocity(new Point(0, 0)));
 						em.addComponent(zombie, new Health());
 						em.addComponent(zombie, new Follower());
@@ -77,7 +77,7 @@ public class MouseInputSystem extends CoreSystem{
 						em.addComponent(zombie, new Collider(4));
 						em.addComponent(zombie, new Angle(0));
 						em.addComponent(zombie, new AngleSpeed(0));
-						em.addComponent(zombie, new TextureComp("zombie.png"));
+						em.addComponent(zombie, new Tex("zombie.png"));
 					}
 				}
 				else if (button.type == "Screen")
@@ -88,7 +88,7 @@ public class MouseInputSystem extends CoreSystem{
 				{
 					world.setState(State.LEVEL1);
 				}
-				else if (button.type == "Level 3")
+				else if (button.type == "Level 2")
 				{
 					world.setState(State.LEVEL2);
 				}

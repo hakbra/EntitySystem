@@ -3,7 +3,7 @@ package engine;
 import helpers.Time;
 import states.Level1State;
 import states.CutsceneState;
-import states.Level3State;
+import states.Level2State;
 import states.MenuState;
 import states.State;
 import framework.World;

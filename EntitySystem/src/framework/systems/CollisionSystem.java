@@ -8,7 +8,7 @@ import helpers.Time;
 import org.lwjgl.input.Keyboard;
 
 import states.CutsceneState;
-import states.Level3State;
+import states.Level2State;
 import states.State;
 
 import engine.GLEngine;
@@ -33,7 +33,7 @@ import framework.components.Light;
 import framework.components.Obstacle;
 import framework.components.Polygon;
 import framework.components.Position;
-import framework.components.TextureComp;
+import framework.components.Tex;
 import framework.components.Timer;
 import framework.components.Trigger;
 import framework.components.Velocity;
@@ -176,7 +176,7 @@ public class CollisionSystem extends CoreSystem {
 
 				em.addComponent(c.b, oldGun);
 				em.addComponent(c.b, new Timer(500, "selfDestruct"));
-				em.getComponent(c.b, TextureComp.class).texture = oldGun.tex;
+				em.getComponent(c.b, Tex.class).texture = oldGun.tex;
 			}
 			if (item.type == "exit1" &&
 					em.hasComponents(c.a, Gun.class, Hero.class))
@@ -209,7 +209,7 @@ public class CollisionSystem extends CoreSystem {
 					i++;
 				}
 				world.clear(world.state);
-				Level3State.init(world);
+				Level2State.init(world);
 				world.state = State.LEVEL2;
 			}
 		}
@@ -234,7 +234,7 @@ public class CollisionSystem extends CoreSystem {
 					em.addComponent(zombie, new Collider(4));
 					em.addComponent(zombie, new Angle(0));
 					em.addComponent(zombie, new AngleSpeed(0));
-					em.addComponent(zombie, new TextureComp("zombie.png"));
+					em.addComponent(zombie, new Tex("zombie.png"));
 				}
 
 				for (int j = 0; j < 10; j++)
@@ -251,7 +251,7 @@ public class CollisionSystem extends CoreSystem {
 					em.addComponent(zombie, new Obstacle());
 					em.addComponent(zombie, new Collider(4));
 					em.addComponent(zombie, new Angle(0));
-					em.addComponent(zombie, new TextureComp("zombie.png"));
+					em.addComponent(zombie, new Tex("zombie.png"));
 
 					if (j % 2 == 0)
 						continue;
@@ -269,7 +269,7 @@ public class CollisionSystem extends CoreSystem {
 				em.addComponent(exit, new Position(new Point(250, 200)));
 				em.addComponent(exit, Polygon.centerRectangle(new Point(50, 50)));
 				em.addComponent(exit, new Item("exit1"));
-				em.addComponent(exit, new TextureComp("exit.png"));
+				em.addComponent(exit, new Tex("exit.png"));
 				em.addComponent(exit, new Angle(180));
 			}	
 		}

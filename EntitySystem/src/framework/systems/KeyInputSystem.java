@@ -22,7 +22,7 @@ import framework.components.KeyInput;
 import framework.components.Light;
 import framework.components.Obstacle;
 import framework.components.Position;
-import framework.components.TextureComp;
+import framework.components.Tex;
 import framework.components.Velocity;
 
 
@@ -55,7 +55,7 @@ public class KeyInputSystem extends CoreSystem{
 			em.addComponent(player, new Collider(4));
 			em.addComponent(player, new Obstacle());
 			em.addComponent(player, new Light(400));
-			em.addComponent(player, new TextureComp("hero.png"));
+			em.addComponent(player, new Tex("hero.png"));
 			em.addStringID(player);
 		}
 	}

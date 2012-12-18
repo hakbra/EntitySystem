@@ -28,7 +28,7 @@ import framework.components.Obstacle;
 import framework.components.Pathfinder;
 import framework.components.Polygon;
 import framework.components.Position;
-import framework.components.TextureComp;
+import framework.components.Tex;
 import framework.components.Trigger;
 import framework.components.Velocity;
 import framework.components.Zombie;
@@ -72,18 +72,18 @@ public class Level1State {
 		Entity player = new Entity();
 		player.name = "player1";
 		player.components.add(new Hero());
-		player.components.add(new Circle(25));
+		player.components.add(new Circle(20));
 		player.components.add(new Position(new Point(300, 250)));
 		player.components.add(new Velocity(new Point(0, 0)));
 		player.components.add(new Angle(0));
 		player.components.add(new AngleSpeed(0));
 		player.components.add(new KeyInput(Keyboard.KEY_A, Keyboard.KEY_D, Keyboard.KEY_W, Keyboard.KEY_S, Keyboard.KEY_SPACE));
-		player.components.add(new Gun(2, 0, 10, 20, 2, "gun1.png"));
+		player.components.add(new Gun(10, 0, 10, 100, 2, "gun1.png"));
 		player.components.add(new Health());
 		player.components.add(new Collider(4));
 		player.components.add(new Obstacle());
 		player.components.add(new Light(300));
-		player.components.add(new TextureComp("hero.png"));
+		player.components.add(new Tex("man.png", new Point(1, 1), new Point(0, 0)));
 		world.addEntityAndID(player, State.LEVEL1);
 
 		Entity worldEntity = new Entity();
@@ -95,9 +95,9 @@ public class Level1State {
 
 		Entity ground = new Entity();
 		ground.name = "ground";
-		ground.components.add(new Position( new Point(), true));
-		ground.components.add(Polygon.rectangle(new Point(GLEngine.WIDTH, GLEngine.HEIGHT)));
-		ground.components.add(new ColorComp( new Color(0.4, 0.4, 0.4)));
+		ground.components.add(new Position( new Point()));
+		ground.components.add(Polygon.rectangle(new Point(GLEngine.WIDTH*2, GLEngine.HEIGHT)));
+		ground.components.add(new Tex("bush.png", new Point(128, 128)));
 		world.addEntityAndID(ground, State.LEVEL1);
 
 		Entity gun = new Entity();
@@ -105,8 +105,8 @@ public class Level1State {
 		gun.components.add(new Position(new Point(GLEngine.WIDTH * 2 - 75, 75)));
 		gun.components.add(new Circle(30));
 		gun.components.add(new Item("gun"));
-		gun.components.add(new TextureComp("gun2.png"));
-		gun.components.add(new Gun(3, 10, 10, 400, 20, "gun2.png"));
+		gun.components.add(new Tex("gun2.png"));
+		gun.components.add(new Gun(10, 10, 10, 400, 20, "gun2.png"));
 		gun.components.add(new Angle(0));
 		gun.components.add(new AngleSpeed(1));
 		world.addEntity(gun, State.LEVEL1);
@@ -123,7 +123,7 @@ public class Level1State {
 		health.name = "health";
 		health.components.add(new Circle(15));
 		health.components.add(new Position(new Point(GLEngine.WIDTH * 2 - 75	, 	GLEngine.HEIGHT - 75)));
-		health.components.add(new TextureComp("health.png"));
+		health.components.add(new Tex("health.png"));
 		health.components.add(new Item("health", 100));
 		health.components.add(new Angle(0));
 		health.components.add(new AngleSpeed(1));
@@ -134,46 +134,34 @@ public class Level1State {
 		ArrayList<Point> p = new ArrayList<Point>();
 
 		p.add(  new Point(400, 50)  );
-		p.add(  new Point(150, 100)  );
+		p.add(  new Point(150, 110)  );
 
 		/**/
-		p.add(  new Point(50, 130)  );
-		p.add(  new Point(150, 420)  );
+		p.add(  new Point(50, 150)  );
+		p.add(  new Point(150, 410)  );
 
-		p.add(  new Point(50, 20)  );
-		p.add(  new Point(150, 380)  );
+		p.add(  new Point(50, 50)  );
+		p.add(  new Point(150, 335)  );
 
-		p.add(  new Point(50, 20)  );
-		p.add(  new Point(150, 340)  );
-
-		p.add(  new Point(50, 20)  );
-		p.add(  new Point(150, 300)  );
-
-		p.add(  new Point(50, 130)  );
-		p.add(  new Point(150, 150)  );
+		p.add(  new Point(50, 150)  );
+		p.add(  new Point(150, 160)  );
 		/**/
 
 		p.add(  new Point(400, 50)  );
-		p.add(  new Point(150, 550)  );
+		p.add(  new Point(150, 560)  );
 
 		p.add(  new Point(400, 50)  );
-		p.add(  new Point(730, 100)  );
+		p.add(  new Point(730, 110)  );
 
 		/**/
-		p.add(  new Point(50, 130)  );
-		p.add(  new Point(1080, 420)  );
+		p.add(  new Point(50, 150)  );
+		p.add(  new Point(1080, 410)  );
 
-		p.add(  new Point(50, 20)  );
-		p.add(  new Point(1080, 380)  );
+		p.add(  new Point(50, 50)  );
+		p.add(  new Point(1080, 335)  );
 
-		p.add(  new Point(50, 20)  );
-		p.add(  new Point(1080, 340)  );
-
-		p.add(  new Point(50, 20)  );
-		p.add(  new Point(1080, 300)  );
-
-		p.add(  new Point(50, 130)  );
-		p.add(  new Point(1080, 150)  );
+		p.add(  new Point(50, 150)  );
+		p.add(  new Point(1080, 160)  );
 		/**/
 
 		p.add(  new Point(400, 50)  );
@@ -189,11 +177,11 @@ public class Level1State {
 		p.add(  new Point(GLEngine.WIDTH + 50, 420)  );
 
 
-		p.add(  new Point(50, 335) );
+		p.add(  new Point(50, 300) );
 		p.add(  new Point(GLEngine.WIDTH*2 - 300, 0)  );
 
-		p.add(  new Point(50, 335) );
-		p.add(  new Point(GLEngine.WIDTH*2 - 300, GLEngine.HEIGHT - 335)  );
+		p.add(  new Point(50, 300) );
+		p.add(  new Point(GLEngine.WIDTH*2 - 300, GLEngine.HEIGHT - 300)  );
 
 		p.add(  new Point(150, 150) );
 		p.add(  new Point(GLEngine.WIDTH + 400, 200)  );
@@ -217,12 +205,15 @@ public class Level1State {
 				rectangle.components.add(Polygon.centerRectangle(p.remove(0)));
 				rectangle.components.add(new Angle(45));
 				rectangle.components.add(new AngleSpeed(0.2));
+				rectangle.components.add(new Tex("crate.png", new Point(150, 150)));
 			}
 			else
+			{
 				rectangle.components.add(Polygon.rectangle(p.remove(0)));
+				rectangle.components.add(new Tex("crate.png", new Point(50, 50)));
+			}
 			rectangle.components.add(new Position(p.remove(0)));
 			rectangle.components.add(new Obstacle());
-			rectangle.components.add(new TextureComp("bush.png", new Point(256, 256)));
 			world.addEntity(rectangle, State.LEVEL1);
 
 		}
@@ -250,7 +241,7 @@ public class Level1State {
 		menuButton.components.add(Polygon.rectangle(new Point(100, 50)));
 		menuButton.components.add(new Position(new Point(150, 650)));
 		menuButton.components.add(new Button("Menu"));
-		menuButton.components.add(new TextureComp("button.png"));
+		menuButton.components.add(new Tex("button.png"));
 		world.addEntity(menuButton, State.LEVEL1);
 
 		Entity exitButton2 = new Entity();
@@ -258,7 +249,7 @@ public class Level1State {
 		exitButton2.components.add(Polygon.rectangle(new Point(100, 50)));
 		exitButton2.components.add(new Position(new Point(25, 650)));
 		exitButton2.components.add(new Button("Exit"));
-		exitButton2.components.add(new TextureComp("button.png"));
+		exitButton2.components.add(new Tex("button.png"));
 		world.addEntity(exitButton2, State.LEVEL1);
 
 		Entity zombieButton = new Entity();
@@ -266,7 +257,7 @@ public class Level1State {
 		zombieButton.components.add(Polygon.rectangle(new Point(100, 50)));
 		zombieButton.components.add(new Position(new Point(400, 650)));
 		zombieButton.components.add(new Button("Zombies"));
-		zombieButton.components.add(new TextureComp("button.png"));
+		zombieButton.components.add(new Tex("button.png"));
 		world.addEntity(zombieButton, State.LEVEL1);
 
 		Entity screenButton = new Entity();
@@ -274,7 +265,7 @@ public class Level1State {
 		screenButton.components.add(Polygon.rectangle(new Point(100, 50)));
 		screenButton.components.add(new Position(new Point(525, 650)));
 		screenButton.components.add(new Button("Screen"));
-		screenButton.components.add(new TextureComp("button.png"));
+		screenButton.components.add(new Tex("button.png"));
 		world.addEntity(screenButton, State.LEVEL1);
 
 		Entity lightButton = new Entity();
@@ -282,7 +273,7 @@ public class Level1State {
 		lightButton.components.add(Polygon.rectangle(new Point(100, 50)));
 		lightButton.components.add(new Position(new Point(275, 650)));
 		lightButton.components.add(new Button("Lights"));
-		lightButton.components.add(new TextureComp("button.png"));
+		lightButton.components.add(new Tex("button.png"));
 		world.addEntity(lightButton, State.LEVEL1);
 
 		Entity restartButton = new Entity();
@@ -290,7 +281,7 @@ public class Level1State {
 		restartButton.components.add(Polygon.rectangle(new Point(100, 50)));
 		restartButton.components.add(new Position(new Point(650, 650)));
 		restartButton.components.add(new Button("Restart"));
-		restartButton.components.add(new TextureComp("button.png"));
+		restartButton.components.add(new Tex("button.png"));
 		world.addEntity(restartButton, State.LEVEL1);
 	}
 
@@ -331,7 +322,7 @@ public class Level1State {
 			zombie.components.add(new Collider(4));
 			zombie.components.add(new Angle(0));
 			zombie.components.add(new AngleSpeed(0));
-			zombie.components.add(new TextureComp("zombie.png"));
+			zombie.components.add(new Tex("zombie.png"));
 			world.addEntity(zombie, State.LEVEL1);
 		}
 	}

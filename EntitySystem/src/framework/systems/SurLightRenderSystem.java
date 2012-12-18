@@ -17,7 +17,7 @@ import framework.components.Item;
 import framework.components.Obstacle;
 import framework.components.Polygon;
 import framework.components.Position;
-import framework.components.TextureComp;
+import framework.components.Tex;
 import framework.components.Velocity;
 
 public class SurLightRenderSystem extends CoreSystem{
@@ -37,7 +37,7 @@ public class SurLightRenderSystem extends CoreSystem{
 		glPushMatrix();
 		Draw.translate(trans);
 
-		for (Entity e : em.getEntityAll(TextureComp.class, Obstacle.class, Polygon.class))
+		for (Entity e : em.getEntityAll(Tex.class, Obstacle.class, Polygon.class))
 		{
 			glPushMatrix();
 
@@ -48,7 +48,7 @@ public class SurLightRenderSystem extends CoreSystem{
 				Draw.rotate(em.getComponent(e, Angle.class).angle);
 
 
-			TextureComp t = em.getComponent(e, TextureComp.class);
+			Tex t = em.getComponent(e, Tex.class);
 			t.render(world, e);
 
 			glPopMatrix();

@@ -49,9 +49,9 @@ public class FollowerSystem extends CoreSystem{
 				double delta = thisSpeed.angle( new Point(oldAng));
 				
 				if (delta > 0)
-					as.speed = 1.5;
+					as.speed = 3;
 				else if (delta < 0)
-					as.speed = -1.5;
+					as.speed = -3;
 				else
 					as.speed = 0;
 			}

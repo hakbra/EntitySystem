@@ -16,7 +16,7 @@ import framework.components.ColorComp;
 import framework.components.Item;
 import framework.components.Polygon;
 import framework.components.Position;
-import framework.components.TextureComp;
+import framework.components.Tex;
 import framework.components.Velocity;
 
 public class SubLightRenderSystem extends CoreSystem{
@@ -29,19 +29,15 @@ public class SubLightRenderSystem extends CoreSystem{
 	{
 		Entity worldComp = em.getByStringID("camera");
 		Point camTrans = em.getComponent(worldComp, Position.class).position.neg();
+		glPushMatrix();
+		Draw.translate(camTrans);
 		
 		Entity ground = em.getByStringID("ground");
 		if (ground != null)
 		{
-			Polygon poly = em.getComponent(ground, Polygon.class);
-			ColorComp color = em.getComponent(ground, ColorComp.class);
-			
-			Draw.setColor(color.color);
-			Draw.polygon(poly.localPoints);
+			Tex tex = em.getComponent(ground, Tex.class);
+			tex.render(world, ground);
 		}
-		
-		glPushMatrix();
-		Draw.translate(camTrans);
 
 		for (Entity e : em.getEntityAll(Item.class))
 		{
@@ -54,9 +50,9 @@ public class SubLightRenderSystem extends CoreSystem{
 				Draw.rotate(em.getComponent(e, Angle.class).angle);
 
 
-			if (em.hasComponent(e, TextureComp.class))
+			if (em.hasComponent(e, Tex.class))
 			{
-				TextureComp t = em.getComponent(e, TextureComp.class);
+				Tex t = em.getComponent(e, Tex.class);
 				t.render(world, e);
 			}
 
@@ -76,9 +72,9 @@ public class SubLightRenderSystem extends CoreSystem{
 			if (em.hasComponent(e, ColorComp.class))
 				Draw.setColor(em.getComponent(e, ColorComp.class).color);
 
-			if (em.hasComponent(e, TextureComp.class))
+			if (em.hasComponent(e, Tex.class))
 			{
-				TextureComp t = em.getComponent(e, TextureComp.class);
+				Tex t = em.getComponent(e, Tex.class);
 				t.render(world, e);
 			}
 			else

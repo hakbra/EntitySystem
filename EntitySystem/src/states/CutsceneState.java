@@ -12,7 +12,7 @@ import framework.components.Item;
 import framework.components.Light;
 import framework.components.Polygon;
 import framework.components.Position;
-import framework.components.TextureComp;
+import framework.components.Tex;
 import framework.systems.CollisionSystem;
 import framework.systems.LightSystem;
 import framework.systems.PhysicsSystem;
@@ -41,9 +41,9 @@ public class CutsceneState {
 
 		Entity ground = new Entity();
 		ground.name = "ground";
-		ground.components.add(new Position( new Point(), true));
-		ground.components.add(Polygon.rectangle(new Point(GLEngine.WIDTH, GLEngine.HEIGHT)));
-		ground.components.add(new ColorComp( new Color(0.4, 0.4, 0.4)));
+		ground.components.add(new Position( new Point()));
+		ground.components.add(Polygon.rectangle(new Point(GLEngine.WIDTH*2, GLEngine.HEIGHT)));
+		ground.components.add(new Tex("bush.png", new Point(128, 128)));
 		world.addEntityAndID(ground, State.CUTSCENE);
 
 		Entity exit = new Entity();
@@ -51,7 +51,7 @@ public class CutsceneState {
 		exit.components.add(new Position(new Point(50, GLEngine.HEIGHT / 2 - 40)));
 		exit.components.add(Polygon.centerRectangle(new Point(50, 50)));
 		exit.components.add(new Item("exit2"));
-		exit.components.add(new TextureComp("exit.png"));
+		exit.components.add(new Tex("exit.png"));
 		exit.components.add(new Angle(180));
 		world.addEntity(exit, State.CUTSCENE);
 		
@@ -60,7 +60,7 @@ public class CutsceneState {
 		exit2.components.add(new Position(new Point(50, GLEngine.HEIGHT / 2 + 40)));
 		exit2.components.add(Polygon.centerRectangle(new Point(50, 50)));
 		exit2.components.add(new Item("exit2"));
-		exit2.components.add(new TextureComp("exit.png"));
+		exit2.components.add(new Tex("exit.png"));
 		exit2.components.add(new Angle(180));
 		world.addEntity(exit2, State.CUTSCENE);
 		
@@ -70,16 +70,16 @@ public class CutsceneState {
 			zombie.name = "Zombie";
 			zombie.components.add(new Circle(20));
 			zombie.components.add(new Position(new Point(i, 250)));
-			zombie.components.add(new Angle(-90));
-			zombie.components.add(new TextureComp("zombie.png"));
+			zombie.components.add(new Angle(90));
+			zombie.components.add(new Tex("zombie.png"));
 			world.addEntity(zombie, State.CUTSCENE);
 
 			Entity zombie2 = new Entity();
 			zombie2.name = "Zombie";
 			zombie2.components.add(new Circle(20));
 			zombie2.components.add(new Position(new Point(i, GLEngine.HEIGHT - 250)));
-			zombie2.components.add(new Angle(90));
-			zombie2.components.add(new TextureComp("zombie.png"));
+			zombie2.components.add(new Angle(-90));
+			zombie2.components.add(new Tex("zombie.png"));
 			world.addEntity(zombie2, State.CUTSCENE);
 		}
 	}

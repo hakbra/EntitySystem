@@ -49,7 +49,7 @@ import framework.components.Particle;
 import framework.components.Pathfinder;
 import framework.components.Polygon;
 import framework.components.Position;
-import framework.components.TextureComp;
+import framework.components.Tex;
 import framework.components.Velocity;
 
 public class HudRenderSystem extends CoreSystem {
@@ -74,7 +74,7 @@ public class HudRenderSystem extends CoreSystem {
 			if (em.hasComponent(e, Position.class))
 				Draw.translate(em.getComponent(e, Position.class).position);
 
-			TextureComp t = em.getComponent(e, TextureComp.class);
+			Tex t = em.getComponent(e, Tex.class);
 			
 			if (t != null)
 				t.render(world, e);
