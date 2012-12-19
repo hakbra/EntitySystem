@@ -29,24 +29,28 @@ public class FollowerSystem extends CoreSystem{
 		
 		for (Entity e : em.getEntityAll(Follower.class))
 		{
-			Point thisPos = em.getComponent(e, Position.class).position;
 			Follower follower = em.getComponent(e, Follower.class);
-			Point thisSpeed = em.getComponent(e, Velocity.class).velocity;
-			float rad = em.getComponent(e, Circle.class).radius;
+			Point pos = em.getComponent(e, Position.class).position;
+			Point vel = em.getComponent(e, Velocity.class).velocity;
 			
-			Point dir = pf.getDir(thisPos, follower.limit);
-			thisSpeed.set(dir);
+			Point dir = pf.getDir(pos, follower.limit);
+			vel.set(dir);
 			
 			if (follower.limit > 0 && dir.len() > 0)
 				follower.limit = -1;
 
 			if (em.hasComponents(e, Angle.class, AngleSpeed.class))
 			{
+				
 				Angle a = em.getComponent(e, Angle.class);
 				AngleSpeed as = em.getComponent(e, AngleSpeed.class);
 				double oldAng = a.angle;
-				double newAng = thisSpeed.angle();
-				double delta = thisSpeed.angle( new Point(oldAng));
+				double newAng = vel.angle();
+				double delta = vel.angle( new Point(oldAng));
+				
+				double m = Math.abs(vel.norm().dot( new Point(oldAng).norm() ));
+				
+				vel.imult(m*m*m);
 				
 				if (delta > 0)
 					as.speed = 3;

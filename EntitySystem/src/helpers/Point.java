@@ -241,4 +241,9 @@ public class Point
 		this.x /= d;
 		this.y /= d;
 	}
+
+	public void imult(double m) {
+		this.x *= m;
+		this.y *= m;
+	}
 }

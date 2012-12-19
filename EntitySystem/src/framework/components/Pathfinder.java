@@ -16,7 +16,6 @@ public class Pathfinder extends Component{
 		public long visited;
 		public long done;
 		public Node prev;
-		public double weight;
 		@Override
 		public int compareTo(Object o) {
 			Node n = (Node) o;
@@ -63,8 +62,8 @@ public class Pathfinder extends Component{
 				if (map[i][j].done != update)
 					continue;
 				
-					int max = 200;
-					double w = map[i][j].weight + map[i][j].value;
+					int max = 80;
+					double w = map[i][j].value;
 					c.r = w / max;
 					c.g = 1 - w / max;
 					
@@ -98,9 +97,9 @@ public class Pathfinder extends Component{
 			{
 				if (!isLegal(i, j))
 					continue;
-				if (map[i][j].done == update && !map[i][j].blocked && (min < 0|| map[i][j].value + map[i][j].weight < min))
+				if (map[i][j].done == update && !map[i][j].blocked && (min < 0|| map[i][j].value < min))
 				{
-					min = map[i][j].value + map[i][j].weight;
+					min = map[i][j].value;
 					node = map[i][j];
 				}
 			}

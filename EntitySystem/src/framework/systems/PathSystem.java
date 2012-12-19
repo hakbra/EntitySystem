@@ -80,12 +80,11 @@ public class PathSystem extends CoreSystem{
 						{
 							pf.map[i][j].value = 10000.0;
 							pf.map[i][j].visited = now;
-							pf.map[i][j].weight = 0;
 							pf.map[i][j].blocked = false;
 							pf.map[i][j].prev = null;
 						}
 
-						double newDist = pf.map[i][j].pos.dist(current.pos) + current.value;// + pf.map[i][j].weight;
+						double newDist = pf.map[i][j].pos.dist(current.pos) + current.value;
 						if (pf.map[i][j].value > newDist )
 						{
 							if (queue.contains(pf.map[i][j]))

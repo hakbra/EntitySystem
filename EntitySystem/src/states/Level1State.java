@@ -1,21 +1,21 @@
 package states;
 
-import helpers.Color;
 import helpers.Point;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import org.lwjgl.input.Keyboard;
 
 import engine.GLEngine;
 import framework.Entity;
 import framework.World;
+import framework.components.Acceleration;
 import framework.components.Angle;
 import framework.components.AngleSpeed;
 import framework.components.Button;
 import framework.components.Circle;
 import framework.components.Collider;
-import framework.components.ColorComp;
 import framework.components.Damage;
 import framework.components.Follower;
 import framework.components.Gun;
@@ -296,7 +296,7 @@ public class Level1State {
 		world.addEntity(restartButton, State.LEVEL1);
 	}
 
-	public static void createZombies(World world)
+	private static void createZombies(World world)
 	{
 
 		ArrayList<Point> spawns = new ArrayList<Point>();
@@ -317,6 +317,10 @@ public class Level1State {
 
 		spawns.add(  new Point(GLEngine.WIDTH*2 -20, 100));
 		spawns.add(  new Point(GLEngine.WIDTH*2 -20, GLEngine.HEIGHT - 100));
+		
+		Random r = new Random();
+		for (int i = 0; i < 20; i++)
+			spawns.add(new Point(r.nextInt(GLEngine.WIDTH) + GLEngine.WIDTH, r.nextInt(GLEngine.HEIGHT)));
 
 		for (Point p : spawns)
 		{
@@ -326,6 +330,7 @@ public class Level1State {
 			zombie.components.add(new Circle(20));
 			zombie.components.add(new Position(p));
 			zombie.components.add(new Velocity(new Point(0, 0)));
+			zombie.components.add(new Acceleration(new Point(0, 0)));
 			zombie.components.add(new Health());
 			zombie.components.add(new Follower());
 			zombie.components.add(new Damage(1, 200));
@@ -336,5 +341,6 @@ public class Level1State {
 			zombie.components.add(new Tex("zombie.png"));
 			world.addEntity(zombie, State.LEVEL1);
 		}
+
 	}
 }
