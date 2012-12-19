@@ -1,9 +1,11 @@
 package engine;
 
 import helpers.Time;
+
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL20;
+
 import states.Level1State;
-import states.CutsceneState;
-import states.Level2State;
 import states.MenuState;
 import states.State;
 import framework.World;

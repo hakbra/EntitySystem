@@ -35,17 +35,18 @@ import framework.components.Zombie;
 import framework.systems.CameraSystem;
 import framework.systems.CollisionSystem;
 import framework.systems.EmitterSystem;
-import framework.systems.FollowerSystem;
-import framework.systems.HudRenderSystem;
 import framework.systems.KeyInputSystem;
 import framework.systems.LightSystem;
-import framework.systems.MouseInputSystem;
 import framework.systems.PathSystem;
 import framework.systems.PhysicsSystem;
-import framework.systems.PlayerInputSystem;
-import framework.systems.SubLightRenderSystem;
-import framework.systems.SurLightRenderSystem;
 import framework.systems.TimerSystem;
+import framework.systems.input.FollowerSystem;
+import framework.systems.input.MouseInputSystem;
+import framework.systems.input.PlayerInputSystem;
+import framework.systems.render.HudRenderSystem;
+import framework.systems.render.LightRenderSystem;
+import framework.systems.render.SubLightRenderSystem;
+import framework.systems.render.SurLightRenderSystem;
 
 public class Level1State {
 
@@ -58,9 +59,10 @@ public class Level1State {
 		world.addSystem(new FollowerSystem(world), State.LEVEL1);
 		world.addSystem(new PhysicsSystem(world), State.LEVEL1);
 		world.addSystem(new CollisionSystem(world), State.LEVEL1);
+		world.addSystem(new LightSystem(world), State.LEVEL1);
 
 		world.addSystem(new SubLightRenderSystem(world), State.LEVEL1);
-		world.addSystem(new LightSystem(world), State.LEVEL1);
+		world.addSystem(new LightRenderSystem(world), State.LEVEL1);
 		world.addSystem(new SurLightRenderSystem(world), State.LEVEL1);
 		world.addSystem(new HudRenderSystem(world), State.LEVEL1);
 
@@ -86,12 +88,16 @@ public class Level1State {
 		player.components.add(new Tex("man.png", new Point(1, 1), new Point(0, 0)));
 		world.addEntityAndID(player, State.LEVEL1);
 
-		Entity worldEntity = new Entity();
-		worldEntity.name = "camera";
-		worldEntity.components.add(new Position( new Point()));
-		worldEntity.components.add(new Polygon( new Point(0, 0), new Point(GLEngine.WIDTH, 0)));
-		worldEntity.components.add(new Pathfinder(new Point(0, 0), new Point(GLEngine.WIDTH*2, GLEngine.HEIGHT), 10));
-		world.addEntityAndID(worldEntity, State.LEVEL1);
+		Entity camera = new Entity();
+		camera.name = "camera";
+		camera.components.add(new Position( new Point()));
+		camera.components.add(new Polygon( new Point(0, 0), new Point(GLEngine.WIDTH, 0)));
+		world.addEntityAndID(camera, State.LEVEL1);
+		
+		Entity path = new Entity();
+		path.name = "path";
+		path.components.add(new Pathfinder(new Point(0, 0), new Point(GLEngine.WIDTH*2, GLEngine.HEIGHT), 10));
+		world.addEntityAndID(path, State.LEVEL1);
 
 		Entity ground = new Entity();
 		ground.name = "ground";

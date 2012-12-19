@@ -8,8 +8,8 @@ import framework.components.Button;
 import framework.components.Polygon;
 import framework.components.Position;
 import framework.components.Tex;
-import framework.systems.HudRenderSystem;
-import framework.systems.MouseInputSystem;
+import framework.systems.input.MouseInputSystem;
+import framework.systems.render.HudRenderSystem;
 
 public class MenuState {
 

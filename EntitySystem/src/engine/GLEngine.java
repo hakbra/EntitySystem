@@ -82,7 +82,6 @@ public class GLEngine {
 	{
 
 		Display.update();
-		//Display.sync(80);
 	}
 	
 	public static void setWindow(boolean fullscreen)

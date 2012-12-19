@@ -14,9 +14,10 @@ import framework.components.Velocity;
 import framework.systems.CollisionSystem;
 import framework.systems.LightSystem;
 import framework.systems.PhysicsSystem;
-import framework.systems.SubLightRenderSystem;
-import framework.systems.SurLightRenderSystem;
 import framework.systems.TimerSystem;
+import framework.systems.render.LightRenderSystem;
+import framework.systems.render.SubLightRenderSystem;
+import framework.systems.render.SurLightRenderSystem;
 
 public class CutsceneState {
 
@@ -24,9 +25,10 @@ public class CutsceneState {
 	{
 		world.addSystem(new PhysicsSystem(world), State.CUTSCENE);
 		world.addSystem(new CollisionSystem(world), State.CUTSCENE);
+		world.addSystem(new LightSystem(world), State.CUTSCENE);
 
 		world.addSystem(new SubLightRenderSystem(world), State.CUTSCENE);
-		world.addSystem(new LightSystem(world), State.CUTSCENE);
+		world.addSystem(new LightRenderSystem(world), State.CUTSCENE);
 		world.addSystem(new SurLightRenderSystem(world), State.CUTSCENE);
 
 		world.addSystem(new TimerSystem(world), State.CUTSCENE);

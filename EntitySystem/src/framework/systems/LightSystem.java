@@ -34,41 +34,12 @@ public class LightSystem  extends CoreSystem{
 
 	public void run(EntityManager em)
 	{
-		calculateLights(em);
-		drawLights();
-		
-	}
-	
-	private void drawLights()
-	{
-		GL11.glBlendFunc(GL11.GL_ONE_MINUS_SRC_ALPHA,GL11.GL_SRC_ALPHA);
-		glBindTexture(GL_TEXTURE_2D, world.getDataManager().lightTexID);
-		Draw.setColor(Color.WHITE);
-
-		GL11.glBegin(GL11.GL_QUADS);
-		GL11.glTexCoord2f(	0,							0);
-		GL11.glVertex2f(	0,							0);
-		GL11.glTexCoord2f(	1,							0);
-		GL11.glVertex2f(	GLEngine.WIDTH,	0);
-		GL11.glTexCoord2f(	1,							1);
-		GL11.glVertex2f(	GLEngine.WIDTH,				GLEngine.HEIGHT);
-		GL11.glTexCoord2f(	0,							1);
-		GL11.glVertex2f(	0,							GLEngine.HEIGHT);
-		GL11.glEnd();
-
-		glDisable(GL_TEXTURE_2D);
-		GL11.glBlendFunc(GL11.GL_SRC_ALPHA,GL11.GL_ONE_MINUS_SRC_ALPHA);
-	}
-	
-	private void calculateLights(EntityManager em)
-	{
 		Entity cam = em.getByStringID("camera");
 		Point trans = new Point();
 
-		if (world != null)
+		if (cam != null)
 			trans = em.getComponent(cam, Position.class).position.neg();
 
-		Draw.translate(trans);
 
 		glEnable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, 0);
@@ -77,8 +48,10 @@ public class LightSystem  extends CoreSystem{
 		glClear (GL_COLOR_BUFFER_BIT);
 
 		GL11.glBlendFunc(GL11.GL_ONE,GL11.GL_ONE);
-
 		glColorMask(false, false, false, true);
+		
+		GL11.glPushMatrix();
+		Draw.translate(trans);
 		for (Entity e : em.getEntityAll(Light.class))
 		{
 			Light l = em.getComponent(e, Light.class);
@@ -93,9 +66,11 @@ public class LightSystem  extends CoreSystem{
 			
 			l.render(em, e);
 		}
+		GL11.glPopMatrix();
+		
 		glColorMask(true, true, true, true);
-
 		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
-		GL11.glLoadIdentity();
+		GL11.glBlendFunc(GL11.GL_SRC_ALPHA,GL11.GL_ONE_MINUS_SRC_ALPHA);
+		glDisable(GL_TEXTURE_2D);
 	}
 }
