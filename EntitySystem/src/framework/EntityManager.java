@@ -1,24 +1,18 @@
 
 package framework;
 
-import helpers.MyFont;
-
-import java.awt.Font;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
-
-import org.newdawn.slick.opengl.Texture;
-import org.newdawn.slick.opengl.TextureLoader;
-import org.newdawn.slick.util.ResourceLoader;
-
-import states.State;
 
 
-public class EntityManager {
-    private HashMap<Class<?>, HashMap<Entity, ? extends Component>> entities = new HashMap<Class<?>, HashMap<Entity, ? extends Component>>();
+
+public class EntityManager{
+	
+    public HashMap<Class<?>, HashMap<Entity, ? extends Component>> entities = new HashMap<Class<?>, HashMap<Entity, ? extends Component>>();
     public HashMap<String, Entity> stringIDs = new HashMap<String, Entity>();
     private ArrayList<Entity> deleties = new ArrayList<Entity>();
+    public ArrayList<Entity> renders = new ArrayList<Entity>();
     
     public World world;
     
@@ -61,6 +55,9 @@ public class EntityManager {
 			c.entityUpdated(this, e);
 		
 		e.components.add(component);
+		
+		if (e.layer != Layer.NOT && !renders.contains(e))
+			addRender(e);
     }
     
     public <T> void removeComponent(Entity e, T component) {
@@ -119,7 +116,9 @@ public class EntityManager {
 				first = false;
 			}
 			else
+			{
 				result.retainAll(  getEntity(c)  );
+			}
 		}
 
 		return result;
@@ -129,6 +128,7 @@ public class EntityManager {
 		for (HashMap<Entity, ? extends Component> HashMap : entities.values()) {
 			HashMap.remove(e);
 			stringIDs.remove(e.name);
+			renders.remove(e);
 		}
     }
     
@@ -156,8 +156,20 @@ public class EntityManager {
 			componentMap.put(e, c);
 		}
 		for (Component c : e.components)
-		{
 			c.entityUpdated(this, e);
+		
+		if (e.layer != Layer.NOT)
+			addRender(e);
+	}
+
+	private void addRender(Entity e)
+	{
+		if (e.layer == Layer.NOT)
+		{
+			System.out.println("You must specify layer - Entity: " + e.name);
+			System.exit(0);
 		}
+		renders.add (e);
+		Collections.sort(renders);
 	}
 }

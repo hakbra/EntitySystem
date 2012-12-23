@@ -32,7 +32,7 @@ public class DataManager {
 	World world;
 
 	public MyFont font;
-    public HashMap<String, Texture> textures = new HashMap<String, Texture>();
+    public HashMap<String, Integer> textures = new HashMap<String, Integer>();
     
     public int lightTexID;
     public int lightBufID;
@@ -46,22 +46,22 @@ public class DataManager {
 		createTexture();
 	}
 
-	public Texture getTexture(String name) {
-		Texture t = textures.get(name);
+	public int getTexture(String name) {
+		Integer t = textures.get(name);
 		if (t != null)
 			return t;
-		
 		try
 		{
-			t = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("res/" + name));
+			Texture tex = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("res/" + name));
+			textures.put(name, tex.getTextureID());
+			return tex.getTextureID();
 		}
 		catch (Exception e)
 		{
 			System.out.println("Couldn't load " + name);
 			System.exit(0);
 		}
-		textures.put(name, t);
-		return t;
+		return -1;
 	}
 
 	private void createTexture()
@@ -82,6 +82,9 @@ public class DataManager {
 			glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT,GL_COLOR_ATTACHMENT0_EXT,GL_TEXTURE_2D, lightTexID, 0);
 
 			glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
+			
+			textures.put("lightTex", lightTexID);
+			textures.put("lightBuf", lightBufID);
 		}
 	}
 }

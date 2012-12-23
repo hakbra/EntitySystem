@@ -24,6 +24,7 @@ public class Tex extends Component{
 		this.texture = name;
 		this.coords = new Point(0, 0);
 		this.offset = new Point(0, 0);
+		this.name = "Texture";
 	}
 
 	public Tex(String name, Point c)
@@ -31,6 +32,7 @@ public class Tex extends Component{
 		this.texture = name;
 		this.coords = c;
 		this.offset = new Point(0, 0);
+		this.name = "Texture";
 	}
 
 	public Tex(String name, Point c, Point o)
@@ -38,13 +40,12 @@ public class Tex extends Component{
 		this.texture = name;
 		this.coords = c;
 		this.offset = o;
+		this.name = "Texture";
 	}
 	
 	public void render(World world, Entity e) {
 		EntityManager em = world.getEntityManager();
-		Draw.setColor(new Color(1, 1, 1));
-		GL11.glEnable(GL11.GL_TEXTURE_2D);
-		GL11.glBindTexture(GL11.GL_TEXTURE_2D, world.getDataManager().getTexture(texture).getTextureID());
+		GL11.glBindTexture(GL11.GL_TEXTURE_2D, world.getDataManager().getTexture(texture));
 		
 		if (em.hasComponent(e, Circle.class))
 		{
@@ -71,10 +72,6 @@ public class Tex extends Component{
 			GL11.glTexCoord2f(	0,		1);
 			GL11.glVertex2f(	-w + (float)offset.x,	h + (float)offset.y);
 			GL11.glEnd();
-			GL11.glDisable(GL11.GL_TEXTURE_2D);
-			
-			//Draw.setColor(Color.RED);
-			//Draw.ring(rad, 2);
 		}
 		else if (em.hasComponent(e, Polygon.class))
 		{
@@ -101,7 +98,6 @@ public class Tex extends Component{
 				GL11.glVertex2f  ((float) p.x,(float)  p.y);
 			}
 			GL11.glEnd();
-			GL11.glDisable(GL11.GL_TEXTURE_2D);
 		}
 	}
 }

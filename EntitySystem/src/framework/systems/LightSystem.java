@@ -10,14 +10,12 @@ import static org.lwjgl.opengl.GL11.glClearColor;
 import static org.lwjgl.opengl.GL11.glColorMask;
 import static org.lwjgl.opengl.GL11.glDisable;
 import static org.lwjgl.opengl.GL11.glEnable;
-import helpers.Color;
 import helpers.Draw;
 import helpers.Point;
-import helpers.Time;
 
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL14;
 
-import engine.GLEngine;
 import framework.CoreSystem;
 import framework.Entity;
 import framework.EntityManager;
@@ -40,14 +38,12 @@ public class LightSystem  extends CoreSystem{
 		if (cam != null)
 			trans = em.getComponent(cam, Position.class).position.neg();
 
-
-		glEnable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, 0);
 		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, world.getDataManager().lightBufID); 
-		glClearColor (0.1f, 0.1f, 0.1f, 0f);
+		glClearColor (0.1f, 0.1f, 0.1f, 1f);
 		glClear (GL_COLOR_BUFFER_BIT);
 
-		GL11.glBlendFunc(GL11.GL_ONE,GL11.GL_ONE);
+		GL14.glBlendEquation(GL14.GL_MIN);
 		glColorMask(false, false, false, true);
 		
 		GL11.glPushMatrix();
@@ -70,7 +66,6 @@ public class LightSystem  extends CoreSystem{
 		
 		glColorMask(true, true, true, true);
 		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
-		GL11.glBlendFunc(GL11.GL_SRC_ALPHA,GL11.GL_ONE_MINUS_SRC_ALPHA);
-		glDisable(GL_TEXTURE_2D);
+		GL14.glBlendEquation(GL14.GL_FUNC_ADD);
 	}
 }

@@ -24,8 +24,8 @@ public class FollowerSystem extends CoreSystem{
 	@Override
 	public void run(EntityManager em)
 	{
-		Entity cam = em.getByStringID("camera");
-		Pathfinder pf = em.getComponent(cam, Pathfinder.class);
+		Entity path = em.getByStringID("path");
+		Pathfinder pf = em.getComponent(path, Pathfinder.class);
 		
 		for (Entity e : em.getEntityAll(Follower.class))
 		{

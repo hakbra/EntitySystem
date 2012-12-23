@@ -7,12 +7,13 @@ import java.util.Random;
 import org.lwjgl.input.Mouse;
 
 import states.Level1State;
-import states.State;
 
 import engine.GLEngine;
 import framework.CoreSystem;
 import framework.Entity;
 import framework.EntityManager;
+import framework.Layer;
+import framework.State;
 import framework.World;
 import framework.components.Angle;
 import framework.components.AngleSpeed;
@@ -67,6 +68,7 @@ public class MouseInputSystem extends CoreSystem{
 					{
 						Entity zombie = new Entity();
 						zombie.name = "Zombie";
+						zombie.layer = Layer.MOVER;
 						em.addComponent(zombie, new Zombie());
 						em.addComponent(zombie, new Circle(20));
 						em.addComponent(zombie, new Position(new Point(r.nextInt(GLEngine.WIDTH), r.nextInt(GLEngine.HEIGHT))));

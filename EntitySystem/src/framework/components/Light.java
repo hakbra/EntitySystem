@@ -67,14 +67,14 @@ public class Light extends Component{
 				i = 360;
 		}
 
-		Color c = new Color(1, 1, 1, 1);
+		Color c = new Color(1, 1, 1, 0);
 		Draw.setColor(c);
 		GL11.glBegin(GL11.GL_TRIANGLE_FAN);
 		Draw.vertex(pos);
 		for (Point p : points)
 		{
 			double d = pos.dist(p);
-			c.alpha = 1 - d/cRad;
+			c.alpha = d/cRad;
 			Draw.setColor(c);
 			Draw.vertex(p);
 		}

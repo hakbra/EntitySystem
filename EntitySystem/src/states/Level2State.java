@@ -3,6 +3,8 @@ package states;
 import helpers.Point;
 import engine.GLEngine;
 import framework.Entity;
+import framework.Layer;
+import framework.State;
 import framework.World;
 import framework.components.Button;
 import framework.components.Obstacle;
@@ -14,18 +16,15 @@ import framework.components.Timer;
 import framework.systems.CameraSystem;
 import framework.systems.CollisionSystem;
 import framework.systems.EmitterSystem;
-import framework.systems.KeyInputSystem;
+import framework.systems.FollowerSystem;
 import framework.systems.LightSystem;
 import framework.systems.PathSystem;
 import framework.systems.PhysicsSystem;
 import framework.systems.TimerSystem;
-import framework.systems.input.FollowerSystem;
+import framework.systems.input.KeyInputSystem;
 import framework.systems.input.MouseInputSystem;
 import framework.systems.input.PlayerInputSystem;
-import framework.systems.render.HudRenderSystem;
-import framework.systems.render.LightRenderSystem;
-import framework.systems.render.SubLightRenderSystem;
-import framework.systems.render.SurLightRenderSystem;
+import framework.systems.render.RenderSystem;
 
 public class Level2State {
 	public static void init(World world)
@@ -39,11 +38,7 @@ public class Level2State {
 		world.addSystem(new CollisionSystem(world), State.LEVEL2);
 		world.addSystem(new LightSystem(world), State.LEVEL2);
 
-		world.addSystem(new SubLightRenderSystem(world), State.LEVEL2);
-		world.addSystem(new LightRenderSystem(world), State.LEVEL2);
-		world.addSystem(new SurLightRenderSystem(world), State.LEVEL2);
-		world.addSystem(new HudRenderSystem(world), State.LEVEL2);
-
+		world.addSystem(new RenderSystem(world), State.LEVEL2);
 		world.addSystem(new EmitterSystem(world), State.LEVEL2);
 		world.addSystem(new MouseInputSystem(world), State.LEVEL2);
 		world.addSystem(new KeyInputSystem(world), State.LEVEL2);
@@ -53,19 +48,31 @@ public class Level2State {
 		camera.name = "camera";
 		camera.components.add(new Position( new Point()));
 		camera.components.add(new Polygon( new Point(0, 0), new Point(0, 0)));
-		world.addEntityAndID(camera, State.LEVEL2);
+		world.addEntity(camera, State.LEVEL2);
+		world.registerID(camera, State.LEVEL2);
 		
 		Entity path = new Entity();
 		path.name = "path";
 		path.components.add(new Pathfinder(new Point(0, 0), new Point(GLEngine.WIDTH, GLEngine.HEIGHT), 10));
-		world.addEntityAndID(path, State.LEVEL2);
+		world.addEntity(path, State.LEVEL2);
+		world.registerID(path, State.LEVEL2);
+
+		Entity light = new Entity();
+		light.name = "light";
+		light.layer = Layer.LIGHT;
+		light.components.add(new Position( new Point(), true));
+		light.components.add(Polygon.rectangle(new Point(GLEngine.WIDTH, GLEngine.HEIGHT)));
+		light.components.add(new Tex("lightTex"));
+		world.addEntity(light, State.LEVEL2);
 
 		Entity ground = new Entity();
 		ground.name = "ground";
+		ground.layer = Layer.GROUND;
 		ground.components.add(new Position( new Point()));
 		ground.components.add(Polygon.rectangle(new Point(GLEngine.WIDTH*2, GLEngine.HEIGHT)));
 		ground.components.add(new Tex("bush.png", new Point(128, 128)));
-		world.addEntityAndID(ground, State.LEVEL2);
+		world.addEntity(ground, State.LEVEL2);
+		world.registerID(ground, State.LEVEL2);
 
 		Entity border = new Entity();
 		border.name = "border";
@@ -82,6 +89,7 @@ public class Level2State {
 
 		Entity menuButton = new Entity();
 		menuButton.name = "button";
+		menuButton.layer = Layer.HUD;
 		menuButton.components.add(Polygon.rectangle(new Point(100, 50)));
 		menuButton.components.add(new Position(new Point(150, 650)));
 		menuButton.components.add(new Button("Menu"));
@@ -90,6 +98,7 @@ public class Level2State {
 
 		Entity exitButton2 = new Entity();
 		exitButton2.name = "exitButton";
+		exitButton2.layer = Layer.HUD;
 		exitButton2.components.add(Polygon.rectangle(new Point(100, 50)));
 		exitButton2.components.add(new Position(new Point(25, 650)));
 		exitButton2.components.add(new Button("Exit"));
@@ -98,6 +107,7 @@ public class Level2State {
 
 		Entity zombieButton = new Entity();
 		zombieButton.name = "zombieButton";
+		zombieButton.layer = Layer.HUD;
 		zombieButton.components.add(Polygon.rectangle(new Point(100, 50)));
 		zombieButton.components.add(new Position(new Point(400, 650)));
 		zombieButton.components.add(new Button("Zombies"));
@@ -106,6 +116,7 @@ public class Level2State {
 
 		Entity screenButton = new Entity();
 		screenButton.name = "screenButton";
+		screenButton.layer = Layer.HUD;
 		screenButton.components.add(Polygon.rectangle(new Point(100, 50)));
 		screenButton.components.add(new Position(new Point(525, 650)));
 		screenButton.components.add(new Button("Screen"));
@@ -114,6 +125,7 @@ public class Level2State {
 
 		Entity lightButton = new Entity();
 		lightButton.name = "lightButton";
+		lightButton.layer = Layer.HUD;
 		lightButton.components.add(Polygon.rectangle(new Point(100, 50)));
 		lightButton.components.add(new Position(new Point(275, 650)));
 		lightButton.components.add(new Button("Lights"));
@@ -130,10 +142,12 @@ public class Level2State {
 		
 		Entity wonButton = new Entity();
 		wonButton.name = "wonButton";
+		wonButton.layer = Layer.HUD;
 		wonButton.components.add(Polygon.centerRectangle(new Point(100, 50)));
 		wonButton.components.add(new Position(new Point(GLEngine.WIDTH / 2, GLEngine.HEIGHT / 2)));
 		wonButton.components.add(new Button("You Won!"));
 		wonButton.components.add(new Timer(5000));
+		wonButton.components.add(new Tex("blank.png"));
 		world.addEntity(wonButton, State.LEVEL2);
 	}
 }

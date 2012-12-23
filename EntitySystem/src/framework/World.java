@@ -5,7 +5,6 @@ import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import states.State;
 
 public class World {
 	public State state;
@@ -86,9 +85,8 @@ public class World {
 		getEntityManager(s).addEntity(e);
 	}
 	
-	public void addEntityAndID(Entity e, State s)
+	public void registerID(Entity e, State s)
 	{
-		getEntityManager(s).addEntity(e);
 		getEntityManager(s).addStringID(e);
 	}
 	

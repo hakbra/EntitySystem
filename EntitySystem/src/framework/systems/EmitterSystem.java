@@ -9,6 +9,7 @@ import java.util.Random;
 import framework.CoreSystem;
 import framework.Entity;
 import framework.EntityManager;
+import framework.Layer;
 import framework.World;
 import framework.components.Circle;
 import framework.components.Collider;
@@ -45,6 +46,7 @@ public class EmitterSystem extends CoreSystem{
 
 				Entity particle = new Entity();
 				particle.name = "particle";
+				particle.layer = Layer.MOVER;
 				em.addComponent(particle, new Position(new Point(position)));
 				em.addComponent(particle, new Velocity(new Point(angle).mult(speed)));
 				em.addComponent(particle, new Circle(size));

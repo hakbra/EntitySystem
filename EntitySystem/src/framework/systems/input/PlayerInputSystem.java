@@ -10,6 +10,7 @@ import org.lwjgl.input.Keyboard;
 import framework.CoreSystem;
 import framework.Entity;
 import framework.EntityManager;
+import framework.Layer;
 import framework.World;
 import framework.components.Angle;
 import framework.components.AngleSpeed;
@@ -80,17 +81,19 @@ public class PlayerInputSystem extends CoreSystem{
 					
 					Entity bullet = new Entity();
 					bullet.name = "Bullet";
-					em.addComponent(bullet, new Bullet());
-					em.addComponent(bullet, new Position(position));
-					em.addComponent(bullet, new Velocity(new Point(angle.angle + deltaAngle).mult(speed)));
-					em.addComponent(bullet, new Circle(5));
-					em.addComponent(bullet, new Tex("bullet.png"));
-					em.addComponent(bullet, new Timer(time));
-					em.addComponent(bullet, new Angle(angle.angle + deltaAngle));
-					em.addComponent(bullet, new Damage(gun.damage, e));
-					em.addComponent(bullet, new Collider(2));
-					em.addComponent(bullet, new DestroyOnImpact());
-					em.addComponent(bullet, new EmitterOnImpact());
+					bullet.layer = Layer.MOVER;
+					bullet.components.add(new Bullet());
+					bullet.components.add(new Position(position));
+					bullet.components.add(new Velocity(new Point(angle.angle + deltaAngle).mult(speed)));
+					bullet.components.add(new Circle(5));
+					bullet.components.add(new Tex("bullet.png"));
+					bullet.components.add(new Timer(time));
+					bullet.components.add(new Angle(angle.angle + deltaAngle));
+					bullet.components.add(new Damage(gun.damage, e));
+					bullet.components.add(new Collider(2));
+					bullet.components.add(new DestroyOnImpact());
+					bullet.components.add(new EmitterOnImpact());
+					em.addEntity(bullet);
 				}
 			}
 		}

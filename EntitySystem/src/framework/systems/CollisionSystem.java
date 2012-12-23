@@ -9,11 +9,12 @@ import org.lwjgl.input.Keyboard;
 
 import states.CutsceneState;
 import states.Level2State;
-import states.State;
 import engine.GLEngine;
 import framework.CoreSystem;
 import framework.Entity;
 import framework.EntityManager;
+import framework.Layer;
+import framework.State;
 import framework.World;
 import framework.components.Angle;
 import framework.components.AngleSpeed;
@@ -221,6 +222,7 @@ public class CollisionSystem extends CoreSystem {
 				{
 					Entity zombie = new Entity();
 					zombie.name = "Zombie";
+					zombie.layer = Layer.MOVER;
 					em.addComponent(zombie, new Zombie());
 					em.addComponent(zombie, new Circle(20));
 					em.addComponent(zombie, new Position(new Point(r.nextInt(GLEngine.WIDTH), r.nextInt(GLEngine.HEIGHT))));
@@ -239,6 +241,7 @@ public class CollisionSystem extends CoreSystem {
 				{
 					Entity zombie = new Entity();
 					zombie.name = "Zombie" + j;
+					zombie.layer = Layer.MOVER;
 					em.addComponent(zombie, new Zombie());
 					em.addComponent(zombie, new Circle(20));
 					em.addComponent(zombie, new Position(new Point(GLEngine.WIDTH + 200 + j * 40, GLEngine.HEIGHT / 2)));
@@ -265,6 +268,7 @@ public class CollisionSystem extends CoreSystem {
 
 				Entity exit = new Entity();
 				exit.name = "exit1";
+				exit.layer = Layer.ITEM;
 				em.addComponent(exit, new Position(new Point(250, 200)));
 				em.addComponent(exit, Polygon.centerRectangle(new Point(50, 50)));
 				em.addComponent(exit, new Item("exit1"));

@@ -9,6 +9,7 @@ public class Collider extends Component{
 	public Collider(int i)
 	{
 		this.level = i;
+		this.name = "Collider";
 	}
 
 }

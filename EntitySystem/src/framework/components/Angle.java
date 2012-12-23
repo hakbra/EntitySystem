@@ -8,5 +8,6 @@ public class Angle extends Component{
 	public Angle(double a)
 	{
 		this.angle = a;
+		this.name = "Angle";
 	}
 }

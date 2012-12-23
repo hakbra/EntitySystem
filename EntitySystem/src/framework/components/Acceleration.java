@@ -10,5 +10,6 @@ public class Acceleration extends Component{
 	public Acceleration(Point a)
 	{
 		this.acceleration = a;
+		this.name = "Acceleration";
 	}
 }

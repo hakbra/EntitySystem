@@ -7,7 +7,7 @@ import org.lwjgl.opengl.GL20;
 
 import states.Level1State;
 import states.MenuState;
-import states.State;
+import framework.State;
 import framework.World;
 
 public class Main

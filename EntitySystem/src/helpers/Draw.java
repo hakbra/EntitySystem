@@ -158,10 +158,6 @@ public class Draw {
 		double w = f.getWidth(t) - 8*t.length();
 		double h = f.getHeight();
 		
-		GL11.glEnable(GL11.GL_TEXTURE_2D);
-		
 		f.drawString((float) (p.x - w / 2), (float) (p.y - h / 2), t, 1, 1);
-		
-		GL11.glDisable(GL11.GL_TEXTURE_2D);
 	}
 }

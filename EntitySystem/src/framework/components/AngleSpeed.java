@@ -9,5 +9,6 @@ public class AngleSpeed extends Component {
 	public AngleSpeed(double s)
 	{
 		this.speed = s;
+		this.name = "AngleSpeed";
 	}
 }
