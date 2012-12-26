@@ -266,6 +266,14 @@ public class Level1State {
 
 	private static void createButtons(World world)
 	{
+		Entity exitButton2 = new Entity();
+		exitButton2.name = "exitButton";
+		exitButton2.layer = Layer.HUD;
+		exitButton2.components.add(Polygon.rectangle(new Point(100, 50)));
+		exitButton2.components.add(new Position(new Point(25, 650), true));
+		exitButton2.components.add(new Button("Exit"));
+		exitButton2.components.add(new Tex("button.png"));
+		world.addEntity(exitButton2, State.LEVEL1);
 
 		Entity menuButton = new Entity();
 		menuButton.name = "button";
@@ -276,20 +284,12 @@ public class Level1State {
 		menuButton.components.add(new Tex("button.png"));
 		world.addEntity(menuButton, State.LEVEL1);
 
-		Entity exitButton2 = new Entity();
-		exitButton2.name = "exitButton";
-		exitButton2.layer = Layer.HUD;
-		exitButton2.components.add(Polygon.rectangle(new Point(100, 50)));
-		exitButton2.components.add(new Position(new Point(25, 650), true));
-		exitButton2.components.add(new Button("Exit"));
-		exitButton2.components.add(new Tex("button.png"));
-		world.addEntity(exitButton2, State.LEVEL1);
 
 		Entity zombieButton = new Entity();
 		zombieButton.name = "zombieButton";
 		zombieButton.layer = Layer.HUD;
 		zombieButton.components.add(Polygon.rectangle(new Point(100, 50)));
-		zombieButton.components.add(new Position(new Point(400, 650), true));
+		zombieButton.components.add(new Position(new Point(275, 650), true));
 		zombieButton.components.add(new Button("Zombies"));
 		zombieButton.components.add(new Tex("button.png"));
 		world.addEntity(zombieButton, State.LEVEL1);
@@ -298,25 +298,16 @@ public class Level1State {
 		screenButton.name = "screenButton";
 		screenButton.layer = Layer.HUD;
 		screenButton.components.add(Polygon.rectangle(new Point(100, 50)));
-		screenButton.components.add(new Position(new Point(525, 650), true));
+		screenButton.components.add(new Position(new Point(400, 650), true));
 		screenButton.components.add(new Button("Screen"));
 		screenButton.components.add(new Tex("button.png"));
 		world.addEntity(screenButton, State.LEVEL1);
-
-		Entity lightButton = new Entity();
-		lightButton.name = "lightButton";
-		lightButton.layer = Layer.HUD;
-		lightButton.components.add(Polygon.rectangle(new Point(100, 50)));
-		lightButton.components.add(new Position(new Point(275, 650), true));
-		lightButton.components.add(new Button("Lights"));
-		lightButton.components.add(new Tex("button.png"));
-		world.addEntity(lightButton, State.LEVEL1);
 
 		Entity restartButton = new Entity();
 		restartButton.name = "restartButton";
 		restartButton.layer = Layer.HUD;
 		restartButton.components.add(Polygon.rectangle(new Point(100, 50)));
-		restartButton.components.add(new Position(new Point(650, 650), true));
+		restartButton.components.add(new Position(new Point(525, 650), true));
 		restartButton.components.add(new Button("Restart"));
 		restartButton.components.add(new Tex("button.png"));
 		world.addEntity(restartButton, State.LEVEL1);

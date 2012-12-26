@@ -89,20 +89,20 @@ public class MouseInputSystem extends CoreSystem{
 				}
 				else if (button.type == "Level 1")
 				{
-					world.setState(State.LEVEL1);
+					world.pushState(State.LEVEL1);
 				}
 				else if (button.type == "Level 2")
 				{
-					world.setState(State.LEVEL2);
+					world.pushState(State.LEVEL2);
 				}
 				else if (button.type == "Exit")
 				{
-					world.setState(State.EXIT);
+					world.pushState(State.EXIT);
 				}
 				else if (button.type == "Menu")
 				{
 					State oldState = world.state;
-					world.setState(State.MENU);
+					world.pushState(State.MENU);
 					
 					EntityManager newEm = world.getEntityManager();
 					Entity runButton = newEm.getByStringID("runButton");
