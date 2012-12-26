@@ -9,6 +9,7 @@ import org.lwjgl.input.Keyboard;
 
 import states.CutsceneState;
 import states.Level2State;
+import states.MessageState;
 import engine.GLEngine;
 import framework.CoreSystem;
 import framework.Entity;
@@ -102,11 +103,8 @@ public class CollisionSystem extends CoreSystem {
 		if (em.hasComponent(c.a, Collider.class) && em.hasComponent(c.b, Obstacle.class))
 		{
 			Point posA = em.getComponent(c.a, Position.class).position;
-			Point velA = em.getComponent(c.a, Velocity.class).velocity;
 			Circle circle = em.getComponent(c.a, Circle.class);
 
-			//if (c.inside)
-			//	c.poi.isub(velA);
 			double dist = posA.dist(c.poi) - circle.radius;
 			if (c.inside)
 				dist += 2*circle.radius;
@@ -190,9 +188,9 @@ public class CollisionSystem extends CoreSystem {
 					world.addEntity(h, State.CUTSCENE);
 					i++;
 				}
-				world.clear(world.state);
+				world.popState();
 				CutsceneState.init(world);
-				world.state = State.CUTSCENE;
+				world.pushState(State.CUTSCENE);
 			}
 			if (item.type == "exit2" &&
 					em.hasComponents(c.a, Gun.class, Hero.class))
@@ -207,74 +205,16 @@ public class CollisionSystem extends CoreSystem {
 					world.addEntity(h, State.LEVEL2);
 					i++;
 				}
-				world.clear(world.state);
+				world.popState();
 				Level2State.init(world);
-				world.state = State.LEVEL2;
+				world.pushState(State.LEVEL2);
+				MessageState.init(world, "YOU WON");
+				world.pushState(State.MESSAGE);
 			}
 		}
 		else if (em.hasComponent(c.b, Trigger.class) && em.hasComponent(c.a, Hero.class))
 		{
 			Trigger trigger = em.getComponent(c.b, Trigger.class);
-			if (trigger.type == "gun")
-			{
-				Random r = new Random();
-				for (int i = 0; i < 20; i++)
-				{
-					Entity zombie = new Entity();
-					zombie.name = "Zombie";
-					zombie.layer = Layer.MOVER;
-					em.addComponent(zombie, new Zombie());
-					em.addComponent(zombie, new Circle(20));
-					em.addComponent(zombie, new Position(new Point(r.nextInt(GLEngine.WIDTH), r.nextInt(GLEngine.HEIGHT))));
-					em.addComponent(zombie, new Velocity(new Point(0, 0)));
-					em.addComponent(zombie, new Health());
-					em.addComponent(zombie, new Follower());
-					em.addComponent(zombie, new Damage(1, 200));
-					em.addComponent(zombie, new Obstacle());
-					em.addComponent(zombie, new Collider(4));
-					em.addComponent(zombie, new Angle(0));
-					em.addComponent(zombie, new AngleSpeed(0));
-					em.addComponent(zombie, new Tex("zombie.png"));
-				}
-
-				for (int j = 0; j < 10; j++)
-				{
-					Entity zombie = new Entity();
-					zombie.name = "Zombie" + j;
-					zombie.layer = Layer.MOVER;
-					em.addComponent(zombie, new Zombie());
-					em.addComponent(zombie, new Circle(20));
-					em.addComponent(zombie, new Position(new Point(GLEngine.WIDTH + 200 + j * 40, GLEngine.HEIGHT / 2)));
-					em.addComponent(zombie, new Velocity(new Point(0, 0)));
-					em.addComponent(zombie, new Health());
-					em.addComponent(zombie, new Follower(0));
-					em.addComponent(zombie, new Damage(1, 200));
-					em.addComponent(zombie, new Obstacle());
-					em.addComponent(zombie, new Collider(4));
-					em.addComponent(zombie, new Angle(0));
-					em.addComponent(zombie, new AngleSpeed(0));
-					em.addComponent(zombie, new Tex("zombie.png"));
-
-					if (j % 2 == 0)
-						continue;
-
-					Entity light = new Entity();
-					light.name = "light" + j;
-					em.addComponent(light, new Position(new Point(GLEngine.WIDTH + 200 + j * 80, GLEngine.HEIGHT / 2)));
-					em.addComponent(light, new Timer(2000 - 200*j, "light200"));
-				}
-
-				em.removeEntity(c.b);
-
-				Entity exit = new Entity();
-				exit.name = "exit1";
-				exit.layer = Layer.ITEM;
-				em.addComponent(exit, new Position(new Point(250, 200)));
-				em.addComponent(exit, Polygon.centerRectangle(new Point(50, 50)));
-				em.addComponent(exit, new Item("exit1"));
-				em.addComponent(exit, new Tex("exit.png"));
-				em.addComponent(exit, new Angle(180));
-			}	
 		}
 
 		if (em.hasComponent(c.a, Zombie.class) && em.hasComponent(c.b, Zombie.class))
@@ -295,9 +235,19 @@ public class CollisionSystem extends CoreSystem {
 
 			health.current -= dam.amount;
 			if (health.current <= 0)
+			{
 				em.removeEntity(c.b);
 
+				if (em.hasComponent(c.b, Hero.class) && em.getEntity(Hero.class).size() == 1)
+				{
+					world.popState();
+					MessageState.init(world, "GAME OVER");
+					world.pushState(State.MESSAGE);
+				}
+			}
+
 			dam.time = Time.getTime();
+			
 		}
 	}
 }

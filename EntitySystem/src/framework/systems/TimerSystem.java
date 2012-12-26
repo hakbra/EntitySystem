@@ -34,6 +34,10 @@ public class TimerSystem extends CoreSystem{
 					em.addComponent(e, new Light(200));
 					em.addComponent(e, new Timer(15000));
 				}
+				else if (timer.type == "message")
+				{
+					world.popState();
+				}
 			}
 		}
 	}

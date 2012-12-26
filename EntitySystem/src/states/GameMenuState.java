@@ -14,14 +14,14 @@ import framework.systems.LightSystem;
 import framework.systems.input.MouseInputSystem;
 import framework.systems.render.RenderSystem;
 
-public class MenuState {
+public class GameMenuState {
 
 	public static void init(World world)
 	{
 		// Systems
-		world.addSystem(new LightSystem(world), State.MENU);
-		world.addSystem(new RenderSystem(world), State.MENU);
-		world.addSystem(new MouseInputSystem(world), State.MENU);
+		world.addSystem(new LightSystem(world), State.GAME_MENU);
+		world.addSystem(new RenderSystem(world), State.GAME_MENU);
+		world.addSystem(new MouseInputSystem(world), State.GAME_MENU);
 		
 		//Buttons
 		Entity screenButton = new Entity();
@@ -31,17 +31,17 @@ public class MenuState {
 		screenButton.components.add(new Position(new Point(GLEngine.WIDTH - 125, 25)));
 		screenButton.components.add(new Button("Screen"));
 		screenButton.components.add(new Tex("button.png"));
-		world.addEntity(screenButton, State.MENU);
+		world.addEntity(screenButton, State.GAME_MENU);
 
 		Entity runButton = new Entity();
 		runButton.name = "runButton";
 		runButton.layer = Layer.HUD;
 		runButton.components.add(Polygon.rectangle(new Point(200, 100)));
 		runButton.components.add(new Position(new Point(500, 300)));
-		runButton.components.add(new Button("Level 1"));
+		runButton.components.add(new Button("Resume"));
 		runButton.components.add(new Tex("button.png"));
-		world.addEntity(runButton, State.MENU);
-		world.registerID(runButton, State.MENU);
+		world.addEntity(runButton, State.GAME_MENU);
+		world.registerID(runButton, State.GAME_MENU);
 
 		Entity exitButton = new Entity();
 		exitButton.name = "exitButton";
@@ -50,7 +50,7 @@ public class MenuState {
 		exitButton.components.add(new Position(new Point(500, 150)));
 		exitButton.components.add(new Button("Exit"));
 		exitButton.components.add(new Tex("button.png"));
-		world.addEntity(exitButton, State.MENU);
+		world.addEntity(exitButton, State.GAME_MENU);
 	}
 	
 }

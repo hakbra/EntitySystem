@@ -1,9 +1,8 @@
 package framework;
 
 
-import java.lang.reflect.Constructor;
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Stack;
 
 
 public class World {
@@ -12,6 +11,8 @@ public class World {
 	private HashMap<State, EntityManager> eManagers;
 	private HashMap<State, SystemManager> sManagers;
 	private HashMap<State, DataManager> dManagers;
+	
+	private Stack<State> stateStack;
 
 	public World(State s)
 	{
@@ -20,6 +21,8 @@ public class World {
 		this.dManagers = new HashMap<State, DataManager>();
 		this.sManagers = new HashMap<State, SystemManager>();
 		this.eManagers = new HashMap<State, EntityManager>();
+		
+		this.stateStack = new Stack<State>();
 	}
 
 	public boolean run()
@@ -27,9 +30,15 @@ public class World {
 		return state != State.EXIT;
 	}
 
-	public void setState(State s)
+	public void pushState(State s)
 	{
+		stateStack.push(this.state);
 		this.state = s;
+	}
+	public void popState()
+	{
+		clear(this.state);
+		this.state = stateStack.pop();
 	}
 
 	public EntityManager getEntityManager(State s)
@@ -100,7 +109,7 @@ public class World {
 		getEntityManager().removeEntities();
 	}
 	
-	public void clear(State s)
+	private void clear(State s)
 	{
 		eManagers.remove(s);
 		sManagers.remove(s);

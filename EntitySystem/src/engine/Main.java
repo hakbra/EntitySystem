@@ -1,12 +1,9 @@
 package engine;
 
 import helpers.Time;
-
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL20;
-
+import states.GameMenuState;
 import states.Level1State;
-import states.MenuState;
+import states.StartMenuState;
 import framework.State;
 import framework.World;
 
@@ -25,10 +22,10 @@ public class Main
 	{
 		GLEngine.init();
 		t = new Time();
-		world = new World(State.MENU);
+		world = new World(State.START_MENU);
 		
-		MenuState.init(world);
-		Level1State.init(world);
+		StartMenuState.init(world);
+		GameMenuState.init(world);
 	}
 
 	public void run()

@@ -4,6 +4,8 @@ import helpers.Point;
 
 import org.lwjgl.input.Keyboard;
 
+import states.MessageState;
+
 
 import engine.GLEngine;
 import framework.CoreSystem;
@@ -21,9 +23,11 @@ import framework.components.Health;
 import framework.components.Hero;
 import framework.components.KeyInput;
 import framework.components.Light;
+import framework.components.Message;
 import framework.components.Obstacle;
 import framework.components.Position;
 import framework.components.Tex;
+import framework.components.Timer;
 import framework.components.Velocity;
 
 
@@ -47,7 +51,7 @@ public class KeyInputSystem extends CoreSystem{
 			player.layer = Layer.MOVER;
 			em.addComponent(player, new Hero());
 			em.addComponent(player, new Circle(20));
-			em.addComponent(player, new Position(new Point(1000, 450)));
+			em.addComponent(player, new Position(new Point(900, 450)));
 			em.addComponent(player, new Velocity(new Point(0, 0)));
 			em.addComponent(player, new Angle(180));
 			em.addComponent(player, new AngleSpeed(0));
@@ -59,6 +63,15 @@ public class KeyInputSystem extends CoreSystem{
 			em.addComponent(player, new Light(300));
 			em.addComponent(player, new Tex("man.png", new Point(1, 1), new Point(0, 0)));
 			em.addStringID(player);
+
+			Entity msg = new Entity();
+			msg.name = "msg";
+			em.addComponent(msg, new Message("PLAYER TWO READY"));
+			em.addComponent(msg, new Timer(3000));
+			em.addComponent(msg, new Position(new Point(900, 475)));
+			
+			MessageState.init(world, "PLAYER TWO READY");
+			world.pushState(State.MESSAGE);
 		}
 	}
 }

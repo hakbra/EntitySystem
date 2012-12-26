@@ -26,11 +26,13 @@ import framework.components.Hero;
 import framework.components.Item;
 import framework.components.KeyInput;
 import framework.components.Light;
+import framework.components.Message;
 import framework.components.Obstacle;
 import framework.components.Pathfinder;
 import framework.components.Polygon;
 import framework.components.Position;
 import framework.components.Tex;
+import framework.components.Timer;
 import framework.components.Trigger;
 import framework.components.Velocity;
 import framework.components.Zombie;
@@ -72,7 +74,7 @@ public class Level1State {
 		player.layer = Layer.MOVER;
 		player.components.add(new Hero());
 		player.components.add(new Circle(20));
-		player.components.add(new Position(new Point(300, 250)));
+		player.components.add(new Position(new Point(400, 250)));
 		player.components.add(new Velocity(new Point(0, 0)));
 		player.components.add(new Angle(0));
 		player.components.add(new AngleSpeed(0));
@@ -95,7 +97,7 @@ public class Level1State {
 		
 		Entity path = new Entity();
 		path.name = "path";
-		path.components.add(new Pathfinder(new Point(0, 0), new Point(GLEngine.WIDTH*2, GLEngine.HEIGHT), 10));
+		path.components.add(new Pathfinder(new Point(0, 0), new Point(GLEngine.WIDTH*2, GLEngine.HEIGHT), 20));
 		world.addEntity(path, State.LEVEL1);
 		world.registerID(path, State.LEVEL1);
 
@@ -115,6 +117,16 @@ public class Level1State {
 		light.components.add(Polygon.rectangle(new Point(GLEngine.WIDTH, GLEngine.HEIGHT)));
 		light.components.add(new Tex("lightTex"));
 		world.addEntity(light, State.LEVEL1);
+		
+		Entity exit = new Entity();
+		exit.name = "exit1";
+		exit.layer = Layer.ITEM;
+		exit.components.add(new Position(new Point(GLEngine.WIDTH * 2 - 75, GLEngine.HEIGHT / 2)));
+		exit.components.add(Polygon.centerRectangle(new Point(50, 50)));
+		exit.components.add(new Item("exit1"));
+		exit.components.add(new Tex("exit.png"));
+		exit.components.add(new Angle(180));
+		world.addEntity(exit, State.LEVEL1);
 
 		createButtons(world);
 		createItems(world);

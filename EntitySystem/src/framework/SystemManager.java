@@ -31,12 +31,27 @@ public class SystemManager {
 		CoreSystem cs = systemMap.get(c);
 		cs.enabled = !cs.enabled;
 	}
+	
+	public void disableSystem(Class c)
+	{
+		CoreSystem cs = systemMap.get(c);
+		cs.enabled = false;
+	}
+	
+	public void enableSystem(Class c)
+	{
+		CoreSystem cs = systemMap.get(c);
+		cs.enabled = true;
+	}
 
 	public void runSystems()
 	{
 		EntityManager em = world.getEntityManager();
-		for (CoreSystem sys : systems)
+		for (int i = 0; i < systems.size(); i++)
+		{
+			CoreSystem sys = systems.get(i);
 			if (sys.enabled)
 				sys.run(em);
+		}
 	}
 }

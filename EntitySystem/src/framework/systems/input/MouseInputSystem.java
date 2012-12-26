@@ -7,7 +7,7 @@ import java.util.Random;
 import org.lwjgl.input.Mouse;
 
 import states.Level1State;
-
+import states.MessageState;
 import engine.GLEngine;
 import framework.CoreSystem;
 import framework.Entity;
@@ -29,7 +29,6 @@ import framework.components.Position;
 import framework.components.Tex;
 import framework.components.Velocity;
 import framework.components.Zombie;
-import framework.systems.LightSystem;
 
 public class MouseInputSystem extends CoreSystem{
 
@@ -87,37 +86,32 @@ public class MouseInputSystem extends CoreSystem{
 				{
 					GLEngine.switchFullscreen();
 				}
-				else if (button.type == "Level 1")
+				else if (button.type == "Menu")
 				{
-					world.pushState(State.LEVEL1);
-				}
-				else if (button.type == "Level 2")
-				{
-					world.pushState(State.LEVEL2);
+					world.pushState(State.GAME_MENU);
 				}
 				else if (button.type == "Exit")
 				{
 					world.pushState(State.EXIT);
 				}
-				else if (button.type == "Menu")
+				else if (button.type == "Play")
 				{
-					State oldState = world.state;
-					world.pushState(State.MENU);
+					Level1State.init(world);
+					world.pushState(State.LEVEL1);
 					
-					EntityManager newEm = world.getEntityManager();
-					Entity runButton = newEm.getByStringID("runButton");
-					newEm.getComponent(runButton, Button.class).type = oldState.str;
+					MessageState.init(world, "PLAYER ONE READY");
+					world.pushState(State.MESSAGE);
 					
 				}
-				else if (button.type == "Lights")
+				else if (button.type == "Resume")
 				{
-					world.getSystemManager().toggleSystem(LightSystem.class);
+					world.popState();
 				}
 				else if (button.type == "Restart")
 				{
-					world.clear(world.state);
+					world.popState();
 					Level1State.init(world);
-					world.state = State.LEVEL1;
+					world.pushState(State.LEVEL1);
 				}
 			}
 			else

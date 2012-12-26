@@ -5,6 +5,7 @@ import static org.lwjgl.opengl.GL11.glPushMatrix;
 import helpers.Color;
 import helpers.Draw;
 import helpers.Point;
+import helpers.Time;
 
 import org.lwjgl.opengl.GL11;
 
@@ -19,9 +20,11 @@ import framework.components.Circle;
 import framework.components.ColorComp;
 import framework.components.Health;
 import framework.components.Hero;
+import framework.components.Message;
 import framework.components.Polygon;
 import framework.components.Position;
 import framework.components.Tex;
+import framework.components.Timer;
 
 public class RenderSystem extends CoreSystem {
 
@@ -53,22 +56,20 @@ public class RenderSystem extends CoreSystem {
 
 			if (em.hasComponent(e, Angle.class))
 				Draw.rotate(em.getComponent(e, Angle.class).angle);
+			
+			if (em.hasComponent(e, ColorComp.class))
+				Draw.setColor(em.getComponent(e, ColorComp.class).color);
 
 			if (em.hasComponent(e, Tex.class))
 			{
 				Draw.setColor(Color.WHITE);
 				em.getComponent(e, Tex.class).render(world, e);
 			}
-			else
+			else if (em.hasComponent(e, Circle.class))
 			{
 				GL11.glDisable(GL11.GL_TEXTURE_2D);
-				
-				ColorComp c = em.getComponent(e, ColorComp.class);
 				Circle circle = em.getComponent(e, Circle.class);
-				
-				Draw.setColor(c.color);
 				Draw.circle(circle.radius);
-
 				GL11.glEnable(GL11.GL_TEXTURE_2D);
 			}
 

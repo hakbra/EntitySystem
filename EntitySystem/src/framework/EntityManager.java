@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 
+import framework.components.Hero;
+
 
 
 public class EntityManager{
