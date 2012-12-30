@@ -36,13 +36,16 @@ import framework.enums.LayerEnum;
 import framework.enums.StateEnum;
 import framework.systems.CameraSystem;
 import framework.systems.CollisionSystem;
+import framework.systems.DamageSystem;
 import framework.systems.EmitterSystem;
 import framework.systems.FollowerSystem;
 import framework.systems.IntersectionSystem;
+import framework.systems.ItemSystem;
 import framework.systems.LightSystem;
 import framework.systems.PathSystem;
 import framework.systems.PhysicsSystem;
 import framework.systems.TimerSystem;
+import framework.systems.TriggerSystem;
 import framework.systems.input.KeyInputSystem;
 import framework.systems.input.MouseInputSystem;
 import framework.systems.input.PlayerInputSystem;
@@ -65,7 +68,11 @@ public class Level1State {
 		world.addSystem(new FollowerSystem(world), StateEnum.LEVEL1);
 		world.addSystem(new PhysicsSystem(world), StateEnum.LEVEL1);
 		world.addSystem(new IntersectionSystem(world), StateEnum.LEVEL1);
+		
 		world.addSystem(new CollisionSystem(world), StateEnum.LEVEL1);
+		world.addSystem(new ItemSystem(world), StateEnum.LEVEL1);
+		world.addSystem(new TriggerSystem(world), StateEnum.LEVEL1);
+		world.addSystem(new DamageSystem(world), StateEnum.LEVEL1);
 
 		world.addSystem(new EmitterSystem(world), StateEnum.LEVEL1);
 		world.addSystem(new MouseInputSystem(world), StateEnum.LEVEL1);

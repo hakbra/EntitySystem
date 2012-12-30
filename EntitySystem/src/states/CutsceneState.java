@@ -14,10 +14,14 @@ import framework.components.Trigger;
 import framework.components.Velocity;
 import framework.enums.LayerEnum;
 import framework.enums.StateEnum;
+import framework.systems.CollisionSystem;
+import framework.systems.DamageSystem;
 import framework.systems.IntersectionSystem;
+import framework.systems.ItemSystem;
 import framework.systems.LightSystem;
 import framework.systems.PhysicsSystem;
 import framework.systems.TimerSystem;
+import framework.systems.TriggerSystem;
 import framework.systems.render.RenderSystem;
 
 public class CutsceneState {
@@ -30,6 +34,9 @@ public class CutsceneState {
 		world.addSystem(new RenderSystem(world), StateEnum.CUTSCENE);
 		world.addSystem(new PhysicsSystem(world), StateEnum.CUTSCENE);
 		world.addSystem(new IntersectionSystem(world), StateEnum.CUTSCENE);
+
+		world.addSystem(new TriggerSystem(world), StateEnum.CUTSCENE);
+		
 		world.addSystem(new TimerSystem(world), StateEnum.CUTSCENE);
 
 		CoreEntity worldEntity = new CoreEntity();

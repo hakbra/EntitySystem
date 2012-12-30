@@ -15,13 +15,17 @@ import framework.components.Timer;
 import framework.enums.LayerEnum;
 import framework.enums.StateEnum;
 import framework.systems.CameraSystem;
+import framework.systems.CollisionSystem;
+import framework.systems.DamageSystem;
 import framework.systems.IntersectionSystem;
 import framework.systems.EmitterSystem;
 import framework.systems.FollowerSystem;
+import framework.systems.ItemSystem;
 import framework.systems.LightSystem;
 import framework.systems.PathSystem;
 import framework.systems.PhysicsSystem;
 import framework.systems.TimerSystem;
+import framework.systems.TriggerSystem;
 import framework.systems.input.KeyInputSystem;
 import framework.systems.input.MouseInputSystem;
 import framework.systems.input.PlayerInputSystem;
@@ -34,15 +38,20 @@ public class Level2State {
 		world.clearState(StateEnum.LEVEL2);
 		
 		//Systems
+		world.addSystem(new LightSystem(world), StateEnum.LEVEL2);
+		world.addSystem(new RenderSystem(world), StateEnum.LEVEL2);
 		world.addSystem(new PlayerInputSystem(world), StateEnum.LEVEL2);
 		world.addSystem(new CameraSystem(world), StateEnum.LEVEL2);
 		world.addSystem(new PathSystem(world), StateEnum.LEVEL2);
 		world.addSystem(new FollowerSystem(world), StateEnum.LEVEL2);
 		world.addSystem(new PhysicsSystem(world), StateEnum.LEVEL2);
 		world.addSystem(new IntersectionSystem(world), StateEnum.LEVEL2);
-		world.addSystem(new LightSystem(world), StateEnum.LEVEL2);
+		
+		world.addSystem(new CollisionSystem(world), StateEnum.LEVEL2);
+		world.addSystem(new ItemSystem(world), StateEnum.LEVEL2);
+		world.addSystem(new TriggerSystem(world), StateEnum.LEVEL2);
+		world.addSystem(new DamageSystem(world), StateEnum.LEVEL2);
 
-		world.addSystem(new RenderSystem(world), StateEnum.LEVEL2);
 		world.addSystem(new TextRenderSystem(world), StateEnum.LEVEL2);
 		world.addSystem(new EmitterSystem(world), StateEnum.LEVEL2);
 		world.addSystem(new MouseInputSystem(world), StateEnum.LEVEL2);

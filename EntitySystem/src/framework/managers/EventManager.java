@@ -4,6 +4,7 @@ import helpers.Intersection;
 
 import java.util.HashMap;
 
+import framework.CoreSystem;
 import framework.EventListener;
 import framework.World;
 import framework.enums.EventEnum;
@@ -26,7 +27,7 @@ public class EventManager {
 	public void sendEvent(EventEnum ee, Intersection i)
 	{
 		EventListener el = listeners.get(ee);
-		if (el != null)
+		if (el != null && ((CoreSystem) el).enabled)
 			el.action(i);
 	}
 }

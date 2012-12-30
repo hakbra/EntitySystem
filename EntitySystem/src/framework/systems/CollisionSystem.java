@@ -47,10 +47,10 @@ public class CollisionSystem extends CoreSystem implements EventListener{
 
 		if (em.hasComponent(i.a, DestroyOnImpact.class))
 		{
-				em.removeEntity(i.a);
-				return;
+			em.removeEntity(i.a);
+			return;
 		}
-		
+
 		if (em.hasComponent(i.a, Collider.class))
 		{
 			Point posA = em.getComponent(i.a, Position.class).position;
