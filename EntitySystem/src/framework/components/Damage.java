@@ -1,17 +1,17 @@
 package framework.components;
 
 import helpers.Time;
-import framework.Component;
-import framework.Entity;
+import framework.CoreComponent;
+import framework.CoreEntity;
 
 
 
-public class Damage extends Component{
+public class Damage extends CoreComponent{
 	
 	public float amount;
 	public long time;
 	public int timeDelta;
-	public Entity parent;
+	public CoreEntity parent;
 	
 	public Damage(float a, int t)
 	{
@@ -22,7 +22,7 @@ public class Damage extends Component{
 		this.name = "Damage";
 	}
 
-	public Damage(float a, Entity e)
+	public Damage(float a, CoreEntity e)
 	{
 		this.parent = e;
 		this.amount = a;

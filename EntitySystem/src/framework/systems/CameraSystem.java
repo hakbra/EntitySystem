@@ -3,12 +3,12 @@ package framework.systems;
 import helpers.Point;
 import engine.GLEngine;
 import framework.CoreSystem;
-import framework.Entity;
-import framework.EntityManager;
+import framework.CoreEntity;
 import framework.World;
 import framework.components.Hero;
 import framework.components.Polygon;
 import framework.components.Position;
+import framework.managers.EntityManager;
 
 public class CameraSystem extends CoreSystem{
 
@@ -20,14 +20,14 @@ public class CameraSystem extends CoreSystem{
 	@Override
 	public void run(EntityManager em)
 	{
-		Entity cam = em.getByStringID("camera");
+		CoreEntity cam = em.getByStringID("camera");
 		Point pos = em.getComponent(cam, Position.class).position;
 		Polygon poly = em.getComponent(cam, Polygon.class);
 		
 		Point mid = new Point();
 		int c = 0;
 		
-		for (Entity h : em.getEntity(Hero.class))
+		for (CoreEntity h : em.getEntity(Hero.class))
 		{
 			Point heroPos = em.getComponent(h, Position.class).position;
 			mid.isub(heroPos);

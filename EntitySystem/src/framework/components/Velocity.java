@@ -1,9 +1,9 @@
 package framework.components;
 
-import framework.Component;
+import framework.CoreComponent;
 import helpers.Point;
 
-public class Velocity extends Component{
+public class Velocity extends CoreComponent{
 	public Point velocity;
 	
 	public Velocity(Point v)

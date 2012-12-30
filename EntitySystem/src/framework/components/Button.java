@@ -1,8 +1,8 @@
 package framework.components;
 
-import framework.Component;
+import framework.CoreComponent;
 
-public class Button extends Component{
+public class Button extends CoreComponent{
 	public String type;
 	public boolean active;
 	

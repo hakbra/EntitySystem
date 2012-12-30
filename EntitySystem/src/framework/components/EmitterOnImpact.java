@@ -1,7 +1,7 @@
 package framework.components;
 
-import framework.Component;
+import framework.CoreComponent;
 
-public class EmitterOnImpact extends Component {
+public class EmitterOnImpact extends CoreComponent {
 
 }

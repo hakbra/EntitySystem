@@ -1,9 +1,9 @@
 package framework.components;
 
 import helpers.Point;
-import framework.Component;
+import framework.CoreComponent;
 
-public class Acceleration extends Component{
+public class Acceleration extends CoreComponent{
 
 	public Point acceleration;
 	

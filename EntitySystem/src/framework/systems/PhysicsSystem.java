@@ -6,8 +6,7 @@ import helpers.Time;
 import java.util.Random;
 
 import framework.CoreSystem;
-import framework.Entity;
-import framework.EntityManager;
+import framework.CoreEntity;
 import framework.World;
 import framework.components.Acceleration;
 import framework.components.Angle;
@@ -15,6 +14,7 @@ import framework.components.AngleSpeed;
 import framework.components.Position;
 import framework.components.Velocity;
 import framework.components.Zombie;
+import framework.managers.EntityManager;
 
 public class PhysicsSystem extends CoreSystem{
 	
@@ -28,7 +28,7 @@ public class PhysicsSystem extends CoreSystem{
 	{
 		long now = Time.getTime();
 		
-		for (Entity e : em.getEntityAll(Acceleration.class, Velocity.class))
+		for (CoreEntity e : em.getEntityAll(Acceleration.class, Velocity.class))
 		{
 			Point acc 	= 	em.getComponent(e, Acceleration.class).acceleration;
 			Point vel 		= em.getComponent(e, Velocity.class).velocity;
@@ -36,7 +36,7 @@ public class PhysicsSystem extends CoreSystem{
 			acc.set(0, 0);
 		}
 		Random r = new Random();
-		for (Entity e : em.getEntityAll(Position.class, Velocity.class))
+		for (CoreEntity e : em.getEntityAll(Position.class, Velocity.class))
 		{
 			Point position 	= 	em.getComponent(e, Position.class).position;
 			Point vel 		= em.getComponent(e, Velocity.class).velocity;
@@ -44,7 +44,7 @@ public class PhysicsSystem extends CoreSystem{
 			position.iadd(vel);
 		}
 		
-		for (Entity e : em.getEntityAll(Angle.class, AngleSpeed.class))
+		for (CoreEntity e : em.getEntityAll(Angle.class, AngleSpeed.class))
 		{
 			Angle angle 	= 	em.getComponent(e, Angle.class);
 			AngleSpeed angleSpeed 		= em.getComponent(e, AngleSpeed.class);

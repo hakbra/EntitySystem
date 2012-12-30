@@ -1,7 +1,7 @@
 package framework.components;
 
-import framework.Component;
+import framework.CoreComponent;
 
-public class Particle extends Component{
+public class Particle extends CoreComponent{
 
 }

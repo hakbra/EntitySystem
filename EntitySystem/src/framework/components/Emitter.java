@@ -1,7 +1,7 @@
 package framework.components;
 
-import framework.Component;
+import framework.CoreComponent;
 
-public class Emitter extends Component{
+public class Emitter extends CoreComponent{
 
 }

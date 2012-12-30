@@ -4,9 +4,9 @@ import helpers.Color;
 import helpers.Draw;
 import helpers.Point;
 import engine.GLEngine;
-import framework.Component;
+import framework.CoreComponent;
 
-public class Pathfinder extends Component{
+public class Pathfinder extends CoreComponent{
 
 	public class Node implements Comparable{
 		public boolean blocked = false;

@@ -7,11 +7,11 @@ import helpers.Time;
 
 import org.lwjgl.opengl.GL11;
 
-import framework.Component;
-import framework.Entity;
-import framework.EntityManager;
+import framework.CoreComponent;
+import framework.CoreEntity;
+import framework.managers.EntityManager;
 
-public class Gun extends Component{
+public class Gun extends CoreComponent{
 	
 	public float damage;
 	public float spread;

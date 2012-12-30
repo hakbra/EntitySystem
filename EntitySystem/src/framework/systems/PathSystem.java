@@ -6,8 +6,7 @@ import helpers.Time;
 import java.util.PriorityQueue;
 
 import framework.CoreSystem;
-import framework.Entity;
-import framework.EntityManager;
+import framework.CoreEntity;
 import framework.World;
 import framework.components.Circle;
 import framework.components.Hero;
@@ -18,6 +17,7 @@ import framework.components.Polygon;
 import framework.components.Position;
 import framework.components.Velocity;
 import framework.components.Zombie;
+import framework.managers.EntityManager;
 
 public class PathSystem extends CoreSystem{
 
@@ -29,12 +29,12 @@ public class PathSystem extends CoreSystem{
 	@Override
 	public void run(EntityManager em)
 	{
-		Entity path = em.getByStringID("path");
+		CoreEntity path = em.getByStringID("path");
 		Pathfinder pf = em.getComponent(path, Pathfinder.class);
 
 		long now = Time.getTime();
 		pf.update = now;
-		for (Entity e : em.getEntityAll(Obstacle.class, Polygon.class))
+		for (CoreEntity e : em.getEntityAll(Obstacle.class, Polygon.class))
 		{
 			Polygon poly = em.getComponent(e, Polygon.class);
 			Point pos = em.getComponent(e, Position.class).position;
@@ -45,7 +45,7 @@ public class PathSystem extends CoreSystem{
 
 		PriorityQueue<Node> queue = new PriorityQueue<Pathfinder.Node>();
 
-		for (Entity hero : em.getEntity(Hero.class))
+		for (CoreEntity hero : em.getEntity(Hero.class))
 		{
 			Point pos = em.getComponent(hero, Position.class).position;
 			Node n = pf.getNode(pos);

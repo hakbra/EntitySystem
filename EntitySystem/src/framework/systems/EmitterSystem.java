@@ -7,9 +7,7 @@ import helpers.Time;
 import java.util.Random;
 
 import framework.CoreSystem;
-import framework.Entity;
-import framework.EntityManager;
-import framework.Layer;
+import framework.CoreEntity;
 import framework.World;
 import framework.components.Circle;
 import framework.components.Collider;
@@ -19,6 +17,8 @@ import framework.components.Particle;
 import framework.components.Position;
 import framework.components.Timer;
 import framework.components.Velocity;
+import framework.enums.LayerEnum;
+import framework.managers.EntityManager;
 
 public class EmitterSystem extends CoreSystem{
 
@@ -30,7 +30,7 @@ public class EmitterSystem extends CoreSystem{
 	@Override
 	public void run(EntityManager em)
 	{
-		for (Entity e : em.getEntity(Emitter.class))
+		for (CoreEntity e : em.getEntity(Emitter.class))
 		{
 			Point position 	= 	em.getComponent(e, Position.class).position;
 
@@ -44,9 +44,9 @@ public class EmitterSystem extends CoreSystem{
 				int size = 3 + r.nextInt(2);
 				int time = 150 + r.nextInt(100);
 
-				Entity particle = new Entity();
+				CoreEntity particle = new CoreEntity();
 				particle.name = "particle";
-				particle.layer = Layer.MOVER;
+				particle.layer = LayerEnum.MOVER;
 				em.addComponent(particle, new Position(new Point(position)));
 				em.addComponent(particle, new Velocity(new Point(angle).mult(speed)));
 				em.addComponent(particle, new Circle(size));
@@ -57,7 +57,7 @@ public class EmitterSystem extends CoreSystem{
 			}
 		}
 
-		for (Entity e : em.getEntity(Particle.class))
+		for (CoreEntity e : em.getEntity(Particle.class))
 		{
 			Color c 	= 	em.getComponent(e, ColorComp.class).color;
 			Timer timer = 	em.getComponent(e, Timer.class);

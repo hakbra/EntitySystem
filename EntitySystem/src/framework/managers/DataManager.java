@@ -1,4 +1,4 @@
-package framework;
+package framework.managers;
 
 import static org.lwjgl.opengl.EXTFramebufferObject.GL_COLOR_ATTACHMENT0_EXT;
 import static org.lwjgl.opengl.EXTFramebufferObject.GL_FRAMEBUFFER_EXT;
@@ -25,6 +25,7 @@ import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
 
 import engine.GLEngine;
+import framework.World;
 
 import helpers.MyFont;
 

@@ -1,8 +1,8 @@
 package framework.components;
 
-import framework.Component;
+import framework.CoreComponent;
 
-public class Trigger extends Component{
+public class Trigger extends CoreComponent{
 	
 	public String type;
 	

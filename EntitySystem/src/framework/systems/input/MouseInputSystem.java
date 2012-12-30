@@ -10,10 +10,7 @@ import states.Level1State;
 import states.MessageState;
 import engine.GLEngine;
 import framework.CoreSystem;
-import framework.Entity;
-import framework.EntityManager;
-import framework.Layer;
-import framework.State;
+import framework.CoreEntity;
 import framework.World;
 import framework.components.Angle;
 import framework.components.AngleSpeed;
@@ -29,6 +26,9 @@ import framework.components.Position;
 import framework.components.Tex;
 import framework.components.Velocity;
 import framework.components.Zombie;
+import framework.enums.LayerEnum;
+import framework.enums.StateEnum;
+import framework.managers.EntityManager;
 
 public class MouseInputSystem extends CoreSystem{
 
@@ -48,7 +48,7 @@ public class MouseInputSystem extends CoreSystem{
 	    if (mouse == null)
 	    	return;
 
-		for (Entity e : em.getEntity(Button.class))
+		for (CoreEntity e : em.getEntity(Button.class))
 		{
 			Polygon poly 		= 	em.getComponent(e, Polygon.class);
 			Button button = 	em.getComponent(e, Button.class);
@@ -65,9 +65,9 @@ public class MouseInputSystem extends CoreSystem{
 					Random r = new Random();
 					for (int i = 0; i < 20; i++)
 					{
-						Entity zombie = new Entity();
+						CoreEntity zombie = new CoreEntity();
 						zombie.name = "Zombie";
-						zombie.layer = Layer.MOVER;
+						zombie.layer = LayerEnum.MOVER;
 						em.addComponent(zombie, new Zombie());
 						em.addComponent(zombie, new Circle(20));
 						em.addComponent(zombie, new Position(new Point(r.nextInt(GLEngine.WIDTH), r.nextInt(GLEngine.HEIGHT))));
@@ -88,19 +88,19 @@ public class MouseInputSystem extends CoreSystem{
 				}
 				else if (button.type == "Menu")
 				{
-					world.pushState(State.GAME_MENU);
+					world.pushState(StateEnum.GAME_MENU);
 				}
 				else if (button.type == "Exit")
 				{
-					world.pushState(State.EXIT);
+					world.pushState(StateEnum.EXIT);
 				}
 				else if (button.type == "Play")
 				{
 					Level1State.init(world);
-					world.pushState(State.LEVEL1);
+					world.pushState(StateEnum.LEVEL1);
 					
 					MessageState.init(world, "PLAYER ONE READY");
-					world.pushState(State.MESSAGE);
+					world.pushState(StateEnum.MESSAGE);
 					
 				}
 				else if (button.type == "Resume")
@@ -111,7 +111,7 @@ public class MouseInputSystem extends CoreSystem{
 				{
 					world.popState();
 					Level1State.init(world);
-					world.pushState(State.LEVEL1);
+					world.pushState(StateEnum.LEVEL1);
 				}
 			}
 			else

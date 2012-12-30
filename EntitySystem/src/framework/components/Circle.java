@@ -6,11 +6,11 @@ import helpers.Point;
 
 import org.lwjgl.opengl.GL11;
 
-import framework.Component;
-import framework.Entity;
-import framework.EntityManager;
+import framework.CoreComponent;
+import framework.CoreEntity;
+import framework.managers.EntityManager;
 
-public class Circle extends Component{
+public class Circle extends CoreComponent{
 
 	Point position;
 	public float radius;
@@ -23,7 +23,7 @@ public class Circle extends Component{
 	}
 	
 	@Override
-	public void entityUpdated(EntityManager em, Entity e)
+	public void entityUpdated(EntityManager em, CoreEntity e)
 	{
 		if (em.hasComponent(e, Position.class))
 			position = em.getComponent(e, Position.class).position;

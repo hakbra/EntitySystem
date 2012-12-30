@@ -1,11 +1,13 @@
 package engine;
 
+import org.lwjgl.input.Keyboard;
+
 import helpers.Time;
 import states.GameMenuState;
 import states.Level1State;
 import states.StartMenuState;
-import framework.State;
 import framework.World;
+import framework.enums.StateEnum;
 
 public class Main
 {
@@ -22,7 +24,7 @@ public class Main
 	{
 		GLEngine.init();
 		t = new Time();
-		world = new World(State.START_MENU);
+		world = new World(StateEnum.START_MENU);
 		
 		StartMenuState.init(world);
 		GameMenuState.init(world);

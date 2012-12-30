@@ -1,8 +1,8 @@
 package framework.components;
 
-import framework.Component;
+import framework.CoreComponent;
 
-public class Obstacle extends Component{
+public class Obstacle extends CoreComponent{
 
 	public Obstacle()
 	{

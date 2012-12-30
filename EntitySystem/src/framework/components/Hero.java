@@ -1,7 +1,7 @@
 package framework.components;
 
-import framework.Component;
+import framework.CoreComponent;
 
-public class Hero extends Component{
+public class Hero extends CoreComponent{
 
 }

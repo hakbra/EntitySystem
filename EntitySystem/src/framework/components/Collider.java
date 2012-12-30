@@ -1,8 +1,8 @@
 package framework.components;
 
-import framework.Component;
+import framework.CoreComponent;
 
-public class Collider extends Component{
+public class Collider extends CoreComponent{
 	
 	public int level;
 	

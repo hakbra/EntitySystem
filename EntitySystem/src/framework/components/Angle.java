@@ -1,8 +1,8 @@
 package framework.components;
 
-import framework.Component;
+import framework.CoreComponent;
 
-public class Angle extends Component{
+public class Angle extends CoreComponent{
 	public Double angle;
 	
 	public Angle(double a)

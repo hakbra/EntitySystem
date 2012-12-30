@@ -9,12 +9,12 @@ import java.util.ArrayList;
 
 import org.lwjgl.opengl.GL11;
 
-import framework.Component;
-import framework.Entity;
-import framework.EntityManager;
+import framework.CoreComponent;
+import framework.CoreEntity;
 import framework.World;
+import framework.managers.EntityManager;
 
-public class Polygon extends Component{
+public class Polygon extends CoreComponent{
 
 	Position position;
 	Angle angle;
@@ -85,7 +85,7 @@ public class Polygon extends Component{
 	}
 	
 	@Override
-	public void entityUpdated(EntityManager em, Entity e)
+	public void entityUpdated(EntityManager em, CoreEntity e)
 	{
 		if (em.hasComponent(e, Position.class))
 			position = em.getComponent(e, Position.class);

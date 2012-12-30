@@ -2,11 +2,11 @@ package framework.systems;
 
 import helpers.Time;
 import framework.CoreSystem;
-import framework.Entity;
-import framework.EntityManager;
+import framework.CoreEntity;
 import framework.World;
 import framework.components.Light;
 import framework.components.Timer;
+import framework.managers.EntityManager;
 
 public class TimerSystem extends CoreSystem{
 
@@ -20,7 +20,7 @@ public class TimerSystem extends CoreSystem{
 	{
 		long now = Time.getTime();
 		
-		for (Entity e : em.getEntityAll(Timer.class))
+		for (CoreEntity e : em.getEntityAll(Timer.class))
 		{
 			Timer timer = em.getComponent(e, Timer.class);
 			if (now - timer.start > timer.time)

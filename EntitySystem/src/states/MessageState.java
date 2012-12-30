@@ -1,10 +1,10 @@
 package states;
 
-import framework.Entity;
-import framework.State;
+import framework.CoreEntity;
 import framework.World;
 import framework.components.Message;
 import framework.components.Timer;
+import framework.enums.StateEnum;
 import framework.systems.TimerSystem;
 import framework.systems.render.TextRenderSystem;
 
@@ -13,12 +13,14 @@ public class MessageState {
 
 	public static void init(World world, String t)
 	{
-		world.addSystem(new TextRenderSystem(world), State.MESSAGE);
-		world.addSystem(new TimerSystem(world), State.MESSAGE);
+		world.clearState(StateEnum.MESSAGE);
+		
+		world.addSystem(new TextRenderSystem(world), StateEnum.MESSAGE);
+		world.addSystem(new TimerSystem(world), StateEnum.MESSAGE);
 
-		Entity msg = new Entity();
+		CoreEntity msg = new CoreEntity();
 		msg.components.add(new Message(t));
 		msg.components.add(new Timer(2000, "message"));
-		world.addEntity(msg, State.MESSAGE);
+		world.addEntity(msg, StateEnum.MESSAGE);
 	}
 }

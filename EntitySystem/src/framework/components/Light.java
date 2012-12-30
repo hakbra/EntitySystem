@@ -9,11 +9,11 @@ import java.util.ArrayList;
 
 import org.lwjgl.opengl.GL11;
 
-import framework.Component;
-import framework.Entity;
-import framework.EntityManager;
+import framework.CoreComponent;
+import framework.CoreEntity;
+import framework.managers.EntityManager;
 
-public class Light extends Component{
+public class Light extends CoreComponent{
 
 	public double mRad;
 	public double cRad;
@@ -24,11 +24,11 @@ public class Light extends Component{
 		this.cRad = r;
 	}
 
-	public void render(EntityManager em, Entity e) {
+	public void render(EntityManager em, CoreEntity e) {
 		ArrayList<Line> edges = new ArrayList<Line>();
 		Point pos = em.getComponent(e, Position.class).position;
 
-		for (Entity p : em.getEntityAll(Polygon.class, Obstacle.class))
+		for (CoreEntity p : em.getEntityAll(Polygon.class, Obstacle.class))
 		{
 			Polygon poly = em.getComponent(p, Polygon.class);
 			edges.addAll(poly.getLines());

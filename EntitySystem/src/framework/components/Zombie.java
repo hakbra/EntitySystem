@@ -1,8 +1,8 @@
 package framework.components;
 
-import framework.Component;
+import framework.CoreComponent;
 
-public class Zombie  extends Component{
+public class Zombie  extends CoreComponent{
 
 	public Zombie()
 	{

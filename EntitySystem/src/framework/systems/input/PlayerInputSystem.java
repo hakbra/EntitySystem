@@ -7,10 +7,8 @@ import java.util.Random;
 
 import org.lwjgl.input.Keyboard;
 
+import framework.CoreEntity;
 import framework.CoreSystem;
-import framework.Entity;
-import framework.EntityManager;
-import framework.Layer;
 import framework.World;
 import framework.components.Angle;
 import framework.components.AngleSpeed;
@@ -26,6 +24,8 @@ import framework.components.Position;
 import framework.components.Tex;
 import framework.components.Timer;
 import framework.components.Velocity;
+import framework.enums.LayerEnum;
+import framework.managers.EntityManager;
 
 
 
@@ -42,7 +42,7 @@ public class PlayerInputSystem extends CoreSystem{
 	@Override
 	public void run(EntityManager em)
 	{
-		for (Entity e : em.getEntity(KeyInput.class))
+		for (CoreEntity e : em.getEntity(KeyInput.class))
 		{
 			KeyInput keyInput 	= em.getComponent(e, KeyInput.class);
 			Point pos	 		= em.getComponent(e, Position.class).position;
@@ -79,9 +79,9 @@ public class PlayerInputSystem extends CoreSystem{
 					int time = 500 + r.nextInt(100);
 					float speed = gun.speed + r.nextFloat()*2 - 1;
 					
-					Entity bullet = new Entity();
+					CoreEntity bullet = new CoreEntity();
 					bullet.name = "Bullet";
-					bullet.layer = Layer.MOVER;
+					bullet.layer = LayerEnum.MOVER;
 					bullet.components.add(new Bullet());
 					bullet.components.add(new Position(position));
 					bullet.components.add(new Velocity(new Point(angle.angle + deltaAngle).mult(speed)));

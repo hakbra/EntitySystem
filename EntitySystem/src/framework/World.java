@@ -4,44 +4,54 @@ package framework;
 import java.util.HashMap;
 import java.util.Stack;
 
+import framework.enums.EventEnum;
+import framework.enums.StateEnum;
+import framework.managers.DataManager;
+import framework.managers.EntityManager;
+import framework.managers.EventManager;
+import framework.managers.SystemManager;
+
 
 public class World {
-	public State state;
+	public StateEnum currentState;
+	private StateEnum state;
 	
-	private HashMap<State, EntityManager> eManagers;
-	private HashMap<State, SystemManager> sManagers;
-	private HashMap<State, DataManager> dManagers;
+	private HashMap<StateEnum, EntityManager> eManagers;
+	private HashMap<StateEnum, SystemManager> sManagers;
+	private HashMap<StateEnum, DataManager> dManagers;
+	private HashMap<StateEnum, EventManager> evManagers;
 	
-	private Stack<State> stateStack;
+	private Stack<StateEnum> stateStack;
 
-	public World(State s)
+	public World(StateEnum s)
 	{
+		this.currentState = s;
 		this.state = s;
 
-		this.dManagers = new HashMap<State, DataManager>();
-		this.sManagers = new HashMap<State, SystemManager>();
-		this.eManagers = new HashMap<State, EntityManager>();
+		this.dManagers = new HashMap<StateEnum, DataManager>();
+		this.sManagers = new HashMap<StateEnum, SystemManager>();
+		this.eManagers = new HashMap<StateEnum, EntityManager>();
+		this.evManagers = new HashMap<StateEnum, EventManager>();
 		
-		this.stateStack = new Stack<State>();
+		this.stateStack = new Stack<StateEnum>();
 	}
 
 	public boolean run()
 	{
-		return state != State.EXIT;
+		return currentState != StateEnum.EXIT;
 	}
 
-	public void pushState(State s)
+	public void pushState(StateEnum s)
 	{
 		stateStack.push(this.state);
 		this.state = s;
 	}
 	public void popState()
 	{
-		clear(this.state);
 		this.state = stateStack.pop();
 	}
 
-	public EntityManager getEntityManager(State s)
+	public EntityManager getEntityManager(StateEnum s)
 	{
 		EntityManager em = eManagers.get(s);
 		if (em == null)
@@ -54,10 +64,10 @@ public class World {
 
 	public EntityManager getEntityManager()
 	{
-		return getEntityManager(state);
+		return getEntityManager(currentState);
 	}
 
-	public SystemManager getSystemManager(State s)
+	public SystemManager getSystemManager(StateEnum s)
 	{
 		SystemManager sm = sManagers.get(s);
 		if (sm == null)
@@ -70,10 +80,10 @@ public class World {
 
 	public SystemManager getSystemManager()
 	{
-		return getSystemManager(state);
+		return getSystemManager(currentState);
 	}
 
-	public DataManager getDataManager(State s)
+	public DataManager getDataManager(StateEnum s)
 	{
 		DataManager dm = dManagers.get(s);
 		if (dm == null)
@@ -86,30 +96,50 @@ public class World {
 
 	public DataManager getDataManager()
 	{
-		return getDataManager(state);
+		return getDataManager(currentState);
+	}
+
+	public EventManager getEventManager(StateEnum s)
+	{
+		EventManager dm = evManagers.get(s);
+		if (dm == null)
+		{
+			dm = new EventManager(this);
+			evManagers.put(s, dm);
+		}
+		return dm;
+	}
+
+	public EventManager getEventManager()
+	{
+		return getEventManager(currentState);
 	}
 	
-	public void addEntity(Entity e, State s)
+	public void addEntity(CoreEntity e, StateEnum s)
 	{
 		getEntityManager(s).addEntity(e);
 	}
 	
-	public void registerID(Entity e, State s)
+	public void registerID(CoreEntity e, StateEnum s)
 	{
 		getEntityManager(s).addStringID(e);
 	}
 	
-	public void addSystem(CoreSystem cs, State s)
+	public void addSystem(CoreSystem cs, StateEnum s)
 	{
 		getSystemManager(s).addSystem(cs);
+		if (cs.event != EventEnum.NONE)
+			getEventManager(s).addListener(cs.event, (EventListener) cs);
 	}
 
 	public void runSystems() {
+		currentState = state;
+		System.out.println(currentState);
 		getSystemManager().runSystems();
 		getEntityManager().removeEntities();
 	}
 	
-	private void clear(State s)
+	public void clearState(StateEnum s)
 	{
 		eManagers.remove(s);
 		sManagers.remove(s);

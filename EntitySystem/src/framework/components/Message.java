@@ -1,8 +1,8 @@
 package framework.components;
 
-import framework.Component;
+import framework.CoreComponent;
 
-public class Message extends Component{
+public class Message extends CoreComponent{
 	public String text;
 	
 	public Message(String t)

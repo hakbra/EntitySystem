@@ -1,9 +1,9 @@
 package framework.components;
 
-import framework.Component;
+import framework.CoreComponent;
 import helpers.Point;
 
-public class Position extends Component {
+public class Position extends CoreComponent {
 	public Point position;
 	public boolean local;
 	

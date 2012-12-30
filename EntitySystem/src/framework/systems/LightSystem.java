@@ -17,12 +17,12 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL14;
 
 import framework.CoreSystem;
-import framework.Entity;
-import framework.EntityManager;
+import framework.CoreEntity;
 import framework.World;
 import framework.components.Light;
 import framework.components.Position;
 import framework.components.Timer;
+import framework.managers.EntityManager;
 
 public class LightSystem  extends CoreSystem{
 
@@ -32,7 +32,7 @@ public class LightSystem  extends CoreSystem{
 
 	public void run(EntityManager em)
 	{
-		Entity cam = em.getByStringID("camera");
+		CoreEntity cam = em.getByStringID("camera");
 		Point trans = new Point();
 
 		if (cam != null)
@@ -48,7 +48,7 @@ public class LightSystem  extends CoreSystem{
 		
 		GL11.glPushMatrix();
 		Draw.translate(trans);
-		for (Entity e : em.getEntityAll(Light.class))
+		for (CoreEntity e : em.getEntityAll(Light.class))
 		{
 			Light l = em.getComponent(e, Light.class);
 			

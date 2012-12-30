@@ -11,8 +11,7 @@ import org.lwjgl.opengl.GL11;
 
 import engine.GLEngine;
 import framework.CoreSystem;
-import framework.Entity;
-import framework.EntityManager;
+import framework.CoreEntity;
 import framework.World;
 import framework.components.Angle;
 import framework.components.Button;
@@ -25,6 +24,7 @@ import framework.components.Polygon;
 import framework.components.Position;
 import framework.components.Tex;
 import framework.components.Timer;
+import framework.managers.EntityManager;
 
 public class RenderSystem extends CoreSystem {
 
@@ -37,13 +37,14 @@ public class RenderSystem extends CoreSystem {
 	@Override
 	public void run(EntityManager em)
 	{
-		Entity cam = em.getByStringID("camera");
+		CoreEntity cam = em.getByStringID("camera");
 		Point camPos = new Point();
 		if (cam != null)
 			camPos = em.getComponent(cam, Position.class).position.neg();
 		
-		for (Entity e: em.renders)
+		for (CoreEntity e: em.renders)
 		{
+			System.out.println("    " + e.name);
 			glPushMatrix();
 
 			if (em.hasComponent(e, Position.class))
@@ -89,7 +90,7 @@ public class RenderSystem extends CoreSystem {
 
 		Draw.setColor(Color.WHITE);
 		int i = 0;
-		for (Entity h : em.getEntity(Hero.class))
+		for (CoreEntity h : em.getEntity(Hero.class))
 		{
 			Health health = em.getComponent(h, Health.class);
 			int p = (int) (100 * health.current / health.max);

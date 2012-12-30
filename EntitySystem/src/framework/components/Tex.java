@@ -8,12 +8,12 @@ import java.util.ArrayList;
 
 import org.lwjgl.opengl.GL11;
 
-import framework.Component;
-import framework.Entity;
-import framework.EntityManager;
+import framework.CoreComponent;
+import framework.CoreEntity;
 import framework.World;
+import framework.managers.EntityManager;
 
-public class Tex extends Component{
+public class Tex extends CoreComponent{
 
 	public String texture;
 	Point coords;
@@ -43,7 +43,7 @@ public class Tex extends Component{
 		this.name = "Texture";
 	}
 	
-	public void render(World world, Entity e) {
+	public void render(World world, CoreEntity e) {
 		EntityManager em = world.getEntityManager();
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, world.getDataManager().getTexture(texture));
 		

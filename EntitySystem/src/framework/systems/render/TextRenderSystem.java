@@ -5,11 +5,11 @@ import helpers.Point;
 import helpers.Time;
 import engine.GLEngine;
 import framework.CoreSystem;
-import framework.Entity;
-import framework.EntityManager;
+import framework.CoreEntity;
 import framework.World;
 import framework.components.Message;
 import framework.components.Position;
+import framework.managers.EntityManager;
 
 public class TextRenderSystem extends CoreSystem {
 
@@ -22,8 +22,9 @@ public class TextRenderSystem extends CoreSystem {
 	@Override
 	public void run(EntityManager em)
 	{
-		for (Entity e: em.getEntity(Message.class))
+		for (CoreEntity e: em.getEntity(Message.class))
 		{
+			System.out.println("    " + e.name);
 			long now = Time.getTime();
 			if ((now / 300) % 2 == 1)
 				continue;

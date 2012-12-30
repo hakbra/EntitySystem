@@ -1,9 +1,9 @@
 package framework.components;
 
 import helpers.Color;
-import framework.Component;
+import framework.CoreComponent;
 
-public class ColorComp extends Component {
+public class ColorComp extends CoreComponent {
 	
 	public Color color;
 	

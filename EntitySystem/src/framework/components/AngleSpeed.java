@@ -1,8 +1,8 @@
 package framework.components;
 
-import framework.Component;
+import framework.CoreComponent;
 
-public class AngleSpeed extends Component {
+public class AngleSpeed extends CoreComponent {
 
 	public double speed;
 	

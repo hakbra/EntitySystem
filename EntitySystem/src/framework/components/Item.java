@@ -1,8 +1,8 @@
 package framework.components;
 
-import framework.Component;
+import framework.CoreComponent;
 
-public class Item extends Component{
+public class Item extends CoreComponent{
 	
 	public String type;
 	public float value;

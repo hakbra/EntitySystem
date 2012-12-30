@@ -1,11 +1,11 @@
 package framework.components;
 
 import helpers.Time;
-import framework.Component;
+import framework.CoreComponent;
 
 
 
-public class Timer extends Component{
+public class Timer extends CoreComponent{
 
 	public long start;
 	public long time;

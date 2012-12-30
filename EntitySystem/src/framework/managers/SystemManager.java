@@ -1,7 +1,10 @@
-package framework;
+package framework.managers;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import framework.CoreSystem;
+import framework.World;
 
 public class SystemManager {
 	World world;
@@ -50,6 +53,7 @@ public class SystemManager {
 		for (int i = 0; i < systems.size(); i++)
 		{
 			CoreSystem sys = systems.get(i);
+			System.out.println("  " + sys.getClass().getSimpleName());
 			if (sys.enabled)
 				sys.run(em);
 		}

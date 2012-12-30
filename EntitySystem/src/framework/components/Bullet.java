@@ -1,7 +1,7 @@
 package framework.components;
 
-import framework.Component;
+import framework.CoreComponent;
 
-public class Bullet  extends Component{
+public class Bullet  extends CoreComponent{
 
 }

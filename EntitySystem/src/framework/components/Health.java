@@ -7,13 +7,13 @@ import java.util.Random;
 
 import org.lwjgl.opengl.GL11;
 
-import framework.Component;
-import framework.Entity;
-import framework.EntityManager;
+import framework.CoreComponent;
+import framework.CoreEntity;
+import framework.managers.EntityManager;
 
 
 
-public class Health extends Component{
+public class Health extends CoreComponent{
 	
 	public float current;
 	public float max;

@@ -1,9 +1,9 @@
 package framework.components;
 
-import framework.Component;
+import framework.CoreComponent;
 import helpers.Point;
 
-public class Follower extends Component{
+public class Follower extends CoreComponent{
 	
 	public Point target;
 	public double limit;
