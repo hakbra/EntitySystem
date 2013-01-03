@@ -44,7 +44,7 @@ public class RenderSystem extends CoreSystem {
 		
 		for (CoreEntity e: em.renders)
 		{
-			System.out.println("    " + e.name);
+			//System.out.println("    " + e.name);
 			glPushMatrix();
 
 			if (em.hasComponent(e, Position.class))

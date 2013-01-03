@@ -53,7 +53,7 @@ public class SystemManager {
 		for (int i = 0; i < systems.size(); i++)
 		{
 			CoreSystem sys = systems.get(i);
-			System.out.println("  " + sys.getClass().getSimpleName());
+			//System.out.println("  " + sys.getClass().getSimpleName());
 			if (sys.enabled)
 				sys.run(em);
 		}

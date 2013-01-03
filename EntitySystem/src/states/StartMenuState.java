@@ -39,7 +39,7 @@ public class StartMenuState {
 		runButton.name = "runButton";
 		runButton.layer = LayerEnum.HUD;
 		runButton.components.add(Polygon.rectangle(new Point(200, 100)));
-		runButton.components.add(new Position(new Point(500, 300)));
+		runButton.components.add(new Position(new Point(GLEngine.WIDTH/2 - 100, 300)));
 		runButton.components.add(new Button("Play"));
 		runButton.components.add(new Tex("button.png"));
 		world.addEntity(runButton, StateEnum.START_MENU);
@@ -49,7 +49,7 @@ public class StartMenuState {
 		exitButton.name = "exitButton";
 		exitButton.layer = LayerEnum.HUD;
 		exitButton.components.add(Polygon.rectangle(new Point(200, 100)));
-		exitButton.components.add(new Position(new Point(500, 150)));
+		exitButton.components.add(new Position(new Point(GLEngine.WIDTH/2 - 100, 150)));
 		exitButton.components.add(new Button("Exit"));
 		exitButton.components.add(new Tex("button.png"));
 		world.addEntity(exitButton, StateEnum.START_MENU);

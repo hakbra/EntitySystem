@@ -134,7 +134,7 @@ public class World {
 
 	public void runSystems() {
 		currentState = state;
-		System.out.println(currentState);
+		//System.out.println(currentState);
 		getSystemManager().runSystems();
 		getEntityManager().removeEntities();
 	}

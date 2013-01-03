@@ -24,7 +24,7 @@ public class TextRenderSystem extends CoreSystem {
 	{
 		for (CoreEntity e: em.getEntity(Message.class))
 		{
-			System.out.println("    " + e.name);
+			//System.out.println("    " + e.name);
 			long now = Time.getTime();
 			if ((now / 300) % 2 == 1)
 				continue;

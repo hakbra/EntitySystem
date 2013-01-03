@@ -98,16 +98,6 @@ public class Level1State {
 		world.addEntity(player, StateEnum.LEVEL1);
 		world.registerID(player, StateEnum.LEVEL1);
 
-		CoreEntity exit2 = new CoreEntity();
-		exit2.name = "exit1";
-		exit2.layer = LayerEnum.ITEM;
-		exit2.components.add(new Position(new Point(600, 250)));
-		exit2.components.add(Polygon.centerRectangle(new Point(50, 50)));
-		exit2.components.add(new Trigger("exit1"));
-		exit2.components.add(new Tex("exit.png"));
-		exit2.components.add(new Angle(180));
-		world.addEntity(exit2, StateEnum.LEVEL1);
-
 		CoreEntity camera = new CoreEntity();
 		camera.name = "camera";
 		camera.components.add(new Position( new Point()));
