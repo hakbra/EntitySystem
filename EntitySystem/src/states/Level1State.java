@@ -21,7 +21,6 @@ import framework.components.Follower;
 import framework.components.Gun;
 import framework.components.Health;
 import framework.components.Hero;
-import framework.components.Item;
 import framework.components.KeyInput;
 import framework.components.Light;
 import framework.components.Obstacle;
@@ -40,7 +39,6 @@ import framework.systems.DamageSystem;
 import framework.systems.EmitterSystem;
 import framework.systems.FollowerSystem;
 import framework.systems.IntersectionSystem;
-import framework.systems.ItemSystem;
 import framework.systems.LightSystem;
 import framework.systems.PathSystem;
 import framework.systems.PhysicsSystem;
@@ -70,7 +68,6 @@ public class Level1State {
 		world.addSystem(new IntersectionSystem(world), StateEnum.LEVEL1);
 		
 		world.addSystem(new CollisionSystem(world), StateEnum.LEVEL1);
-		world.addSystem(new ItemSystem(world), StateEnum.LEVEL1);
 		world.addSystem(new TriggerSystem(world), StateEnum.LEVEL1);
 		world.addSystem(new DamageSystem(world), StateEnum.LEVEL1);
 
@@ -152,7 +149,7 @@ public class Level1State {
 		health.components.add(new Circle(15));
 		health.components.add(new Position(new Point(GLEngine.WIDTH * 2 - 75	, 	GLEngine.HEIGHT - 75)));
 		health.components.add(new Tex("health.png"));
-		health.components.add(new Item("health", 100));
+		health.components.add(new Trigger("health"));
 		health.components.add(new Angle(0));
 		health.components.add(new AngleSpeed(1));
 		world.addEntity(health, StateEnum.LEVEL1);
@@ -162,7 +159,7 @@ public class Level1State {
 		gun.layer = LayerEnum.ITEM;
 		gun.components.add(new Position(new Point(GLEngine.WIDTH * 2 - 75, 75)));
 		gun.components.add(new Circle(30));
-		gun.components.add(new Item("gun"));
+		gun.components.add(new Trigger("gun"));
 		gun.components.add(new Tex("gun2.png"));
 		gun.components.add(new Gun(5, 10, 10, 400, 20, "gun2.png"));
 		gun.components.add(new Angle(0));
@@ -174,7 +171,7 @@ public class Level1State {
 		gun2.layer = LayerEnum.ITEM;
 		gun2.components.add(new Position(new Point(75, GLEngine.HEIGHT - 75)));
 		gun2.components.add(new Circle(30));
-		gun2.components.add(new Item("gun"));
+		gun2.components.add(new Trigger("gun"));
 		gun2.components.add(new Tex("gun3.png"));
 		gun2.components.add(new Gun(5, 35, 10, 400, 10, "gun3.png"));
 		gun2.components.add(new Angle(0));
@@ -277,13 +274,6 @@ public class Level1State {
 		border.components.add(new Position(new Point(0, 0)));
 		border.components.add(new Obstacle());
 		world.addEntity(border, StateEnum.LEVEL1);
-
-		CoreEntity trigger = new CoreEntity();
-		trigger.name = "trigger";
-		trigger.components.add(Polygon.rectangle(new Point(150, 150)));
-		trigger.components.add(new Position( new Point(GLEngine.WIDTH*2-150, 0)));
-		trigger.components.add(new Trigger("gun"));
-		world.addEntity(trigger, StateEnum.LEVEL1);
 	}
 
 	private static void createButtons(World world)

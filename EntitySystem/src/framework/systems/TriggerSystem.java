@@ -2,12 +2,10 @@ package framework.systems;
 
 import org.lwjgl.input.Keyboard;
 
+import helpers.Intersection;
 import states.CutsceneState;
 import states.Level2State;
 import states.MessageState;
-
-import helpers.Intersection;
-import helpers.Point;
 import engine.GLEngine;
 import framework.CoreEntity;
 import framework.CoreSystem;
@@ -15,15 +13,9 @@ import framework.EventListener;
 import framework.World;
 import framework.components.Angle;
 import framework.components.AngleSpeed;
-import framework.components.Circle;
-import framework.components.Collider;
-import framework.components.DestroyOnImpact;
-import framework.components.Emitter;
-import framework.components.EmitterOnImpact;
 import framework.components.Gun;
 import framework.components.Health;
 import framework.components.Hero;
-import framework.components.Item;
 import framework.components.KeyInput;
 import framework.components.Position;
 import framework.components.Tex;
@@ -89,6 +81,38 @@ public class TriggerSystem extends CoreSystem implements EventListener{
 			world.pushState(StateEnum.LEVEL2);
 			MessageState.init(world, "YOU WON");
 			world.pushState(StateEnum.MESSAGE);
+		}
+
+		if (trigger.type == "health")
+		{
+			Health health = em.getComponent(i.a, Health.class);
+			if (health.current < health.max)
+			{
+				health.current += 100;
+				if (health.current > health.max)
+					health.current = health.max;
+				em.removeEntity(i.b);
+			}
+
+		}
+		if (trigger.type == "gun" && !em.hasComponent(i.b, Timer.class))
+		{
+			KeyInput keys = em.getComponent(i.a, KeyInput.class);
+
+			if (Keyboard.isKeyDown(keys.pickup))
+			{
+				System.out.println(i.b.name);
+				Gun oldGun = em.getComponent(i.a, Gun.class);
+				em.removeComponent(i.a, oldGun);
+
+				Gun newGun = em.getComponent(i.b, Gun.class);
+				System.out.println(newGun);
+				em.addComponent(i.a, newGun);
+
+				em.addComponent(i.b, oldGun);
+				em.addComponent(i.b, new Timer(500, "selfDestruct"));
+				em.getComponent(i.b, Tex.class).texture = oldGun.tex;
+			}
 		}
 	}
 }

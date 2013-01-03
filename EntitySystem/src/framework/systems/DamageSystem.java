@@ -1,37 +1,14 @@
 package framework.systems;
 
-import org.lwjgl.input.Keyboard;
-
-import states.CutsceneState;
-import states.Level2State;
-import states.MessageState;
-
 import helpers.Intersection;
-import helpers.Point;
 import helpers.Time;
-import engine.GLEngine;
-import framework.CoreEntity;
+import states.MessageState;
 import framework.CoreSystem;
 import framework.EventListener;
 import framework.World;
-import framework.components.Angle;
-import framework.components.AngleSpeed;
-import framework.components.Circle;
-import framework.components.Collider;
 import framework.components.Damage;
-import framework.components.DestroyOnImpact;
-import framework.components.Emitter;
-import framework.components.EmitterOnImpact;
-import framework.components.Gun;
 import framework.components.Health;
 import framework.components.Hero;
-import framework.components.Item;
-import framework.components.KeyInput;
-import framework.components.Position;
-import framework.components.Tex;
-import framework.components.Timer;
-import framework.components.Trigger;
-import framework.components.Velocity;
 import framework.components.Zombie;
 import framework.enums.EventEnum;
 import framework.enums.StateEnum;

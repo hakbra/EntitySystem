@@ -17,10 +17,9 @@ import framework.enums.StateEnum;
 import framework.systems.CameraSystem;
 import framework.systems.CollisionSystem;
 import framework.systems.DamageSystem;
-import framework.systems.IntersectionSystem;
 import framework.systems.EmitterSystem;
 import framework.systems.FollowerSystem;
-import framework.systems.ItemSystem;
+import framework.systems.IntersectionSystem;
 import framework.systems.LightSystem;
 import framework.systems.PathSystem;
 import framework.systems.PhysicsSystem;
@@ -48,7 +47,6 @@ public class Level2State {
 		world.addSystem(new IntersectionSystem(world), StateEnum.LEVEL2);
 		
 		world.addSystem(new CollisionSystem(world), StateEnum.LEVEL2);
-		world.addSystem(new ItemSystem(world), StateEnum.LEVEL2);
 		world.addSystem(new TriggerSystem(world), StateEnum.LEVEL2);
 		world.addSystem(new DamageSystem(world), StateEnum.LEVEL2);
 
