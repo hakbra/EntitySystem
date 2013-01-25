@@ -6,8 +6,8 @@ import java.util.Random;
 
 import org.lwjgl.input.Mouse;
 
-import states.Level1State;
-import states.MessageState;
+import zombies.states.Level1State;
+import zombies.states.MessageState;
 import engine.GLEngine;
 import framework.CoreSystem;
 import framework.CoreEntity;

@@ -1,4 +1,4 @@
-package states;
+package zombies.states;
 
 import framework.CoreEntity;
 import framework.World;

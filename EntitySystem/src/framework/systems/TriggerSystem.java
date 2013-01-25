@@ -3,9 +3,9 @@ package framework.systems;
 import org.lwjgl.input.Keyboard;
 
 import helpers.Intersection;
-import states.CutsceneState;
-import states.Level2State;
-import states.MessageState;
+import zombies.states.CutsceneState;
+import zombies.states.Level2State;
+import zombies.states.MessageState;
 import engine.GLEngine;
 import framework.CoreEntity;
 import framework.CoreSystem;
@@ -47,7 +47,7 @@ public class TriggerSystem extends CoreSystem implements EventListener{
 		EntityManager em = world.getEntityManager();
 
 		Trigger trigger = em.getComponent(i.b, Trigger.class);
-		if (trigger.type == "exit1")
+		if (trigger.type == "exit1" && i.inside)
 		{
 			world.popState();
 			CutsceneState.init(world);
@@ -64,7 +64,7 @@ public class TriggerSystem extends CoreSystem implements EventListener{
 			}
 			world.pushState(StateEnum.CUTSCENE);
 		}
-		if (trigger.type == "exit2")
+		if (trigger.type == "exit2" && i.inside)
 		{
 			world.popState();
 			Level2State.init(world);

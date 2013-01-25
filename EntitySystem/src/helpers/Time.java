@@ -17,11 +17,11 @@ public class Time {
 	}
 	
 	public int getDelta() {
-	    long time = getTime();
-	    int delta = (int) (time - lastFrame);
-	    lastFrame = time;
- 
-	    return delta;
+		long time = System.nanoTime();
+		int delta = (int) (time - lastFrame);
+		lastFrame = time;
+
+		return delta;
 	}
  
 	/**
@@ -30,7 +30,7 @@ public class Time {
 	 * @return The system time in milliseconds
 	 */
 	public static long getTime() {
-		 return (Sys.getTime() * 1000) / Sys.getTimerResolution();
+		return (Sys.getTime() * 1000) / Sys.getTimerResolution();
 	}
 
 	public static long getHighTime() {

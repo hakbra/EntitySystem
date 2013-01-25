@@ -2,7 +2,7 @@ package framework.systems;
 
 import helpers.Intersection;
 import helpers.Time;
-import states.MessageState;
+import zombies.states.MessageState;
 import framework.CoreSystem;
 import framework.EventListener;
 import framework.World;

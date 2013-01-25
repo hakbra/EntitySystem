@@ -1,4 +1,4 @@
-package states;
+package zombies.states;
 
 import helpers.Point;
 

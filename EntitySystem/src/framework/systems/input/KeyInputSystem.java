@@ -4,7 +4,7 @@ import helpers.Point;
 
 import org.lwjgl.input.Keyboard;
 
-import states.MessageState;
+import zombies.states.MessageState;
 
 
 import engine.GLEngine;

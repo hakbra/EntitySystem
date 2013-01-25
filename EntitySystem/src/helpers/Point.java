@@ -198,6 +198,13 @@ public class Point
 		return this.x*p.x + this.y*p.y;
 	}
 	
+	public Point proj(Point p)
+	{
+		Point onto = p.norm();
+		double d = this.dot(onto);
+		return onto.mult(d);
+	}
+	
 	public double cross(Point p)
 	{
 		return this.x*p.y - this.y*p.x;

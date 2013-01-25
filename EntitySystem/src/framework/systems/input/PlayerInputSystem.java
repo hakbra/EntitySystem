@@ -20,6 +20,7 @@ import framework.components.DestroyOnImpact;
 import framework.components.EmitterOnImpact;
 import framework.components.Gun;
 import framework.components.KeyInput;
+import framework.components.Polygon;
 import framework.components.Position;
 import framework.components.Tex;
 import framework.components.Timer;

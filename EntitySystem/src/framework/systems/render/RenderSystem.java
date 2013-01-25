@@ -44,7 +44,6 @@ public class RenderSystem extends CoreSystem {
 		
 		for (CoreEntity e: em.renders)
 		{
-			//System.out.println("    " + e.name);
 			glPushMatrix();
 
 			if (em.hasComponent(e, Position.class))
@@ -65,6 +64,13 @@ public class RenderSystem extends CoreSystem {
 			{
 				Draw.setColor(Color.WHITE);
 				em.getComponent(e, Tex.class).render(world, e);
+			}
+			else if (em.hasComponent(e, Polygon.class))
+			{
+				GL11.glDisable(GL11.GL_TEXTURE_2D);
+				Polygon poly = em.getComponent(e, Polygon.class);
+				Draw.polygon(poly.localPoints);
+				GL11.glEnable(GL11.GL_TEXTURE_2D);
 			}
 			else if (em.hasComponent(e, Circle.class))
 			{

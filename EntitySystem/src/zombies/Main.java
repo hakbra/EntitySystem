@@ -1,11 +1,12 @@
-package engine;
+package zombies;
 
 import org.lwjgl.input.Keyboard;
 
 import helpers.Time;
-import states.GameMenuState;
-import states.Level1State;
-import states.StartMenuState;
+import zombies.states.GameMenuState;
+import zombies.states.Level1State;
+import zombies.states.StartMenuState;
+import engine.GLEngine;
 import framework.World;
 import framework.enums.StateEnum;
 
