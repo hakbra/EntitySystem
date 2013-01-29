@@ -1,10 +1,9 @@
 package framework.systems;
 
-import helpers.Intersection;
+import helpers.Data;
 import helpers.Time;
 import zombies.states.MessageState;
 import framework.CoreSystem;
-import framework.EventListener;
 import framework.World;
 import framework.components.Damage;
 import framework.components.Health;
@@ -15,7 +14,7 @@ import framework.enums.StateEnum;
 import framework.managers.EntityManager;
 
 
-public class DamageSystem extends CoreSystem implements EventListener{
+public class DamageSystem extends CoreSystem{
 
 
 	public DamageSystem(World w)
@@ -30,7 +29,7 @@ public class DamageSystem extends CoreSystem implements EventListener{
 	}
 
 	@Override
-	public void action(Intersection i)
+	public void recieveEvent(Data i)
 	{
 		EntityManager em = world.getEntityManager();
 

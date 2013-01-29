@@ -1,10 +1,11 @@
 package framework;
 
+import helpers.Data;
 import framework.enums.EventEnum;
 import framework.managers.EntityManager;
 
 
-public abstract class CoreSystem {
+public abstract class CoreSystem implements EventListener{
 	protected World world;
 	public boolean enabled;
 	public EventEnum event;
@@ -16,5 +17,10 @@ public abstract class CoreSystem {
 		this.world = w;
 		this.enabled = true;
 		this.event = EventEnum.NONE;
+	}
+
+	@Override
+	public void recieveEvent(Data i) {
+		
 	}
 }

@@ -1,6 +1,6 @@
 package framework.systems;
 
-import helpers.Intersection;
+import helpers.Data;
 import helpers.Point;
 import framework.CoreEntity;
 import framework.CoreSystem;
@@ -45,7 +45,7 @@ public class IntersectionSystem extends CoreSystem {
 				boolean inside = circle2.isInside(circle1pos);
 
 				if (circle1pos.dist(col) < circle1.radius || inside)
-					handleCollision( em, new Intersection(e1, e2, col, inside) );
+					handleCollision( em, new Data(e1, e2, col, inside) );
 			}
 
 			for (CoreEntity e2 : em.getEntityAll(Polygon.class))
@@ -56,12 +56,12 @@ public class IntersectionSystem extends CoreSystem {
 				boolean inside = poly.isInside(circle1pos);
 
 				if (circle1pos.dist(col) < circle1.radius || inside)
-					handleCollision( em, new Intersection(e1, e2, col, inside) );
+					handleCollision( em, new Data(e1, e2, col, inside) );
 			}
 		}
 	}
 
-	private void handleCollision(EntityManager em, Intersection i)
+	private void handleCollision(EntityManager em, Data i)
 	{
 		if (em.hasComponent(i.b, Obstacle.class))
 			world.getEventManager().sendEvent(EventEnum.COLLISION, i);

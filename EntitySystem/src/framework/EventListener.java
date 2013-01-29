@@ -1,7 +1,7 @@
 package framework;
 
-import helpers.Intersection;
+import helpers.Data;
 
 public interface EventListener {
-	public void action(Intersection i);
+	public void recieveEvent(Data i);
 }

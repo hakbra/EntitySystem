@@ -1,6 +1,6 @@
 package framework.systems;
 
-import helpers.Intersection;
+import helpers.Data;
 import helpers.Point;
 import framework.CoreEntity;
 import framework.CoreSystem;
@@ -32,7 +32,7 @@ public class CollisionSystem extends CoreSystem implements EventListener{
 	}
 
 	@Override
-	public void action(Intersection i)
+	public void recieveEvent(Data i)
 	{
 		EntityManager em = world.getEntityManager();
 

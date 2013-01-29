@@ -2,7 +2,7 @@ package framework.systems;
 
 import org.lwjgl.input.Keyboard;
 
-import helpers.Intersection;
+import helpers.Data;
 import zombies.states.CutsceneState;
 import zombies.states.Level2State;
 import zombies.states.MessageState;
@@ -42,7 +42,7 @@ public class TriggerSystem extends CoreSystem implements EventListener{
 	}
 
 	@Override
-	public void action(Intersection i)
+	public void recieveEvent(Data i)
 	{
 		EntityManager em = world.getEntityManager();
 

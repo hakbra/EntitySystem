@@ -1,7 +1,8 @@
 package framework.managers;
 
-import helpers.Intersection;
+import helpers.Data;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import framework.CoreSystem;
@@ -10,24 +11,36 @@ import framework.World;
 import framework.enums.EventEnum;
 
 public class EventManager {
-	HashMap<EventEnum, EventListener> listeners;
+	HashMap<EventEnum, ArrayList<EventListener>> listenerLists;
 	World world;
 	
 	public EventManager(World w)
 	{
 		this.world = w;
-		listeners = new HashMap<EventEnum, EventListener>();
+		listenerLists = new HashMap<EventEnum, ArrayList<EventListener>>();
+	}
+	
+	private ArrayList<EventListener> getListeners(EventEnum e)
+	{
+		ArrayList<EventListener> listeners = listenerLists.get(e);
+		if (listeners == null)
+		{
+			listeners = new ArrayList<EventListener>();
+			listenerLists.put(e, listeners);
+		}
+		return listeners;
 	}
 	
 	public void addListener(EventEnum ee, EventListener el)
 	{
-		listeners.put(ee, el);
+		ArrayList<EventListener> listeners = getListeners(ee);
+		listeners.add(el);
 	}
 	
-	public void sendEvent(EventEnum ee, Intersection i)
+	public void sendEvent(EventEnum ee, Data i)
 	{
-		EventListener el = listeners.get(ee);
-		if (el != null && ((CoreSystem) el).enabled)
-			el.action(i);
+		ArrayList<EventListener> listeners = getListeners(ee);
+		for(EventListener el : listeners)
+			el.recieveEvent(i);
 	}
 }
