@@ -12,6 +12,11 @@ public abstract class CoreSystem implements EventListener{
 	
 	public  void run(EntityManager em){}
 	
+	public CoreSystem()
+	{
+		this.enabled = true;
+		this.event = EventEnum.NONE;
+	}
 	public CoreSystem(World w)
 	{
 		this.world = w;

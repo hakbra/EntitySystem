@@ -8,7 +8,6 @@ import java.util.HashMap;
 import framework.CoreComponent;
 import framework.CoreEntity;
 import framework.World;
-import framework.components.Hero;
 import framework.enums.LayerEnum;
 
 
@@ -25,7 +24,6 @@ public class EntityManager{
     public EntityManager(World w)
     {
     	this.world = w;
-
     }
 
     public void addStringID(CoreEntity e)
@@ -61,6 +59,8 @@ public class EntityManager{
 			c.entityUpdated(this, e);
 		
 		e.components.add(component);
+		component.parent = e;
+		component.world = this.world;
 		
 		if (e.layer != LayerEnum.NOT && !renders.contains(e))
 			addRender(e);
@@ -83,6 +83,7 @@ public class EntityManager{
 		HashMap<CoreEntity, T> HashMap = (HashMap<CoreEntity, T>) entities.get(type);
 		if (HashMap != null)
 			return HashMap.get(e);
+		System.out.println(e.name + " har ikke komponent " + type.getSimpleName());
 		return null;
     }
 

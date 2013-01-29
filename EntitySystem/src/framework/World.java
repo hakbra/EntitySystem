@@ -127,6 +127,7 @@ public class World {
 	
 	public void addSystem(CoreSystem cs, StateEnum s)
 	{
+		cs.world = this;
 		getSystemManager(s).addSystem(cs);
 		if (cs.event != EventEnum.NONE)
 			getEventManager(s).addListener(cs.event, (EventListener) cs);

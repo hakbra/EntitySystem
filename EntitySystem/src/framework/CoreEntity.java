@@ -6,6 +6,7 @@ import framework.enums.LayerEnum;
 
 public class CoreEntity implements Comparable{
 	
+	public World world;
 	public LayerEnum layer;
 	public String name;
 	public ArrayList<CoreComponent> components;
