@@ -86,7 +86,6 @@ public class CutsceneState {
 			zombie.layer = LayerEnum.MOVER;
 			zombie.components.add(new Circle(20));
 			zombie.components.add(new Position(new Point(i, 250)));
-			zombie.components.add(new Velocity(new Point()));
 			zombie.components.add(new Angle(90));
 			zombie.components.add(new Tex("zombie.png"));
 			world.addEntity(zombie, StateEnum.CUTSCENE);
@@ -96,7 +95,6 @@ public class CutsceneState {
 			zombie2.layer = LayerEnum.MOVER;
 			zombie2.components.add(new Circle(20));
 			zombie2.components.add(new Position(new Point(i, GLEngine.HEIGHT - 250)));
-			zombie2.components.add(new Velocity(new Point()));
 			zombie2.components.add(new Angle(-90));
 			zombie2.components.add(new Tex("zombie.png"));
 			world.addEntity(zombie2, StateEnum.CUTSCENE);

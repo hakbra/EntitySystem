@@ -1,24 +1,14 @@
 package framework.components;
 
-import helpers.Color;
-import helpers.Draw;
 import helpers.Line;
 import helpers.Point;
 
 import java.util.ArrayList;
 
-import org.lwjgl.opengl.GL11;
-
 import framework.CoreComponent;
-import framework.CoreEntity;
-import framework.World;
-import framework.managers.EntityManager;
 
 public class Polygon extends CoreComponent{
 
-	Position position;
-	Angle angle;
-	
 	public ArrayList<Point> localPoints;
 	public Point mid;
 	public Point min, max;
@@ -48,8 +38,6 @@ public class Polygon extends CoreComponent{
 		mid.idiv(localPoints.size());
 		
 		inverted = false;
-		angle = new Angle(0);
-		position = new Position(new Point());
 	}
 
 	public static Polygon rectangle(Point dim)
@@ -84,14 +72,18 @@ public class Polygon extends CoreComponent{
 		return poly; 
 	}
 	
-	@Override
-	public void entityUpdated(EntityManager em, CoreEntity e)
+	public Point getPosition()
 	{
-		if (em.hasComponent(e, Position.class))
-			position = em.getComponent(e, Position.class);
-
-		if (em.hasComponent(e, Angle.class))
-			angle = em.getComponent(e, Angle.class);
+		if (world.getEntityManager().hasComponent(parent, Position.class))
+			return world.getEntityManager().getComponent(parent, Position.class).position;
+		return null;
+	}
+	
+	public double getAngle()
+	{
+		if (world.getEntityManager().hasComponent(parent, Angle.class))
+			return world.getEntityManager().getComponent(parent, Angle.class).angle;
+		return 0;
 	}
 
 	public boolean isInside(Point p)
@@ -140,8 +132,8 @@ public class Polygon extends CoreComponent{
 		
 		for (Point p : localPoints)
 		{
-			Point t = p.rot(angle.angle);
-			t = t.add(position.position);
+			Point t = p.rot(getAngle());
+			t = t.add(getPosition());
 			worldPoints.add(t);
 		}
 		

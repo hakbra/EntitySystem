@@ -55,9 +55,6 @@ public class EntityManager{
 		}
 		componentMap.put(e, component);
 		
-		for (CoreComponent c : e.components)
-			c.entityUpdated(this, e);
-		
 		e.components.add(component);
 		component.parent = e;
 		component.world = this.world;
@@ -74,9 +71,6 @@ public class EntityManager{
 
 		
 		e.components.remove(component);
-		
-		for (CoreComponent c : e.components)
-			c.entityUpdated(this, e);
     }
 
     public <T> T getComponent(CoreEntity e, Class<T> type) {
@@ -161,11 +155,11 @@ public class EntityManager{
 				entities.put(c.getClass(), componentMap);
 			}
 			componentMap.put(e, c);
+			c.parent = e;
+			c.world = this.world;
 		}
-		for (CoreComponent c : e.components)
-			c.entityUpdated(this, e);
-		
-		if (e.layer != LayerEnum.NOT)
+
+		if (e.layer != LayerEnum.NOT && !renders.contains(e))
 			addRender(e);
 	}
 

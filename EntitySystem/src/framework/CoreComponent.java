@@ -8,11 +8,6 @@ public class CoreComponent {
 	public World world;
 	public CoreEntity parent;
 	
-	public void entityUpdated(EntityManager em, CoreEntity e)
-	{
-		
-	}
-	
 	public String toString()
 	{
 		return name;

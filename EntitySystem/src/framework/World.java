@@ -118,6 +118,7 @@ public class World {
 	public void addEntity(CoreEntity e, StateEnum s)
 	{
 		getEntityManager(s).addEntity(e);
+		e.world = this;
 	}
 	
 	public void registerID(CoreEntity e, StateEnum s)
