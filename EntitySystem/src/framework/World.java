@@ -22,9 +22,11 @@ public class World {
 	private HashMap<StateEnum, EventManager> evManagers;
 	
 	private Stack<StateEnum> stateStack;
+	public int frame;
 
 	public World(StateEnum s)
 	{
+		this.frame = 0;
 		this.currentState = s;
 		this.state = s;
 
@@ -138,6 +140,7 @@ public class World {
 		currentState = state;
 		getSystemManager().runSystems();
 		getEntityManager().removeEntities();
+		this.frame++;
 	}
 	
 	public void clearState(StateEnum s)

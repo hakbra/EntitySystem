@@ -85,6 +85,13 @@ public class Polygon extends CoreComponent{
 			return world.getEntityManager().getComponent(parent, Angle.class).angle;
 		return 0;
 	}
+	
+	public double getScale()
+	{
+		if (world.getEntityManager().hasComponent(parent, Scale.class))
+			return world.getEntityManager().getComponent(parent, Scale.class).scale;
+		return 1;
+	}
 
 	public boolean isInside(Point p)
 	{
@@ -133,6 +140,7 @@ public class Polygon extends CoreComponent{
 		for (Point p : localPoints)
 		{
 			Point t = p.rot(getAngle());
+			t = t.mult(getScale());
 			t = t.add(getPosition());
 			worldPoints.add(t);
 		}

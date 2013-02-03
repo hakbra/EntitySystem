@@ -44,7 +44,7 @@ public class IntersectionSystem extends CoreSystem {
 				Point col = circle2.getClosest(circle1pos);
 				boolean inside = circle2.isInside(circle1pos);
 
-				if (circle1pos.dist(col) < circle1.radius || inside)
+				if (circle1pos.dist(col) < circle1.getRadius() || inside)
 					handleCollision( em, new Data(e1, e2, col, inside) );
 			}
 
@@ -55,7 +55,7 @@ public class IntersectionSystem extends CoreSystem {
 				Point col = poly.getClosest(circle1pos);
 				boolean inside = poly.isInside(circle1pos);
 
-				if (circle1pos.dist(col) < circle1.radius || inside)
+				if (circle1pos.dist(col) < circle1.getRadius() || inside)
 					handleCollision( em, new Data(e1, e2, col, inside) );
 			}
 		}

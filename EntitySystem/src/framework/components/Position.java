@@ -1,7 +1,7 @@
 package framework.components;
 
-import framework.CoreComponent;
 import helpers.Point;
+import framework.CoreComponent;
 
 public class Position extends CoreComponent {
 	public Point position;

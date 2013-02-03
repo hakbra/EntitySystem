@@ -24,4 +24,10 @@ public class Health extends CoreComponent{
 		this.max = 100;
 		this.name = "Health";
 	}
+	public Health(float m)
+	{
+		this.current = m;
+		this.max = m;
+		this.name = "Health";
+	}
 }

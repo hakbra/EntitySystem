@@ -296,21 +296,11 @@ public class Level1State {
 		menuButton.components.add(new Tex("button.png"));
 		world.addEntity(menuButton, StateEnum.LEVEL1);
 
-
-		CoreEntity zombieButton = new CoreEntity();
-		zombieButton.name = "zombieButton";
-		zombieButton.layer = LayerEnum.HUD;
-		zombieButton.components.add(Polygon.rectangle(new Point(100, 50)));
-		zombieButton.components.add(new Position(new Point(275, 650), true));
-		zombieButton.components.add(new Button("Zombies"));
-		zombieButton.components.add(new Tex("button.png"));
-		world.addEntity(zombieButton, StateEnum.LEVEL1);
-
 		CoreEntity screenButton = new CoreEntity();
 		screenButton.name = "screenButton";
 		screenButton.layer = LayerEnum.HUD;
 		screenButton.components.add(Polygon.rectangle(new Point(100, 50)));
-		screenButton.components.add(new Position(new Point(400, 650), true));
+		screenButton.components.add(new Position(new Point(275, 650), true));
 		screenButton.components.add(new Button("Screen"));
 		screenButton.components.add(new Tex("button.png"));
 		world.addEntity(screenButton, StateEnum.LEVEL1);
@@ -319,7 +309,7 @@ public class Level1State {
 		restartButton.name = "restartButton";
 		restartButton.layer = LayerEnum.HUD;
 		restartButton.components.add(Polygon.rectangle(new Point(100, 50)));
-		restartButton.components.add(new Position(new Point(525, 650), true));
+		restartButton.components.add(new Position(new Point(400, 650), true));
 		restartButton.components.add(new Button("Restart"));
 		restartButton.components.add(new Tex("button.png"));
 		world.addEntity(restartButton, StateEnum.LEVEL1);

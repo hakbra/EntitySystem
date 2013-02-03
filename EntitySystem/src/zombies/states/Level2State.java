@@ -1,10 +1,25 @@
 package zombies.states;
 
 import helpers.Point;
+
+import org.lwjgl.input.Keyboard;
+
 import engine.GLEngine;
 import framework.CoreEntity;
 import framework.World;
+import framework.components.Acceleration;
+import framework.components.Angle;
+import framework.components.AngleSpeed;
 import framework.components.Button;
+import framework.components.Circle;
+import framework.components.Collider;
+import framework.components.Damage;
+import framework.components.DirectFollower;
+import framework.components.Gun;
+import framework.components.Health;
+import framework.components.Hero;
+import framework.components.KeyInput;
+import framework.components.Light;
 import framework.components.Message;
 import framework.components.Obstacle;
 import framework.components.Pathfinder;
@@ -12,11 +27,14 @@ import framework.components.Polygon;
 import framework.components.Position;
 import framework.components.Tex;
 import framework.components.Timer;
+import framework.components.Velocity;
+import framework.components.Zombie;
 import framework.enums.LayerEnum;
 import framework.enums.StateEnum;
 import framework.systems.CameraSystem;
 import framework.systems.CollisionSystem;
 import framework.systems.DamageSystem;
+import framework.systems.DirectFollowerSystem;
 import framework.systems.EmitterSystem;
 import framework.systems.FollowerSystem;
 import framework.systems.IntersectionSystem;
@@ -43,6 +61,7 @@ public class Level2State {
 		world.addSystem(new CameraSystem(world), StateEnum.LEVEL2);
 		world.addSystem(new PathSystem(world), StateEnum.LEVEL2);
 		world.addSystem(new FollowerSystem(world), StateEnum.LEVEL2);
+		world.addSystem(new DirectFollowerSystem(world), StateEnum.LEVEL2);
 		world.addSystem(new PhysicsSystem(world), StateEnum.LEVEL2);
 		world.addSystem(new IntersectionSystem(world), StateEnum.LEVEL2);
 		
@@ -98,6 +117,44 @@ public class Level2State {
 		msg.components.add(new Timer(5000));
 		world.addEntity(msg, StateEnum.LEVEL2);
 		
+		CoreEntity boss = new CoreEntity();
+		boss.name ="Big bad boss";
+		boss.layer = LayerEnum.MOVER;
+		boss.components.add(new Zombie());
+		boss.components.add(new Circle(100));
+		boss.components.add(new Position(new Point(GLEngine.WIDTH / 2, GLEngine.HEIGHT / 2)));
+		boss.components.add(new Velocity(new Point(0, 0)));
+		boss.components.add(new Acceleration(new Point(0, 0)));
+		boss.components.add(new Health(1000));
+		boss.components.add(new DirectFollower());
+		boss.components.add(new Damage(20, 200));
+		boss.components.add(new Obstacle());
+		boss.components.add(new Collider(4));
+		boss.components.add(new Angle(0));
+		boss.components.add(new AngleSpeed(0));
+		boss.components.add(new Tex("zombie.png"));
+		world.addEntity(boss, StateEnum.LEVEL2);
+		
+
+		CoreEntity player = new CoreEntity();
+		player.name = "Player 1";
+		player.layer = LayerEnum.MOVER;
+		player.components.add(new Hero());
+		player.components.add(new Circle(20));
+		player.components.add(new Position(new Point(400, 250)));
+		player.components.add(new Velocity(new Point(0, 0)));
+		player.components.add(new Angle(0));
+		player.components.add(new AngleSpeed(0));
+		player.components.add(new KeyInput(Keyboard.KEY_A, Keyboard.KEY_D, Keyboard.KEY_W, Keyboard.KEY_S, Keyboard.KEY_SPACE, Keyboard.KEY_E));
+		player.components.add(new Gun(5, 0, 10, 100, 2, "gun1.png"));
+		player.components.add(new Health());
+		player.components.add(new Collider(4));
+		player.components.add(new Obstacle());
+		player.components.add(new Light(300));
+		player.components.add(new Tex("man.png", new Point(1, 1), new Point(0, 0)));
+		world.addEntity(player, StateEnum.LEVEL2);
+		world.registerID(player, StateEnum.LEVEL2);
+		
 		createButtons(world);
 	}
 
@@ -121,20 +178,11 @@ public class Level2State {
 		menuButton.components.add(new Tex("button.png"));
 		world.addEntity(menuButton, StateEnum.LEVEL2);
 
-		CoreEntity zombieButton = new CoreEntity();
-		zombieButton.name = "zombieButton";
-		zombieButton.layer = LayerEnum.HUD;
-		zombieButton.components.add(Polygon.rectangle(new Point(100, 50)));
-		zombieButton.components.add(new Position(new Point(275, 650), true));
-		zombieButton.components.add(new Button("Zombies"));
-		zombieButton.components.add(new Tex("button.png"));
-		world.addEntity(zombieButton, StateEnum.LEVEL2);
-
 		CoreEntity screenButton = new CoreEntity();
 		screenButton.name = "screenButton";
 		screenButton.layer = LayerEnum.HUD;
 		screenButton.components.add(Polygon.rectangle(new Point(100, 50)));
-		screenButton.components.add(new Position(new Point(400, 650), true));
+		screenButton.components.add(new Position(new Point(275, 650), true));
 		screenButton.components.add(new Button("Screen"));
 		screenButton.components.add(new Tex("button.png"));
 		world.addEntity(screenButton, StateEnum.LEVEL2);
@@ -143,7 +191,7 @@ public class Level2State {
 		restartButton.name = "restartButton";
 		restartButton.layer = LayerEnum.HUD;
 		restartButton.components.add(Polygon.rectangle(new Point(100, 50)));
-		restartButton.components.add(new Position(new Point(525, 650), true));
+		restartButton.components.add(new Position(new Point(400, 650), true));
 		restartButton.components.add(new Button("Restart"));
 		restartButton.components.add(new Tex("button.png"));
 		world.addEntity(restartButton, StateEnum.LEVEL2);

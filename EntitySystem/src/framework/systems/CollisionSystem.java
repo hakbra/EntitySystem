@@ -56,9 +56,9 @@ public class CollisionSystem extends CoreSystem implements EventListener{
 			Point posA = em.getComponent(i.a, Position.class).position;
 			Circle circle = em.getComponent(i.a, Circle.class);
 
-			double dist = posA.dist(i.poi) - circle.radius;
+			double dist = posA.dist(i.poi) - circle.getRadius();
 			if (i.inside)
-				dist += 2*circle.radius;
+				dist += 2*circle.getRadius();
 			Point mov = posA.sub(i.poi).norm(dist);
 
 			if (em.hasComponent(i.b, Collider.class))
@@ -73,8 +73,12 @@ public class CollisionSystem extends CoreSystem implements EventListener{
 					posA.isub(mov);
 				else
 				{
-					posB.iadd(mov.div(2));
-					posA.isub(mov.div(2));
+					Circle circle2 = em.getComponent(i.b, Circle.class);
+					double r1 = circle.getRadius();
+					double r2 = circle2.getRadius();
+					double ratio = r1*r1 / (r1*r1+r2*r2);
+					posB.iadd(mov.mult(ratio));
+					posA.isub(mov.mult(1-ratio));
 				}
 			}
 			else

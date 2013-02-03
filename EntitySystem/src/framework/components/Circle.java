@@ -17,18 +17,30 @@ public class Circle extends CoreComponent{
 	{
 		if (world.getEntityManager().hasComponent(parent, Position.class))
 			return world.getEntityManager().getComponent(parent, Position.class).position;
-		return null;
+		return new Point();
+	}
+	
+	public double getScale()
+	{
+		if (world.getEntityManager().hasComponent(parent, Scale.class))
+			return world.getEntityManager().getComponent(parent, Scale.class).scale;
+		return 1;
+	}
+	
+	public double getRadius()
+	{
+		return radius * getScale();
 	}
 	
 	public boolean isInside(Point p)
 	{
-		return getPosition().dist(p) < this.radius;
+		return getPosition().dist(p) < this.radius*getScale();
 	}
 	
 	public Point getClosest(Point p)
 	{
 		Point pos = getPosition();
 		Point dir = p.sub(pos).norm();
-		return pos.add(dir.mult(this.radius));
+		return pos.add(dir.mult(this.radius*getScale()));
 	}
 }

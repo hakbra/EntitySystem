@@ -5,6 +5,7 @@ import org.lwjgl.input.Keyboard;
 import helpers.Time;
 import zombies.states.GameMenuState;
 import zombies.states.Level1State;
+import zombies.states.Level2State;
 import zombies.states.StartMenuState;
 import engine.GLEngine;
 import framework.World;
@@ -25,10 +26,11 @@ public class Main
 	{
 		GLEngine.init();
 		t = new Time();
-		world = new World(StateEnum.START_MENU);
-		
+		//world = new World(StateEnum.START_MENU);
+		world = new World(StateEnum.LEVEL2);
 		StartMenuState.init(world);
 		GameMenuState.init(world);
+		Level2State.init(world);
 	}
 
 	public void run()
