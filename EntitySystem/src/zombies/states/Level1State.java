@@ -14,8 +14,9 @@ import framework.components.Acceleration;
 import framework.components.Angle;
 import framework.components.AngleSpeed;
 import framework.components.Button;
-import framework.components.Circle;
 import framework.components.Collider;
+import framework.components.CollisionCircle;
+import framework.components.CollisionPolygon;
 import framework.components.Damage;
 import framework.components.Follower;
 import framework.components.Gun;
@@ -25,9 +26,9 @@ import framework.components.KeyInput;
 import framework.components.Light;
 import framework.components.Obstacle;
 import framework.components.Pathfinder;
-import framework.components.Polygon;
 import framework.components.Position;
 import framework.components.Tex;
+import framework.components.Text;
 import framework.components.Trigger;
 import framework.components.Velocity;
 import framework.components.Zombie;
@@ -80,7 +81,7 @@ public class Level1State {
 		player.name = "Player 1";
 		player.layer = LayerEnum.MOVER;
 		player.components.add(new Hero());
-		player.components.add(new Circle(20));
+		player.components.add(new CollisionCircle(20));
 		player.components.add(new Position(new Point(400, 250)));
 		player.components.add(new Velocity(new Point(0, 0)));
 		player.components.add(new Angle(0));
@@ -91,14 +92,14 @@ public class Level1State {
 		player.components.add(new Collider(4));
 		player.components.add(new Obstacle());
 		player.components.add(new Light(300));
-		player.components.add(new Tex("man.png", new Point(1, 1), new Point(0, 0)));
+		player.components.add(new Tex("man.png", new Point(40, 40)).setLayer(LayerEnum.MOVER));
 		world.addEntity(player, StateEnum.LEVEL1);
 		world.registerID(player, StateEnum.LEVEL1);
 
 		CoreEntity camera = new CoreEntity();
 		camera.name = "camera";
 		camera.components.add(new Position( new Point()));
-		camera.components.add(new Polygon( new Point(0, 0), new Point(GLEngine.WIDTH, 0)));
+		camera.components.add(new CollisionPolygon( new Point(0, 0), new Point(GLEngine.WIDTH, 0)));
 		world.addEntity(camera, StateEnum.LEVEL1);
 		world.registerID(camera, StateEnum.LEVEL1);
 		
@@ -111,27 +112,27 @@ public class Level1State {
 		CoreEntity ground = new CoreEntity();
 		ground.name = "ground";
 		ground.layer = LayerEnum.GROUND;
-		ground.components.add(new Position( new Point()));
-		ground.components.add(Polygon.rectangle(new Point(GLEngine.WIDTH*2, GLEngine.HEIGHT)));
-		ground.components.add(new Tex("bush.png", new Point(128, 128)));
+		ground.components.add(new Position( new Point(GLEngine.WIDTH, GLEngine.HEIGHT / 2)));
+		ground.components.add(CollisionPolygon.centerRectangle(new Point(GLEngine.WIDTH*2, GLEngine.HEIGHT)));
+		ground.components.add(new Tex("bush.png", new Point(GLEngine.WIDTH*2, GLEngine.HEIGHT)).setScale(new Point(30, 19)).setLayer(LayerEnum.GROUND));
 		world.addEntity(ground, StateEnum.LEVEL1);
 		world.registerID(ground, StateEnum.LEVEL1);
 		
 		CoreEntity light = new CoreEntity();
 		light.name = "light";
 		light.layer = LayerEnum.LIGHT;
-		light.components.add(new Position( new Point(), true));
-		light.components.add(Polygon.rectangle(new Point(GLEngine.WIDTH, GLEngine.HEIGHT)));
-		light.components.add(new Tex("lightTex"));
+		light.components.add(new Position( new Point(GLEngine.WIDTH / 2, GLEngine.HEIGHT / 2)).setFixed());
+		light.components.add(CollisionPolygon.centerRectangle(new Point(GLEngine.WIDTH, GLEngine.HEIGHT)));
+		light.components.add(new Tex("lightTex", new Point(GLEngine.WIDTH, GLEngine.HEIGHT)).setLayer(LayerEnum.LIGHT));
 		world.addEntity(light, StateEnum.LEVEL1);
 		
 		CoreEntity exit = new CoreEntity();
 		exit.name = "exit1";
 		exit.layer = LayerEnum.ITEM;
 		exit.components.add(new Position(new Point(GLEngine.WIDTH * 2 - 75, GLEngine.HEIGHT / 2)));
-		exit.components.add(Polygon.centerRectangle(new Point(50, 50)));
+		exit.components.add(CollisionPolygon.centerRectangle(new Point(50, 50)));
 		exit.components.add(new Trigger("exit1"));
-		exit.components.add(new Tex("exit.png"));
+		exit.components.add(new Tex("exit.png", new Point(50, 50)).setLayer(LayerEnum.ITEM));
 		exit.components.add(new Angle(180));
 		world.addEntity(exit, StateEnum.LEVEL1);
 
@@ -146,9 +147,9 @@ public class Level1State {
 		CoreEntity health = new CoreEntity();
 		health.name = "health";
 		health.layer = LayerEnum.ITEM;
-		health.components.add(new Circle(15));
+		health.components.add(new CollisionCircle(15));
 		health.components.add(new Position(new Point(GLEngine.WIDTH * 2 - 75	, 	GLEngine.HEIGHT - 75)));
-		health.components.add(new Tex("health.png"));
+		health.components.add(new Tex("health.png", new Point(30, 30)).setLayer(LayerEnum.ITEM));
 		health.components.add(new Trigger("health"));
 		health.components.add(new Angle(0));
 		health.components.add(new AngleSpeed(1));
@@ -158,9 +159,9 @@ public class Level1State {
 		gun.name = "gun";
 		gun.layer = LayerEnum.ITEM;
 		gun.components.add(new Position(new Point(GLEngine.WIDTH * 2 - 75, 75)));
-		gun.components.add(new Circle(30));
+		gun.components.add(new CollisionCircle(30));
 		gun.components.add(new Trigger("gun"));
-		gun.components.add(new Tex("gun2.png"));
+		gun.components.add(new Tex("gun2.png", new Point(60, 60)).setLayer(LayerEnum.ITEM));
 		gun.components.add(new Gun(5, 10, 10, 400, 20, "gun2.png"));
 		gun.components.add(new Angle(0));
 		gun.components.add(new AngleSpeed(1));
@@ -169,10 +170,10 @@ public class Level1State {
 		CoreEntity gun2 = new CoreEntity();
 		gun2.name = "gun2";
 		gun2.layer = LayerEnum.ITEM;
-		gun2.components.add(new Position(new Point(75, GLEngine.HEIGHT - 75)));
-		gun2.components.add(new Circle(30));
+		gun2.components.add(new Position(new Point(75, 75)));
+		gun2.components.add(new CollisionCircle(30));
 		gun2.components.add(new Trigger("gun"));
-		gun2.components.add(new Tex("gun3.png"));
+		gun2.components.add(new Tex("gun3.png", new Point(60, 60)).setLayer(LayerEnum.ITEM));
 		gun2.components.add(new Gun(5, 35, 10, 400, 10, "gun3.png"));
 		gun2.components.add(new Angle(0));
 		gun2.components.add(new AngleSpeed(1));
@@ -250,19 +251,20 @@ public class Level1State {
 			CoreEntity rectangle = new CoreEntity();
 			rectangle.name = "rectangle";
 			rectangle.layer = LayerEnum.OBSTACLE;
+			Point dim = p.remove(0);
+			rectangle.components.add(CollisionPolygon.centerRectangle(dim));
 			if (p.size() < 9)
 			{
-				rectangle.components.add(Polygon.centerRectangle(p.remove(0)));
 				rectangle.components.add(new Angle(45));
 				rectangle.components.add(new AngleSpeed(0.2));
-				rectangle.components.add(new Tex("crate.png", new Point(150, 150)));
+				rectangle.components.add(new Tex("crate.png", dim).setLayer(LayerEnum.OBSTACLE));
+				rectangle.components.add(new Position(p.remove(0)));
 			}
 			else
 			{
-				rectangle.components.add(Polygon.rectangle(p.remove(0)));
-				rectangle.components.add(new Tex("crate.png", new Point(50, 50)));
+				rectangle.components.add(new Tex("crate.png", dim).setScale(new Point(50, 50)).setLayer(LayerEnum.OBSTACLE));
+				rectangle.components.add(new Position(p.remove(0).add(dim.div(2))));
 			}
-			rectangle.components.add(new Position(p.remove(0)));
 			rectangle.components.add(new Obstacle());
 			world.addEntity(rectangle, StateEnum.LEVEL1);
 
@@ -270,7 +272,7 @@ public class Level1State {
 
 		CoreEntity border = new CoreEntity();
 		border.name = "border";
-		border.components.add(Polygon.invertedRectangle(new Point(GLEngine.WIDTH*2, GLEngine.HEIGHT)));
+		border.components.add(CollisionPolygon.invertedRectangle(new Point(GLEngine.WIDTH*2, GLEngine.HEIGHT)));
 		border.components.add(new Position(new Point(0, 0)));
 		border.components.add(new Obstacle());
 		world.addEntity(border, StateEnum.LEVEL1);
@@ -281,37 +283,40 @@ public class Level1State {
 		CoreEntity exitButton2 = new CoreEntity();
 		exitButton2.name = "exitButton";
 		exitButton2.layer = LayerEnum.HUD;
-		exitButton2.components.add(Polygon.rectangle(new Point(100, 50)));
-		exitButton2.components.add(new Position(new Point(25, 650), true));
+		exitButton2.components.add(CollisionPolygon.centerRectangle(new Point(100, 50)));
+		exitButton2.components.add(new Position(new Point(75, 670), true));
 		exitButton2.components.add(new Button("Exit"));
-		exitButton2.components.add(new Tex("button.png"));
+		exitButton2.components.add(new Text("Exit").setLayer(LayerEnum.TEXT));
+		exitButton2.components.add(new Tex("button.png", new Point(100, 50)).setLayer(LayerEnum.HUD));
 		world.addEntity(exitButton2, StateEnum.LEVEL1);
 
 		CoreEntity menuButton = new CoreEntity();
 		menuButton.name = "button";
 		menuButton.layer = LayerEnum.HUD;
-		menuButton.components.add(Polygon.rectangle(new Point(100, 50)));
-		menuButton.components.add(new Position(new Point(150, 650), true));
+		menuButton.components.add(CollisionPolygon.centerRectangle(new Point(100, 50)));
+		menuButton.components.add(new Position(new Point(200, 670), true));
 		menuButton.components.add(new Button("Menu"));
-		menuButton.components.add(new Tex("button.png"));
+		menuButton.components.add(new Text("Menu").setLayer(LayerEnum.TEXT));
+		menuButton.components.add(new Tex("button.png", new Point(100, 50)).setLayer(LayerEnum.HUD));
 		world.addEntity(menuButton, StateEnum.LEVEL1);
 
 		CoreEntity screenButton = new CoreEntity();
 		screenButton.name = "screenButton";
 		screenButton.layer = LayerEnum.HUD;
-		screenButton.components.add(Polygon.rectangle(new Point(100, 50)));
-		screenButton.components.add(new Position(new Point(275, 650), true));
+		screenButton.components.add(CollisionPolygon.centerRectangle(new Point(100, 50)));
+		screenButton.components.add(new Position(new Point(325, 670), true));
 		screenButton.components.add(new Button("Screen"));
-		screenButton.components.add(new Tex("button.png"));
+		screenButton.components.add(new Text("Screen").setLayer(LayerEnum.TEXT));
+		screenButton.components.add(new Tex("button.png", new Point(100, 50)).setLayer(LayerEnum.HUD));
 		world.addEntity(screenButton, StateEnum.LEVEL1);
 
 		CoreEntity restartButton = new CoreEntity();
 		restartButton.name = "restartButton";
-		restartButton.layer = LayerEnum.HUD;
-		restartButton.components.add(Polygon.rectangle(new Point(100, 50)));
-		restartButton.components.add(new Position(new Point(400, 650), true));
+		restartButton.components.add(CollisionPolygon.centerRectangle(new Point(100, 50)));
+		restartButton.components.add(new Position(new Point(450, 670), true));
 		restartButton.components.add(new Button("Restart"));
-		restartButton.components.add(new Tex("button.png"));
+		restartButton.components.add(new Text("Restart").setLayer(LayerEnum.TEXT));
+		restartButton.components.add(new Tex("button.png", new Point(100, 50)).setLayer(LayerEnum.HUD));
 		world.addEntity(restartButton, StateEnum.LEVEL1);
 	}
 
@@ -347,7 +352,7 @@ public class Level1State {
 			zombie.name = "Zombie";
 			zombie.layer = LayerEnum.MOVER;
 			zombie.components.add(new Zombie());
-			zombie.components.add(new Circle(20));
+			zombie.components.add(new CollisionCircle(20));
 			zombie.components.add(new Position(p));
 			zombie.components.add(new Velocity(new Point(0, 0)));
 			zombie.components.add(new Acceleration(new Point(0, 0)));
@@ -358,7 +363,7 @@ public class Level1State {
 			zombie.components.add(new Collider(4));
 			zombie.components.add(new Angle(0));
 			zombie.components.add(new AngleSpeed(0));
-			zombie.components.add(new Tex("zombie.png"));
+			zombie.components.add(new Tex("zombie.png", new Point(40, 40)).setLayer(LayerEnum.MOVER));
 			world.addEntity(zombie, StateEnum.LEVEL1);
 		}
 

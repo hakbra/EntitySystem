@@ -7,14 +7,14 @@ import java.util.ArrayList;
 
 import framework.CoreComponent;
 
-public class Polygon extends CoreComponent{
+public class CollisionPolygon extends CoreComponent{
 
 	public ArrayList<Point> localPoints;
 	public Point mid;
 	public Point min, max;
 	public boolean inverted;
 
-	public Polygon(Point... ps)
+	public CollisionPolygon(Point... ps)
 	{
 		mid = new Point();
 
@@ -38,35 +38,26 @@ public class Polygon extends CoreComponent{
 		mid.idiv(localPoints.size());
 		
 		inverted = false;
+		name = "CollisionPolygon";
 	}
 
-	public static Polygon rectangle(Point dim)
-	{
-
-		Point p = new Point(0, 0);
-		Point w = new Point(dim.x, 0);
-		Point h = new Point(0, dim.y);
-
-		return new Polygon(p, p.add(h), p.add(h).add(w), p.add(w));
-	}
-
-	public static Polygon centerRectangle(Point dim)
+	public static CollisionPolygon centerRectangle(Point dim)
 	{
 
 		Point p = new Point(0, 0);
 		Point w = new Point(dim.x/2, 0);
 		Point h = new Point(0, dim.y/2);
-		return new Polygon(p.add(w).add(h), p.sub(w).add(h), p.sub(w).sub(h), p.add(w).sub(h));
+		return new CollisionPolygon(p.add(w).add(h), p.sub(w).add(h), p.sub(w).sub(h), p.add(w).sub(h));
 	}
 
-	public static Polygon invertedRectangle(Point dim)
+	public static CollisionPolygon invertedRectangle(Point dim)
 	{
 
 		Point p = new Point(0, 0);
 		Point w = new Point(dim.x, 0);
 		Point h = new Point(0, dim.y);
 		
-		Polygon poly = new Polygon(p, p.add(h), p.add(h).add(w), p.add(w));
+		CollisionPolygon poly = new CollisionPolygon(p, p.add(h), p.add(h).add(w), p.add(w));
 		poly.inverted = true;
 
 		return poly; 
@@ -76,7 +67,7 @@ public class Polygon extends CoreComponent{
 	{
 		if (world.getEntityManager().hasComponent(parent, Position.class))
 			return world.getEntityManager().getComponent(parent, Position.class).position;
-		return null;
+		return new Point();
 	}
 	
 	public double getAngle()

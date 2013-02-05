@@ -2,7 +2,7 @@ package zombies.states;
 
 import framework.CoreEntity;
 import framework.World;
-import framework.components.Message;
+import framework.components.Text;
 import framework.components.Timer;
 import framework.enums.StateEnum;
 import framework.systems.TimerSystem;
@@ -19,7 +19,7 @@ public class MessageState {
 		world.addSystem(new TimerSystem(world), StateEnum.MESSAGE);
 
 		CoreEntity msg = new CoreEntity();
-		msg.components.add(new Message(t));
+		msg.components.add(new Text(t));
 		msg.components.add(new Timer(2000, "message"));
 		world.addEntity(msg, StateEnum.MESSAGE);
 	}

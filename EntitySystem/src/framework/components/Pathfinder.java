@@ -125,7 +125,7 @@ public class Pathfinder extends CoreComponent{
 
 	}
 
-	public void mask(Polygon poly, Point pos, long time)
+	public void mask(CollisionPolygon poly, Point pos, long time)
 	{
 		Point a = poly.min.add(pos);
 		Point b = poly.max.add(pos);

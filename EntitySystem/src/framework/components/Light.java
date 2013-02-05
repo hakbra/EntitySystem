@@ -28,9 +28,9 @@ public class Light extends CoreComponent{
 		ArrayList<Line> edges = new ArrayList<Line>();
 		Point pos = em.getComponent(e, Position.class).position;
 
-		for (CoreEntity p : em.getEntityAll(Polygon.class, Obstacle.class))
+		for (CoreEntity p : em.getEntityAll(CollisionPolygon.class, Obstacle.class))
 		{
-			Polygon poly = em.getComponent(p, Polygon.class);
+			CollisionPolygon poly = em.getComponent(p, CollisionPolygon.class);
 			edges.addAll(poly.getLines());
 		}
 

@@ -17,7 +17,7 @@ public class EntityManager{
     public HashMap<Class<?>, HashMap<CoreEntity, ? extends CoreComponent>> entities = new HashMap<Class<?>, HashMap<CoreEntity, ? extends CoreComponent>>();
     public HashMap<String, CoreEntity> stringIDs = new HashMap<String, CoreEntity>();
     private ArrayList<CoreEntity> deleties = new ArrayList<CoreEntity>();
-    public ArrayList<CoreEntity> renders = new ArrayList<CoreEntity>();
+    public ArrayList<CoreComponent> renders = new ArrayList<CoreComponent>();
     
     public World world;
     
@@ -58,9 +58,9 @@ public class EntityManager{
 		e.components.add(component);
 		component.parent = e;
 		component.world = this.world;
-		
-		if (e.layer != LayerEnum.NOT && !renders.contains(e))
-			addRender(e);
+
+		if (component.layer != LayerEnum.NOT)
+			addRender(component);
     }
     
     public <T> void removeComponent(CoreEntity e, T component) {
@@ -126,10 +126,11 @@ public class EntityManager{
     }
 
     private void remove(CoreEntity e) {
+    	for (CoreComponent c : e.components)
+    		renders.remove(c);
 		for (HashMap<CoreEntity, ? extends CoreComponent> HashMap : entities.values()) {
 			HashMap.remove(e);
 			stringIDs.remove(e.name);
-			renders.remove(e);
 		}
     }
     
@@ -157,17 +158,16 @@ public class EntityManager{
 			componentMap.put(e, c);
 			c.parent = e;
 			c.world = this.world;
+			if (c.layer != LayerEnum.NOT)
+				addRender(c);
 		}
-
-		if (e.layer != LayerEnum.NOT && !renders.contains(e))
-			addRender(e);
 	}
 
-	private void addRender(CoreEntity e)
+	private void addRender(CoreComponent e)
 	{
 		if (e.layer == LayerEnum.NOT)
 		{
-			System.out.println("You must specify layer - CoreEntity: " + e.name);
+			System.out.println("You must specify layer - CoreEntity: " + e.toString());
 			System.exit(0);
 		}
 		renders.add (e);

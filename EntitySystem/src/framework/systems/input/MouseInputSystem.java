@@ -15,13 +15,13 @@ import framework.World;
 import framework.components.Angle;
 import framework.components.AngleSpeed;
 import framework.components.Button;
-import framework.components.Circle;
+import framework.components.CollisionCircle;
 import framework.components.Collider;
 import framework.components.Damage;
 import framework.components.Follower;
 import framework.components.Health;
 import framework.components.Obstacle;
-import framework.components.Polygon;
+import framework.components.CollisionPolygon;
 import framework.components.Position;
 import framework.components.Tex;
 import framework.components.Velocity;
@@ -50,7 +50,7 @@ public class MouseInputSystem extends CoreSystem{
 
 		for (CoreEntity e : em.getEntity(Button.class))
 		{
-			Polygon poly 		= 	em.getComponent(e, Polygon.class);
+			CollisionPolygon poly 		= 	em.getComponent(e, CollisionPolygon.class);
 			Button button = 	em.getComponent(e, Button.class);
 			
 			if (poly.isInside(mouse))
@@ -69,7 +69,7 @@ public class MouseInputSystem extends CoreSystem{
 						zombie.name = "Zombie";
 						zombie.layer = LayerEnum.MOVER;
 						em.addComponent(zombie, new Zombie());
-						em.addComponent(zombie, new Circle(20));
+						em.addComponent(zombie, new CollisionCircle(20));
 						em.addComponent(zombie, new Position(new Point(r.nextInt(GLEngine.WIDTH), r.nextInt(GLEngine.HEIGHT))));
 						em.addComponent(zombie, new Velocity(new Point(0, 0)));
 						em.addComponent(zombie, new Health());
@@ -79,7 +79,7 @@ public class MouseInputSystem extends CoreSystem{
 						em.addComponent(zombie, new Collider(4));
 						em.addComponent(zombie, new Angle(0));
 						em.addComponent(zombie, new AngleSpeed(0));
-						em.addComponent(zombie, new Tex("zombie.png"));
+						em.addComponent(zombie, new Tex("zombie.png", new Point(30, 30)));
 					}
 				}
 				else if (button.type == "Screen")

@@ -11,93 +11,57 @@ import org.lwjgl.opengl.GL11;
 import framework.CoreComponent;
 import framework.CoreEntity;
 import framework.World;
+import framework.enums.LayerEnum;
 import framework.managers.EntityManager;
 
 public class Tex extends CoreComponent{
 
 	public String texture;
-	Point coords;
-	Point offset;
-	
-	public Tex(String name)
-	{
-		this.texture = name;
-		this.coords = new Point(0, 0);
-		this.offset = new Point(0, 0);
-		this.name = "Texture";
-	}
+	Point dim;
+	Point scale;
 
 	public Tex(String name, Point c)
 	{
 		this.texture = name;
-		this.coords = c;
-		this.offset = new Point(0, 0);
-		this.name = "Texture";
-	}
-
-	public Tex(String name, Point c, Point o)
-	{
-		this.texture = name;
-		this.coords = c;
-		this.offset = o;
+		this.dim = c;
+		this.scale = new Point(0, 0);
 		this.name = "Texture";
 	}
 	
-	public void render(World world, CoreEntity e) {
-		EntityManager em = world.getEntityManager();
-		GL11.glBindTexture(GL11.GL_TEXTURE_2D, world.getDataManager().getTexture(texture));
+	public Tex setScale(Point s)
+	{
+		this.scale = s;
+		return this;
+	}
+
+	@Override
+	public void render()
+	{
+		float w = (float) dim.x / 2;
+		float h = (float) dim.y / 2;
 		
-		if (em.hasComponent(e, Circle.class))
+		float u = 1f;
+		float v = 1f;
+		if (scale.len() != 0)
 		{
-			float rad = em.getComponent(e, Circle.class).radius;
-			float w = (float) rad;
-			float h = (float) rad;
-			
-			if (coords.x != 0 || coords.y != 0)
-			{
-				w *= coords.x;
-				h *= coords.y;
-			}
-			
-			GL11.glBegin(GL11.GL_QUADS);
-			GL11.glTexCoord2f(	1,		1);
-			GL11.glVertex2f(	-w + (float)offset.x,	-h + (float)offset.y);
-			
-			GL11.glTexCoord2f(	1,		0);
-			GL11.glVertex2f(	w + (float)offset.x,	-h + (float)offset.y);
-			
-			GL11.glTexCoord2f(	0,		0);
-			GL11.glVertex2f(	w + (float)offset.x,	h + (float)offset.y);
-			
-			GL11.glTexCoord2f(	0,		1);
-			GL11.glVertex2f(	-w + (float)offset.x,	h + (float)offset.y);
-			GL11.glEnd();
+			u = (float) (w / scale.x) * 2;
+			v = (float) (h / scale.y) * 2;
 		}
-		else if (em.hasComponent(e, Polygon.class))
-		{
-			if (em.hasComponent(e, Button.class))
-				Draw.setColor(new Color(1, 1, 1, 0.5));
-			
-			Polygon poly = em.getComponent(e, Polygon.class);
-			GL11.glBegin(GL11.GL_POLYGON);
-			ArrayList<Point> points = poly.localPoints;
-			for (Point p : points)
-			{
-				if (coords.x == 0 && coords.y == 0)
-				{
-					GL11.glTexCoord2f(
-							(float) ((p.x - poly.min.x) / (poly.max.x - poly.min.x)),
-							(float) ((p.y - poly.min.y) / (poly.max.y - poly.min.y)));
-				}
-				else
-				{
-					GL11.glTexCoord2f(
-							(float) ((p.x - poly.min.x) / coords.x),
-							(float) ((p.y - poly.min.y) / coords.y) );
-				}
-				GL11.glVertex2f  ((float) p.x,(float)  p.y);
-			}
-			GL11.glEnd();
-		}
+
+		Draw.setColor(Color.WHITE);
+		GL11.glBindTexture(GL11.GL_TEXTURE_2D, world.getDataManager().getTexture(texture));
+		GL11.glBegin(GL11.GL_QUADS);
+		GL11.glTexCoord2f(	0,		0);
+		GL11.glVertex2f(	-w,		-h);
+		
+		GL11.glTexCoord2f(	u,		0);
+		GL11.glVertex2f(	w,		-h);
+		
+		GL11.glTexCoord2f(	u,		v);
+		GL11.glVertex2f(	w,		h);
+		
+		GL11.glTexCoord2f(	0,		v);
+		GL11.glVertex2f(	-w,		h);
+		GL11.glEnd();
 	}
 }

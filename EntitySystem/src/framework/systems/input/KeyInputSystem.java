@@ -13,14 +13,14 @@ import framework.CoreEntity;
 import framework.World;
 import framework.components.Angle;
 import framework.components.AngleSpeed;
-import framework.components.Circle;
+import framework.components.CollisionCircle;
 import framework.components.Collider;
 import framework.components.Gun;
 import framework.components.Health;
 import framework.components.Hero;
 import framework.components.KeyInput;
 import framework.components.Light;
-import framework.components.Message;
+import framework.components.Text;
 import framework.components.Obstacle;
 import framework.components.Position;
 import framework.components.Tex;
@@ -48,9 +48,8 @@ public class KeyInputSystem extends CoreSystem{
 		{
 			CoreEntity player = new CoreEntity();
 			player.name = "Player 2";
-			player.layer = LayerEnum.MOVER;
 			em.addComponent(player, new Hero());
-			em.addComponent(player, new Circle(20));
+			em.addComponent(player, new CollisionCircle(20));
 			em.addComponent(player, new Position(new Point(900, 450)));
 			em.addComponent(player, new Velocity(new Point(0, 0)));
 			em.addComponent(player, new Angle(180));
@@ -61,12 +60,12 @@ public class KeyInputSystem extends CoreSystem{
 			em.addComponent(player, new Collider(4));
 			em.addComponent(player, new Obstacle());
 			em.addComponent(player, new Light(300));
-			em.addComponent(player, new Tex("man.png", new Point(1, 1), new Point(0, 0)));
+			em.addComponent(player, new Tex("man.png", new Point(40, 40)).setLayer(LayerEnum.MOVER));
 			em.addStringID(player);
 
 			CoreEntity msg = new CoreEntity();
 			msg.name = "msg";
-			em.addComponent(msg, new Message("PLAYER TWO READY"));
+			em.addComponent(msg, new Text("PLAYER TWO READY"));
 			em.addComponent(msg, new Timer(3000));
 			em.addComponent(msg, new Position(new Point(900, 475)));
 			

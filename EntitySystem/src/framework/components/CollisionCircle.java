@@ -3,14 +3,14 @@ package framework.components;
 import helpers.Point;
 import framework.CoreComponent;
 
-public class Circle extends CoreComponent{
+public class CollisionCircle extends CoreComponent{
 
 	public float radius;
 	
-	public Circle(float r)
+	public CollisionCircle(float r)
 	{
 		this.radius = r;
-		this.name = "Circle";
+		this.name = "CollisionCircle";
 	}
 	
 	public Point getPosition()

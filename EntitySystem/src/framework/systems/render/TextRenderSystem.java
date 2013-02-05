@@ -7,7 +7,7 @@ import engine.GLEngine;
 import framework.CoreSystem;
 import framework.CoreEntity;
 import framework.World;
-import framework.components.Message;
+import framework.components.Text;
 import framework.components.Position;
 import framework.managers.EntityManager;
 
@@ -22,14 +22,14 @@ public class TextRenderSystem extends CoreSystem {
 	@Override
 	public void run(EntityManager em)
 	{
-		for (CoreEntity e: em.getEntity(Message.class))
+		for (CoreEntity e: em.getEntity(Text.class))
 		{
 			//System.out.println("    " + e.name);
 			long now = Time.getTime();
 			if ((now / 300) % 2 == 1)
 				continue;
 
-			String t = em.getComponent(e, Message.class).text;
+			String t = em.getComponent(e, Text.class).text;
 			Point pos = new Point(GLEngine.WIDTH / 2, GLEngine.HEIGHT / 2);
 			Draw.write(world.getDataManager().font, pos, t);
 		}

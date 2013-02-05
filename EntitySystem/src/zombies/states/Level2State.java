@@ -11,7 +11,7 @@ import framework.components.Acceleration;
 import framework.components.Angle;
 import framework.components.AngleSpeed;
 import framework.components.Button;
-import framework.components.Circle;
+import framework.components.CollisionCircle;
 import framework.components.Collider;
 import framework.components.Damage;
 import framework.components.DirectFollower;
@@ -20,10 +20,10 @@ import framework.components.Health;
 import framework.components.Hero;
 import framework.components.KeyInput;
 import framework.components.Light;
-import framework.components.Message;
+import framework.components.Text;
 import framework.components.Obstacle;
 import framework.components.Pathfinder;
-import framework.components.Polygon;
+import framework.components.CollisionPolygon;
 import framework.components.Position;
 import framework.components.Tex;
 import framework.components.Timer;
@@ -78,7 +78,7 @@ public class Level2State {
 		CoreEntity camera = new CoreEntity();
 		camera.name = "camera";
 		camera.components.add(new Position( new Point()));
-		camera.components.add(new Polygon( new Point(0, 0), new Point(0, 0)));
+		camera.components.add(new CollisionPolygon( new Point(0, 0), new Point(0, 0)));
 		world.addEntity(camera, StateEnum.LEVEL2);
 		world.registerID(camera, StateEnum.LEVEL2);
 		
@@ -91,29 +91,29 @@ public class Level2State {
 		CoreEntity light = new CoreEntity();
 		light.name = "light";
 		light.layer = LayerEnum.LIGHT;
-		light.components.add(new Position( new Point(), true));
-		light.components.add(Polygon.rectangle(new Point(GLEngine.WIDTH, GLEngine.HEIGHT)));
-		light.components.add(new Tex("lightTex"));
+		light.components.add(new Position( new Point(GLEngine.WIDTH, GLEngine.HEIGHT / 2)));
+		light.components.add(CollisionPolygon.centerRectangle(new Point(GLEngine.WIDTH*2, GLEngine.HEIGHT)));
+		light.components.add(new Tex("lightTex",new Point(30, 30)));
 		world.addEntity(light, StateEnum.LEVEL2);
 
 		CoreEntity ground = new CoreEntity();
 		ground.name = "ground";
 		ground.layer = LayerEnum.GROUND;
-		ground.components.add(new Position( new Point()));
-		ground.components.add(Polygon.rectangle(new Point(GLEngine.WIDTH*2, GLEngine.HEIGHT)));
+		ground.components.add(new Position( new Point(GLEngine.WIDTH, GLEngine.HEIGHT / 2)));
+		ground.components.add(CollisionPolygon.centerRectangle(new Point(GLEngine.WIDTH*2, GLEngine.HEIGHT)));
 		ground.components.add(new Tex("bush.png", new Point(128, 128)));
 		world.addEntity(ground, StateEnum.LEVEL2);
 		world.registerID(ground, StateEnum.LEVEL2);
 
 		CoreEntity border = new CoreEntity();
 		border.name = "border";
-		border.components.add(Polygon.invertedRectangle(new Point(GLEngine.WIDTH, GLEngine.HEIGHT)));
+		border.components.add(CollisionPolygon.invertedRectangle(new Point(GLEngine.WIDTH, GLEngine.HEIGHT)));
 		border.components.add(new Position(new Point(0, 0)));
 		border.components.add(new Obstacle());
 		world.addEntity(border, StateEnum.LEVEL2);
 		
 		CoreEntity msg = new CoreEntity();
-		msg.components.add(new Message("BONUS LEVEL"));
+		msg.components.add(new Text("BONUS LEVEL"));
 		msg.components.add(new Timer(5000));
 		world.addEntity(msg, StateEnum.LEVEL2);
 		
@@ -121,7 +121,7 @@ public class Level2State {
 		boss.name ="Big bad boss";
 		boss.layer = LayerEnum.MOVER;
 		boss.components.add(new Zombie());
-		boss.components.add(new Circle(100));
+		boss.components.add(new CollisionCircle(100));
 		boss.components.add(new Position(new Point(GLEngine.WIDTH / 2, GLEngine.HEIGHT / 2)));
 		boss.components.add(new Velocity(new Point(0, 0)));
 		boss.components.add(new Acceleration(new Point(0, 0)));
@@ -132,7 +132,7 @@ public class Level2State {
 		boss.components.add(new Collider(4));
 		boss.components.add(new Angle(0));
 		boss.components.add(new AngleSpeed(0));
-		boss.components.add(new Tex("zombie.png"));
+		boss.components.add(new Tex("zombie.png", new Point(30, 30)));
 		world.addEntity(boss, StateEnum.LEVEL2);
 		
 
@@ -140,7 +140,7 @@ public class Level2State {
 		player.name = "Player 1";
 		player.layer = LayerEnum.MOVER;
 		player.components.add(new Hero());
-		player.components.add(new Circle(20));
+		player.components.add(new CollisionCircle(20));
 		player.components.add(new Position(new Point(400, 250)));
 		player.components.add(new Velocity(new Point(0, 0)));
 		player.components.add(new Angle(0));
@@ -151,7 +151,7 @@ public class Level2State {
 		player.components.add(new Collider(4));
 		player.components.add(new Obstacle());
 		player.components.add(new Light(300));
-		player.components.add(new Tex("man.png", new Point(1, 1), new Point(0, 0)));
+		player.components.add(new Tex("man.png", new Point(30, 30)));
 		world.addEntity(player, StateEnum.LEVEL2);
 		world.registerID(player, StateEnum.LEVEL2);
 		
@@ -163,37 +163,37 @@ public class Level2State {
 		CoreEntity exitButton2 = new CoreEntity();
 		exitButton2.name = "exitButton";
 		exitButton2.layer = LayerEnum.HUD;
-		exitButton2.components.add(Polygon.rectangle(new Point(100, 50)));
+		exitButton2.components.add(CollisionPolygon.centerRectangle(new Point(100, 50)));
 		exitButton2.components.add(new Position(new Point(25, 650), true));
 		exitButton2.components.add(new Button("Exit"));
-		exitButton2.components.add(new Tex("button.png"));
+		exitButton2.components.add(new Tex("button.png", new Point(30, 30)));
 		world.addEntity(exitButton2, StateEnum.LEVEL2);
 
 		CoreEntity menuButton = new CoreEntity();
 		menuButton.name = "button";
 		menuButton.layer = LayerEnum.HUD;
-		menuButton.components.add(Polygon.rectangle(new Point(100, 50)));
+		menuButton.components.add(CollisionPolygon.centerRectangle(new Point(100, 50)));
 		menuButton.components.add(new Position(new Point(150, 650), true));
 		menuButton.components.add(new Button("Menu"));
-		menuButton.components.add(new Tex("button.png"));
+		menuButton.components.add(new Tex("button.png", new Point(30, 30)));
 		world.addEntity(menuButton, StateEnum.LEVEL2);
 
 		CoreEntity screenButton = new CoreEntity();
 		screenButton.name = "screenButton";
 		screenButton.layer = LayerEnum.HUD;
-		screenButton.components.add(Polygon.rectangle(new Point(100, 50)));
+		screenButton.components.add(CollisionPolygon.centerRectangle(new Point(100, 50)));
 		screenButton.components.add(new Position(new Point(275, 650), true));
 		screenButton.components.add(new Button("Screen"));
-		screenButton.components.add(new Tex("button.png"));
+		screenButton.components.add(new Tex("button.png", new Point(30, 30)));
 		world.addEntity(screenButton, StateEnum.LEVEL2);
 
 		CoreEntity restartButton = new CoreEntity();
 		restartButton.name = "restartButton";
 		restartButton.layer = LayerEnum.HUD;
-		restartButton.components.add(Polygon.rectangle(new Point(100, 50)));
+		restartButton.components.add(CollisionPolygon.centerRectangle(new Point(100, 50)));
 		restartButton.components.add(new Position(new Point(400, 650), true));
 		restartButton.components.add(new Button("Restart"));
-		restartButton.components.add(new Tex("button.png"));
+		restartButton.components.add(new Tex("button.png", new Point(30, 30)));
 		world.addEntity(restartButton, StateEnum.LEVEL2);
 	}
 }

@@ -5,13 +5,13 @@ import helpers.Point;
 import framework.CoreEntity;
 import framework.CoreSystem;
 import framework.World;
-import framework.components.Circle;
+import framework.components.CollisionCircle;
 import framework.components.Collider;
 import framework.components.Damage;
 import framework.components.Health;
 import framework.components.Hero;
 import framework.components.Obstacle;
-import framework.components.Polygon;
+import framework.components.CollisionPolygon;
 import framework.components.Position;
 import framework.components.Trigger;
 import framework.enums.EventEnum;
@@ -32,14 +32,14 @@ public class IntersectionSystem extends CoreSystem {
 		for (CoreEntity e1 : em.getEntity(Collider.class))
 		{
 			Point circle1pos = em.getComponent(e1, Position.class).position;
-			Circle circle1 = em.getComponent(e1, Circle.class);
+			CollisionCircle circle1 = em.getComponent(e1, CollisionCircle.class);
 
-			for (CoreEntity e2 : em.getEntityAll(Circle.class))
+			for (CoreEntity e2 : em.getEntityAll(CollisionCircle.class))
 			{
 				if (e1 == e2)
 					continue;
 
-				Circle circle2 = em.getComponent(e2, Circle.class);
+				CollisionCircle circle2 = em.getComponent(e2, CollisionCircle.class);
 
 				Point col = circle2.getClosest(circle1pos);
 				boolean inside = circle2.isInside(circle1pos);
@@ -48,9 +48,9 @@ public class IntersectionSystem extends CoreSystem {
 					handleCollision( em, new Data(e1, e2, col, inside) );
 			}
 
-			for (CoreEntity e2 : em.getEntityAll(Polygon.class))
+			for (CoreEntity e2 : em.getEntityAll(CollisionPolygon.class))
 			{
-				Polygon poly = em.getComponent(e2, Polygon.class);
+				CollisionPolygon poly = em.getComponent(e2, CollisionPolygon.class);
 
 				Point col = poly.getClosest(circle1pos);
 				boolean inside = poly.isInside(circle1pos);

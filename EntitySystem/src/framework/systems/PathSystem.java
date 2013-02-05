@@ -8,12 +8,12 @@ import java.util.PriorityQueue;
 import framework.CoreSystem;
 import framework.CoreEntity;
 import framework.World;
-import framework.components.Circle;
+import framework.components.CollisionCircle;
 import framework.components.Hero;
 import framework.components.Obstacle;
 import framework.components.Pathfinder;
 import framework.components.Pathfinder.Node;
-import framework.components.Polygon;
+import framework.components.CollisionPolygon;
 import framework.components.Position;
 import framework.components.Velocity;
 import framework.components.Zombie;
@@ -34,9 +34,9 @@ public class PathSystem extends CoreSystem{
 
 		long now = Time.getTime();
 		pf.update = now;
-		for (CoreEntity e : em.getEntityAll(Obstacle.class, Polygon.class))
+		for (CoreEntity e : em.getEntityAll(Obstacle.class, CollisionPolygon.class))
 		{
-			Polygon poly = em.getComponent(e, Polygon.class);
+			CollisionPolygon poly = em.getComponent(e, CollisionPolygon.class);
 			Point pos = em.getComponent(e, Position.class).position;
 			if (!poly.inverted)
 				pf.mask(poly, pos, now);

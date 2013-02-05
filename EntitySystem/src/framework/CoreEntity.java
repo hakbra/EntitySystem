@@ -4,7 +4,7 @@ import java.util.*;
 
 import framework.enums.LayerEnum;
 
-public class CoreEntity implements Comparable{
+public class CoreEntity{
 	
 	public World world;
 	public LayerEnum layer;
@@ -20,10 +20,5 @@ public class CoreEntity implements Comparable{
 	public String toString()
 	{
 		return name;
-	}
-
-	@Override
-	public int compareTo(Object o) {
-		return ((CoreEntity) o).layer.num.compareTo(this.layer.num) * -1;
 	}
 }

@@ -19,4 +19,10 @@ public class Position extends CoreComponent {
 		this.local = l;
 		this.name = "Position";
 	}
+	
+	public Position setFixed()
+	{
+		local = true;
+		return this;
+	}
 }

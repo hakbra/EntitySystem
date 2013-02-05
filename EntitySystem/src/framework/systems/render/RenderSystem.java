@@ -9,17 +9,18 @@ import helpers.Point;
 import org.lwjgl.opengl.GL11;
 
 import engine.GLEngine;
+import framework.CoreComponent;
 import framework.CoreEntity;
 import framework.CoreSystem;
 import framework.World;
 import framework.components.Angle;
 import framework.components.Button;
-import framework.components.Circle;
+import framework.components.CollisionCircle;
+import framework.components.CollisionPolygon;
 import framework.components.ColorComp;
 import framework.components.Health;
 import framework.components.Hero;
 import framework.components.ParentTransform;
-import framework.components.Polygon;
 import framework.components.Position;
 import framework.components.Scale;
 import framework.components.Tex;
@@ -67,45 +68,13 @@ public class RenderSystem extends CoreSystem {
 		if (cam != null)
 			camPos = em.getComponent(cam, Position.class).position.neg();
 		
-		for (CoreEntity e: em.renders)
+		for (CoreComponent c: em.renders)
 		{
 			glPushMatrix();
 
-			transform(em, e, camPos);
+			transform(em, c.parent, camPos);
 			
-			if (em.hasComponent(e, ColorComp.class))
-				Draw.setColor(em.getComponent(e, ColorComp.class).color);
-
-			if (em.hasComponent(e, Tex.class))
-			{
-				Draw.setColor(Color.WHITE);
-				em.getComponent(e, Tex.class).render(world, e);
-			}
-			else if (em.hasComponent(e, Polygon.class))
-			{
-				GL11.glDisable(GL11.GL_TEXTURE_2D);
-				Polygon poly = em.getComponent(e, Polygon.class);
-				Draw.polygon(poly.localPoints);
-				GL11.glEnable(GL11.GL_TEXTURE_2D);
-			}
-			else if (em.hasComponent(e, Circle.class))
-			{
-				GL11.glDisable(GL11.GL_TEXTURE_2D);
-				Circle circle = em.getComponent(e, Circle.class);
-				Draw.circle(circle.radius);
-				GL11.glEnable(GL11.GL_TEXTURE_2D);
-			}
-
-			if (em.hasComponent(e, Button.class))
-			{
-				Button b = em.getComponent(e, Button.class);
-				Polygon poly = em.getComponent(e, Polygon.class);
-				if (!b.active)
-					Draw.setColor(Color.WHITE);
-				else
-					Draw.setColor(new Color(0.6, 0.6, 0.6));
-				Draw.write(world.getDataManager().font, poly.mid, b.type);
-			}
+			c.render();
 
 			glPopMatrix();
 		}

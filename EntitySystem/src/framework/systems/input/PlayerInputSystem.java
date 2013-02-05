@@ -13,14 +13,14 @@ import framework.World;
 import framework.components.Angle;
 import framework.components.AngleSpeed;
 import framework.components.Bullet;
-import framework.components.Circle;
+import framework.components.CollisionCircle;
 import framework.components.Collider;
 import framework.components.Damage;
 import framework.components.DestroyOnImpact;
 import framework.components.EmitterOnImpact;
 import framework.components.Gun;
 import framework.components.KeyInput;
-import framework.components.Polygon;
+import framework.components.CollisionPolygon;
 import framework.components.Position;
 import framework.components.Tex;
 import framework.components.Timer;
@@ -51,7 +51,7 @@ public class PlayerInputSystem extends CoreSystem{
 			Angle angle 		= em.getComponent(e, Angle.class);
 			AngleSpeed angleS 	= em.getComponent(e, AngleSpeed.class);
 			Gun gun 			= em.getComponent(e, Gun.class);
-			Circle circle 		= em.getComponent(e, Circle.class);
+			CollisionCircle circle 		= em.getComponent(e, CollisionCircle.class);
 			
 			if (Keyboard.isKeyDown(keyInput.left))
 				angleS.speed = 3;
@@ -86,8 +86,8 @@ public class PlayerInputSystem extends CoreSystem{
 					bullet.components.add(new Bullet());
 					bullet.components.add(new Position(position));
 					bullet.components.add(new Velocity(new Point(angle.angle + deltaAngle).mult(speed)));
-					bullet.components.add(new Circle(5));
-					bullet.components.add(new Tex("bullet.png"));
+					bullet.components.add(new CollisionCircle(5));
+					bullet.components.add(new Tex("bullet.png", new Point(10, 10)).setLayer(LayerEnum.MOVER));
 					bullet.components.add(new Timer(time));
 					bullet.components.add(new Angle(angle.angle + deltaAngle));
 					bullet.components.add(new Damage(gun.damage, e));

@@ -6,7 +6,7 @@ import framework.CoreEntity;
 import framework.World;
 import framework.components.Angle;
 import framework.components.AngleSpeed;
-import framework.components.Circle;
+import framework.components.CollisionCircle;
 import framework.components.Follower;
 import framework.components.Pathfinder;
 import framework.components.Position;

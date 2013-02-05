@@ -6,7 +6,7 @@ import framework.CoreSystem;
 import framework.CoreEntity;
 import framework.World;
 import framework.components.Hero;
-import framework.components.Polygon;
+import framework.components.CollisionPolygon;
 import framework.components.Position;
 import framework.managers.EntityManager;
 
@@ -22,7 +22,7 @@ public class CameraSystem extends CoreSystem{
 	{
 		CoreEntity cam = em.getByStringID("camera");
 		Point pos = em.getComponent(cam, Position.class).position;
-		Polygon poly = em.getComponent(cam, Polygon.class);
+		CollisionPolygon poly = em.getComponent(cam, CollisionPolygon.class);
 		
 		Point mid = new Point();
 		int c = 0;

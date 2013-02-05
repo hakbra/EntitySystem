@@ -6,7 +6,7 @@ import framework.CoreEntity;
 import framework.CoreSystem;
 import framework.EventListener;
 import framework.World;
-import framework.components.Circle;
+import framework.components.CollisionCircle;
 import framework.components.Collider;
 import framework.components.DestroyOnImpact;
 import framework.components.Emitter;
@@ -54,7 +54,7 @@ public class CollisionSystem extends CoreSystem implements EventListener{
 		if (em.hasComponent(i.a, Collider.class))
 		{
 			Point posA = em.getComponent(i.a, Position.class).position;
-			Circle circle = em.getComponent(i.a, Circle.class);
+			CollisionCircle circle = em.getComponent(i.a, CollisionCircle.class);
 
 			double dist = posA.dist(i.poi) - circle.getRadius();
 			if (i.inside)
@@ -73,7 +73,7 @@ public class CollisionSystem extends CoreSystem implements EventListener{
 					posA.isub(mov);
 				else
 				{
-					Circle circle2 = em.getComponent(i.b, Circle.class);
+					CollisionCircle circle2 = em.getComponent(i.b, CollisionCircle.class);
 					double r1 = circle.getRadius();
 					double r2 = circle2.getRadius();
 					double ratio = r1*r1 / (r1*r1+r2*r2);
