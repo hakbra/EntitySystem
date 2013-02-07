@@ -6,7 +6,7 @@ import framework.components.Text;
 import framework.components.Timer;
 import framework.enums.StateEnum;
 import framework.systems.TimerSystem;
-import framework.systems.render.TextRenderSystem;
+import framework.systems.render.StatsSystem;
 
 
 public class MessageState {
@@ -15,7 +15,7 @@ public class MessageState {
 	{
 		world.clearState(StateEnum.MESSAGE);
 		
-		world.addSystem(new TextRenderSystem(world), StateEnum.MESSAGE);
+		world.addSystem(new StatsSystem(world), StateEnum.MESSAGE);
 		world.addSystem(new TimerSystem(world), StateEnum.MESSAGE);
 
 		CoreEntity msg = new CoreEntity();

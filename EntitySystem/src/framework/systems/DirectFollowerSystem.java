@@ -27,7 +27,7 @@ public class DirectFollowerSystem extends CoreSystem{
 		for (CoreEntity e : em.getEntityAll(DirectFollower.class))
 		{
 			Point pos = em.getComponent(e, Position.class).position;
-			Point vel = em.getComponent(e, Velocity.class).velocity;
+			Point vel = em.getComponent(e, Velocity.class).dir;
 
 			for (CoreEntity hero : em.getEntityAll(Hero.class))
 			{

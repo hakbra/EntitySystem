@@ -51,7 +51,7 @@ public class KeyInputSystem extends CoreSystem{
 			em.addComponent(player, new Hero());
 			em.addComponent(player, new CollisionCircle(20));
 			em.addComponent(player, new Position(new Point(900, 450)));
-			em.addComponent(player, new Velocity(new Point(0, 0)));
+			em.addComponent(player, new Velocity(new Point(0, 0), 4));
 			em.addComponent(player, new Angle(180));
 			em.addComponent(player, new AngleSpeed(0));
 			em.addComponent(player, new KeyInput(Keyboard.KEY_LEFT, Keyboard.KEY_RIGHT, Keyboard.KEY_UP, Keyboard.KEY_DOWN, Keyboard.KEY_RCONTROL, Keyboard.KEY_RSHIFT));

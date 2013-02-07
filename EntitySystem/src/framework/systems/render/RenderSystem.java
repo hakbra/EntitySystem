@@ -78,16 +78,5 @@ public class RenderSystem extends CoreSystem {
 
 			glPopMatrix();
 		}
-
-		Draw.setColor(Color.WHITE);
-		int i = 0;
-		for (CoreEntity h : em.getEntity(Hero.class))
-		{
-			Health health = em.getComponent(h, Health.class);
-			int p = (int) (100 * health.current / health.max);
-			Draw.write(world.getDataManager().font, new Point(GLEngine.WIDTH - 100, GLEngine.HEIGHT - 40 -60*i), h.name);
-			Draw.write(world.getDataManager().font, new Point(GLEngine.WIDTH - 100, GLEngine.HEIGHT - 65 -60*i), "Health: " + p + "%");
-			i++;
-		}
 	}
 }

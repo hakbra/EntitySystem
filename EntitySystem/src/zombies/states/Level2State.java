@@ -47,7 +47,7 @@ import framework.systems.input.KeyInputSystem;
 import framework.systems.input.MouseInputSystem;
 import framework.systems.input.PlayerInputSystem;
 import framework.systems.render.RenderSystem;
-import framework.systems.render.TextRenderSystem;
+import framework.systems.render.StatsSystem;
 
 public class Level2State {
 	public static void init(World world)
@@ -69,7 +69,7 @@ public class Level2State {
 		world.addSystem(new TriggerSystem(world), StateEnum.LEVEL2);
 		world.addSystem(new DamageSystem(world), StateEnum.LEVEL2);
 
-		world.addSystem(new TextRenderSystem(world), StateEnum.LEVEL2);
+		world.addSystem(new StatsSystem(world), StateEnum.LEVEL2);
 		world.addSystem(new EmitterSystem(world), StateEnum.LEVEL2);
 		world.addSystem(new MouseInputSystem(world), StateEnum.LEVEL2);
 		world.addSystem(new KeyInputSystem(world), StateEnum.LEVEL2);
@@ -107,8 +107,8 @@ public class Level2State {
 
 		CoreEntity border = new CoreEntity();
 		border.name = "border";
-		border.components.add(CollisionPolygon.invertedRectangle(new Point(GLEngine.WIDTH, GLEngine.HEIGHT)));
-		border.components.add(new Position(new Point(0, 0)));
+		border.components.add(CollisionPolygon.centerRectangle(new Point(GLEngine.WIDTH, GLEngine.HEIGHT)).setInverted());
+		border.components.add(new Position(new Point(GLEngine.WIDTH / 2, GLEngine.HEIGHT / 2)));
 		border.components.add(new Obstacle());
 		world.addEntity(border, StateEnum.LEVEL2);
 		
@@ -123,7 +123,7 @@ public class Level2State {
 		boss.components.add(new Zombie());
 		boss.components.add(new CollisionCircle(100));
 		boss.components.add(new Position(new Point(GLEngine.WIDTH / 2, GLEngine.HEIGHT / 2)));
-		boss.components.add(new Velocity(new Point(0, 0)));
+		boss.components.add(new Velocity(new Point(0, 0), 1));
 		boss.components.add(new Acceleration(new Point(0, 0)));
 		boss.components.add(new Health(1000));
 		boss.components.add(new DirectFollower());
@@ -142,7 +142,7 @@ public class Level2State {
 		player.components.add(new Hero());
 		player.components.add(new CollisionCircle(20));
 		player.components.add(new Position(new Point(400, 250)));
-		player.components.add(new Velocity(new Point(0, 0)));
+		player.components.add(new Velocity(new Point(0, 0), 4));
 		player.components.add(new Angle(0));
 		player.components.add(new AngleSpeed(0));
 		player.components.add(new KeyInput(Keyboard.KEY_A, Keyboard.KEY_D, Keyboard.KEY_W, Keyboard.KEY_S, Keyboard.KEY_SPACE, Keyboard.KEY_E));

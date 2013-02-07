@@ -47,7 +47,7 @@ public class PlayerInputSystem extends CoreSystem{
 		{
 			KeyInput keyInput 	= em.getComponent(e, KeyInput.class);
 			Point pos	 		= em.getComponent(e, Position.class).position;
-			Point vel 			= em.getComponent(e, Velocity.class).velocity;
+			Point vel 			= em.getComponent(e, Velocity.class).dir;
 			Angle angle 		= em.getComponent(e, Angle.class);
 			AngleSpeed angleS 	= em.getComponent(e, AngleSpeed.class);
 			Gun gun 			= em.getComponent(e, Gun.class);
@@ -85,7 +85,7 @@ public class PlayerInputSystem extends CoreSystem{
 					bullet.layer = LayerEnum.MOVER;
 					bullet.components.add(new Bullet());
 					bullet.components.add(new Position(position));
-					bullet.components.add(new Velocity(new Point(angle.angle + deltaAngle).mult(speed)));
+					bullet.components.add(new Velocity(new Point(angle.angle + deltaAngle), speed));
 					bullet.components.add(new CollisionCircle(5));
 					bullet.components.add(new Tex("bullet.png", new Point(10, 10)).setLayer(LayerEnum.MOVER));
 					bullet.components.add(new Timer(time));

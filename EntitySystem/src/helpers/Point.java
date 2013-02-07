@@ -253,4 +253,8 @@ public class Point
 		this.x *= m;
 		this.y *= m;
 	}
+
+	public String intString() {
+		return "[" + (int)this.x + ", " + (int)this.y + "]";
+	}
 }

@@ -4,11 +4,13 @@ import framework.CoreComponent;
 import helpers.Point;
 
 public class Velocity extends CoreComponent{
-	public Point velocity;
+	public Point dir;
+	public double speed;
 	
-	public Velocity(Point v)
+	public Velocity(Point d, double s)
 	{
-		this.velocity = v;
+		this.dir = d;
+		this.speed = s;
 		this.name = "Velocity";
 	}
 }

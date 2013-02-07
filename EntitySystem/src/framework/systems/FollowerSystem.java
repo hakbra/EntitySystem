@@ -31,7 +31,7 @@ public class FollowerSystem extends CoreSystem{
 		{
 			Follower follower = em.getComponent(e, Follower.class);
 			Point pos = em.getComponent(e, Position.class).position;
-			Point vel = em.getComponent(e, Velocity.class).velocity;
+			Point vel = em.getComponent(e, Velocity.class).dir;
 			
 			Point dir = pf.getDir(pos, follower.limit);
 			vel.set(dir);

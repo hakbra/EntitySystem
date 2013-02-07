@@ -31,7 +31,7 @@ public class PhysicsSystem extends CoreSystem{
 		for (CoreEntity e : em.getEntityAll(Acceleration.class, Velocity.class))
 		{
 			Point acc 	= 	em.getComponent(e, Acceleration.class).acceleration;
-			Point vel 		= em.getComponent(e, Velocity.class).velocity;
+			Point vel 		= em.getComponent(e, Velocity.class).dir;
 			vel.iadd(acc);
 			acc.set(0, 0);
 		}
@@ -39,9 +39,9 @@ public class PhysicsSystem extends CoreSystem{
 		for (CoreEntity e : em.getEntityAll(Position.class, Velocity.class))
 		{
 			Point position 	= 	em.getComponent(e, Position.class).position;
-			Point vel 		= em.getComponent(e, Velocity.class).velocity;
+			Velocity vel 		= em.getComponent(e, Velocity.class);
 				
-			position.iadd(vel);
+			position.iadd(vel.dir.norm(vel.speed));
 		}
 		
 		for (CoreEntity e : em.getEntityAll(Angle.class, AngleSpeed.class))

@@ -60,29 +60,7 @@ public class MouseInputSystem extends CoreSystem{
 			    if (!Mouse.getEventButtonState())
 			    	continue;
 			    	
-				if (button.type == "Zombies")
-				{
-					Random r = new Random();
-					for (int i = 0; i < 20; i++)
-					{
-						CoreEntity zombie = new CoreEntity();
-						zombie.name = "Zombie";
-						zombie.layer = LayerEnum.MOVER;
-						em.addComponent(zombie, new Zombie());
-						em.addComponent(zombie, new CollisionCircle(20));
-						em.addComponent(zombie, new Position(new Point(r.nextInt(GLEngine.WIDTH), r.nextInt(GLEngine.HEIGHT))));
-						em.addComponent(zombie, new Velocity(new Point(0, 0)));
-						em.addComponent(zombie, new Health());
-						em.addComponent(zombie, new Follower());
-						em.addComponent(zombie, new Damage(1, 200));
-						em.addComponent(zombie, new Obstacle());
-						em.addComponent(zombie, new Collider(4));
-						em.addComponent(zombie, new Angle(0));
-						em.addComponent(zombie, new AngleSpeed(0));
-						em.addComponent(zombie, new Tex("zombie.png", new Point(30, 30)));
-					}
-				}
-				else if (button.type == "Screen")
+				if (button.type == "Screen")
 				{
 					GLEngine.switchFullscreen();
 				}
@@ -98,9 +76,6 @@ public class MouseInputSystem extends CoreSystem{
 				{
 					Level1State.init(world);
 					world.pushState(StateEnum.LEVEL1);
-					
-					MessageState.init(world, "PLAYER ONE READY");
-					world.pushState(StateEnum.MESSAGE);
 					
 				}
 				else if (button.type == "Resume")

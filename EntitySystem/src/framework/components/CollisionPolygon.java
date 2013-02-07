@@ -49,18 +49,11 @@ public class CollisionPolygon extends CoreComponent{
 		Point h = new Point(0, dim.y/2);
 		return new CollisionPolygon(p.add(w).add(h), p.sub(w).add(h), p.sub(w).sub(h), p.add(w).sub(h));
 	}
-
-	public static CollisionPolygon invertedRectangle(Point dim)
+	
+	public CollisionPolygon setInverted()
 	{
-
-		Point p = new Point(0, 0);
-		Point w = new Point(dim.x, 0);
-		Point h = new Point(0, dim.y);
-		
-		CollisionPolygon poly = new CollisionPolygon(p, p.add(h), p.add(h).add(w), p.add(w));
-		poly.inverted = true;
-
-		return poly; 
+		this.inverted = true;
+		return this;
 	}
 	
 	public Point getPosition()
