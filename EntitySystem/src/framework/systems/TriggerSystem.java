@@ -73,7 +73,7 @@ public class TriggerSystem extends CoreSystem implements EventListener{
 				int j = 0;
 				for (CoreEntity h : em.getEntity(Hero.class))
 				{
-					em.getComponent(h, Position.class).position.set(world.WIDTH - 50, world.HEIGHT / 2 - 40 + 80*j);
+					em.getComponent(h, Position.class).position.set(50, 40 + 80*j);
 					em.getComponent(h, Velocity.class).dir.set(-4, 0);
 					em.getComponent(h, Angle.class).angle = 180.0;
 					em.getComponent(h, AngleSpeed.class).speed = 0.0;

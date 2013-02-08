@@ -26,27 +26,34 @@ public class CameraSystem extends CoreSystem{
 		
 		Point mid = new Point();
 		int c = 0;
-		
 		for (CoreEntity h : em.getEntity(Hero.class))
 		{
 			Point heroPos = em.getComponent(h, Position.class).position;
 			mid.iadd(heroPos);
 			c++;
 		}
-		
 		mid.idiv(c);
+		
 		Point dim = poly.dim;
 		Point halfDim = dim.div(2);
 		Point newPos = mid.sub(halfDim);
+		Point worldDim = new Point(world.getDataManager().mapwidth, world.getDataManager().mapheight);
+		
 		if (newPos.x < 0)
 			newPos.x = 0;
 		if (newPos.y < 0)
 			newPos.y = 0;
 		
-		if (newPos.x + dim.x > world.WIDTH)
-			newPos.x = world.WIDTH - dim.x;
-		if (newPos.y + dim.y > world.HEIGHT)
-			newPos.y = world.HEIGHT - dim.y;
+		if (newPos.x + dim.x > worldDim.x)
+			newPos.x = worldDim.x - dim.x;
+		if (newPos.y + dim.y > worldDim.y)
+			newPos.y = worldDim.y - dim.y;
+		/*
+		if (dim.y > worldDim.y)
+			newPos.y = worldDim.y / 2;
+		if (dim.x > worldDim.x)
+			newPos.x = worldDim.x / 2;
+			*/
 		
 		pos.set(newPos);
 	}

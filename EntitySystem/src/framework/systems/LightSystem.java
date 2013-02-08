@@ -39,7 +39,7 @@ public class LightSystem  extends CoreSystem{
 			trans = em.getComponent(cam, Position.class).position.neg();
 
 		glBindTexture(GL_TEXTURE_2D, 0);
-		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, world.getDataManager().lightBufID); 
+		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, world.getDataManager().getLightBufID()); 
 		glClearColor (0.1f, 0.1f, 0.1f, 1f);
 		glClear (GL_COLOR_BUFFER_BIT);
 

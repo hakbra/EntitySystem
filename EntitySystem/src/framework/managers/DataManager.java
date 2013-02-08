@@ -31,12 +31,15 @@ import helpers.MyFont;
 
 public class DataManager {
 	World world;
+	
+	public int mapwidth;
+	public int mapheight;
 
 	public MyFont font;
     public HashMap<String, Integer> textures = new HashMap<String, Integer>();
     
-    public int lightTexID;
-    public int lightBufID;
+    private int lightTexID = -1;
+    private int lightBufID = -1;
 	
 	public DataManager(World w)
 	{
@@ -44,7 +47,13 @@ public class DataManager {
 
 		Font awtFont = new Font("Times New Roman", Font.BOLD, 24);
 		font = new MyFont(awtFont, false);
-		createTexture();
+	}
+	
+	public int getLightBufID()
+	{
+		if (lightBufID == -1)
+			createTexture();
+		return lightBufID;
 	}
 
 	public int getTexture(String name) {
@@ -79,7 +88,7 @@ public class DataManager {
 
 			glBindTexture(GL_TEXTURE_2D, lightTexID);
 			glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, world.WIDTH, world.HEIGHT, 0,GL_RGBA, GL_INT, (java.nio.ByteBuffer) null);
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, mapwidth, mapheight, 0,GL_RGBA, GL_INT, (java.nio.ByteBuffer) null);
 			glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT,GL_COLOR_ATTACHMENT0_EXT,GL_TEXTURE_2D, lightTexID, 0);
 
 			glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);

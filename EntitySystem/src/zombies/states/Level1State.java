@@ -36,6 +36,7 @@ import framework.components.Zombie;
 import framework.components.ZombieSpawner;
 import framework.enums.LayerEnum;
 import framework.enums.StateEnum;
+import framework.managers.DataManager;
 import framework.systems.CameraSystem;
 import framework.systems.CollisionSystem;
 import framework.systems.DamageSystem;
@@ -63,8 +64,9 @@ public class Level1State {
 	{
 		world.clearState(StateEnum.LEVEL1);
 		
-		world.WIDTH = MAPWIDTH;
-		world.HEIGHT = MAPHEIGHT;
+		DataManager dm = world.getDataManager(StateEnum.LEVEL1);
+		dm.mapwidth = MAPWIDTH;
+		dm.mapheight = MAPHEIGHT;
 
 		//Systems
 
