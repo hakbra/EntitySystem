@@ -5,6 +5,7 @@ import helpers.Time;
 import zombies.states.MessageState;
 import framework.CoreSystem;
 import framework.World;
+import framework.components.Bullet;
 import framework.components.Damage;
 import framework.components.Health;
 import framework.components.Hero;
@@ -44,6 +45,9 @@ public class DamageSystem extends CoreSystem{
 
 		if (!dam.canDamage())
 			return;
+		
+		if (health.current <= 0)
+			return;
 
 		dam.time = Time.getTime();
 
@@ -57,6 +61,12 @@ public class DamageSystem extends CoreSystem{
 				world.popState();
 				MessageState.init(world, "GAME OVER");
 				world.pushState(StateEnum.MESSAGE);
+			}
+			else if (em.hasComponent(i.a, Bullet.class))
+			{
+				Bullet bullet = em.getComponent(i.a, Bullet.class);
+				Hero hero = em.getComponent(bullet.parent, Hero.class);
+				hero.kills++;
 			}
 		}
 

@@ -1,11 +1,8 @@
 package zombies;
 
-import org.lwjgl.input.Keyboard;
-
+import helpers.Point;
 import helpers.Time;
 import zombies.states.GameMenuState;
-import zombies.states.Level1State;
-import zombies.states.Level2State;
 import zombies.states.StartMenuState;
 import engine.GLEngine;
 import framework.World;

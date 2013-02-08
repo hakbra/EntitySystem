@@ -73,7 +73,7 @@ public class TriggerSystem extends CoreSystem implements EventListener{
 				int j = 0;
 				for (CoreEntity h : em.getEntity(Hero.class))
 				{
-					em.getComponent(h, Position.class).position.set(GLEngine.WIDTH - 50, GLEngine.HEIGHT / 2 - 40 + 80*j);
+					em.getComponent(h, Position.class).position.set(world.WIDTH - 50, world.HEIGHT / 2 - 40 + 80*j);
 					em.getComponent(h, Velocity.class).dir.set(-4, 0);
 					em.getComponent(h, Angle.class).angle = 180.0;
 					em.getComponent(h, AngleSpeed.class).speed = 0.0;
@@ -118,12 +118,10 @@ public class TriggerSystem extends CoreSystem implements EventListener{
 
 			if (Keyboard.isKeyDown(keys.pickup))
 			{
-				System.out.println(i.b.name);
 				Gun oldGun = em.getComponent(i.a, Gun.class);
 				em.removeComponent(i.a, oldGun);
 
 				Gun newGun = em.getComponent(i.b, Gun.class);
-				System.out.println(newGun);
 				em.addComponent(i.a, newGun);
 
 				em.addComponent(i.b, oldGun);

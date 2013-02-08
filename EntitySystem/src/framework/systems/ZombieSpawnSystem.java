@@ -40,7 +40,7 @@ public class ZombieSpawnSystem extends CoreSystem{
 		Random r = new Random();
 		for (CoreEntity spawner : em.getEntity(ZombieSpawner.class))
 		{
-			if (em.getEntity(Zombie.class).size() > 60)
+			if (em.getEntity(Zombie.class).size() > 10)
 				return;
 			
 			ZombieSpawner spawn = em.getComponent(spawner, ZombieSpawner.class);

@@ -20,8 +20,8 @@ import org.lwjgl.opengl.GL11;
 
 public class GLEngine {
 	// Default settings
-	public static final int HEIGHT = 720;
-	public static final int WIDTH = 1280;
+	public static final int WIDTH = 800;
+	public static final int HEIGHT = 600;
 	
 	public static void init()
 	{

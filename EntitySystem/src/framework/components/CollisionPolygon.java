@@ -12,6 +12,7 @@ public class CollisionPolygon extends CoreComponent{
 	public ArrayList<Point> localPoints;
 	public Point mid;
 	public Point min, max;
+	public Point dim;
 	public boolean inverted;
 
 	public CollisionPolygon(Point... ps)
@@ -36,6 +37,7 @@ public class CollisionPolygon extends CoreComponent{
 				max.y = p.y;
 		}
 		mid.idiv(localPoints.size());
+		dim = max.sub(min);
 		
 		inverted = false;
 		name = "CollisionPolygon";
@@ -48,6 +50,14 @@ public class CollisionPolygon extends CoreComponent{
 		Point w = new Point(dim.x/2, 0);
 		Point h = new Point(0, dim.y/2);
 		return new CollisionPolygon(p.add(w).add(h), p.sub(w).add(h), p.sub(w).sub(h), p.add(w).sub(h));
+	}
+
+	public static CollisionPolygon rectangle(Point dim) {
+
+		Point p = new Point(0, 0);
+		Point w = new Point(dim.x, 0);
+		Point h = new Point(0, dim.y);
+		return new CollisionPolygon(p.add(w).add(h), p.add(h), p, p.add(w));
 	}
 	
 	public CollisionPolygon setInverted()

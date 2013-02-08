@@ -55,15 +55,21 @@ import framework.systems.render.RenderSystem;
 import framework.systems.render.StatsSystem;
 
 public class Level1State {
+	
+	public static int MAPWIDTH = 1280*2;
+	public static int MAPHEIGHT = 720;
 
 	public static void init(World world)
 	{
 		world.clearState(StateEnum.LEVEL1);
+		
+		world.WIDTH = MAPWIDTH;
+		world.HEIGHT = MAPHEIGHT;
 
 		//Systems
 
 		world.addSystem(new CameraSystem(world), StateEnum.LEVEL1);
-		//world.addSystem(new LightSystem(world), StateEnum.LEVEL1);
+		world.addSystem(new LightSystem(world), StateEnum.LEVEL1);
 		world.addSystem(new RenderSystem(world), StateEnum.LEVEL1);
 		world.addSystem(new StatsSystem(world), StateEnum.LEVEL1);
 
@@ -105,31 +111,31 @@ public class Level1State {
 		CoreEntity camera = new CoreEntity();
 		camera.name = "camera";
 		camera.components.add(new Position( new Point()));
-		camera.components.add(new CollisionPolygon( new Point(0, 0), new Point(GLEngine.WIDTH, 0)));
+		camera.components.add(CollisionPolygon.rectangle( new Point(GLEngine.WIDTH, GLEngine.HEIGHT)));
 		world.addEntity(camera, StateEnum.LEVEL1);
 		world.registerID(camera, StateEnum.LEVEL1);
 
 		CoreEntity path = new CoreEntity();
 		path.name = "path";
-		path.components.add(new Pathfinder(new Point(0, 0), new Point(GLEngine.WIDTH*2, GLEngine.HEIGHT), 20));
+		path.components.add(new Pathfinder(new Point(0, 0), new Point(MAPWIDTH, MAPHEIGHT), 20));
 		world.addEntity(path, StateEnum.LEVEL1);
 		world.registerID(path, StateEnum.LEVEL1);
 
 		CoreEntity ground = new CoreEntity();
 		ground.name = "ground";
 		ground.layer = LayerEnum.GROUND;
-		ground.components.add(new Position( new Point(GLEngine.WIDTH, GLEngine.HEIGHT / 2)));
-		ground.components.add(CollisionPolygon.centerRectangle(new Point(GLEngine.WIDTH*2, GLEngine.HEIGHT)));
-		ground.components.add(new Tex("bush.png", new Point(GLEngine.WIDTH*2, GLEngine.HEIGHT)).setScale(new Point(30, 19)).setLayer(LayerEnum.GROUND));
+		ground.components.add(new Position( new Point(MAPWIDTH / 2, MAPHEIGHT / 2)));
+		ground.components.add(CollisionPolygon.centerRectangle(new Point(MAPWIDTH, MAPHEIGHT)));
+		ground.components.add(new Tex("bush.png", new Point(MAPWIDTH, MAPHEIGHT)).setScale(new Point(30, 19)).setLayer(LayerEnum.GROUND));
 		world.addEntity(ground, StateEnum.LEVEL1);
 		world.registerID(ground, StateEnum.LEVEL1);
 
 		CoreEntity light = new CoreEntity();
 		light.name = "light";
 		light.layer = LayerEnum.LIGHT;
-		light.components.add(new Position( new Point(GLEngine.WIDTH / 2, GLEngine.HEIGHT / 2)).setFixed());
-		light.components.add(CollisionPolygon.centerRectangle(new Point(GLEngine.WIDTH, GLEngine.HEIGHT)));
-		light.components.add(new Tex("lightTex", new Point(GLEngine.WIDTH, GLEngine.HEIGHT)).setLayer(LayerEnum.LIGHT));
+		light.components.add(new Position( new Point(MAPWIDTH / 2, MAPHEIGHT / 2)).setFixed());
+		light.components.add(CollisionPolygon.centerRectangle(new Point(MAPWIDTH, MAPHEIGHT)));
+		light.components.add(new Tex("lightTex", new Point(MAPWIDTH, MAPHEIGHT)).setLayer(LayerEnum.LIGHT));
 		world.addEntity(light, StateEnum.LEVEL1);
 
 		CoreEntity exit = new CoreEntity();
@@ -156,15 +162,15 @@ public class Level1State {
 
 		spawns.add(  new Point(1050, 	500) );
 		spawns.add(  new Point(75, 	75) );
-		spawns.add(  new Point(GLEngine.WIDTH * 1.5, 	75) );
-		spawns.add(  new Point(GLEngine.WIDTH * 1.5, 	GLEngine.HEIGHT - 75) );
+		spawns.add(  new Point(MAPWIDTH * 0.75, 	75) );
+		spawns.add(  new Point(MAPWIDTH * 0.75, 	MAPHEIGHT - 75) );
 
 		for (Point p : spawns)
 		{
 			CoreEntity spawn = new CoreEntity();
 			spawn.name = "spawn";
 			spawn.components.add(new Position(p));
-			spawn.components.add(new ZombieSpawner(3000));
+			spawn.components.add(new ZombieSpawner(5000));
 			world.addEntity(spawn, StateEnum.LEVEL1);
 		}
 	}
@@ -175,7 +181,7 @@ public class Level1State {
 		health.name = "health";
 		health.layer = LayerEnum.ITEM;
 		health.components.add(new CollisionCircle(15));
-		health.components.add(new Position(new Point(GLEngine.WIDTH * 1.5	, 	GLEngine.HEIGHT - 75)));
+		health.components.add(new Position(new Point(MAPWIDTH * 0.75	, 	MAPHEIGHT - 75)));
 		health.components.add(new Tex("health.png", new Point(30, 30)).setLayer(LayerEnum.ITEM));
 		health.components.add(new Trigger("health"));
 		health.components.add(new Angle(0));
@@ -185,7 +191,7 @@ public class Level1State {
 		CoreEntity gun = new CoreEntity();
 		gun.name = "gun";
 		gun.layer = LayerEnum.ITEM;
-		gun.components.add(new Position(new Point(GLEngine.WIDTH * 1.5, 75)));
+		gun.components.add(new Position(new Point(MAPWIDTH * 0.75, 75)));
 		gun.components.add(new CollisionCircle(30));
 		gun.components.add(new Trigger("gun"));
 		gun.components.add(new Tex("gun2.png", new Point(60, 60)).setLayer(LayerEnum.ITEM));
@@ -197,7 +203,7 @@ public class Level1State {
 		CoreEntity gun2 = new CoreEntity();
 		gun2.name = "gun2";
 		gun2.layer = LayerEnum.ITEM;
-		gun2.components.add(new Position(new Point(75, 75)));
+		gun2.components.add(new Position(new Point(1050, 200)));
 		gun2.components.add(new CollisionCircle(30));
 		gun2.components.add(new Trigger("gun"));
 		gun2.components.add(new Tex("gun3.png", new Point(60, 60)).setLayer(LayerEnum.ITEM));
@@ -209,7 +215,7 @@ public class Level1State {
 		CoreEntity griffPart = new CoreEntity();
 		griffPart.name = "griffPart";
 		griffPart.layer = LayerEnum.ITEM;
-		griffPart.components.add(new Position(new Point(GLEngine.WIDTH*2 - 150, 75)));
+		griffPart.components.add(new Position(new Point(MAPWIDTH - 150, 75)));
 		griffPart.components.add(new CollisionCircle(30));
 		griffPart.components.add(new Trigger("griff"));
 		griffPart.components.add(new Tex("part.png", new Point(60, 60)).setLayer(LayerEnum.ITEM));
@@ -260,29 +266,29 @@ public class Level1State {
 		p.add(  new Point(340, 335)  );
 
 		p.add(  new Point(50, 300) );
-		p.add(  new Point(GLEngine.WIDTH + 50, 0)  );
+		p.add(  new Point(1280 + 50, 0)  );
 
 		p.add(  new Point(50, 300) );
-		p.add(  new Point(GLEngine.WIDTH + 50, 420)  );
+		p.add(  new Point(1280 + 50, 420)  );
 
 
 		p.add(  new Point(50, 300) );
-		p.add(  new Point(GLEngine.WIDTH*2 - 300, 0)  );
+		p.add(  new Point(1280*2 - 300, 0)  );
 
 		p.add(  new Point(50, 300) );
-		p.add(  new Point(GLEngine.WIDTH*2 - 300, GLEngine.HEIGHT - 300)  );
+		p.add(  new Point(1280*2 - 300, 720 - 300)  );
 
 		p.add(  new Point(150, 150) );
-		p.add(  new Point(GLEngine.WIDTH + 400, 200)  );
+		p.add(  new Point(1280 + 400, 200)  );
 
 		p.add(  new Point(150, 150) );
-		p.add(  new Point(GLEngine.WIDTH + 400, 520)  );
+		p.add(  new Point(1280 + 400, 520)  );
 
 		p.add(  new Point(150, 150) );
-		p.add(  new Point(GLEngine.WIDTH + 760, 200)  );
+		p.add(  new Point(1280 + 760, 200)  );
 
 		p.add(  new Point(150, 150) );
-		p.add(  new Point(GLEngine.WIDTH + 760, 520)  );
+		p.add(  new Point(1280 + 760, 520)  );
 
 
 		while (p.size() > 0)
@@ -311,8 +317,8 @@ public class Level1State {
 
 		CoreEntity border = new CoreEntity();
 		border.name = "border";
-		border.components.add(CollisionPolygon.centerRectangle(new Point(GLEngine.WIDTH*2, GLEngine.HEIGHT)).setInverted());
-		border.components.add(new Position(new Point(GLEngine.WIDTH, GLEngine.HEIGHT / 2)));
+		border.components.add(CollisionPolygon.centerRectangle(new Point(MAPWIDTH, MAPHEIGHT)).setInverted());
+		border.components.add(new Position(new Point(MAPWIDTH / 2, MAPHEIGHT / 2)));
 		border.components.add(new Obstacle());
 		world.addEntity(border, StateEnum.LEVEL1);
 	}
@@ -323,7 +329,7 @@ public class Level1State {
 		exitButton2.name = "exitButton";
 		exitButton2.layer = LayerEnum.HUD;
 		exitButton2.components.add(CollisionPolygon.centerRectangle(new Point(100, 50)));
-		exitButton2.components.add(new Position(new Point(75, 670), true));
+		exitButton2.components.add(new Position(new Point(75, GLEngine.HEIGHT - 50), true));
 		exitButton2.components.add(new Button("Exit"));
 		exitButton2.components.add(new Text("Exit").setLayer(LayerEnum.TEXT));
 		exitButton2.components.add(new Tex("button.png", new Point(100, 50)).setLayer(LayerEnum.HUD));
@@ -333,7 +339,7 @@ public class Level1State {
 		menuButton.name = "button";
 		menuButton.layer = LayerEnum.HUD;
 		menuButton.components.add(CollisionPolygon.centerRectangle(new Point(100, 50)));
-		menuButton.components.add(new Position(new Point(200, 670), true));
+		menuButton.components.add(new Position(new Point(200, GLEngine.HEIGHT - 50), true));
 		menuButton.components.add(new Button("Menu"));
 		menuButton.components.add(new Text("Menu").setLayer(LayerEnum.TEXT));
 		menuButton.components.add(new Tex("button.png", new Point(100, 50)).setLayer(LayerEnum.HUD));
@@ -343,7 +349,7 @@ public class Level1State {
 		screenButton.name = "screenButton";
 		screenButton.layer = LayerEnum.HUD;
 		screenButton.components.add(CollisionPolygon.centerRectangle(new Point(100, 50)));
-		screenButton.components.add(new Position(new Point(325, 670), true));
+		screenButton.components.add(new Position(new Point(325, GLEngine.HEIGHT - 50), true));
 		screenButton.components.add(new Button("Screen"));
 		screenButton.components.add(new Text("Screen").setLayer(LayerEnum.TEXT));
 		screenButton.components.add(new Tex("button.png", new Point(100, 50)).setLayer(LayerEnum.HUD));
@@ -352,7 +358,7 @@ public class Level1State {
 		CoreEntity restartButton = new CoreEntity();
 		restartButton.name = "restartButton";
 		restartButton.components.add(CollisionPolygon.centerRectangle(new Point(100, 50)));
-		restartButton.components.add(new Position(new Point(450, 670), true));
+		restartButton.components.add(new Position(new Point(450, GLEngine.HEIGHT - 50), true));
 		restartButton.components.add(new Button("Restart"));
 		restartButton.components.add(new Text("Restart").setLayer(LayerEnum.TEXT));
 		restartButton.components.add(new Tex("button.png", new Point(100, 50)).setLayer(LayerEnum.HUD));
@@ -365,24 +371,24 @@ public class Level1State {
 		ArrayList<Point> spawns = new ArrayList<Point>();
 
 		spawns.add(  new Point(50, 50));
-		spawns.add(  new Point(GLEngine.WIDTH - 50, 50));
-		spawns.add(  new Point(50, GLEngine.HEIGHT - 50));
-		spawns.add(  new Point(GLEngine.WIDTH - 50, GLEngine.HEIGHT - 50));
+		spawns.add(  new Point(MAPWIDTH / 2 - 50, 50));
+		spawns.add(  new Point(50, MAPHEIGHT - 50));
+		spawns.add(  new Point(MAPWIDTH / 2 - 50, MAPHEIGHT - 50));
 
-		spawns.add(  new Point(GLEngine.WIDTH / 2, 50));
-		spawns.add(  new Point(GLEngine.WIDTH / 2, GLEngine.HEIGHT - 50));
-		spawns.add(  new Point(GLEngine.WIDTH - 50, GLEngine.HEIGHT / 2));
+		spawns.add(  new Point(MAPWIDTH / 4, 50));
+		spawns.add(  new Point(MAPWIDTH / 4, MAPHEIGHT - 50));
+		spawns.add(  new Point(MAPWIDTH / 2 - 50, MAPHEIGHT / 2));
 
-		spawns.add(  new Point(GLEngine.WIDTH + 560, 500));
-		spawns.add(  new Point(GLEngine.WIDTH + 560, 225));
-		spawns.add(  new Point(GLEngine.WIDTH + 700, 360));
+		spawns.add(  new Point(MAPWIDTH / 2 + 560, 500));
+		spawns.add(  new Point(MAPWIDTH / 2 + 560, 225));
+		spawns.add(  new Point(MAPWIDTH / 2 + 700, 360));
 
-		spawns.add(  new Point(GLEngine.WIDTH*2 -20, 100));
-		spawns.add(  new Point(GLEngine.WIDTH*2 -20, GLEngine.HEIGHT - 100));
+		spawns.add(  new Point(MAPWIDTH -20, 100));
+		spawns.add(  new Point(MAPWIDTH -20, MAPHEIGHT - 100));
 
 		Random r = new Random();
 		for (int i = 0; i < 20; i++)
-			spawns.add(new Point(r.nextInt(GLEngine.WIDTH) + GLEngine.WIDTH, r.nextInt(GLEngine.HEIGHT)));
+			spawns.add(new Point(r.nextInt(MAPWIDTH/2) + MAPWIDTH/2, r.nextInt(MAPHEIGHT)));
 
 		for (Point p : spawns)
 		{

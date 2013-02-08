@@ -56,6 +56,9 @@ public class Tex extends CoreComponent{
 		}
 
 		Draw.setColor(Color.WHITE);
+		if (world.getEntityManager().hasComponent(parent, Button.class))
+			Draw.setColor(new Color(1, 1, 1, 0.5));
+		
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, world.getDataManager().getTexture(texture));
 		GL11.glBegin(GL11.GL_QUADS);
 		GL11.glTexCoord2f(	0,		0);

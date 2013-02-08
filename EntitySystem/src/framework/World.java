@@ -1,6 +1,8 @@
 package framework;
 
 
+import helpers.Point;
+
 import java.util.HashMap;
 import java.util.Stack;
 
@@ -13,6 +15,9 @@ import framework.managers.SystemManager;
 
 
 public class World {
+	public int WIDTH;
+	public int HEIGHT;
+	
 	public StateEnum currentState;
 	private StateEnum state;
 	
@@ -36,6 +41,9 @@ public class World {
 		this.evManagers = new HashMap<StateEnum, EventManager>();
 		
 		this.stateStack = new Stack<StateEnum>();
+		
+		this.WIDTH = 0;
+		this.HEIGHT = 0;
 	}
 
 	public boolean run()

@@ -1,5 +1,6 @@
 package framework.components;
 
+import helpers.Color;
 import helpers.Draw;
 import helpers.Point;
 import framework.CoreComponent;
@@ -21,6 +22,7 @@ public class Text extends CoreComponent{
 	
 	public void render()
 	{
+		Draw.setColor(Color.WHITE);
 		Draw.write(world.getDataManager().font, new Point(), text);
 	}
 
