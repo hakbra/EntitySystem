@@ -108,7 +108,7 @@ public class MyFont {
 		}
 	}
 	private BufferedImage getFontImage(char ch) {
-		// Create a temporary image to extract the character's size
+		// Create attacker temporary image to extract the character's size
 		BufferedImage tempfontImage = new BufferedImage(1, 1,
 				BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g = (Graphics2D) tempfontImage.getGraphics();

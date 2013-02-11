@@ -1,7 +1,5 @@
 package framework.managers;
 
-import helpers.Data;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -9,6 +7,7 @@ import framework.CoreSystem;
 import framework.EventListener;
 import framework.World;
 import framework.enums.EventEnum;
+import framework.events.Event;
 
 public class EventManager {
 	HashMap<EventEnum, ArrayList<EventListener>> listenerLists;
@@ -37,10 +36,10 @@ public class EventManager {
 		listeners.add(el);
 	}
 	
-	public void sendEvent(EventEnum ee, Data i)
+	public void sendEvent(Event e)
 	{
-		ArrayList<EventListener> listeners = getListeners(ee);
+		ArrayList<EventListener> listeners = getListeners(e.type);
 		for(EventListener el : listeners)
-			el.recieveEvent(i);
+			el.recieveEvent(e);
 	}
 }

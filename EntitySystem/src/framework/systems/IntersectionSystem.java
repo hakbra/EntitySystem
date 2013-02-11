@@ -1,20 +1,21 @@
 package framework.systems;
 
-import helpers.Data;
 import helpers.Point;
 import framework.CoreEntity;
 import framework.CoreSystem;
 import framework.World;
-import framework.components.CollisionCircle;
 import framework.components.Collider;
+import framework.components.CollisionCircle;
+import framework.components.CollisionPolygon;
 import framework.components.Damage;
 import framework.components.Health;
 import framework.components.Hero;
 import framework.components.Obstacle;
-import framework.components.CollisionPolygon;
 import framework.components.Position;
 import framework.components.Trigger;
-import framework.enums.EventEnum;
+import framework.events.CollisionEvent;
+import framework.events.DamageEvent;
+import framework.events.TriggerEvent;
 import framework.managers.EntityManager;
 
 
@@ -45,7 +46,7 @@ public class IntersectionSystem extends CoreSystem {
 				boolean inside = circle2.isInside(circle1pos);
 
 				if (circle1pos.dist(col) < circle1.getRadius() || inside)
-					handleCollision( em, new Data(e1, e2, col, inside) );
+					handleCollision( em, new CollisionEvent(e1, e2, col, inside) );
 			}
 
 			for (CoreEntity e2 : em.getEntityAll(CollisionPolygon.class))
@@ -56,20 +57,20 @@ public class IntersectionSystem extends CoreSystem {
 				boolean inside = poly.isInside(circle1pos);
 
 				if (circle1pos.dist(col) < circle1.getRadius() || inside)
-					handleCollision( em, new Data(e1, e2, col, inside) );
+					handleCollision( em, new CollisionEvent(e1, e2, col, inside) );
 			}
 		}
 	}
 
-	private void handleCollision(EntityManager em, Data i)
+	private void handleCollision(EntityManager em, CollisionEvent ce)
 	{
-		if (em.hasComponent(i.b, Obstacle.class))
-			world.getEventManager().sendEvent(EventEnum.COLLISION, i);
+		if (em.hasComponent(ce.obstacle, Obstacle.class))
+			world.getEventManager().sendEvent(ce);
 		
-		if (em.hasComponent(i.b, Trigger.class) && em.hasComponent(i.a, Hero.class))
-			world.getEventManager().sendEvent(EventEnum.TRIGGER, i);
+		if (em.hasComponent(ce.obstacle, Trigger.class) && em.hasComponent(ce.collider, Hero.class))
+			world.getEventManager().sendEvent(new TriggerEvent(ce.collider, ce.obstacle));
 
-		if (em.hasComponent(i.a, Damage.class) && em.hasComponent(i.b, Health.class))
-			world.getEventManager().sendEvent(EventEnum.DAMAGE, i);
+		if (em.hasComponent(ce.obstacle, Health.class) && em.hasComponent(ce.collider, Damage.class))
+			world.getEventManager().sendEvent(new DamageEvent(ce.collider, ce.obstacle));
 	}
 }

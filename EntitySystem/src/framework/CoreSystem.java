@@ -1,7 +1,7 @@
 package framework;
 
-import helpers.Data;
 import framework.enums.EventEnum;
+import framework.events.Event;
 import framework.managers.EntityManager;
 
 
@@ -25,7 +25,7 @@ public abstract class CoreSystem implements EventListener{
 	}
 
 	@Override
-	public void recieveEvent(Data i) {
+	public void recieveEvent(Event e) {
 		
 	}
 }
