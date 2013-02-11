@@ -34,6 +34,7 @@ import framework.components.Trigger;
 import framework.components.Velocity;
 import framework.components.Zombie;
 import framework.components.ZombieSpawner;
+import framework.enums.EventEnum;
 import framework.enums.LayerEnum;
 import framework.enums.StateEnum;
 import framework.managers.DataManager;
@@ -81,9 +82,9 @@ public class Level1State {
 		world.addSystem(new PhysicsSystem(world), StateEnum.LEVEL1);
 		world.addSystem(new IntersectionSystem(world), StateEnum.LEVEL1);
 
-		world.addSystem(new CollisionSystem(world), StateEnum.LEVEL1);
-		world.addSystem(new TriggerSystem(world), StateEnum.LEVEL1);
-		world.addSystem(new DamageSystem(world), StateEnum.LEVEL1);
+		world.addSystem(new CollisionSystem(world), StateEnum.LEVEL1).subscribe(EventEnum.COLLISION);
+		world.addSystem(new TriggerSystem(world), StateEnum.LEVEL1).subscribe(EventEnum.TRIGGER);
+		world.addSystem(new DamageSystem(world), StateEnum.LEVEL1).subscribe(EventEnum.DAMAGE);
 
 		world.addSystem(new EmitterSystem(world), StateEnum.LEVEL1);
 		world.addSystem(new MouseInputSystem(world), StateEnum.LEVEL1);

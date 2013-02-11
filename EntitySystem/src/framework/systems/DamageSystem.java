@@ -22,7 +22,6 @@ public class DamageSystem extends CoreSystem{
 	public DamageSystem(World w)
 	{
 		super(w);
-		this.event = EventEnum.DAMAGE;
 	}
 
 	@Override

@@ -24,7 +24,6 @@ public class CollisionSystem extends CoreSystem implements EventListener{
 	public CollisionSystem(World w)
 	{
 		super(w);
-		this.event = EventEnum.COLLISION;
 	}
 
 	@Override

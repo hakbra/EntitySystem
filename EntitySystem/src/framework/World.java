@@ -60,7 +60,7 @@ public class World {
 		EntityManager em = eManagers.get(s);
 		if (em == null)
 		{
-			em = new EntityManager(this);
+			em = new EntityManager(this, s);
 			eManagers.put(s, em);
 		}
 		return em;
@@ -76,7 +76,7 @@ public class World {
 		SystemManager sm = sManagers.get(s);
 		if (sm == null)
 		{
-			sm = new SystemManager(this);
+			sm = new SystemManager(this, s);
 			sManagers.put(s, sm);
 		}
 		return sm;
@@ -105,13 +105,13 @@ public class World {
 
 	public EventManager getEventManager(StateEnum s)
 	{
-		EventManager dm = evManagers.get(s);
-		if (dm == null)
+		EventManager em = evManagers.get(s);
+		if (em == null)
 		{
-			dm = new EventManager(this);
-			evManagers.put(s, dm);
+			em = new EventManager(this);
+			evManagers.put(s, em);
 		}
-		return dm;
+		return em;
 	}
 
 	public EventManager getEventManager()
@@ -130,12 +130,12 @@ public class World {
 		getEntityManager(s).addStringID(e);
 	}
 	
-	public void addSystem(CoreSystem cs, StateEnum s)
+	public CoreSystem addSystem(CoreSystem cs, StateEnum s)
 	{
 		cs.world = this;
+		cs.state = s;
 		getSystemManager(s).addSystem(cs);
-		if (cs.event != EventEnum.NONE)
-			getEventManager(s).addListener(cs.event, (EventListener) cs);
+		return cs;
 	}
 
 	public void runSystems() {

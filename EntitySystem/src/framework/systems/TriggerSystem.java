@@ -36,7 +36,6 @@ public class TriggerSystem extends CoreSystem implements EventListener{
 	public TriggerSystem(World w)
 	{
 		super(w);
-		this.event = EventEnum.TRIGGER;
 	}
 
 	@Override

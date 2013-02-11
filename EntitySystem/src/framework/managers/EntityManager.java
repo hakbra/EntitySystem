@@ -9,6 +9,7 @@ import framework.CoreComponent;
 import framework.CoreEntity;
 import framework.World;
 import framework.enums.LayerEnum;
+import framework.enums.StateEnum;
 
 
 
@@ -20,10 +21,12 @@ public class EntityManager{
     public ArrayList<CoreComponent> renders = new ArrayList<CoreComponent>();
     
     public World world;
+    public StateEnum state;
     
-    public EntityManager(World w)
+    public EntityManager(World w, StateEnum s)
     {
     	this.world = w;
+    	this.state = s;
     }
 
     public void addStringID(CoreEntity e)
