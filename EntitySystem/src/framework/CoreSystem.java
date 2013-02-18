@@ -32,4 +32,22 @@ public abstract class CoreSystem implements EventListener{
 	public void recieveEvent(Event e) {
 		
 	}
+	
+	public void stop()
+	{
+		enabled = false;
+	}
+	
+	public void start()
+	{
+		enabled = true;
+	}
+	
+	public void toggle()
+	{
+		if (enabled)
+			stop();
+		else
+			start();
+	}
 }

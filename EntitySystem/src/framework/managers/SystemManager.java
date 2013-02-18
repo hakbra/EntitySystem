@@ -36,19 +36,19 @@ public class SystemManager {
 	public void toggleSystem(Class c)
 	{
 		CoreSystem cs = systemMap.get(c);
-		cs.enabled = !cs.enabled;
+		cs.toggle();
 	}
 	
 	public void disableSystem(Class c)
 	{
 		CoreSystem cs = systemMap.get(c);
-		cs.enabled = false;
+		cs.stop();
 	}
 	
 	public void enableSystem(Class c)
 	{
 		CoreSystem cs = systemMap.get(c);
-		cs.enabled = true;
+		cs.start();
 	}
 
 	public void runSystems()
@@ -57,7 +57,6 @@ public class SystemManager {
 		for (int i = 0; i < systems.size(); i++)
 		{
 			CoreSystem sys = systems.get(i);
-			//System.out.println("  " + sys.getClass().getSimpleName());
 			if (sys.enabled)
 				sys.run(em);
 		}

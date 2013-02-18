@@ -2,33 +2,18 @@ package framework.systems.input;
 
 import helpers.Point;
 
-import java.util.Random;
-
 import org.lwjgl.input.Mouse;
 
 import zombies.states.Level1State;
-import zombies.states.MessageState;
 import engine.GLEngine;
-import framework.CoreSystem;
 import framework.CoreEntity;
+import framework.CoreSystem;
 import framework.World;
-import framework.components.Angle;
-import framework.components.AngleSpeed;
 import framework.components.Button;
-import framework.components.CollisionCircle;
-import framework.components.Collider;
-import framework.components.Damage;
-import framework.components.Follower;
-import framework.components.Health;
-import framework.components.Obstacle;
 import framework.components.CollisionPolygon;
-import framework.components.Position;
-import framework.components.Tex;
-import framework.components.Velocity;
-import framework.components.Zombie;
-import framework.enums.LayerEnum;
 import framework.enums.StateEnum;
 import framework.managers.EntityManager;
+import framework.systems.LightSystem;
 
 public class MouseInputSystem extends CoreSystem{
 
@@ -87,6 +72,10 @@ public class MouseInputSystem extends CoreSystem{
 					world.popState();
 					Level1State.init(world);
 					world.pushState(StateEnum.LEVEL1);
+				}
+				else if (button.type == "Light")
+				{
+					world.getSystemManager().toggleSystem(LightSystem.class);
 				}
 			}
 			else

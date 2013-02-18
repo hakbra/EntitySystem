@@ -68,4 +68,15 @@ public class LightSystem  extends CoreSystem{
 		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
 		GL14.glBlendEquation(GL14.GL_FUNC_ADD);
 	}
+	
+	@Override
+	public void stop()
+	{
+		super.stop();
+		glBindTexture(GL_TEXTURE_2D, 0);
+		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, world.getDataManager().getLightBufID()); 
+		glClearColor (1f, 1f, 1f, 0f);
+		glClear (GL_COLOR_BUFFER_BIT);
+		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
+	}
 }

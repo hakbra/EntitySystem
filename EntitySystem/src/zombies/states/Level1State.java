@@ -366,6 +366,15 @@ public class Level1State {
 		restartButton.components.add(new Text("Restart").setLayer(LayerEnum.TEXT));
 		restartButton.components.add(new Tex("button.png", new Point(100, 50)).setLayer(LayerEnum.HUD));
 		world.addEntity(restartButton, StateEnum.LEVEL1);
+
+		CoreEntity lightButton = new CoreEntity();
+		lightButton.name = "lightButton";
+		lightButton.components.add(CollisionPolygon.centerRectangle(new Point(40, 40)));
+		lightButton.components.add(new Position(new Point(30, 30), true));
+		lightButton.components.add(new Button("Light"));
+		lightButton.components.add(new Text("O").setLayer(LayerEnum.TEXT));
+		lightButton.components.add(new Tex("button.png", new Point(40, 40)).setLayer(LayerEnum.HUD));
+		world.addEntity(lightButton, StateEnum.LEVEL1);
 	}
 
 	private static void createZombies(World world)
