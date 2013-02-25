@@ -210,7 +210,7 @@ public class Level1State {
 		gun2.components.add(new CollisionCircle(30));
 		gun2.components.add(new Trigger("gun"));
 		gun2.components.add(new Tex("gun3.png", new Point(60, 60)).setLayer(LayerEnum.ITEM));
-		gun2.components.add(new Gun(5, 35, 10, 400, 10, "gun3.png"));
+		gun2.components.add(new Gun(5, 5, 10, 0, 50, "gun3.png"));
 		gun2.components.add(new Angle(0));
 		gun2.components.add(new AngleSpeed(1));
 		world.addEntity(gun2, StateEnum.LEVEL1);

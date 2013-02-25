@@ -10,7 +10,7 @@ public class Velocity extends CoreComponent{
 	public Velocity(Point d, double s)
 	{
 		this.dir = d;
-		this.speed = s;
+		this.speed = s * 2;
 		this.name = "Velocity";
 	}
 }

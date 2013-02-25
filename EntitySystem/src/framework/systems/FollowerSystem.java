@@ -50,8 +50,6 @@ public class FollowerSystem extends CoreSystem{
 				
 				double m = Math.abs(vel.norm().dot( new Point(oldAng).norm() ));
 				
-				vel.imult(m*m*m);
-				
 				if (delta > 0)
 					as.speed = 3;
 				else if (delta < 0)

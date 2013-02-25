@@ -5,23 +5,13 @@ import org.lwjgl.opengl.Display;
 
 public class Time {
 
+	public long lastFrameHigh;
+	public long lastFrame;
 	
-	private long lastFrame;
-	private long lastFPS;
-	private int fps;
-
 	public Time()
 	{
+		lastFrameHigh = -1;
 		lastFrame = -1;
-		lastFPS = 0;
-	}
-	
-	public int getDelta() {
-		long time = System.nanoTime();
-		int delta = (int) (time - lastFrame);
-		lastFrame = time;
-
-		return delta;
 	}
  
 	/**
@@ -37,25 +27,15 @@ public class Time {
 		 return (Sys.getTime() * 1000000000) / Sys.getTimerResolution();
 	}
  
-	/**
-	 * Calculate the FPS and set it in the title bar
-	 */
-	public void updateFPS() {
-		long time = getTime();
-		if (time - lastFPS > 1000000000) {
-			System.out.println(fps);
-			fps = 0;
-			lastFPS = time;
-		}
-		fps++;
-	}
 	
 	public void sync(int fps) {
-		if (lastFrame < 0){
-			lastFrame = getHighTime();
+		if (lastFrameHigh < 0){
+			lastFrameHigh = getHighTime();
 			return;
 		}
 		if (fps <= 0) return;
+		
+		lastFrame = getTime();
 		
 		long errorMargin = 1000*1000; // 1 millisecond error margin for Thread.sleep()
 		long sleepTime = 1000000000 / fps; // nanoseconds to sleep this frame
@@ -67,7 +47,7 @@ public class Time {
 		
 		try {
 			while (true) {
-				long t = getHighTime() - lastFrame;
+				long t = getHighTime() - lastFrameHigh;
 				
 				if (t < sleepTime - burnTime) {
 					Thread.sleep(1);
@@ -83,6 +63,6 @@ public class Time {
 			}
 		} catch (InterruptedException e) {}
 		
-		lastFrame = getHighTime() - overSleep;
+		lastFrameHigh = getHighTime() - overSleep;
 	}
 }

@@ -55,7 +55,6 @@ public class TriggerSystem extends CoreSystem implements EventListener{
 			if(em.getComponent(te.hero, Hero.class).parts < 1 && !em.hasComponent(te.trigger, Timer.class))
 			{
 				Point pos = em.getComponent(te.trigger, Position.class).position;
-				System.out.println("New message at " + pos);
 				CoreEntity msg = new CoreEntity();
 				msg.components.add(new Position(new Point(pos)));
 				msg.components.add(new Velocity(new Point(0, 1), 1));
@@ -69,17 +68,6 @@ public class TriggerSystem extends CoreSystem implements EventListener{
 			{
 				world.popState();
 				Level2State.init(world);
-
-				int j = 0;
-				for (CoreEntity h : em.getEntity(Hero.class))
-				{
-					em.getComponent(h, Position.class).position.set(50, 40 + 80*j);
-					em.getComponent(h, Velocity.class).dir.set(-4, 0);
-					em.getComponent(h, Angle.class).angle = 180.0;
-					em.getComponent(h, AngleSpeed.class).speed = 0.0;
-					world.addEntity(h, StateEnum.CUTSCENE);
-					j++;
-				}
 				world.pushState(StateEnum.LEVEL2);
 			}
 		}

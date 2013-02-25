@@ -54,9 +54,9 @@ public class PlayerInputSystem extends CoreSystem{
 			CollisionCircle circle 		= em.getComponent(e, CollisionCircle.class);
 			
 			if (Keyboard.isKeyDown(keyInput.left))
-				angleS.speed = 3;
+				angleS.speed = 6;
 			else if (Keyboard.isKeyDown(keyInput.right))
-				angleS.speed = -3;
+				angleS.speed = -6;
 			else
 				angleS.speed = 0;
 

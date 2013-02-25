@@ -39,7 +39,7 @@ public class Main
 
 			GLEngine.endRender();
 
-			t.sync(60);
+			t.sync(30);
 		}
 	}
 }

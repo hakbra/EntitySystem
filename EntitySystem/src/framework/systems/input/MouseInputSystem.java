@@ -5,6 +5,7 @@ import helpers.Point;
 import org.lwjgl.input.Mouse;
 
 import zombies.states.Level1State;
+import zombies.states.Level2State;
 import engine.GLEngine;
 import framework.CoreEntity;
 import framework.CoreSystem;
@@ -59,8 +60,8 @@ public class MouseInputSystem extends CoreSystem{
 				}
 				else if (button.type == "Play")
 				{
-					Level1State.init(world);
-					world.pushState(StateEnum.LEVEL1);
+					Level2State.init(world);
+					world.pushState(StateEnum.LEVEL2);
 					
 				}
 				else if (button.type == "Resume")
