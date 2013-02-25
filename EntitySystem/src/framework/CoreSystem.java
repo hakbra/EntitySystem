@@ -27,12 +27,6 @@ public abstract class CoreSystem implements EventListener{
 	{
 		world.getEventManager(state).addListener(type, this);
 	}
-
-	@Override
-	public void recieveEvent(Event e) {
-		
-	}
-	
 	public void stop()
 	{
 		enabled = false;
@@ -49,5 +43,10 @@ public abstract class CoreSystem implements EventListener{
 			stop();
 		else
 			start();
+	}
+
+	@Override
+	public void recieveEvent(Event e) {
+		
 	}
 }

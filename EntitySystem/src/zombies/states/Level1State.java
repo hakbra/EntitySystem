@@ -74,7 +74,7 @@ public class Level1State {
 		world.addSystem(new CameraSystem(world), StateEnum.LEVEL1);
 		world.addSystem(new LightSystem(world), StateEnum.LEVEL1);
 		world.addSystem(new RenderSystem(world), StateEnum.LEVEL1);
-		world.addSystem(new StatsSystem(world), StateEnum.LEVEL1);
+		world.addSystem(new StatsSystem(world), StateEnum.LEVEL1).subscribe(EventEnum.KILL);
 
 		world.addSystem(new PlayerInputSystem(world), StateEnum.LEVEL1);
 		world.addSystem(new PathSystem(world), StateEnum.LEVEL1);

@@ -60,8 +60,8 @@ public class MouseInputSystem extends CoreSystem{
 				}
 				else if (button.type == "Play")
 				{
-					Level2State.init(world);
-					world.pushState(StateEnum.LEVEL2);
+					Level1State.init(world);
+					world.pushState(StateEnum.LEVEL1);
 					
 				}
 				else if (button.type == "Resume")

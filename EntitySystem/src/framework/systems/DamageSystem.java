@@ -9,10 +9,10 @@ import framework.components.Damage;
 import framework.components.Health;
 import framework.components.Hero;
 import framework.components.Zombie;
-import framework.enums.EventEnum;
 import framework.enums.StateEnum;
 import framework.events.DamageEvent;
 import framework.events.Event;
+import framework.events.KillEvent;
 import framework.managers.EntityManager;
 
 
@@ -56,6 +56,15 @@ public class DamageSystem extends CoreSystem{
 		if (health.current <= 0)
 		{
 			em.removeEntity(de.receiver);
+			
+			String attackerName = "";
+			if (em.hasComponent(de.attacker, Bullet.class))
+				attackerName = em.getComponent(de.attacker, Bullet.class).owner.name;
+			else
+				attackerName = de.attacker.name;
+			
+			world.getEventManager().sendEvent(new KillEvent(attackerName + " killed " + de.receiver.name));
+			
 
 			if (em.hasComponent(de.receiver, Hero.class) && em.getEntity(Hero.class).size() == 1)
 			{
@@ -66,7 +75,7 @@ public class DamageSystem extends CoreSystem{
 			else if (em.hasComponent(de.attacker, Bullet.class))
 			{
 				Bullet bullet = em.getComponent(de.attacker, Bullet.class);
-				Hero hero = em.getComponent(bullet.parent, Hero.class);
+				Hero hero = em.getComponent(bullet.owner, Hero.class);
 				hero.kills++;
 			}
 		}

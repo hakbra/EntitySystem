@@ -12,7 +12,6 @@ import framework.components.Emitter;
 import framework.components.EmitterOnImpact;
 import framework.components.Position;
 import framework.components.Timer;
-import framework.enums.EventEnum;
 import framework.events.CollisionEvent;
 import framework.events.Event;
 import framework.managers.EntityManager;

@@ -2,23 +2,31 @@ package framework.systems.render;
 
 import helpers.Draw;
 import helpers.Point;
+import helpers.Time;
+
+import java.util.ArrayList;
+
 import engine.GLEngine;
 import framework.CoreEntity;
 import framework.CoreSystem;
+import framework.EventListener;
 import framework.World;
 import framework.components.Health;
 import framework.components.Hero;
 import framework.components.Position;
 import framework.components.Zombie;
+import framework.events.Event;
+import framework.events.KillEvent;
 import framework.managers.EntityManager;
 
-public class StatsSystem extends CoreSystem {
+public class StatsSystem extends CoreSystem  implements EventListener{
+	
+	private ArrayList<KillEvent> events = new ArrayList<KillEvent>();
 
 	public StatsSystem(World w)
 	{
 		super(w);
 	}
-
 
 	@Override
 	public void run(EntityManager em)
@@ -38,5 +46,19 @@ public class StatsSystem extends CoreSystem {
 			Draw.write(world.getDataManager().font, new Point(GLEngine.WIDTH - 100, GLEngine.HEIGHT - 140 -60*i), "Zombies: " + em.getEntity(Zombie.class).size());
 			i++;
 		}
+
+		for (int j = events.size()-1; j >= 0; j--)
+		{
+			KillEvent ke = events.get(j);
+			Draw.write(world.getDataManager().font, new Point(125, 75 + 25*j), ke.text);
+			if (Time.getTime() - ke.time > 3000)
+				events.remove(j);
+		}
+	}
+
+	@Override
+	public void recieveEvent(Event e) {
+		KillEvent ke = (KillEvent) e;
+		events.add(ke);
 	}
 }
