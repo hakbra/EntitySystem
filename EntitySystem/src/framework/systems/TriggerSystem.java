@@ -9,8 +9,6 @@ import framework.CoreEntity;
 import framework.CoreSystem;
 import framework.EventListener;
 import framework.World;
-import framework.components.Angle;
-import framework.components.AngleSpeed;
 import framework.components.GriffPart;
 import framework.components.Gun;
 import framework.components.Health;
@@ -22,10 +20,10 @@ import framework.components.Text;
 import framework.components.Timer;
 import framework.components.Trigger;
 import framework.components.Velocity;
-import framework.enums.EventEnum;
 import framework.enums.LayerEnum;
 import framework.enums.StateEnum;
 import framework.events.Event;
+import framework.events.StatusEvent;
 import framework.events.TriggerEvent;
 import framework.managers.EntityManager;
 
@@ -69,6 +67,7 @@ public class TriggerSystem extends CoreSystem implements EventListener{
 				world.popState();
 				Level2State.init(world);
 				world.pushState(StateEnum.LEVEL2);
+				world.getEventManager(StateEnum.LEVEL2).sendEvent(new StatusEvent(te.hero.name + " has descended"));
 			}
 		}
 
@@ -115,6 +114,8 @@ public class TriggerSystem extends CoreSystem implements EventListener{
 				em.addComponent(te.trigger, oldGun);
 				em.addComponent(te.trigger, new Timer(500, "selfDestruct"));
 				em.getComponent(te.trigger, Tex.class).texture = oldGun.tex;
+
+				world.getEventManager().sendEvent(new StatusEvent(te.hero.name + " has picked up a gun"));
 			}
 		}
 	}

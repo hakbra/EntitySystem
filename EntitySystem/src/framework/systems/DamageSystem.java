@@ -12,7 +12,7 @@ import framework.components.Zombie;
 import framework.enums.StateEnum;
 import framework.events.DamageEvent;
 import framework.events.Event;
-import framework.events.KillEvent;
+import framework.events.StatusEvent;
 import framework.managers.EntityManager;
 
 
@@ -63,7 +63,7 @@ public class DamageSystem extends CoreSystem{
 			else
 				attackerName = de.attacker.name;
 			
-			world.getEventManager().sendEvent(new KillEvent(attackerName + " killed " + de.receiver.name));
+			world.getEventManager().sendEvent(new StatusEvent(attackerName + " killed " + de.receiver.name));
 			
 
 			if (em.hasComponent(de.receiver, Hero.class) && em.getEntity(Hero.class).size() == 1)

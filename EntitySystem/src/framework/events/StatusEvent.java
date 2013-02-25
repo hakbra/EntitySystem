@@ -3,11 +3,11 @@ package framework.events;
 import framework.enums.EventEnum;
 import helpers.Time;
 
-public class KillEvent extends Event{
+public class StatusEvent extends Event{
 	public String text;
 	public long time;
 	
-	public KillEvent(String t)
+	public StatusEvent(String t)
 	{
 		this.type = EventEnum.KILL;
 		this.text = t;

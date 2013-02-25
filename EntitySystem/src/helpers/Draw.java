@@ -152,12 +152,20 @@ public class Draw {
 		glEnd();
 	}
 	
-	public static void write(MyFont f, Point p, String t)
+	public static void writeMid(MyFont f, Point p, String t)
 	{
 
 		double w = f.getWidth(t) - 8*t.length();
 		double h = f.getHeight();
 		
 		f.drawString((float) (p.x - w / 2), (float) (p.y - h / 2), t, 1, 1);
+	}
+
+	
+	public static void write(MyFont f, Point p, String t)
+	{
+		double h = f.getHeight();
+		
+		f.drawString((float) (p.x), (float) (p.y - h / 2), t, 1, 1);
 	}
 }

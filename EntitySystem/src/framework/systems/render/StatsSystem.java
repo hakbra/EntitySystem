@@ -16,12 +16,12 @@ import framework.components.Hero;
 import framework.components.Position;
 import framework.components.Zombie;
 import framework.events.Event;
-import framework.events.KillEvent;
+import framework.events.StatusEvent;
 import framework.managers.EntityManager;
 
 public class StatsSystem extends CoreSystem  implements EventListener{
 	
-	private ArrayList<KillEvent> events = new ArrayList<KillEvent>();
+	private ArrayList<StatusEvent> events = new ArrayList<StatusEvent>();
 
 	public StatsSystem(World w)
 	{
@@ -39,18 +39,18 @@ public class StatsSystem extends CoreSystem  implements EventListener{
 			Hero h = em.getComponent(hero, Hero.class);
 
 			int p = (int) (100 * health.current / health.max);
-			Draw.write(world.getDataManager().font, new Point(GLEngine.WIDTH - 100, GLEngine.HEIGHT - 40 -60*i), hero.name);
-			Draw.write(world.getDataManager().font, new Point(GLEngine.WIDTH - 100, GLEngine.HEIGHT - 65 -60*i), "Health: " + p + "%");
-			Draw.write(world.getDataManager().font, new Point(GLEngine.WIDTH - 100, GLEngine.HEIGHT - 90 -60*i), "Position: " + pos.intString());
-			Draw.write(world.getDataManager().font, new Point(GLEngine.WIDTH - 100, GLEngine.HEIGHT - 115 -60*i), "Kills: " + h.kills);
-			Draw.write(world.getDataManager().font, new Point(GLEngine.WIDTH - 100, GLEngine.HEIGHT - 140 -60*i), "Zombies: " + em.getEntity(Zombie.class).size());
+			Draw.writeMid(world.getDataManager().font, new Point(GLEngine.WIDTH - 100, GLEngine.HEIGHT - 40 -60*i), hero.name);
+			Draw.writeMid(world.getDataManager().font, new Point(GLEngine.WIDTH - 100, GLEngine.HEIGHT - 65 -60*i), "Health: " + p + "%");
+			Draw.writeMid(world.getDataManager().font, new Point(GLEngine.WIDTH - 100, GLEngine.HEIGHT - 90 -60*i), "Position: " + pos.intString());
+			Draw.writeMid(world.getDataManager().font, new Point(GLEngine.WIDTH - 100, GLEngine.HEIGHT - 115 -60*i), "Kills: " + h.kills);
+			Draw.writeMid(world.getDataManager().font, new Point(GLEngine.WIDTH - 100, GLEngine.HEIGHT - 140 -60*i), "Zombies: " + em.getEntity(Zombie.class).size());
 			i++;
 		}
 
 		for (int j = events.size()-1; j >= 0; j--)
 		{
-			KillEvent ke = events.get(j);
-			Draw.write(world.getDataManager().font, new Point(125, 75 + 25*j), ke.text);
+			StatusEvent ke = events.get(j);
+			Draw.write(world.getDataManager().font, new Point(25, 75 + 25*j), ke.text);
 			if (Time.getTime() - ke.time > 3000)
 				events.remove(j);
 		}
@@ -58,7 +58,7 @@ public class StatsSystem extends CoreSystem  implements EventListener{
 
 	@Override
 	public void recieveEvent(Event e) {
-		KillEvent ke = (KillEvent) e;
+		StatusEvent ke = (StatusEvent) e;
 		events.add(ke);
 	}
 }
