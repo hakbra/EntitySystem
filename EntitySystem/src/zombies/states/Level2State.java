@@ -1,5 +1,6 @@
 package zombies.states;
 
+import helpers.Color;
 import helpers.Point;
 
 import java.util.ArrayList;
@@ -28,6 +29,7 @@ import framework.components.Light;
 import framework.components.Obstacle;
 import framework.components.Pathfinder;
 import framework.components.Position;
+import framework.components.RenderPolygon;
 import framework.components.Tex;
 import framework.components.Text;
 import framework.components.Trigger;
@@ -136,7 +138,7 @@ public class Level2State {
 		CoreEntity light = new CoreEntity();
 		light.name = "light";
 		light.layer = LayerEnum.LIGHT;
-		light.components.add(new Position( new Point(MAPWIDTH / 2, MAPHEIGHT / 2)).setFixed());
+		light.components.add(new Position( new Point(MAPWIDTH / 2, MAPHEIGHT / 2)));
 		light.components.add(CollisionPolygon.centerRectangle(new Point(MAPWIDTH, MAPHEIGHT)));
 		light.components.add(new Tex("lightTex", new Point(MAPWIDTH, MAPHEIGHT)).setLayer(LayerEnum.LIGHT));
 		world.addEntity(light, StateEnum.LEVEL2);
@@ -232,7 +234,7 @@ public class Level2State {
 		rectangle.components.add(CollisionPolygon.centerRectangle(dim));
 		rectangle.components.add(new Angle(45));
 		rectangle.components.add(new AngleSpeed(0.2));
-		rectangle.components.add(new Tex("crate.png", dim).setLayer(LayerEnum.OBSTACLE));
+		rectangle.components.add(new Tex("crate.png", dim).setScale(new Point(50, 50)).setLayer(LayerEnum.OBSTACLE));
 		rectangle.components.add(new Position(new Point(MAPWIDTH / 2, MAPHEIGHT / 2)));
 		rectangle.components.add(new Obstacle());
 		world.addEntity(rectangle, StateEnum.LEVEL2);
@@ -243,6 +245,7 @@ public class Level2State {
 		border.components.add(CollisionPolygon.centerRectangle(new Point(MAPWIDTH, MAPHEIGHT)).setInverted());
 		border.components.add(new Position(new Point(MAPWIDTH / 2, MAPHEIGHT / 2)));
 		border.components.add(new Obstacle());
+		border.components.add(RenderPolygon.centerRectangle(new Point(MAPWIDTH, MAPHEIGHT), new Color(0.3, 0.3, 0.3)).wireframe().setLayer(LayerEnum.OBSTACLE));
 		world.addEntity(border, StateEnum.LEVEL2);
 	}
 

@@ -32,31 +32,31 @@ public class FollowerSystem extends CoreSystem{
 			Follower follower = em.getComponent(e, Follower.class);
 			Point pos = em.getComponent(e, Position.class).position;
 			Point vel = em.getComponent(e, Velocity.class).dir;
+			Angle a = em.getComponent(e, Angle.class);
+			AngleSpeed as = em.getComponent(e, AngleSpeed.class);
 			
-			Point dir = pf.getDir(pos, follower.limit);
-			vel.set(dir);
-			
-			if (follower.limit > 0 && dir.len() > 0)
-				follower.limit = -1;
+			Point dir = pf.getDir(pos);
 
-			if (em.hasComponents(e, Angle.class, AngleSpeed.class))
+			double oldAng = a.angle;
+			double newAng = dir.angle();
+			double delta = dir.angle( new Point(oldAng));
+			
+			double m = Math.abs(dir.norm().dot( new Point(oldAng).norm() ));
+			
+			if (delta > 0)
+				as.speed = 6;
+			else if (delta < 0)
+				as.speed = -6;
+			else
+				as.speed = 0;
+			
+			if (follower.limit <= 0 || (follower.limit > 0 && dir.len() < follower.limit))
 			{
-				
-				Angle a = em.getComponent(e, Angle.class);
-				AngleSpeed as = em.getComponent(e, AngleSpeed.class);
-				double oldAng = a.angle;
-				double newAng = vel.angle();
-				double delta = vel.angle( new Point(oldAng));
-				
-				double m = Math.abs(vel.norm().dot( new Point(oldAng).norm() ));
-				
-				if (delta > 0)
-					as.speed = 3;
-				else if (delta < 0)
-					as.speed = -3;
-				else
-					as.speed = 0;
+				vel.set(dir);
+				follower.limit = -1;
 			}
+			else
+				vel.set(new Point());
 		}
 	}
 }
