@@ -22,7 +22,6 @@ public class StartMenuState {
 		world.clearState(StateEnum.START_MENU);
 		
 		// Systems
-		world.addSystem(new LightSystem(world), StateEnum.START_MENU);
 		world.addSystem(new RenderSystem(world), StateEnum.START_MENU);
 		world.addSystem(new MouseInputSystem(world), StateEnum.START_MENU);
 		
@@ -41,7 +40,7 @@ public class StartMenuState {
 		runButton.name = "runButton";
 		runButton.layer = LayerEnum.HUD;
 		runButton.components.add(CollisionPolygon.centerRectangle(new Point(200, 100)));
-		runButton.components.add(new Position(new Point(GLEngine.WIDTH/2, 400)));
+		runButton.components.add(new Position(new Point(GLEngine.WIDTH/2, GLEngine.HEIGHT / 2)));
 		runButton.components.add(new Button("Play"));
 		runButton.components.add(new Text("Play").setLayer(LayerEnum.TEXT));
 		runButton.components.add(new Tex("button.png", new Point(200, 100)).setLayer(LayerEnum.HUD));
@@ -52,7 +51,7 @@ public class StartMenuState {
 		exitButton.name = "exitButton";
 		exitButton.layer = LayerEnum.HUD;
 		exitButton.components.add(CollisionPolygon.centerRectangle(new Point(200, 100)));
-		exitButton.components.add(new Position(new Point(GLEngine.WIDTH/2, 250)));
+		exitButton.components.add(new Position(new Point(GLEngine.WIDTH/2, GLEngine.HEIGHT / 2 - 150)));
 		exitButton.components.add(new Button("Exit"));
 		exitButton.components.add(new Text("Exit").setLayer(LayerEnum.TEXT));
 		exitButton.components.add(new Tex("button.png", new Point(200, 100)).setLayer(LayerEnum.HUD));
