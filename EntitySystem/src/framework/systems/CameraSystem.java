@@ -48,13 +48,13 @@ public class CameraSystem extends CoreSystem{
 			newPos.x = worldDim.x - dim.x;
 		if (newPos.y + dim.y > worldDim.y)
 			newPos.y = worldDim.y - dim.y;
-		
+		/*
 		if (dim.y > worldDim.y)
-			newPos.y = (worldDim.y - dim.y)/2;
+			newPos.y = worldDim.y / 2;
 		if (dim.x > worldDim.x)
-			newPos.x = (worldDim.x - dim.x)/2;
+			newPos.x = worldDim.x / 2;
+			*/
 		
 		pos.set(newPos);
 	}
 }
-

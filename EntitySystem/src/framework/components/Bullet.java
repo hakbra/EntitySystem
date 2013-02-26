@@ -5,10 +5,10 @@ import framework.CoreEntity;
 
 public class Bullet  extends CoreComponent{
 
-	public CoreEntity owner;
+	public CoreEntity parent;
 	
 	public Bullet(CoreEntity p)
 	{
-		this.owner = p;
+		this.parent = p;
 	}
 }

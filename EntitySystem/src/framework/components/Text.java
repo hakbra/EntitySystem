@@ -23,7 +23,7 @@ public class Text extends CoreComponent{
 	public void render()
 	{
 		Draw.setColor(Color.WHITE);
-		Draw.writeMid(world.getDataManager().font, new Point(), text);
+		Draw.write(world.getDataManager().font, new Point(), text);
 	}
 
 }

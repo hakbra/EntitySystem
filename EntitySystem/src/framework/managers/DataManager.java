@@ -88,7 +88,7 @@ public class DataManager {
 
 			glBindTexture(GL_TEXTURE_2D, lightTexID);
 			glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, GLEngine.WIDTH, GLEngine.HEIGHT, 0,GL_RGBA, GL_INT, (java.nio.ByteBuffer) null);
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, mapwidth, mapheight, 0,GL_RGBA, GL_INT, (java.nio.ByteBuffer) null);
 			glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT,GL_COLOR_ATTACHMENT0_EXT,GL_TEXTURE_2D, lightTexID, 0);
 
 			glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);

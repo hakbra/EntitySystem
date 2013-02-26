@@ -16,7 +16,6 @@ import helpers.Point;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL14;
 
-import engine.GLEngine;
 import framework.CoreSystem;
 import framework.CoreEntity;
 import framework.World;
@@ -47,11 +46,8 @@ public class LightSystem  extends CoreSystem{
 		GL14.glBlendEquation(GL14.GL_MIN);
 		glColorMask(false, false, false, true);
 		
-		double xratio = (double) GLEngine.WIDTH / world.getDataManager().mapwidth;
-		double yratio = (double) GLEngine.HEIGHT / world.getDataManager().mapheight;
-		
 		GL11.glPushMatrix();
-		GL11.glScaled(xratio, yratio, 1);
+		Draw.translate(trans);
 		for (CoreEntity e : em.getEntityAll(Light.class))
 		{
 			Light l = em.getComponent(e, Light.class);
@@ -79,7 +75,7 @@ public class LightSystem  extends CoreSystem{
 		super.stop();
 		glBindTexture(GL_TEXTURE_2D, 0);
 		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, world.getDataManager().getLightBufID()); 
-		glClearColor (0.1f, 0.1f, 0.1f, 1f);
+		glClearColor (1f, 1f, 1f, 0f);
 		glClear (GL_COLOR_BUFFER_BIT);
 		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
 	}

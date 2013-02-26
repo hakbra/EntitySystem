@@ -82,7 +82,7 @@ public class Pathfinder extends CoreComponent{
 		return true;
 	}
 
-	public Point getDir(Point p)
+	public Point getDir(Point p, double limit)
 	{
 		double min = -1;
 		Node node = null;
@@ -107,8 +107,10 @@ public class Pathfinder extends CoreComponent{
 
 		if (node == null)
 			return new Point();
+		if (limit > 0 && node.value > limit)
+			return new Point();
 
-		return node.pos.sub(p).norm(node.value);
+		return node.pos.sub(p).norm();
 	}
 
 	public Node getNode(Point p)

@@ -1,6 +1,5 @@
 package zombies.states;
 
-import helpers.Color;
 import helpers.Point;
 
 import java.util.ArrayList;
@@ -29,7 +28,6 @@ import framework.components.Light;
 import framework.components.Obstacle;
 import framework.components.Pathfinder;
 import framework.components.Position;
-import framework.components.RenderPolygon;
 import framework.components.Tex;
 import framework.components.Text;
 import framework.components.Trigger;
@@ -76,7 +74,7 @@ public class Level1State {
 		world.addSystem(new CameraSystem(world), StateEnum.LEVEL1);
 		world.addSystem(new LightSystem(world), StateEnum.LEVEL1);
 		world.addSystem(new RenderSystem(world), StateEnum.LEVEL1);
-		world.addSystem(new StatsSystem(world), StateEnum.LEVEL1).subscribe(EventEnum.KILL);
+		world.addSystem(new StatsSystem(world), StateEnum.LEVEL1);
 
 		world.addSystem(new PlayerInputSystem(world), StateEnum.LEVEL1);
 		world.addSystem(new PathSystem(world), StateEnum.LEVEL1);
@@ -138,7 +136,7 @@ public class Level1State {
 		CoreEntity light = new CoreEntity();
 		light.name = "light";
 		light.layer = LayerEnum.LIGHT;
-		light.components.add(new Position( new Point(MAPWIDTH / 2, MAPHEIGHT / 2)));
+		light.components.add(new Position( new Point(MAPWIDTH / 2, MAPHEIGHT / 2)).setFixed());
 		light.components.add(CollisionPolygon.centerRectangle(new Point(MAPWIDTH, MAPHEIGHT)));
 		light.components.add(new Tex("lightTex", new Point(MAPWIDTH, MAPHEIGHT)).setLayer(LayerEnum.LIGHT));
 		world.addEntity(light, StateEnum.LEVEL1);
@@ -212,7 +210,7 @@ public class Level1State {
 		gun2.components.add(new CollisionCircle(30));
 		gun2.components.add(new Trigger("gun"));
 		gun2.components.add(new Tex("gun3.png", new Point(60, 60)).setLayer(LayerEnum.ITEM));
-		gun2.components.add(new Gun(15, 5, 10, 50, 4, "gun3.png"));
+		gun2.components.add(new Gun(5, 5, 10, 0, 50, "gun3.png"));
 		gun2.components.add(new Angle(0));
 		gun2.components.add(new AngleSpeed(1));
 		world.addEntity(gun2, StateEnum.LEVEL1);
@@ -325,7 +323,6 @@ public class Level1State {
 		border.components.add(CollisionPolygon.centerRectangle(new Point(MAPWIDTH, MAPHEIGHT)).setInverted());
 		border.components.add(new Position(new Point(MAPWIDTH / 2, MAPHEIGHT / 2)));
 		border.components.add(new Obstacle());
-		border.components.add(RenderPolygon.centerRectangle(new Point(MAPWIDTH, MAPHEIGHT), new Color(0.3, 0.3, 0.3)).wireframe().setLayer(LayerEnum.OBSTACLE));
 		world.addEntity(border, StateEnum.LEVEL1);
 	}
 
