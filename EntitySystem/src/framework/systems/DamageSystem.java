@@ -74,6 +74,5 @@ public class DamageSystem extends CoreSystem implements EventListener{
 		}
 
 		dam.time = Time.getTime();
-
 	}
 }

@@ -28,7 +28,7 @@ public class GLEngine {
 		try
 		{
 			//Display
-			setWindow(true);
+			setWindow(false);
 			Display.setVSyncEnabled(true);
 			Display.setTitle("entitySystem");
 			//System.setProperty("org.lwjgl.opengl.Window.undecorated","true");

@@ -59,6 +59,7 @@ public class TriggerSystem extends CoreSystem implements EventListener{
 			}
 			else if(em.getComponent(te.hero, Hero.class).parts >= 1)
 			{
+				world.setState(StateEnum.LEVEL2);
 				Level2State.init(world);
 				world.getEventManager().sendEvent(new StatusEvent(te.hero.name + " has descended"));
 			}

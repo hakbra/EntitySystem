@@ -73,7 +73,7 @@ public class PlayerInputSystem extends CoreSystem{
 					Point origin = new Point(angle.angle).mult(circle.getRadius());
 					Point position = new Point(pos.add(origin));
 					int time = 500 + r.nextInt(100);
-					float speed = gun.speed + r.nextFloat()*2 - 1;
+					float speed = gun.speed + r.nextFloat();
 					
 					CoreEntity bullet = new CoreEntity();
 					bullet.name = "Bullet";

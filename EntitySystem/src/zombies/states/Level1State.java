@@ -102,7 +102,7 @@ public class Level1State {
 		player.components.add(new Angle(0));
 		player.components.add(new AngleSpeed(0));
 		player.components.add(new KeyInput(Keyboard.KEY_A, Keyboard.KEY_D, Keyboard.KEY_W, Keyboard.KEY_S, Keyboard.KEY_SPACE, Keyboard.KEY_E));
-		player.components.add(new Gun(5, 0, 10, 100, 2, "gun1.png"));
+		player.components.add(new Gun(5, 5, 10, 0, 1, "gun1.png"));
 		player.components.add(new Health());
 		player.components.add(new Collider(4));
 		player.components.add(new Obstacle());

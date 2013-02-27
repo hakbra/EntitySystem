@@ -12,6 +12,6 @@ public class Hero extends CoreComponent{
 	{
 		score = 0;
 		kills = 0;
-		parts = 0;
+		parts = 1;
 	}
 }
