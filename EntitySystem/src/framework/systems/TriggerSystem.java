@@ -31,11 +31,6 @@ import framework.managers.EntityManager;
 public class TriggerSystem extends CoreSystem implements EventListener{
 
 
-	public TriggerSystem(World w)
-	{
-		super(w);
-	}
-
 	@Override
 	public void run(EntityManager em)
 	{
@@ -64,10 +59,8 @@ public class TriggerSystem extends CoreSystem implements EventListener{
 			}
 			else if(em.getComponent(te.hero, Hero.class).parts >= 1)
 			{
-				world.popState();
 				Level2State.init(world);
-				world.pushState(StateEnum.LEVEL2);
-				world.getEventManager(StateEnum.LEVEL2).sendEvent(new StatusEvent(te.hero.name + " has descended"));
+				world.getEventManager().sendEvent(new StatusEvent(te.hero.name + " has descended"));
 			}
 		}
 

@@ -19,11 +19,9 @@ public class StartMenuState {
 
 	public static void init(World world)
 	{
-		world.clearState(StateEnum.START_MENU);
-		
 		// Systems
-		world.addSystem(new RenderSystem(world), StateEnum.START_MENU);
-		world.addSystem(new MouseInputSystem(world), StateEnum.START_MENU);
+		world.addSystem(new RenderSystem());
+		world.addSystem(new MouseInputSystem());
 		
 		//Buttons
 		CoreEntity screenButton = new CoreEntity();
@@ -33,7 +31,7 @@ public class StartMenuState {
 		screenButton.components.add(new Button("Screen"));
 		screenButton.components.add(new Text("Screen").setLayer(LayerEnum.TEXT));
 		screenButton.components.add(new Tex("button.png", new Point(100, 50)).setLayer(LayerEnum.HUD));
-		world.addEntity(screenButton, StateEnum.START_MENU);
+		world.addEntity(screenButton);
 
 		CoreEntity runButton = new CoreEntity();
 		runButton.name = "runButton";
@@ -42,8 +40,7 @@ public class StartMenuState {
 		runButton.components.add(new Button("Play"));
 		runButton.components.add(new Text("Play").setLayer(LayerEnum.TEXT));
 		runButton.components.add(new Tex("button.png", new Point(200, 100)).setLayer(LayerEnum.HUD));
-		world.addEntity(runButton, StateEnum.START_MENU);
-		world.registerID(runButton, StateEnum.START_MENU);
+		world.addEntity(runButton);
 
 		CoreEntity exitButton = new CoreEntity();
 		exitButton.name = "exitButton";
@@ -52,7 +49,7 @@ public class StartMenuState {
 		exitButton.components.add(new Button("Exit"));
 		exitButton.components.add(new Text("Exit").setLayer(LayerEnum.TEXT));
 		exitButton.components.add(new Tex("button.png", new Point(200, 100)).setLayer(LayerEnum.HUD));
-		world.addEntity(exitButton, StateEnum.START_MENU);
+		world.addEntity(exitButton);
 	}
 	
 }

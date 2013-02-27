@@ -22,10 +22,6 @@ import framework.managers.EntityManager;
 
 public class EmitterSystem extends CoreSystem{
 
-	public EmitterSystem(World w)
-	{
-		super(w);
-	}
 
 	@Override
 	public void run(EntityManager em)

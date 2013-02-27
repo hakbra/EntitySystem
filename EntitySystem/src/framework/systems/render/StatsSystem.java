@@ -23,11 +23,6 @@ public class StatsSystem extends CoreSystem  implements EventListener{
 	
 	private ArrayList<StatusEvent> events = new ArrayList<StatusEvent>();
 
-	public StatsSystem(World w)
-	{
-		super(w);
-	}
-
 	@Override
 	public void run(EntityManager em)
 	{

@@ -65,34 +65,33 @@ public class Level1State {
 
 	public static void init(World world)
 	{
-		world.clearState(StateEnum.LEVEL1);
-		
-		DataManager dm = world.getDataManager(StateEnum.LEVEL1);
+		DataManager dm = world.getDataManager();
 		dm.mapwidth = MAPWIDTH;
 		dm.mapheight = MAPHEIGHT;
 
 		//Systems
 
-		world.addSystem(new CameraSystem(world), StateEnum.LEVEL1);
-		world.addSystem(new LightSystem(world), StateEnum.LEVEL1);
-		world.addSystem(new RenderSystem(world), StateEnum.LEVEL1);
-		world.addSystem(new StatsSystem(world), StateEnum.LEVEL1).subscribe(EventEnum.KILL);
-
-		world.addSystem(new PlayerInputSystem(world), StateEnum.LEVEL1);
-		world.addSystem(new PathSystem(world), StateEnum.LEVEL1);
-		world.addSystem(new FollowerSystem(world), StateEnum.LEVEL1);
-		world.addSystem(new PhysicsSystem(world), StateEnum.LEVEL1);
-		world.addSystem(new IntersectionSystem(world), StateEnum.LEVEL1);
-
-		world.addSystem(new CollisionSystem(world), StateEnum.LEVEL1).subscribe(EventEnum.COLLISION);
-		world.addSystem(new TriggerSystem(world), StateEnum.LEVEL1).subscribe(EventEnum.TRIGGER);
-		world.addSystem(new DamageSystem(world), StateEnum.LEVEL1).subscribe(EventEnum.DAMAGE);
-
-		world.addSystem(new EmitterSystem(world), StateEnum.LEVEL1);
-		world.addSystem(new MouseInputSystem(world), StateEnum.LEVEL1);
-		world.addSystem(new KeyInputSystem(world), StateEnum.LEVEL1);
-		world.addSystem(new ZombieSpawnSystem(world), StateEnum.LEVEL1);
-		world.addSystem(new TimerSystem(world), StateEnum.LEVEL1);
+		world.addSystem(new CameraSystem());
+		world.addSystem(new LightSystem());
+		
+		world.addSystem(new RenderSystem());
+		world.addSystem(new StatsSystem()).subscribe(EventEnum.KILL);
+		
+		world.addSystem(new PlayerInputSystem());
+		world.addSystem(new PathSystem());
+		world.addSystem(new FollowerSystem());
+		world.addSystem(new PhysicsSystem());
+		world.addSystem(new IntersectionSystem());
+		
+		world.addSystem(new CollisionSystem()).subscribe(EventEnum.COLLISION);
+		world.addSystem(new TriggerSystem()).subscribe(EventEnum.TRIGGER);
+		world.addSystem(new DamageSystem()).subscribe(EventEnum.DAMAGE);
+		
+		world.addSystem(new EmitterSystem());
+		world.addSystem(new MouseInputSystem());
+		world.addSystem(new KeyInputSystem());
+		world.addSystem(new ZombieSpawnSystem());
+		world.addSystem(new TimerSystem());
 
 		CoreEntity player = new CoreEntity();
 		player.name = "Player 1";
@@ -109,36 +108,36 @@ public class Level1State {
 		player.components.add(new Obstacle());
 		player.components.add(new Light(300));
 		player.components.add(new Tex("man.png", new Point(40, 40)).setLayer(LayerEnum.MOVER));
-		world.addEntity(player, StateEnum.LEVEL1);
-		world.registerID(player, StateEnum.LEVEL1);
+		world.addEntity(player);
+		world.registerID(player);
 
 		CoreEntity camera = new CoreEntity();
 		camera.name = "camera";
 		camera.components.add(new Position( new Point()));
 		camera.components.add(CollisionPolygon.rectangle( new Point(GLEngine.WIDTH, GLEngine.HEIGHT)));
-		world.addEntity(camera, StateEnum.LEVEL1);
-		world.registerID(camera, StateEnum.LEVEL1);
+		world.addEntity(camera);
+		world.registerID(camera);
 
 		CoreEntity path = new CoreEntity();
 		path.name = "path";
 		path.components.add(new Pathfinder(new Point(0, 0), new Point(MAPWIDTH, MAPHEIGHT), 20));
-		world.addEntity(path, StateEnum.LEVEL1);
-		world.registerID(path, StateEnum.LEVEL1);
+		world.addEntity(path);
+		world.registerID(path);
 
 		CoreEntity ground = new CoreEntity();
 		ground.name = "ground";
 		ground.components.add(new Position( new Point(MAPWIDTH / 2, MAPHEIGHT / 2)));
 		ground.components.add(CollisionPolygon.centerRectangle(new Point(MAPWIDTH, MAPHEIGHT)));
 		ground.components.add(new Tex("bush.png", new Point(MAPWIDTH, MAPHEIGHT)).setScale(new Point(30, 19)).setLayer(LayerEnum.GROUND));
-		world.addEntity(ground, StateEnum.LEVEL1);
-		world.registerID(ground, StateEnum.LEVEL1);
+		world.addEntity(ground);
+		world.registerID(ground);
 
 		CoreEntity light = new CoreEntity();
 		light.name = "light";
 		light.components.add(new Position( new Point(MAPWIDTH / 2, MAPHEIGHT / 2)));
 		light.components.add(CollisionPolygon.centerRectangle(new Point(MAPWIDTH, MAPHEIGHT)));
 		light.components.add(new Tex("lightTex", new Point(MAPWIDTH, MAPHEIGHT)).setLayer(LayerEnum.LIGHT));
-		world.addEntity(light, StateEnum.LEVEL1);
+		world.addEntity(light);
 
 		CoreEntity exit = new CoreEntity();
 		exit.name = "exit1";
@@ -147,7 +146,7 @@ public class Level1State {
 		exit.components.add(new Trigger("exit1"));
 		exit.components.add(new Tex("exit.png", new Point(50, 50)).setLayer(LayerEnum.ITEM));
 		exit.components.add(new Angle(0));
-		world.addEntity(exit, StateEnum.LEVEL1);
+		world.addEntity(exit);
 
 		createButtons(world);
 		createItems(world);
@@ -172,7 +171,7 @@ public class Level1State {
 			spawn.name = "spawn";
 			spawn.components.add(new Position(p));
 			spawn.components.add(new ZombieSpawner(5000));
-			world.addEntity(spawn, StateEnum.LEVEL1);
+			world.addEntity(spawn);
 		}
 	}
 
@@ -186,7 +185,7 @@ public class Level1State {
 		health.components.add(new Trigger("health"));
 		health.components.add(new Angle(0));
 		health.components.add(new AngleSpeed(1));
-		world.addEntity(health, StateEnum.LEVEL1);
+		world.addEntity(health);
 
 		CoreEntity gun = new CoreEntity();
 		gun.name = "gun";
@@ -197,7 +196,7 @@ public class Level1State {
 		gun.components.add(new Gun(5, 10, 10, 400, 20, "gun2.png"));
 		gun.components.add(new Angle(0));
 		gun.components.add(new AngleSpeed(1));
-		world.addEntity(gun, StateEnum.LEVEL1);
+		world.addEntity(gun);
 
 		CoreEntity gun2 = new CoreEntity();
 		gun2.name = "gun2";
@@ -208,7 +207,7 @@ public class Level1State {
 		gun2.components.add(new Gun(15, 5, 10, 50, 4, "gun3.png"));
 		gun2.components.add(new Angle(0));
 		gun2.components.add(new AngleSpeed(1));
-		world.addEntity(gun2, StateEnum.LEVEL1);
+		world.addEntity(gun2);
 
 		CoreEntity griffPart = new CoreEntity();
 		griffPart.name = "griffPart";
@@ -219,7 +218,7 @@ public class Level1State {
 		griffPart.components.add(new GriffPart("Apple"));
 		griffPart.components.add(new Angle(0));
 		griffPart.components.add(new AngleSpeed(1));
-		world.addEntity(griffPart, StateEnum.LEVEL1);
+		world.addEntity(griffPart);
 	}
 
 	private static void createWalls(World world) {
@@ -307,7 +306,7 @@ public class Level1State {
 				rectangle.components.add(new Position(p.remove(0).add(dim.div(2))));
 			}
 			rectangle.components.add(new Obstacle());
-			world.addEntity(rectangle, StateEnum.LEVEL1);
+			world.addEntity(rectangle);
 
 		}
 
@@ -317,7 +316,7 @@ public class Level1State {
 		border.components.add(new Position(new Point(MAPWIDTH / 2, MAPHEIGHT / 2)));
 		border.components.add(new Obstacle());
 		border.components.add(RenderPolygon.centerRectangle(new Point(MAPWIDTH, MAPHEIGHT), new Color(0.3, 0.3, 0.3)).wireframe().setLayer(LayerEnum.OBSTACLE));
-		world.addEntity(border, StateEnum.LEVEL1);
+		world.addEntity(border);
 	}
 
 	private static void createButtons(World world)
@@ -329,7 +328,7 @@ public class Level1State {
 		exitButton2.components.add(new Button("Exit"));
 		exitButton2.components.add(new Text("Exit").setLayer(LayerEnum.TEXT));
 		exitButton2.components.add(new Tex("button.png", new Point(100, 50)).setLayer(LayerEnum.HUD));
-		world.addEntity(exitButton2, StateEnum.LEVEL1);
+		world.addEntity(exitButton2);
 
 		CoreEntity menuButton = new CoreEntity();
 		menuButton.name = "button";
@@ -338,7 +337,7 @@ public class Level1State {
 		menuButton.components.add(new Button("Menu"));
 		menuButton.components.add(new Text("Menu").setLayer(LayerEnum.TEXT));
 		menuButton.components.add(new Tex("button.png", new Point(100, 50)).setLayer(LayerEnum.HUD));
-		world.addEntity(menuButton, StateEnum.LEVEL1);
+		world.addEntity(menuButton);
 
 		CoreEntity screenButton = new CoreEntity();
 		screenButton.name = "screenButton";
@@ -347,7 +346,7 @@ public class Level1State {
 		screenButton.components.add(new Button("Screen"));
 		screenButton.components.add(new Text("Screen").setLayer(LayerEnum.TEXT));
 		screenButton.components.add(new Tex("button.png", new Point(100, 50)).setLayer(LayerEnum.HUD));
-		world.addEntity(screenButton, StateEnum.LEVEL1);
+		world.addEntity(screenButton);
 
 		CoreEntity restartButton = new CoreEntity();
 		restartButton.name = "restartButton";
@@ -356,7 +355,7 @@ public class Level1State {
 		restartButton.components.add(new Button("Restart"));
 		restartButton.components.add(new Text("Restart").setLayer(LayerEnum.TEXT));
 		restartButton.components.add(new Tex("button.png", new Point(100, 50)).setLayer(LayerEnum.HUD));
-		world.addEntity(restartButton, StateEnum.LEVEL1);
+		world.addEntity(restartButton);
 
 		CoreEntity lightButton = new CoreEntity();
 		lightButton.name = "lightButton";
@@ -365,7 +364,7 @@ public class Level1State {
 		lightButton.components.add(new Button("Light"));
 		lightButton.components.add(new Text("O").setLayer(LayerEnum.TEXT));
 		lightButton.components.add(new Tex("button.png", new Point(40, 40)).setLayer(LayerEnum.HUD));
-		world.addEntity(lightButton, StateEnum.LEVEL1);
+		world.addEntity(lightButton);
 	}
 
 	private static void createZombies(World world)
@@ -410,7 +409,7 @@ public class Level1State {
 			zombie.components.add(new Angle(0));
 			zombie.components.add(new AngleSpeed(0));
 			zombie.components.add(new Tex("zombie.png", new Point(40, 40)).setLayer(LayerEnum.MOVER));
-			world.addEntity(zombie, StateEnum.LEVEL1);
+			world.addEntity(zombie);
 		}
 
 	}

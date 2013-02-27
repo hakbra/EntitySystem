@@ -15,10 +15,6 @@ import framework.managers.EntityManager;
 
 public class DirectFollowerSystem extends CoreSystem{
 
-	public DirectFollowerSystem(World w)
-	{
-		super(w);
-	}
 
 	@Override
 	public void run(EntityManager em)

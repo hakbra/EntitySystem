@@ -23,9 +23,11 @@ public class Main
 	{
 		GLEngine.init();
 		t = new Time();
-		world = new World(StateEnum.START_MENU);
-		StartMenuState.init(world);
+		world = new World();
+		world.setState(StateEnum.GAME_MENU);
 		GameMenuState.init(world);
+		world.setState(StateEnum.START_MENU);
+		StartMenuState.init(world);
 	}
 
 	public void run()

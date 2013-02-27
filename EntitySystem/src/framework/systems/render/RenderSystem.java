@@ -27,11 +27,6 @@ import framework.components.Tex;
 import framework.managers.EntityManager;
 
 public class RenderSystem extends CoreSystem {
-
-	public RenderSystem(World w)
-	{
-		super(w);
-	}
 	
 	private void transform(EntityManager em, CoreEntity e, Point camPos)
 	{

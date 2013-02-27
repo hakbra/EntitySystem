@@ -27,9 +27,6 @@ import framework.managers.EntityManager;
 
 public class LightSystem  extends CoreSystem{
 
-	public LightSystem(World w) {
-		super(w);
-	}
 
 	public void run(EntityManager em)
 	{

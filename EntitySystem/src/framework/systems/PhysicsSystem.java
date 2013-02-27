@@ -18,11 +18,6 @@ import framework.managers.EntityManager;
 
 public class PhysicsSystem extends CoreSystem{
 	
-	public PhysicsSystem(World w)
-	{
-		super(w);
-	}
-	
 	@Override
 	public void run(EntityManager em)
 	{

@@ -21,10 +21,6 @@ import framework.managers.EntityManager;
 
 public class PathSystem extends CoreSystem{
 
-	public PathSystem(World w)
-	{
-		super(w);
-	}
 
 	@Override
 	public void run(EntityManager em)

@@ -10,8 +10,6 @@ import framework.components.Position;
 import framework.components.Tex;
 import framework.components.Text;
 import framework.enums.LayerEnum;
-import framework.enums.StateEnum;
-import framework.systems.LightSystem;
 import framework.systems.input.MouseInputSystem;
 import framework.systems.render.RenderSystem;
 
@@ -19,12 +17,9 @@ public class GameMenuState {
 
 	public static void init(World world)
 	{
-		world.clearState(StateEnum.GAME_MENU);
-		
 		// Systems
-		world.addSystem(new LightSystem(world), StateEnum.GAME_MENU);
-		world.addSystem(new RenderSystem(world), StateEnum.GAME_MENU);
-		world.addSystem(new MouseInputSystem(world), StateEnum.GAME_MENU);
+		world.addSystem(new RenderSystem());
+		world.addSystem(new MouseInputSystem());
 		
 		//Buttons
 		CoreEntity screenButton = new CoreEntity();
@@ -34,7 +29,7 @@ public class GameMenuState {
 		screenButton.components.add(new Button("Screen"));
 		screenButton.components.add(new Text("Screen").setLayer(LayerEnum.TEXT));
 		screenButton.components.add(new Tex("button.png", new Point(100, 50)).setLayer(LayerEnum.HUD));
-		world.addEntity(screenButton, StateEnum.GAME_MENU);
+		world.addEntity(screenButton);
 
 		CoreEntity runButton = new CoreEntity();
 		runButton.name = "runButton";
@@ -43,8 +38,7 @@ public class GameMenuState {
 		runButton.components.add(new Button("Resume"));
 		runButton.components.add(new Text("Resume").setLayer(LayerEnum.TEXT));
 		runButton.components.add(new Tex("button.png", new Point(200, 100)).setLayer(LayerEnum.HUD));
-		world.addEntity(runButton, StateEnum.GAME_MENU);
-		world.registerID(runButton, StateEnum.GAME_MENU);
+		world.addEntity(runButton);
 
 		CoreEntity exitButton = new CoreEntity();
 		exitButton.name = "exitButton";
@@ -53,7 +47,7 @@ public class GameMenuState {
 		exitButton.components.add(new Button("Exit"));
 		exitButton.components.add(new Text("Exit").setLayer(LayerEnum.TEXT));
 		exitButton.components.add(new Tex("button.png", new Point(200, 100)).setLayer(LayerEnum.HUD));
-		world.addEntity(exitButton, StateEnum.GAME_MENU);
+		world.addEntity(exitButton);
 	}
 	
 }

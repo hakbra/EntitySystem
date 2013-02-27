@@ -18,10 +18,6 @@ import framework.systems.LightSystem;
 
 public class MouseInputSystem extends CoreSystem{
 
-	public MouseInputSystem(World w)
-	{
-		super(w);
-	}
 	
 	@Override
 	public void run(EntityManager em)
@@ -52,27 +48,25 @@ public class MouseInputSystem extends CoreSystem{
 				}
 				else if (button.type == "Menu")
 				{
-					world.pushState(StateEnum.GAME_MENU);
+					world.setState(StateEnum.GAME_MENU);
 				}
 				else if (button.type == "Exit")
 				{
-					world.pushState(StateEnum.EXIT);
+					world.setState(StateEnum.EXIT);
 				}
 				else if (button.type == "Play")
 				{
-					Level2State.init(world);
-					world.pushState(StateEnum.LEVEL2);
-					
+					world.setStateAndClear(StateEnum.LEVEL1);
+					Level1State.init(world);
 				}
 				else if (button.type == "Resume")
 				{
-					world.popState();
+					world.setState(StateEnum.LEVEL1);
 				}
 				else if (button.type == "Restart")
 				{
-					world.popState();
+					world.setStateAndClear(StateEnum.LEVEL1);
 					Level1State.init(world);
-					world.pushState(StateEnum.LEVEL1);
 				}
 				else if (button.type == "Light")
 				{

@@ -28,11 +28,6 @@ import framework.managers.EntityManager;
 
 public class ZombieSpawnSystem extends CoreSystem{
 
-	public ZombieSpawnSystem(World w)
-	{
-		super(w);
-	}
-
 	@Override
 	public void run(EntityManager em)
 	{

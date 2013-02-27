@@ -34,11 +34,6 @@ import framework.managers.EntityManager;
 public class PlayerInputSystem extends CoreSystem{
 	
 	public static float s = 2f;
-
-	public PlayerInputSystem(World w)
-	{
-		super(w);
-	}
 	
 	@Override
 	public void run(EntityManager em)

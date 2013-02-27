@@ -12,10 +12,6 @@ import framework.managers.EntityManager;
 
 public class CameraSystem extends CoreSystem{
 
-	public CameraSystem(World w)
-	{
-		super(w);
-	}
 
 	@Override
 	public void run(EntityManager em)

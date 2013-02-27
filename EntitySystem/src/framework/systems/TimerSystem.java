@@ -9,11 +9,6 @@ import framework.components.Timer;
 import framework.managers.EntityManager;
 
 public class TimerSystem extends CoreSystem{
-
-	public TimerSystem(World w)
-	{
-		super(w);
-	}
 	
 	@Override
 	public void run(EntityManager em)
@@ -34,10 +29,8 @@ public class TimerSystem extends CoreSystem{
 					em.addComponent(e, new Light(200));
 					em.addComponent(e, new Timer(15000));
 				}
-				else if (timer.type == "message")
-				{
-					world.popState();
-				}
+				else
+					System.out.println("Unknown timer-type " + timer.type);
 			}
 		}
 	}

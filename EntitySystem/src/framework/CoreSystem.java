@@ -18,16 +18,11 @@ public abstract class CoreSystem{
 	{
 		this.enabled = true;
 	}
-	public CoreSystem(World w)
-	{
-		this.world = w;
-		this.enabled = true;
-	}
 	
 	public void subscribe(EventEnum type)
 	{
 		if (this instanceof EventListener)
-			world.getEventManager(state).addListener(type, (EventListener) this);
+			world.getEventManager().addListener(type, (EventListener) this);
 	}
 	
 	public void stop()

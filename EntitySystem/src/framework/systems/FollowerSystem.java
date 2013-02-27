@@ -16,10 +16,6 @@ import framework.managers.EntityManager;
 
 public class FollowerSystem extends CoreSystem{
 
-	public FollowerSystem(World w)
-	{
-		super(w);
-	}
 	
 	@Override
 	public void run(EntityManager em)

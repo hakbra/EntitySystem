@@ -9,6 +9,7 @@ import framework.components.Damage;
 import framework.components.Health;
 import framework.components.Hero;
 import framework.components.Zombie;
+import framework.enums.StateEnum;
 import framework.events.DamageEvent;
 import framework.events.Event;
 import framework.events.StatusEvent;
@@ -17,11 +18,6 @@ import framework.managers.EntityManager;
 
 public class DamageSystem extends CoreSystem implements EventListener{
 
-
-	public DamageSystem(World w)
-	{
-		super(w);
-	}
 
 	@Override
 	public void run(EntityManager em)
@@ -67,7 +63,7 @@ public class DamageSystem extends CoreSystem implements EventListener{
 
 			if (em.hasComponent(de.receiver, Hero.class) && em.getEntity(Hero.class).size() == 1)
 			{
-				world.popState();
+				world.setState(StateEnum.START_MENU);
 			}
 			else if (em.hasComponent(de.attacker, Bullet.class))
 			{

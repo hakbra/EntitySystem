@@ -15,47 +15,39 @@ import framework.managers.SystemManager;
 
 
 public class World {
-	public StateEnum currentState;
 	private StateEnum state;
 	
 	private HashMap<StateEnum, EntityManager> eManagers;
 	private HashMap<StateEnum, SystemManager> sManagers;
 	private HashMap<StateEnum, DataManager> dManagers;
 	private HashMap<StateEnum, EventManager> evManagers;
-	
-	private Stack<StateEnum> stateStack;
-	public int frame;
 
-	public World(StateEnum s)
+	public World()
 	{
-		this.frame = 0;
-		this.currentState = s;
-		this.state = s;
+		this.state = StateEnum.NULL;
 
 		this.dManagers = new HashMap<StateEnum, DataManager>();
 		this.sManagers = new HashMap<StateEnum, SystemManager>();
 		this.eManagers = new HashMap<StateEnum, EntityManager>();
 		this.evManagers = new HashMap<StateEnum, EventManager>();
-		
-		this.stateStack = new Stack<StateEnum>();
 	}
 
 	public boolean run()
 	{
-		return currentState != StateEnum.EXIT;
+		return state != StateEnum.EXIT;
 	}
 
-	public void pushState(StateEnum s)
+	public void setStateAndClear(StateEnum s)
 	{
-		stateStack.push(this.state);
+		this.state = s;
+		this.clearState();
+	}
+	public void setState(StateEnum s)
+	{
 		this.state = s;
 	}
-	public void popState()
-	{
-		this.state = stateStack.pop();
-	}
 
-	public EntityManager getEntityManager(StateEnum s)
+	private EntityManager getEntityManager(StateEnum s)
 	{
 		EntityManager em = eManagers.get(s);
 		if (em == null)
@@ -68,10 +60,10 @@ public class World {
 
 	public EntityManager getEntityManager()
 	{
-		return getEntityManager(currentState);
+		return getEntityManager(state);
 	}
 
-	public SystemManager getSystemManager(StateEnum s)
+	private SystemManager getSystemManager(StateEnum s)
 	{
 		SystemManager sm = sManagers.get(s);
 		if (sm == null)
@@ -84,10 +76,10 @@ public class World {
 
 	public SystemManager getSystemManager()
 	{
-		return getSystemManager(currentState);
+		return getSystemManager(state);
 	}
 
-	public DataManager getDataManager(StateEnum s)
+	private DataManager getDataManager(StateEnum s)
 	{
 		DataManager dm = dManagers.get(s);
 		if (dm == null)
@@ -100,10 +92,10 @@ public class World {
 
 	public DataManager getDataManager()
 	{
-		return getDataManager(currentState);
+		return getDataManager(state);
 	}
 
-	public EventManager getEventManager(StateEnum s)
+	private EventManager getEventManager(StateEnum s)
 	{
 		EventManager em = evManagers.get(s);
 		if (em == null)
@@ -116,39 +108,38 @@ public class World {
 
 	public EventManager getEventManager()
 	{
-		return getEventManager(currentState);
+		return getEventManager(state);
 	}
 	
-	public void addEntity(CoreEntity e, StateEnum s)
+	public void addEntity(CoreEntity e)
 	{
-		getEntityManager(s).addEntity(e);
+		getEntityManager(state).addEntity(e);
 		e.world = this;
 	}
 	
-	public void registerID(CoreEntity e, StateEnum s)
+	public void registerID(CoreEntity e)
 	{
-		getEntityManager(s).addStringID(e);
+		getEntityManager(state).addStringID(e);
 	}
 	
-	public CoreSystem addSystem(CoreSystem cs, StateEnum s)
+	public CoreSystem addSystem(CoreSystem cs)
 	{
 		cs.world = this;
-		cs.state = s;
-		getSystemManager(s).addSystem(cs);
+		cs.state = state;
+		getSystemManager(state).addSystem(cs);
 		return cs;
 	}
 
 	public void runSystems() {
-		currentState = state;
 		getSystemManager().runSystems();
 		getEntityManager().removeEntities();
-		this.frame++;
 	}
 	
-	public void clearState(StateEnum s)
+	private void clearState()
 	{
-		eManagers.remove(s);
-		sManagers.remove(s);
-		dManagers.remove(s);
+		eManagers.remove(state);
+		sManagers.remove(state);
+		dManagers.remove(state);
+		evManagers.remove(state);
 	}
 }

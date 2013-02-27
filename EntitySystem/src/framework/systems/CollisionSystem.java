@@ -21,11 +21,6 @@ import framework.managers.EntityManager;
 public class CollisionSystem extends CoreSystem implements EventListener{
 
 
-	public CollisionSystem(World w)
-	{
-		super(w);
-	}
-
 	@Override
 	public void run(EntityManager em)
 	{
