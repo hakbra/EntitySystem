@@ -1,4 +1,4 @@
-package framework;
+package interfaces;
 
 import framework.events.Event;
 import helpers.Data;

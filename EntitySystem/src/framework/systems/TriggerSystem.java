@@ -1,5 +1,6 @@
 package framework.systems;
 
+import interfaces.EventListener;
 import helpers.Point;
 
 import org.lwjgl.input.Keyboard;
@@ -7,7 +8,6 @@ import org.lwjgl.input.Keyboard;
 import zombies.states.Level2State;
 import framework.CoreEntity;
 import framework.CoreSystem;
-import framework.EventListener;
 import framework.World;
 import framework.components.GriffPart;
 import framework.components.Gun;

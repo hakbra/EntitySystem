@@ -3,13 +3,13 @@ package framework.systems.render;
 import helpers.Draw;
 import helpers.Point;
 import helpers.Time;
+import interfaces.EventListener;
 
 import java.util.ArrayList;
 
 import engine.GLEngine;
 import framework.CoreEntity;
 import framework.CoreSystem;
-import framework.EventListener;
 import framework.World;
 import framework.components.Health;
 import framework.components.Hero;

@@ -1,12 +1,13 @@
 package framework;
 
+import interfaces.EventListener;
 import framework.enums.EventEnum;
 import framework.enums.StateEnum;
 import framework.events.Event;
 import framework.managers.EntityManager;
 
 
-public abstract class CoreSystem implements EventListener{
+public abstract class CoreSystem{
 	protected World world;
 	public boolean enabled;
 	public StateEnum state;
@@ -25,12 +26,8 @@ public abstract class CoreSystem implements EventListener{
 	
 	public void subscribe(EventEnum type)
 	{
-		world.getEventManager(state).addListener(type, this);
-	}
-
-	@Override
-	public void recieveEvent(Event e) {
-		
+		if (this instanceof EventListener)
+			world.getEventManager(state).addListener(type, (EventListener) this);
 	}
 	
 	public void stop()

@@ -1,10 +1,11 @@
 package framework.managers;
 
+import interfaces.EventListener;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import framework.CoreSystem;
-import framework.EventListener;
 import framework.World;
 import framework.enums.EventEnum;
 import framework.events.Event;

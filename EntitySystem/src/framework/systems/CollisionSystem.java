@@ -1,9 +1,9 @@
 package framework.systems;
 
+import interfaces.EventListener;
 import helpers.Point;
 import framework.CoreEntity;
 import framework.CoreSystem;
-import framework.EventListener;
 import framework.World;
 import framework.components.Collider;
 import framework.components.CollisionCircle;

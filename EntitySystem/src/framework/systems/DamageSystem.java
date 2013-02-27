@@ -1,5 +1,6 @@
 package framework.systems;
 
+import interfaces.EventListener;
 import helpers.Time;
 import framework.CoreSystem;
 import framework.World;
@@ -14,7 +15,7 @@ import framework.events.StatusEvent;
 import framework.managers.EntityManager;
 
 
-public class DamageSystem extends CoreSystem{
+public class DamageSystem extends CoreSystem implements EventListener{
 
 
 	public DamageSystem(World w)
