@@ -46,7 +46,6 @@ public class EmitterSystem extends CoreSystem{
 
 				CoreEntity particle = new CoreEntity();
 				particle.name = "particle";
-				particle.layer = LayerEnum.MOVER;
 				em.addComponent(particle, new Position(new Point(position)));
 				em.addComponent(particle, new Velocity(new Point(angle), speed));
 				em.addComponent(particle, new RenderCircle(size, c).setLayer(LayerEnum.MOVER));

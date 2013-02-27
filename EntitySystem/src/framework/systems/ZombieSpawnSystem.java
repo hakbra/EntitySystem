@@ -60,7 +60,6 @@ public class ZombieSpawnSystem extends CoreSystem{
 			{
 				CoreEntity zombie = new CoreEntity();
 				zombie.name = "Zombie";
-				zombie.layer = LayerEnum.MOVER;
 				zombie.components.add(new Zombie());
 				zombie.components.add(new CollisionCircle(20));
 				zombie.components.add(new Position(new Point(pos)));

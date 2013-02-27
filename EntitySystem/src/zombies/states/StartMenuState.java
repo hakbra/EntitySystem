@@ -28,7 +28,6 @@ public class StartMenuState {
 		//Buttons
 		CoreEntity screenButton = new CoreEntity();
 		screenButton.name = "screenButton";
-		screenButton.layer = LayerEnum.HUD;
 		screenButton.components.add(CollisionPolygon.centerRectangle(new Point(100, 50)));
 		screenButton.components.add(new Position(new Point(GLEngine.WIDTH - 75, 50)));
 		screenButton.components.add(new Button("Screen"));
@@ -38,7 +37,6 @@ public class StartMenuState {
 
 		CoreEntity runButton = new CoreEntity();
 		runButton.name = "runButton";
-		runButton.layer = LayerEnum.HUD;
 		runButton.components.add(CollisionPolygon.centerRectangle(new Point(200, 100)));
 		runButton.components.add(new Position(new Point(GLEngine.WIDTH/2, GLEngine.HEIGHT / 2)));
 		runButton.components.add(new Button("Play"));
@@ -49,7 +47,6 @@ public class StartMenuState {
 
 		CoreEntity exitButton = new CoreEntity();
 		exitButton.name = "exitButton";
-		exitButton.layer = LayerEnum.HUD;
 		exitButton.components.add(CollisionPolygon.centerRectangle(new Point(200, 100)));
 		exitButton.components.add(new Position(new Point(GLEngine.WIDTH/2, GLEngine.HEIGHT / 2 - 150)));
 		exitButton.components.add(new Button("Exit"));

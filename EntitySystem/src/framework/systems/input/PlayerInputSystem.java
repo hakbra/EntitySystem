@@ -82,7 +82,6 @@ public class PlayerInputSystem extends CoreSystem{
 					
 					CoreEntity bullet = new CoreEntity();
 					bullet.name = "Bullet";
-					bullet.layer = LayerEnum.MOVER;
 					bullet.components.add(new Bullet(e));
 					bullet.components.add(new Position(position));
 					bullet.components.add(new Velocity(new Point(angle.angle + deltaAngle), speed));
