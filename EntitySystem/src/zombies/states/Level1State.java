@@ -224,7 +224,7 @@ public class Level1State {
 		griffPart.components.add(new CollisionCircle(30));
 		griffPart.components.add(new Trigger("griff"));
 		griffPart.components.add(new Tex("part.png", new Point(60, 60)).setLayer(LayerEnum.ITEM));
-		griffPart.components.add(new GriffPart("Lion Head"));
+		griffPart.components.add(new GriffPart("Apple"));
 		griffPart.components.add(new Angle(0));
 		griffPart.components.add(new AngleSpeed(1));
 		world.addEntity(griffPart, StateEnum.LEVEL1);

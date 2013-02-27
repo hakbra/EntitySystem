@@ -115,7 +115,7 @@ public class TriggerSystem extends CoreSystem implements EventListener{
 				em.addComponent(te.trigger, new Timer(500, "selfDestruct"));
 				em.getComponent(te.trigger, Tex.class).texture = oldGun.tex;
 
-				world.getEventManager().sendEvent(new StatusEvent(te.hero.name + " has picked up a gun"));
+				world.getEventManager().sendEvent(new StatusEvent(te.hero.name + " picked up a gun"));
 			}
 		}
 	}
