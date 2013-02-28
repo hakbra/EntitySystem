@@ -23,8 +23,9 @@ public class IntersectionSystem extends CoreSystem {
 
 
 	@Override
-	public void run(EntityManager em)
+	public void run()
 	{
+		EntityManager em = world.getEntityManager();
 		for (CoreEntity e1 : em.getEntity(Collider.class))
 		{
 			Point circle1pos = em.getComponent(e1, Position.class).position;

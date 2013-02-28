@@ -11,8 +11,9 @@ import framework.managers.EntityManager;
 public class TimerSystem extends CoreSystem{
 	
 	@Override
-	public void run(EntityManager em)
+	public void run()
 	{
+		EntityManager em = world.getEntityManager();
 		long now = Time.getTime();
 		
 		for (CoreEntity e : em.getEntityAll(Timer.class))

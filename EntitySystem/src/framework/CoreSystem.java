@@ -4,33 +4,27 @@ import interfaces.EventListener;
 import framework.enums.EventEnum;
 import framework.enums.StateEnum;
 import framework.events.Event;
-import framework.managers.EntityManager;
 
 
 public abstract class CoreSystem{
 	protected World world;
 	public boolean enabled;
-	public StateEnum state;
-	
-	public  void run(EntityManager em){}
+
+	public  void init(){}
+	public  void run(){}
+	public  void stop(){}
 	
 	public CoreSystem()
 	{
 		this.enabled = true;
 	}
 	
-	public void subscribe(EventEnum type)
-	{
-		if (this instanceof EventListener)
-			world.getEventManager().addListener(type, (EventListener) this);
-	}
-	
-	public void stop()
+	public void disable()
 	{
 		enabled = false;
 	}
 	
-	public void start()
+	public void enable()
 	{
 		enabled = true;
 	}
@@ -38,8 +32,8 @@ public abstract class CoreSystem{
 	public void toggle()
 	{
 		if (enabled)
-			stop();
+			disable();
 		else
-			start();
+			enable();
 	}
 }

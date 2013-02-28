@@ -9,18 +9,26 @@ import framework.components.Damage;
 import framework.components.Health;
 import framework.components.Hero;
 import framework.components.Zombie;
+import framework.enums.EventEnum;
 import framework.enums.StateEnum;
 import framework.events.DamageEvent;
 import framework.events.Event;
 import framework.events.StatusEvent;
 import framework.managers.EntityManager;
+import framework.managers.EventManager;
 
 
 public class DamageSystem extends CoreSystem implements EventListener{
 
+	@Override
+	public void init ()
+	{
+		EventManager em = world.getEventManager();
+		em.addListener(EventEnum.DAMAGE, this);
+	}
 
 	@Override
-	public void run(EntityManager em)
+	public void run()
 	{
 	}
 

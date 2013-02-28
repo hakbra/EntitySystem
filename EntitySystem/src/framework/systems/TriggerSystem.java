@@ -20,19 +20,27 @@ import framework.components.Text;
 import framework.components.Timer;
 import framework.components.Trigger;
 import framework.components.Velocity;
+import framework.enums.EventEnum;
 import framework.enums.LayerEnum;
 import framework.enums.StateEnum;
 import framework.events.Event;
 import framework.events.StatusEvent;
 import framework.events.TriggerEvent;
 import framework.managers.EntityManager;
+import framework.managers.EventManager;
 
 
 public class TriggerSystem extends CoreSystem implements EventListener{
 
+	@Override
+	public void init ()
+	{
+		EventManager em = world.getEventManager();
+		em.addListener(EventEnum.TRIGGER, this);
+	}
 
 	@Override
-	public void run(EntityManager em)
+	public void run()
 	{
 	}
 

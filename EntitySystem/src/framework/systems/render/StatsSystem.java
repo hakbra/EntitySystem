@@ -10,22 +10,34 @@ import java.util.ArrayList;
 import engine.GLEngine;
 import framework.CoreEntity;
 import framework.CoreSystem;
-import framework.World;
 import framework.components.Health;
 import framework.components.Hero;
 import framework.components.Position;
 import framework.components.Zombie;
+import framework.enums.EventEnum;
 import framework.events.Event;
 import framework.events.StatusEvent;
 import framework.managers.EntityManager;
+import framework.managers.EventManager;
 
 public class StatsSystem extends CoreSystem  implements EventListener{
 	
-	private ArrayList<StatusEvent> events = new ArrayList<StatusEvent>();
+	private ArrayList<StatusEvent> events;
+	
+	@Override
+	public void init ()
+	{
+		EventManager em = world.getEventManager();
+		em.addListener(EventEnum.KILL, this);
+		
+		events = new ArrayList<StatusEvent>();
+	}
 
 	@Override
-	public void run(EntityManager em)
+	public void run()
 	{
+		EntityManager em = world.getEntityManager();
+		
 		int i = 0;
 		for (CoreEntity hero : em.getEntity(Hero.class))
 		{

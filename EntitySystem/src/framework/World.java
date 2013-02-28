@@ -125,7 +125,6 @@ public class World {
 	public CoreSystem addSystem(CoreSystem cs)
 	{
 		cs.world = this;
-		cs.state = state;
 		getSystemManager(state).addSystem(cs);
 		return cs;
 	}

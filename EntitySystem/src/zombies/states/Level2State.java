@@ -73,7 +73,7 @@ public class Level2State {
 		world.addSystem(new CameraSystem());
 		world.addSystem(new LightSystem());
 		world.addSystem(new RenderSystem());
-		world.addSystem(new StatsSystem()).subscribe(EventEnum.KILL);
+		world.addSystem(new StatsSystem());
 
 		world.addSystem(new PlayerInputSystem());
 		world.addSystem(new PathSystem());
@@ -81,9 +81,9 @@ public class Level2State {
 		world.addSystem(new PhysicsSystem());
 		world.addSystem(new IntersectionSystem());
 
-		world.addSystem(new CollisionSystem()).subscribe(EventEnum.COLLISION);
-		world.addSystem(new TriggerSystem()).subscribe(EventEnum.TRIGGER);
-		world.addSystem(new DamageSystem()).subscribe(EventEnum.DAMAGE);
+		world.addSystem(new CollisionSystem());
+		world.addSystem(new TriggerSystem());
+		world.addSystem(new DamageSystem());
 
 		world.addSystem(new EmitterSystem());
 		world.addSystem(new MouseInputSystem());

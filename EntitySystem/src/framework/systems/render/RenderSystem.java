@@ -56,8 +56,9 @@ public class RenderSystem extends CoreSystem {
 
 
 	@Override
-	public void run(EntityManager em)
+	public void run()
 	{
+		EntityManager em = world.getEntityManager();
 		CoreEntity cam = em.getByStringID("camera");
 		Point camPos = new Point();
 		if (cam != null)

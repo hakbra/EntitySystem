@@ -17,8 +17,9 @@ public class DirectFollowerSystem extends CoreSystem{
 
 
 	@Override
-	public void run(EntityManager em)
+	public void run()
 	{
+		EntityManager em = world.getEntityManager();
 		Point target = null;
 		for (CoreEntity e : em.getEntityAll(DirectFollower.class))
 		{

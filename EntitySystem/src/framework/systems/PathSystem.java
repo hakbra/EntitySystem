@@ -23,8 +23,9 @@ public class PathSystem extends CoreSystem{
 
 
 	@Override
-	public void run(EntityManager em)
+	public void run()
 	{
+		EntityManager em = world.getEntityManager();
 		CoreEntity path = em.getByStringID("path");
 		Pathfinder pf = em.getComponent(path, Pathfinder.class);
 

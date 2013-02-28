@@ -36,8 +36,9 @@ public class PlayerInputSystem extends CoreSystem{
 	public static float s = 2f;
 	
 	@Override
-	public void run(EntityManager em)
+	public void run()
 	{
+		EntityManager em = world.getEntityManager();
 		for (CoreEntity e : em.getEntity(KeyInput.class))
 		{
 			KeyInput keyInput 	= em.getComponent(e, KeyInput.class);

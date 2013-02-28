@@ -29,8 +29,9 @@ import framework.managers.EntityManager;
 public class ZombieSpawnSystem extends CoreSystem{
 
 	@Override
-	public void run(EntityManager em)
+	public void run()
 	{
+		EntityManager em = world.getEntityManager();
 		long now = Time.getTime();
 		Random r = new Random();
 		for (CoreEntity spawner : em.getEntity(ZombieSpawner.class))

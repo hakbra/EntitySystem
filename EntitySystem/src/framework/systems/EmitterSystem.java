@@ -24,8 +24,9 @@ public class EmitterSystem extends CoreSystem{
 
 
 	@Override
-	public void run(EntityManager em)
+	public void run()
 	{
+		EntityManager em = world.getEntityManager();
 		for (CoreEntity e : em.getEntity(Emitter.class))
 		{
 			Point position 	= 	em.getComponent(e, Position.class).position;

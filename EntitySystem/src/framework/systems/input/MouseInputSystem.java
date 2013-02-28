@@ -20,8 +20,10 @@ public class MouseInputSystem extends CoreSystem{
 
 	
 	@Override
-	public void run(EntityManager em)
+	public void run()
 	{
+		EntityManager em = world.getEntityManager();
+		
 		Point mouse = null;
 		
 		while (Mouse.next())

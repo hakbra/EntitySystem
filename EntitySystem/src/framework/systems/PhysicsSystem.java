@@ -19,8 +19,9 @@ import framework.managers.EntityManager;
 public class PhysicsSystem extends CoreSystem{
 	
 	@Override
-	public void run(EntityManager em)
+	public void run()
 	{
+		EntityManager em = world.getEntityManager();
 		long now = Time.getTime();
 
 		for (CoreEntity e : em.getEntityAll(Acceleration.class, Velocity.class))

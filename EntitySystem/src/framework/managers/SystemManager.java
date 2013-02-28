@@ -22,13 +22,14 @@ public class SystemManager {
 
 	public void addSystem(CoreSystem cs)
 	{
-		cs.state = this.state;
+		cs.init();
 		systems.add(cs);
 		systemMap.put(cs.getClass(), cs);
 	}
 
 	public void removeSystem(CoreSystem cs)
 	{
+		cs.stop();
 		systems.remove(cs);
 		systemMap.remove(cs.getClass());
 	}
@@ -42,13 +43,13 @@ public class SystemManager {
 	public void disableSystem(Class c)
 	{
 		CoreSystem cs = systemMap.get(c);
-		cs.stop();
+		cs.disable();
 	}
 	
 	public void enableSystem(Class c)
 	{
 		CoreSystem cs = systemMap.get(c);
-		cs.start();
+		cs.enable();
 	}
 
 	public void runSystems()
@@ -58,7 +59,7 @@ public class SystemManager {
 		{
 			CoreSystem sys = systems.get(i);
 			if (sys.enabled)
-				sys.run(em);
+				sys.run();
 		}
 	}
 }

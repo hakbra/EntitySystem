@@ -28,8 +28,9 @@ import framework.managers.EntityManager;
 public class LightSystem  extends CoreSystem{
 
 
-	public void run(EntityManager em)
+	public void run()
 	{
+		EntityManager em = world.getEntityManager();
 		CoreEntity cam = em.getByStringID("camera");
 		Point trans = new Point();
 
@@ -71,9 +72,9 @@ public class LightSystem  extends CoreSystem{
 	}
 	
 	@Override
-	public void stop()
+	public void disable()
 	{
-		super.stop();
+		super.disable();
 		glBindTexture(GL_TEXTURE_2D, 0);
 		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, world.getDataManager().getLightBufID()); 
 		glClearColor (0.1f, 0.1f, 0.1f, 0f);

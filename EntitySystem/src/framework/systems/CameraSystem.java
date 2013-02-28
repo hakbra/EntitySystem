@@ -14,8 +14,9 @@ public class CameraSystem extends CoreSystem{
 
 
 	@Override
-	public void run(EntityManager em)
+	public void run()
 	{
+		EntityManager em = world.getEntityManager();
 		CoreEntity cam = em.getByStringID("camera");
 		Point pos = em.getComponent(cam, Position.class).position;
 		CollisionPolygon poly = em.getComponent(cam, CollisionPolygon.class);

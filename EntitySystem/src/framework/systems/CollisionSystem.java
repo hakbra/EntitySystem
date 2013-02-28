@@ -1,5 +1,7 @@
 package framework.systems;
 
+import java.util.ArrayList;
+
 import interfaces.EventListener;
 import helpers.Point;
 import framework.CoreEntity;
@@ -15,14 +17,22 @@ import framework.components.Timer;
 import framework.enums.EventEnum;
 import framework.events.CollisionEvent;
 import framework.events.Event;
+import framework.events.StatusEvent;
 import framework.managers.EntityManager;
+import framework.managers.EventManager;
 
 
 public class CollisionSystem extends CoreSystem implements EventListener{
 
+	@Override
+	public void init ()
+	{
+		EventManager em = world.getEventManager();
+		em.addListener(EventEnum.COLLISION, this);
+	}
 
 	@Override
-	public void run(EntityManager em)
+	public void run()
 	{
 	}
 

@@ -1,12 +1,10 @@
 package framework.systems;
 
 import helpers.Point;
-import framework.CoreSystem;
 import framework.CoreEntity;
-import framework.World;
+import framework.CoreSystem;
 import framework.components.Angle;
 import framework.components.AngleSpeed;
-import framework.components.CollisionCircle;
 import framework.components.Follower;
 import framework.components.Pathfinder;
 import framework.components.Position;
@@ -18,8 +16,9 @@ public class FollowerSystem extends CoreSystem{
 
 	
 	@Override
-	public void run(EntityManager em)
+	public void run()
 	{
+		EntityManager em = world.getEntityManager();
 		CoreEntity path = em.getByStringID("path");
 		Pathfinder pf = em.getComponent(path, Pathfinder.class);
 		
