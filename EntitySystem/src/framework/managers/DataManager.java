@@ -37,9 +37,6 @@ public class DataManager {
 
 	public MyFont font;
     public HashMap<String, Integer> textures = new HashMap<String, Integer>();
-    
-    private int lightTexID = -1;
-    private int lightBufID = -1;
 	
 	public DataManager(World w)
 	{
@@ -47,13 +44,6 @@ public class DataManager {
 
 		Font awtFont = new Font("Times New Roman", Font.BOLD, 24);
 		font = new MyFont(awtFont, false);
-	}
-	
-	public int getLightBufID()
-	{
-		if (lightBufID == -1)
-			createTexture();
-		return lightBufID;
 	}
 
 	public int getTexture(String name) {
@@ -74,15 +64,15 @@ public class DataManager {
 		return -1;
 	}
 
-	private void createTexture()
+	public void createLightTexture()
 	{
 		if (!GLContext.getCapabilities().GL_EXT_framebuffer_object) {
 			System.out.println("FBO not supported!!!");
 			System.exit(0);
 		}
 		else {
-			lightBufID = glGenFramebuffersEXT();
-			lightTexID = glGenTextures();
+			int lightBufID = glGenFramebuffersEXT();
+			int lightTexID = glGenTextures();
 
 			glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, lightBufID);
 

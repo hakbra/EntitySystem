@@ -27,6 +27,11 @@ import framework.managers.EntityManager;
 
 public class LightSystem  extends CoreSystem{
 
+	@Override
+	public void init()
+	{
+		world.getDataManager().createLightTexture();
+	}
 
 	public void run()
 	{
@@ -38,7 +43,7 @@ public class LightSystem  extends CoreSystem{
 			trans = em.getComponent(cam, Position.class).position.neg();
 
 		glBindTexture(GL_TEXTURE_2D, 0);
-		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, world.getDataManager().getLightBufID()); 
+		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, world.getDataManager().getTexture("lightBuf")); 
 		glClearColor (0.1f, 0.1f, 0.1f, 1f);
 		glClear (GL_COLOR_BUFFER_BIT);
 
@@ -76,7 +81,7 @@ public class LightSystem  extends CoreSystem{
 	{
 		super.disable();
 		glBindTexture(GL_TEXTURE_2D, 0);
-		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, world.getDataManager().getLightBufID()); 
+		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, world.getDataManager().getTexture("lightBuf")); 
 		glClearColor (0.1f, 0.1f, 0.1f, 0f);
 		glClear (GL_COLOR_BUFFER_BIT);
 		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
