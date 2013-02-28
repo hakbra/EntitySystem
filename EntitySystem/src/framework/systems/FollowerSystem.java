@@ -20,7 +20,6 @@ import framework.managers.EntityManager;
 import framework.misc.Pathfinder;
 import framework.misc.Pathfinder.Node;
 
-
 public class FollowerSystem extends CoreSystem{
 	Pathfinder pf;
 
@@ -45,18 +44,17 @@ public class FollowerSystem extends CoreSystem{
 				pf.mask(poly, pos, now);
 		}
 
-
 		PriorityQueue<Node> queue = new PriorityQueue<Pathfinder.Node>();
 
 		for (CoreEntity hero : em.getEntity(Hero.class))
 		{
 			Point pos = em.getComponent(hero, Position.class).position;
 			Node n = pf.getNode(pos);
-			if (n != null)
-			{
-				n.value = 0.0;
-				queue.add(n);
-			}
+			if (n == null)
+				return;
+			
+			n.value = 0.0;
+			queue.add(n);
 		}
 
 		while (queue.size() > 0)
@@ -110,7 +108,7 @@ public class FollowerSystem extends CoreSystem{
 	public void run()
 	{
 		EntityManager em = world.getEntityManager();
-		
+
 		this.update();
 
 		for (CoreEntity e : em.getEntityAll(Follower.class))

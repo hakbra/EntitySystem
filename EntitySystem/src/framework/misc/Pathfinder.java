@@ -4,7 +4,7 @@ import helpers.Point;
 import framework.CoreComponent;
 import framework.components.CollisionPolygon;
 
-public class Pathfinder extends CoreComponent{
+public class Pathfinder{
 
 	public class Node implements Comparable{
 		public boolean blocked = false;
