@@ -1,10 +1,8 @@
-package framework.components;
+package framework.misc;
 
-import helpers.Color;
-import helpers.Draw;
 import helpers.Point;
-import engine.GLEngine;
 import framework.CoreComponent;
+import framework.components.CollisionPolygon;
 
 public class Pathfinder extends CoreComponent{
 
@@ -21,10 +19,6 @@ public class Pathfinder extends CoreComponent{
 			Node n = (Node) o;
 			return this.value.compareTo(n.value);
 		}
-		public String toString()
-		{
-			return (int)i.x + ", " + (int)i.y + ": " + value + ", blocked: " + blocked; 
-		}
 	}
 
 	public int width;
@@ -33,11 +27,11 @@ public class Pathfinder extends CoreComponent{
 	public Node[][] map;
 	public long update;
 
-	public Pathfinder(Point min, Point max, int s)
+	public Pathfinder(Point dim, int s)
 	{
 		this.step = s;
-		this.width = (int) (max.x - min.x) / s;
-		this.height = (int) (max.y - min.y) / s;
+		this.width = (int) (dim.x) / s;
+		this.height = (int) (dim.y) / s;
 
 		map = new Node[width][height];
 
@@ -48,27 +42,6 @@ public class Pathfinder extends CoreComponent{
 				map[i][j] = new Node();
 				map[i][j].pos = p;
 				map[i][j].i = new Point(i, j);
-			}
-	}
-
-	public void render()
-	{
-		Color c = new Color(1, 0, 0);
-		for (int i = 0; i < width; i++)
-			for (int j = 0; j < height; j++)
-			{
-				if (map[i][j].blocked)
-					continue;
-				if (map[i][j].done != update)
-					continue;
-				
-					int max = 80;
-					double w = map[i][j].value;
-					c.r = w / max;
-					c.g = 1 - w / max;
-					
-				Draw.setColor(c);
-				Draw.point(map[i][j].pos);
 			}
 	}
 

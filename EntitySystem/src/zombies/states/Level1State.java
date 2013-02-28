@@ -27,7 +27,6 @@ import framework.components.Hero;
 import framework.components.KeyInput;
 import framework.components.Light;
 import framework.components.Obstacle;
-import framework.components.Pathfinder;
 import framework.components.Position;
 import framework.components.RenderPolygon;
 import framework.components.Tex;
@@ -36,9 +35,7 @@ import framework.components.Trigger;
 import framework.components.Velocity;
 import framework.components.Zombie;
 import framework.components.ZombieSpawner;
-import framework.enums.EventEnum;
 import framework.enums.LayerEnum;
-import framework.enums.StateEnum;
 import framework.managers.DataManager;
 import framework.systems.CameraSystem;
 import framework.systems.CollisionSystem;
@@ -47,7 +44,6 @@ import framework.systems.EmitterSystem;
 import framework.systems.FollowerSystem;
 import framework.systems.IntersectionSystem;
 import framework.systems.LightSystem;
-import framework.systems.PathSystem;
 import framework.systems.PhysicsSystem;
 import framework.systems.TimerSystem;
 import framework.systems.TriggerSystem;
@@ -78,7 +74,6 @@ public class Level1State {
 		world.addSystem(new StatsSystem());
 		
 		world.addSystem(new PlayerInputSystem());
-		world.addSystem(new PathSystem());
 		world.addSystem(new FollowerSystem());
 		world.addSystem(new PhysicsSystem());
 		world.addSystem(new IntersectionSystem());
@@ -117,12 +112,6 @@ public class Level1State {
 		camera.components.add(CollisionPolygon.rectangle( new Point(GLEngine.WIDTH, GLEngine.HEIGHT)));
 		world.addEntity(camera);
 		world.registerID(camera);
-
-		CoreEntity path = new CoreEntity();
-		path.name = "path";
-		path.components.add(new Pathfinder(new Point(0, 0), new Point(MAPWIDTH, MAPHEIGHT), 20));
-		world.addEntity(path);
-		world.registerID(path);
 
 		CoreEntity ground = new CoreEntity();
 		ground.name = "ground";
