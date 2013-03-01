@@ -122,8 +122,8 @@ public class Level1State {
 		createButtons(world);
 		createItems(world);
 		createWalls(world);
-		createZombies(world);
-		createSpawns(world);
+		//createZombies(world);
+		//createSpawns(world);
 	}
 
 	private static void createSpawns(World world) {

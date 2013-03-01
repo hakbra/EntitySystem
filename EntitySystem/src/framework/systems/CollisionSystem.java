@@ -1,14 +1,12 @@
 package framework.systems;
 
-import java.util.ArrayList;
-
-import interfaces.EventListener;
 import helpers.Point;
+import interfaces.EventListener;
 import framework.CoreEntity;
 import framework.CoreSystem;
-import framework.World;
 import framework.components.Collider;
 import framework.components.CollisionCircle;
+import framework.components.CollisionPolygon;
 import framework.components.DestroyOnImpact;
 import framework.components.Emitter;
 import framework.components.EmitterOnImpact;
@@ -17,7 +15,6 @@ import framework.components.Timer;
 import framework.enums.EventEnum;
 import framework.events.CollisionEvent;
 import framework.events.Event;
-import framework.events.StatusEvent;
 import framework.managers.EntityManager;
 import framework.managers.EventManager;
 
@@ -89,6 +86,20 @@ public class CollisionSystem extends CoreSystem implements EventListener{
 			}
 			else
 				posA.isub(mov);
+
+			CollisionPolygon cp = em.getComponent(ce.obstacle, CollisionPolygon.class);
+			
+			if (cp != null)
+			{
+				Point closest = cp.getClosest(posA);
+				boolean inside = cp.isInside(posA);
+				if (posA.dist(closest) < circle.radius * 0.99 || inside)
+				{
+					posA.iadd(new Point(0, 0.0001));
+					CollisionEvent ce2 = new CollisionEvent(ce.collider, ce.obstacle, closest, inside);
+					world.getEventManager().sendEvent(ce2);
+				}
+			}
 		}
 	}
 }

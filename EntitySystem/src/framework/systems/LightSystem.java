@@ -36,11 +36,6 @@ public class LightSystem  extends CoreSystem{
 	public void run()
 	{
 		EntityManager em = world.getEntityManager();
-		CoreEntity cam = em.getByStringID("camera");
-		Point trans = new Point();
-
-		if (cam != null)
-			trans = em.getComponent(cam, Position.class).position.neg();
 
 		glBindTexture(GL_TEXTURE_2D, 0);
 		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, world.getDataManager().getTexture("lightBuf")); 
@@ -58,15 +53,6 @@ public class LightSystem  extends CoreSystem{
 		for (CoreEntity e : em.getEntityAll(Light.class))
 		{
 			Light l = em.getComponent(e, Light.class);
-			
-			if (em.hasComponent(e, Timer.class))
-			{
-				Timer  t = em.getComponent(e, Timer.class);
-				l.cRad = (1 - t.getPercent()) * l.mRad;
-				if (l.cRad <= 10)
-					l.cRad = 10;
-			}
-			
 			l.render(em, e);
 		}
 		GL11.glPopMatrix();
