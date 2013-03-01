@@ -9,7 +9,7 @@ public class StatusEvent extends Event{
 	
 	public StatusEvent(String t)
 	{
-		this.type = EventEnum.KILL;
+		this.type = EventEnum.STATUS;
 		this.text = t;
 		this.time = Time.getTime();
 	}

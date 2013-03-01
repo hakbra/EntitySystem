@@ -1,7 +1,6 @@
 package framework.systems;
 
 import helpers.Point;
-import interfaces.EventListener;
 import framework.CoreEntity;
 import framework.CoreSystem;
 import framework.components.Collider;
@@ -15,11 +14,12 @@ import framework.components.Timer;
 import framework.enums.EventEnum;
 import framework.events.CollisionEvent;
 import framework.events.Event;
+import framework.interfaces.EventListener;
 import framework.managers.EntityManager;
 import framework.managers.EventManager;
 
 
-public class CollisionSystem extends CoreSystem implements EventListener{
+public class CollisionSystem extends CoreSystem implements EventListener<CollisionEvent>{
 
 	@Override
 	public void init ()
@@ -34,9 +34,8 @@ public class CollisionSystem extends CoreSystem implements EventListener{
 	}
 
 	@Override
-	public void recieveEvent(Event e)
+	public void recieveEvent(CollisionEvent ce)
 	{
-		CollisionEvent ce = (CollisionEvent) e;
 		EntityManager em = world.getEntityManager();
 
 		if (em.hasComponent(ce.collider, EmitterOnImpact.class))

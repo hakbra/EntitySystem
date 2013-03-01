@@ -3,7 +3,6 @@ package framework.systems.render;
 import helpers.Draw;
 import helpers.Point;
 import helpers.Time;
-import interfaces.EventListener;
 
 import java.util.ArrayList;
 
@@ -17,10 +16,11 @@ import framework.components.Zombie;
 import framework.enums.EventEnum;
 import framework.events.Event;
 import framework.events.StatusEvent;
+import framework.interfaces.EventListener;
 import framework.managers.EntityManager;
 import framework.managers.EventManager;
 
-public class StatsSystem extends CoreSystem  implements EventListener{
+public class StatsSystem extends CoreSystem  implements EventListener<StatusEvent>{
 	
 	private ArrayList<StatusEvent> events;
 	
@@ -28,7 +28,7 @@ public class StatsSystem extends CoreSystem  implements EventListener{
 	public void init ()
 	{
 		EventManager em = world.getEventManager();
-		em.addListener(EventEnum.KILL, this);
+		em.addListener(EventEnum.STATUS, this);
 		
 		events = new ArrayList<StatusEvent>();
 	}
@@ -64,8 +64,7 @@ public class StatsSystem extends CoreSystem  implements EventListener{
 	}
 
 	@Override
-	public void recieveEvent(Event e) {
-		StatusEvent ke = (StatusEvent) e;
-		events.add(ke);
+	public void recieveEvent(StatusEvent se) {
+		events.add(se);
 	}
 }

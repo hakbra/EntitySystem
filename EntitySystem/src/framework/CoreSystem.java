@@ -1,9 +1,9 @@
 package framework;
 
-import interfaces.EventListener;
 import framework.enums.EventEnum;
 import framework.enums.StateEnum;
 import framework.events.Event;
+import framework.interfaces.EventListener;
 
 
 public abstract class CoreSystem{
