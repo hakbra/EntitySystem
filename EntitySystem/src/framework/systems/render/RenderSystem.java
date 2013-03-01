@@ -28,19 +28,20 @@ import framework.managers.EntityManager;
 
 public class RenderSystem extends CoreSystem {
 	
-	private void transform(EntityManager em, CoreEntity e, Point camPos)
+	private void transform(CoreEntity e)
 	{
+		EntityManager em = world.getEntityManager();
 		if (em.hasComponent(e, ParentTransform.class))
 		{
 			CoreEntity parent = em.getComponent(e, ParentTransform.class).parent;
-			transform(em, parent, camPos);
+			transform(parent);
 		}
 		
 		if (em.hasComponent(e, Position.class))
 		{
 			Position pos = em.getComponent(e, Position.class);
 			if (!pos.local)
-				Draw.translate(camPos);
+				Draw.translate(world.camera.neg());
 			Draw.translate(pos.position);
 		}
 
@@ -59,16 +60,11 @@ public class RenderSystem extends CoreSystem {
 	public void run()
 	{
 		EntityManager em = world.getEntityManager();
-		CoreEntity cam = em.getByStringID("camera");
-		Point camPos = new Point();
-		if (cam != null)
-			camPos = em.getComponent(cam, Position.class).position.neg();
-		
 		for (CoreComponent c: em.renders)
 		{
 			glPushMatrix();
 
-			transform(em, c.parent, camPos);
+			transform(c.parent);
 			
 			c.render();
 

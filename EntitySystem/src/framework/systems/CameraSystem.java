@@ -15,12 +15,8 @@ public class CameraSystem extends CoreSystem{
 
 	@Override
 	public void run()
-	{
+	{	
 		EntityManager em = world.getEntityManager();
-		CoreEntity cam = em.getByStringID("camera");
-		Point pos = em.getComponent(cam, Position.class).position;
-		CollisionPolygon poly = em.getComponent(cam, CollisionPolygon.class);
-		
 		Point mid = new Point();
 		int c = 0;
 		for (CoreEntity h : em.getEntity(Hero.class))
@@ -31,8 +27,8 @@ public class CameraSystem extends CoreSystem{
 		}
 		mid.idiv(c);
 		
-		Point dim = poly.dim;
-		Point halfDim = dim.div(2);
+		Point camDim = new Point(GLEngine.WIDTH, GLEngine.HEIGHT);
+		Point halfDim = camDim.div(2);
 		Point newPos = mid.sub(halfDim);
 		Point worldDim = new Point(world.getDataManager().mapwidth, world.getDataManager().mapheight);
 		
@@ -41,17 +37,17 @@ public class CameraSystem extends CoreSystem{
 		if (newPos.y < 0)
 			newPos.y = 0;
 		
-		if (newPos.x + dim.x > worldDim.x)
-			newPos.x = worldDim.x - dim.x;
-		if (newPos.y + dim.y > worldDim.y)
-			newPos.y = worldDim.y - dim.y;
+		if (newPos.x + camDim.x > worldDim.x)
+			newPos.x = worldDim.x - camDim.x;
+		if (newPos.y + camDim.y > worldDim.y)
+			newPos.y = worldDim.y - camDim.y;
 		
-		if (dim.y > worldDim.y)
-			newPos.y = (worldDim.y - dim.y)/2;
-		if (dim.x > worldDim.x)
-			newPos.x = (worldDim.x - dim.x)/2;
+		if (camDim.y > worldDim.y)
+			newPos.y = (worldDim.y - camDim.y)/2;
+		if (camDim.x > worldDim.x)
+			newPos.x = (worldDim.x - camDim.x)/2;
 		
-		pos.set(newPos);
+		world.camera.set(newPos);
 	}
 }
 

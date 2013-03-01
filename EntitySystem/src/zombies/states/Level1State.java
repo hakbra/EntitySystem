@@ -84,7 +84,6 @@ public class Level1State {
 		
 		world.addSystem(new EmitterSystem());
 		world.addSystem(new MouseInputSystem());
-		world.addSystem(new KeyInputSystem());
 		world.addSystem(new ZombieSpawnSystem());
 		world.addSystem(new TimerSystem());
 
@@ -106,20 +105,12 @@ public class Level1State {
 		world.addEntity(player);
 		world.registerID(player);
 
-		CoreEntity camera = new CoreEntity();
-		camera.name = "camera";
-		camera.components.add(new Position( new Point()));
-		camera.components.add(CollisionPolygon.rectangle( new Point(GLEngine.WIDTH, GLEngine.HEIGHT)));
-		world.addEntity(camera);
-		world.registerID(camera);
-
 		CoreEntity ground = new CoreEntity();
 		ground.name = "ground";
 		ground.components.add(new Position( new Point(MAPWIDTH / 2, MAPHEIGHT / 2)));
 		ground.components.add(CollisionPolygon.centerRectangle(new Point(MAPWIDTH, MAPHEIGHT)));
 		ground.components.add(new Tex("bush.png", new Point(MAPWIDTH, MAPHEIGHT)).setScale(new Point(30, 19)).setLayer(LayerEnum.GROUND));
 		world.addEntity(ground);
-		world.registerID(ground);
 
 		CoreEntity light = new CoreEntity();
 		light.name = "light";
@@ -127,15 +118,6 @@ public class Level1State {
 		light.components.add(CollisionPolygon.centerRectangle(new Point(MAPWIDTH, MAPHEIGHT)));
 		light.components.add(new Tex("lightTex", new Point(MAPWIDTH, MAPHEIGHT)).setLayer(LayerEnum.LIGHT));
 		world.addEntity(light);
-
-		CoreEntity exit = new CoreEntity();
-		exit.name = "exit1";
-		exit.components.add(new Position(new Point(250, 200)));
-		exit.components.add(CollisionPolygon.centerRectangle(new Point(50, 50)));
-		exit.components.add(new Trigger("exit1"));
-		exit.components.add(new Tex("exit.png", new Point(50, 50)).setLayer(LayerEnum.ITEM));
-		exit.components.add(new Angle(0));
-		world.addEntity(exit);
 
 		createButtons(world);
 		createItems(world);
@@ -208,6 +190,15 @@ public class Level1State {
 		griffPart.components.add(new Angle(0));
 		griffPart.components.add(new AngleSpeed(1));
 		world.addEntity(griffPart);
+
+		CoreEntity exit = new CoreEntity();
+		exit.name = "exit1";
+		exit.components.add(new Position(new Point(250, 200)));
+		exit.components.add(CollisionPolygon.centerRectangle(new Point(50, 50)));
+		exit.components.add(new Trigger("exit1"));
+		exit.components.add(new Tex("exit.png", new Point(50, 50)).setLayer(LayerEnum.ITEM));
+		exit.components.add(new Angle(0));
+		world.addEntity(exit);
 	}
 
 	private static void createWalls(World world) {

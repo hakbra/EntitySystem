@@ -106,16 +106,8 @@ public class Level2State {
 		world.addEntity(player);
 		world.registerID(player);
 
-		CoreEntity camera = new CoreEntity();
-		camera.name = "camera";
-		camera.components.add(new Position( new Point()));
-		camera.components.add(CollisionPolygon.rectangle( new Point(GLEngine.WIDTH, GLEngine.HEIGHT)));
-		world.addEntity(camera);
-		world.registerID(camera);
-
 		CoreEntity ground = new CoreEntity();
 		ground.name = "ground";
-
 		ground.components.add(new Position( new Point(MAPWIDTH / 2, MAPHEIGHT / 2)));
 		ground.components.add(CollisionPolygon.centerRectangle(new Point(MAPWIDTH, MAPHEIGHT)));
 		ground.components.add(new Tex("bush.png", new Point(MAPWIDTH, MAPHEIGHT)).setScale(new Point(30, 19)).setLayer(LayerEnum.GROUND));
@@ -124,7 +116,6 @@ public class Level2State {
 
 		CoreEntity light = new CoreEntity();
 		light.name = "light";
-
 		light.components.add(new Position( new Point(MAPWIDTH / 2, MAPHEIGHT / 2)));
 		light.components.add(CollisionPolygon.centerRectangle(new Point(MAPWIDTH, MAPHEIGHT)));
 		light.components.add(new Tex("lightTex", new Point(MAPWIDTH, MAPHEIGHT)).setLayer(LayerEnum.LIGHT));

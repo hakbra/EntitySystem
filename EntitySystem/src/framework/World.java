@@ -21,6 +21,8 @@ public class World {
 	private HashMap<StateEnum, SystemManager> sManagers;
 	private HashMap<StateEnum, DataManager> dManagers;
 	private HashMap<StateEnum, EventManager> evManagers;
+	
+	public Point camera;
 
 	public World()
 	{
@@ -30,6 +32,8 @@ public class World {
 		this.sManagers = new HashMap<StateEnum, SystemManager>();
 		this.eManagers = new HashMap<StateEnum, EntityManager>();
 		this.evManagers = new HashMap<StateEnum, EventManager>();
+		
+		camera = new Point();
 	}
 
 	public boolean run()
