@@ -44,24 +44,12 @@ public class GLEngine {
 			GL11.glBlendFunc(GL11.GL_SRC_ALPHA,GL11.GL_ONE_MINUS_SRC_ALPHA);
 			GL11.glDisable(GL11.GL_DEPTH_TEST);
 			
-			prepare2D();
+			startRender();
 
 		} catch (LWJGLException e)
 		{
 			e.printStackTrace();
 		}
-	}
-	
-	public static void prepare2D()
-	{
-		// 2D Scene
-		glViewport(0, 0, WIDTH, HEIGHT);
-
-		glMatrixMode(GL_PROJECTION);
-		glLoadIdentity();
-		gluOrtho2D(0.0f, (float) WIDTH, 0.0f, (float) HEIGHT);
-		glMatrixMode(GL_MODELVIEW);
-		GL11.glEnable(GL11.GL_TEXTURE_2D);
 	}
 	
 	public static void clearState()
@@ -73,6 +61,18 @@ public class GLEngine {
 	public static boolean running()
 	{
 		return !Display.isCloseRequested() && !Keyboard.isKeyDown(Keyboard.KEY_ESCAPE);
+	}
+	
+	public static void startRender()
+	{
+		// 2D Scene
+		glViewport(0, 0, WIDTH, HEIGHT);
+
+		glMatrixMode(GL_PROJECTION);
+		glLoadIdentity();
+		gluOrtho2D(0.0f, (float) WIDTH, 0.0f, (float) HEIGHT);
+		glMatrixMode(GL_MODELVIEW);
+		GL11.glEnable(GL11.GL_TEXTURE_2D);
 	}
 	
 	public static void endRender()

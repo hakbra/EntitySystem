@@ -35,7 +35,7 @@ public class Main
 		while (GLEngine.running() && world.run())
 		{
 			GLEngine.clearState();
-			GLEngine.prepare2D();
+			GLEngine.startRender();
 
 			world.runSystems();
 

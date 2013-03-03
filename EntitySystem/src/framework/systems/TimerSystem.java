@@ -10,6 +10,8 @@ import framework.managers.EntityManager;
 
 public class TimerSystem extends CoreSystem{
 	
+	long delayTimer;
+	
 	@Override
 	public void run()
 	{
@@ -33,6 +35,26 @@ public class TimerSystem extends CoreSystem{
 				else
 					System.out.println("Unknown timer-type " + timer.type);
 			}
+		}
+	}
+
+	@Override
+	public void disable()
+	{
+		this.enabled = false;
+		this.delayTimer = Time.getTime();
+	}
+	@Override
+	public void enable()
+	{
+		this.enabled = true;
+		long delay = Time.getTime() - delayTimer;
+
+		EntityManager em = world.getEntityManager();
+		for (CoreEntity e : em.getEntityAll(Timer.class))
+		{
+			Timer timer = em.getComponent(e, Timer.class);
+			timer.start += delay;
 		}
 	}
 }

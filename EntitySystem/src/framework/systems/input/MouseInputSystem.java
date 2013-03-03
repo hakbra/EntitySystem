@@ -5,16 +5,17 @@ import helpers.Point;
 import org.lwjgl.input.Mouse;
 
 import zombies.states.Level1State;
-import zombies.states.Level2State;
 import engine.GLEngine;
 import framework.CoreEntity;
 import framework.CoreSystem;
-import framework.World;
 import framework.components.Button;
 import framework.components.CollisionPolygon;
 import framework.enums.StateEnum;
 import framework.managers.EntityManager;
+import framework.systems.EmitterSystem;
 import framework.systems.LightSystem;
+import framework.systems.PhysicsSystem;
+import framework.systems.TimerSystem;
 
 public class MouseInputSystem extends CoreSystem{
 
@@ -74,6 +75,15 @@ public class MouseInputSystem extends CoreSystem{
 				{
 					world.getSystemManager().toggleSystem(LightSystem.class);
 				}
+				else if (button.type == "Pause")
+				{
+					world.getSystemManager().toggleSystem(PhysicsSystem.class);
+					world.getSystemManager().toggleSystem(PlayerInputSystem.class);
+					world.getSystemManager().toggleSystem(TimerSystem.class);
+					world.getSystemManager().toggleSystem(EmitterSystem.class);
+				}
+				else
+					System.out.println("Button " + button.type + " not recognised");
 			}
 			else
 				button.active = false;

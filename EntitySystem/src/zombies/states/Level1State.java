@@ -334,6 +334,15 @@ public class Level1State {
 		restartButton.components.add(new Text("Restart").setLayer(LayerEnum.TEXT));
 		restartButton.components.add(new Tex("button.png", new Point(100, 50)).setLayer(LayerEnum.HUD));
 		world.addEntity(restartButton);
+		
+		CoreEntity pauseButton = new CoreEntity();
+		pauseButton.name = "pauseButton";
+		pauseButton.components.add(CollisionPolygon.centerRectangle(new Point(100, 50)));
+		pauseButton.components.add(new Position(new Point(575, GLEngine.HEIGHT - 50), true));
+		pauseButton.components.add(new Button("Pause"));
+		pauseButton.components.add(new Text("Pause").setLayer(LayerEnum.TEXT));
+		pauseButton.components.add(new Tex("button.png", new Point(100, 50)).setLayer(LayerEnum.HUD));
+		world.addEntity(pauseButton);
 
 		CoreEntity lightButton = new CoreEntity();
 		lightButton.name = "lightButton";

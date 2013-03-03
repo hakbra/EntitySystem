@@ -95,7 +95,7 @@ public class CollisionSystem extends CoreSystem implements EventListener{
 				boolean inside = cp.isInside(posA);
 				if (posA.dist(closest) < circle.radius * 0.99 || inside)
 				{
-					posA.iadd(new Point(0, 0.0001));
+					posA.iadd(new Point(0.00001, 0.0001));
 					CollisionEvent ce2 = new CollisionEvent(ce.collider, ce.obstacle, closest, inside);
 					world.getEventManager().sendEvent(ce2);
 				}
