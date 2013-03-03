@@ -65,7 +65,6 @@ public class Level1State {
 		world.mapdim.y = MAPHEIGHT;
 
 		//Systems
-
 		world.addSystem(new CameraSystem());
 		world.addSystem(new LightSystem());
 		
@@ -121,8 +120,8 @@ public class Level1State {
 		createButtons(world);
 		createItems(world);
 		createWalls(world);
-		//createZombies(world);
-		//createSpawns(world);
+		createZombies(world);
+		createSpawns(world);
 	}
 
 	private static void createSpawns(World world) {
