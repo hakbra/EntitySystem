@@ -27,7 +27,7 @@ public class FollowerSystem extends CoreSystem{
 	public void init()
 	{
 		DataManager dm = world.getDataManager();
-		pf = new Pathfinder(new Point(dm.mapwidth, dm.mapheight), 10);
+		pf = new Pathfinder(world.mapdim, 10);
 	}
 
 	private void update()

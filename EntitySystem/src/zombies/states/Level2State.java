@@ -62,9 +62,8 @@ public class Level2State {
 
 	public static void init(World world)
 	{
-		DataManager dm = world.getDataManager();
-		dm.mapwidth = MAPWIDTH;
-		dm.mapheight = MAPHEIGHT;
+		world.mapdim.x = MAPWIDTH;
+		world.mapdim.y = MAPHEIGHT;
 
 		//Systems
 		world.addSystem(new CameraSystem());

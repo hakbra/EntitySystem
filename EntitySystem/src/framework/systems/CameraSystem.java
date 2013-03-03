@@ -30,7 +30,7 @@ public class CameraSystem extends CoreSystem{
 		Point camDim = new Point(GLEngine.WIDTH, GLEngine.HEIGHT);
 		Point halfDim = camDim.div(2);
 		Point newPos = mid.sub(halfDim);
-		Point worldDim = new Point(world.getDataManager().mapwidth, world.getDataManager().mapheight);
+		Point worldDim = world.mapdim;
 		
 		if (newPos.x < 0)
 			newPos.x = 0;

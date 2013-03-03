@@ -32,9 +32,6 @@ import helpers.MyFont;
 public class DataManager {
 	World world;
 	
-	public int mapwidth;
-	public int mapheight;
-
 	public MyFont font;
     public HashMap<String, Integer> textures = new HashMap<String, Integer>();
 	

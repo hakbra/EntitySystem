@@ -23,6 +23,7 @@ public class World {
 	private HashMap<StateEnum, EventManager> evManagers;
 	
 	public Point camera;
+	public Point mapdim;
 
 	public World()
 	{
@@ -34,6 +35,7 @@ public class World {
 		this.evManagers = new HashMap<StateEnum, EventManager>();
 		
 		camera = new Point();
+		mapdim = new Point();
 	}
 
 	public boolean run()

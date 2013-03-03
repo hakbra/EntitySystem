@@ -45,8 +45,8 @@ public class LightSystem  extends CoreSystem{
 		GL14.glBlendEquation(GL14.GL_MIN);
 		glColorMask(false, false, false, true);
 		
-		double xratio = (double) GLEngine.WIDTH / world.getDataManager().mapwidth;
-		double yratio = (double) GLEngine.HEIGHT / world.getDataManager().mapheight;
+		double xratio = (double) GLEngine.WIDTH / world.mapdim.x;
+		double yratio = (double) GLEngine.HEIGHT / world.mapdim.y;
 		
 		GL11.glPushMatrix();
 		GL11.glScaled(xratio, yratio, 1);
