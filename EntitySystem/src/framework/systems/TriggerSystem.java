@@ -1,5 +1,6 @@
 package framework.systems;
 
+import interfaces.EventListener;
 import helpers.Point;
 
 import org.lwjgl.input.Keyboard;
@@ -25,12 +26,11 @@ import framework.enums.StateEnum;
 import framework.events.Event;
 import framework.events.StatusEvent;
 import framework.events.TriggerEvent;
-import framework.interfaces.EventListener;
 import framework.managers.EntityManager;
 import framework.managers.EventManager;
 
 
-public class TriggerSystem extends CoreSystem implements EventListener<TriggerEvent>{
+public class TriggerSystem extends CoreSystem implements EventListener{
 
 	@Override
 	public void init ()
@@ -45,8 +45,9 @@ public class TriggerSystem extends CoreSystem implements EventListener<TriggerEv
 	}
 
 	@Override
-	public void recieveEvent(TriggerEvent te)
+	public void recieveEvent(Event e)
 	{
+		TriggerEvent te = (TriggerEvent) e;
 		EntityManager em = world.getEntityManager();
 
 		Trigger trigger = em.getComponent(te.trigger, Trigger.class);

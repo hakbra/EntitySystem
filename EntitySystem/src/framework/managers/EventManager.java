@@ -1,5 +1,6 @@
 package framework.managers;
 
+import interfaces.EventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,7 +9,6 @@ import framework.CoreSystem;
 import framework.World;
 import framework.enums.EventEnum;
 import framework.events.Event;
-import framework.interfaces.EventListener;
 
 public class EventManager {
 	HashMap<EventEnum, ArrayList<EventListener>> listenerLists;

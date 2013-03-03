@@ -1,5 +1,6 @@
 package framework.systems;
 
+import interfaces.EventListener;
 import helpers.Time;
 import framework.CoreSystem;
 import framework.World;
@@ -13,12 +14,11 @@ import framework.enums.StateEnum;
 import framework.events.DamageEvent;
 import framework.events.Event;
 import framework.events.StatusEvent;
-import framework.interfaces.EventListener;
 import framework.managers.EntityManager;
 import framework.managers.EventManager;
 
 
-public class DamageSystem extends CoreSystem implements EventListener<DamageEvent>{
+public class DamageSystem extends CoreSystem implements EventListener{
 
 	@Override
 	public void init ()
@@ -33,8 +33,9 @@ public class DamageSystem extends CoreSystem implements EventListener<DamageEven
 	}
 
 	@Override
-	public void recieveEvent(DamageEvent de)
+	public void recieveEvent(Event e)
 	{
+		DamageEvent de = (DamageEvent) e;
 		EntityManager em = world.getEntityManager();
 
 		if (em.hasComponent(de.attacker, Zombie.class) && em.hasComponent(de.receiver, Zombie.class))
