@@ -35,8 +35,10 @@ public class Time {
 		}
 		if (fps <= 0) return;
 		
-		lastFrame = getTime();
-		
+		long thisFrame = getTime();
+		//System.out.println(thisFrame - lastFrame);
+		lastFrame = thisFrame;
+		/**/
 		long errorMargin = 1000*1000; // 1 millisecond error margin for Thread.sleep()
 		long sleepTime = 1000000000 / fps; // nanoseconds to sleep this frame
 		
@@ -64,5 +66,6 @@ public class Time {
 		} catch (InterruptedException e) {}
 		
 		lastFrameHigh = getHighTime() - overSleep;
+		/**/
 	}
 }
