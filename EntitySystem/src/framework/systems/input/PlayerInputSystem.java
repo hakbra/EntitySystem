@@ -77,7 +77,7 @@ public class PlayerInputSystem extends CoreSystem{
 					float speed = gun.speed + r.nextFloat();
 					
 					CoreEntity bullet = new CoreEntity();
-					bullet.name = "Bullet";
+					bullet.name = "Bullet" + Time.getTime();
 					bullet.components.add(new Bullet(e));
 					bullet.components.add(new Position(position));
 					bullet.components.add(new Velocity(new Point(angle.angle + deltaAngle), speed));
