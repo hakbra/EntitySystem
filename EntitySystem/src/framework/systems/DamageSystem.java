@@ -68,7 +68,6 @@ public class DamageSystem extends CoreSystem implements EventListener{
 			
 			world.getEventManager().sendEvent(new StatusEvent(attackerName + " killed " + de.receiver.name));
 			
-
 			if (em.hasComponent(de.receiver, Hero.class) && em.getEntity(Hero.class).size() == 1)
 			{
 				world.setState(StateEnum.START_MENU);
