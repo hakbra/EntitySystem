@@ -56,8 +56,12 @@ public class Tex extends CoreComponent{
 		}
 
 		Draw.setColor(Color.WHITE);
-		if (world.getEntityManager().hasComponent(parent, Button.class))
+		
+		Button button = world.getEntityManager().getComponent(parent, Button.class);
+		if (button != null && !button.active)
 			Draw.setColor(new Color(1, 1, 1, 0.5));
+		else if (button != null && button.active)
+			Draw.setColor(new Color(1, 1, 1, 0.75));
 		
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, world.getDataManager().getTexture(texture));
 		GL11.glBegin(GL11.GL_QUADS);
