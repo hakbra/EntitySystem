@@ -1,14 +1,11 @@
 package zombies.states;
 
-import helpers.Color;
-import helpers.Point;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 import org.lwjgl.input.Keyboard;
 
-import engine.GLEngine;
 import framework.CoreEntity;
 import framework.World;
 import framework.components.Acceleration;
@@ -35,7 +32,10 @@ import framework.components.Trigger;
 import framework.components.Velocity;
 import framework.components.Zombie;
 import framework.components.ZombieSpawner;
+import framework.engine.GLEngine;
 import framework.enums.LayerEnum;
+import framework.helpers.Color;
+import framework.helpers.Point;
 import framework.managers.DataManager;
 import framework.systems.CameraSystem;
 import framework.systems.CollisionSystem;

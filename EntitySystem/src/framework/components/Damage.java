@@ -1,8 +1,8 @@
 package framework.components;
 
-import helpers.Time;
 import framework.CoreComponent;
 import framework.CoreEntity;
+import framework.helpers.Time;
 
 
 

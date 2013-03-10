@@ -1,4 +1,4 @@
-package engine;
+package framework.engine;
 
 
 import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;

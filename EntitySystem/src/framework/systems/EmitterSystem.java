@@ -1,8 +1,5 @@
 package framework.systems;
 
-import helpers.Color;
-import helpers.Point;
-import helpers.Time;
 
 import java.util.Random;
 
@@ -18,6 +15,9 @@ import framework.components.RenderCircle;
 import framework.components.Timer;
 import framework.components.Velocity;
 import framework.enums.LayerEnum;
+import framework.helpers.Color;
+import framework.helpers.Point;
+import framework.helpers.Time;
 import framework.managers.EntityManager;
 
 public class EmitterSystem extends CoreSystem{

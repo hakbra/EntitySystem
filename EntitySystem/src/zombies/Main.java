@@ -1,12 +1,12 @@
 package zombies;
 
-import helpers.Point;
-import helpers.Time;
 import zombies.states.GameMenuState;
 import zombies.states.StartMenuState;
-import engine.GLEngine;
 import framework.World;
+import framework.engine.GLEngine;
 import framework.enums.StateEnum;
+import framework.helpers.Point;
+import framework.helpers.Time;
 
 public class Main
 {

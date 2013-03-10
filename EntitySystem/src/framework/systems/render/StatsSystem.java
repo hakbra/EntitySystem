@@ -1,22 +1,22 @@
 package framework.systems.render;
 
-import helpers.Draw;
-import helpers.Point;
-import helpers.Time;
-import interfaces.EventListener;
 
 import java.util.ArrayList;
 
-import engine.GLEngine;
 import framework.CoreEntity;
 import framework.CoreSystem;
 import framework.components.Health;
 import framework.components.Hero;
 import framework.components.Position;
 import framework.components.Zombie;
+import framework.engine.GLEngine;
 import framework.enums.EventEnum;
 import framework.events.Event;
 import framework.events.StatusEvent;
+import framework.helpers.Draw;
+import framework.helpers.Point;
+import framework.helpers.Time;
+import framework.interfaces.EventListener;
 import framework.managers.EntityManager;
 import framework.managers.EventManager;
 

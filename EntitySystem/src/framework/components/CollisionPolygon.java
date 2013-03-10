@@ -1,11 +1,11 @@
 package framework.components;
 
-import helpers.Line;
-import helpers.Point;
 
 import java.util.ArrayList;
 
 import framework.CoreComponent;
+import framework.helpers.Line;
+import framework.helpers.Point;
 
 public class CollisionPolygon extends CoreComponent{
 

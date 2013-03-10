@@ -1,6 +1,5 @@
 package framework.systems;
 
-import helpers.Point;
 import framework.CoreEntity;
 import framework.CoreSystem;
 import framework.World;
@@ -10,6 +9,7 @@ import framework.components.DirectFollower;
 import framework.components.Hero;
 import framework.components.Position;
 import framework.components.Velocity;
+import framework.helpers.Point;
 import framework.managers.EntityManager;
 
 

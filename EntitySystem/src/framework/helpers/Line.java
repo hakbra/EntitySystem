@@ -1,4 +1,4 @@
-package helpers;
+package framework.helpers;
 
 public class Line {
 	Point p1;

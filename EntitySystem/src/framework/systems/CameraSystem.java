@@ -1,13 +1,13 @@
 package framework.systems;
 
-import helpers.Point;
-import engine.GLEngine;
 import framework.CoreSystem;
 import framework.CoreEntity;
 import framework.World;
 import framework.components.Hero;
 import framework.components.CollisionPolygon;
 import framework.components.Position;
+import framework.engine.GLEngine;
+import framework.helpers.Point;
 import framework.managers.EntityManager;
 
 public class CameraSystem extends CoreSystem{

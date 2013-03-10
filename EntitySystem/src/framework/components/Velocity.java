@@ -1,7 +1,7 @@
 package framework.components;
 
 import framework.CoreComponent;
-import helpers.Point;
+import framework.helpers.Point;
 
 public class Velocity extends CoreComponent{
 	public Point dir;

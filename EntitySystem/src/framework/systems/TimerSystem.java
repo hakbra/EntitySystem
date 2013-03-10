@@ -1,11 +1,11 @@
 package framework.systems;
 
-import helpers.Time;
 import framework.CoreSystem;
 import framework.CoreEntity;
 import framework.World;
 import framework.components.Light;
 import framework.components.Timer;
+import framework.helpers.Time;
 import framework.managers.EntityManager;
 
 public class TimerSystem extends CoreSystem{

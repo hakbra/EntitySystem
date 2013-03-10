@@ -1,7 +1,5 @@
 package framework.systems;
 
-import interfaces.EventListener;
-import helpers.Time;
 import framework.CoreSystem;
 import framework.World;
 import framework.components.Bullet;
@@ -14,6 +12,8 @@ import framework.enums.StateEnum;
 import framework.events.DamageEvent;
 import framework.events.Event;
 import framework.events.StatusEvent;
+import framework.helpers.Time;
+import framework.interfaces.EventListener;
 import framework.managers.EntityManager;
 import framework.managers.EventManager;
 

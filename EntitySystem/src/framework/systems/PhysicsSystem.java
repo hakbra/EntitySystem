@@ -1,7 +1,5 @@
 package framework.systems;
 
-import helpers.Point;
-import helpers.Time;
 
 import java.util.Random;
 
@@ -14,6 +12,8 @@ import framework.components.AngleSpeed;
 import framework.components.Position;
 import framework.components.Scale;
 import framework.components.Velocity;
+import framework.helpers.Point;
+import framework.helpers.Time;
 import framework.managers.EntityManager;
 
 public class PhysicsSystem extends CoreSystem{

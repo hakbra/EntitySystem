@@ -1,13 +1,13 @@
 package framework;
 
 
-import helpers.Point;
 
 import java.util.HashMap;
 import java.util.Stack;
 
 import framework.enums.EventEnum;
 import framework.enums.StateEnum;
+import framework.helpers.Point;
 import framework.managers.DataManager;
 import framework.managers.EntityManager;
 import framework.managers.EventManager;

@@ -1,9 +1,5 @@
 package framework.components;
 
-import helpers.Color;
-import helpers.Draw;
-import helpers.Line;
-import helpers.Point;
 
 import java.util.ArrayList;
 
@@ -11,6 +7,10 @@ import org.lwjgl.opengl.GL11;
 
 import framework.CoreComponent;
 import framework.CoreEntity;
+import framework.helpers.Color;
+import framework.helpers.Draw;
+import framework.helpers.Line;
+import framework.helpers.Point;
 import framework.managers.EntityManager;
 
 public class Light extends CoreComponent{

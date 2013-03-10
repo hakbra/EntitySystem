@@ -1,7 +1,5 @@
 package framework.systems;
 
-import helpers.Point;
-import helpers.Time;
 
 import java.util.PriorityQueue;
 
@@ -15,6 +13,8 @@ import framework.components.Hero;
 import framework.components.Obstacle;
 import framework.components.Position;
 import framework.components.Velocity;
+import framework.helpers.Point;
+import framework.helpers.Time;
 import framework.managers.DataManager;
 import framework.managers.EntityManager;
 import framework.misc.Pathfinder;

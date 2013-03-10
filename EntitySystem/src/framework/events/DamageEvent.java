@@ -1,8 +1,8 @@
 package framework.events;
 
-import helpers.Point;
 import framework.CoreEntity;
 import framework.enums.EventEnum;
+import framework.helpers.Point;
 
 public class DamageEvent extends Event{
 	public CoreEntity attacker;

@@ -1,16 +1,16 @@
 package framework.systems.input;
 
-import helpers.Point;
 
 import org.lwjgl.input.Mouse;
 
 import zombies.states.Level1State;
-import engine.GLEngine;
 import framework.CoreEntity;
 import framework.CoreSystem;
 import framework.components.Button;
 import framework.components.CollisionPolygon;
+import framework.engine.GLEngine;
 import framework.enums.StateEnum;
+import framework.helpers.Point;
 import framework.managers.EntityManager;
 import framework.systems.EmitterSystem;
 import framework.systems.LightSystem;

@@ -1,12 +1,10 @@
 package framework.systems;
 
-import helpers.Point;
 
 import java.util.HashSet;
 
 import framework.CoreEntity;
 import framework.CoreSystem;
-import framework.components.Button;
 import framework.components.Collider;
 import framework.components.CollisionCircle;
 import framework.components.CollisionPolygon;
@@ -19,12 +17,14 @@ import framework.components.Trigger;
 import framework.events.CollisionEvent;
 import framework.events.DamageEvent;
 import framework.events.TriggerEvent;
+import framework.helpers.Point;
 import framework.managers.EntityManager;
 import framework.misc.CollisionMap;
 
 
 public class IntersectionSystem extends CoreSystem {
 	CollisionMap cmap = new CollisionMap();
+	CollisionMap pmap = new CollisionMap();
 
 	@Override
 	public void run()
@@ -36,8 +36,9 @@ public class IntersectionSystem extends CoreSystem {
 		{
 			Point circle1pos = em.getComponent(e1, Position.class).position;
 			CollisionCircle circle1 = em.getComponent(e1, CollisionCircle.class);
+			Point radVec = new Point(circle1.radius, circle1.radius);
 
-			HashSet<CoreEntity> cCands = cmap.getCircleCandidates(circle1pos, circle1.radius);
+			HashSet<CoreEntity> cCands = cmap.get(circle1pos.sub(radVec), circle1pos.add(radVec));
 			for (CoreEntity e2 : cCands)
 			{
 				if (e1 == e2)
@@ -55,7 +56,7 @@ public class IntersectionSystem extends CoreSystem {
 					handleCollision( em, new CollisionEvent(e1, e2, col, inside) );
 			}
 
-			HashSet<CoreEntity> pCands = cmap.getPolyCandidates(circle1pos, circle1.radius);
+			HashSet<CoreEntity> pCands = pmap.get(circle1pos.sub(radVec), circle1pos.add(radVec));
 			for (CoreEntity e2 : pCands)
 			{
 				CollisionPolygon poly = em.getComponent(e2, CollisionPolygon.class);
@@ -76,13 +77,15 @@ public class IntersectionSystem extends CoreSystem {
 		EntityManager em = world.getEntityManager();
 		
 		cmap.clear();
+		pmap.clear();
 
 		for (CoreEntity e1 : em.getEntityAll(CollisionCircle.class))
 		{	
-			CollisionCircle circle = em.getComponent(e1, CollisionCircle.class);
+			double rad = em.getComponent(e1, CollisionCircle.class).radius;
 			Point pos = em.getComponent(e1, Position.class).position;
+			Point radVec = new Point(rad, rad);
 
-			cmap.addCircle(e1, pos, circle.radius);
+			cmap.add(e1, pos.sub(radVec), pos.add(radVec));
 		}
 
 		for (CoreEntity e2 : em.getEntityAll(CollisionPolygon.class))
@@ -92,7 +95,7 @@ public class IntersectionSystem extends CoreSystem {
 			Point polyMin = poly.min.add(pos);
 			Point polyMax = poly.max.add(pos);
 
-			cmap.addPolygon(e2, polyMin, polyMax);
+			pmap.add(e2, polyMin, polyMax);
 		}
 	}
 

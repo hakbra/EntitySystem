@@ -1,7 +1,5 @@
 package framework.systems;
 
-import helpers.Point;
-import helpers.Time;
 
 import java.util.Random;
 
@@ -24,6 +22,8 @@ import framework.components.Velocity;
 import framework.components.Zombie;
 import framework.components.ZombieSpawner;
 import framework.enums.LayerEnum;
+import framework.helpers.Point;
+import framework.helpers.Time;
 import framework.managers.EntityManager;
 
 public class ZombieSpawnSystem extends CoreSystem{

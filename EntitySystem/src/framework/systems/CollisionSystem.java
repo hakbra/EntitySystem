@@ -1,7 +1,5 @@
 package framework.systems;
 
-import helpers.Point;
-import interfaces.EventListener;
 import framework.CoreEntity;
 import framework.CoreSystem;
 import framework.components.Collider;
@@ -15,6 +13,8 @@ import framework.components.Timer;
 import framework.enums.EventEnum;
 import framework.events.CollisionEvent;
 import framework.events.Event;
+import framework.helpers.Point;
+import framework.interfaces.EventListener;
 import framework.managers.EntityManager;
 import framework.managers.EventManager;
 

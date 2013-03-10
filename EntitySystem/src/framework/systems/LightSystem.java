@@ -10,19 +10,19 @@ import static org.lwjgl.opengl.GL11.glClearColor;
 import static org.lwjgl.opengl.GL11.glColorMask;
 import static org.lwjgl.opengl.GL11.glDisable;
 import static org.lwjgl.opengl.GL11.glEnable;
-import helpers.Draw;
-import helpers.Point;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL14;
 
-import engine.GLEngine;
 import framework.CoreSystem;
 import framework.CoreEntity;
 import framework.World;
 import framework.components.Light;
 import framework.components.Position;
 import framework.components.Timer;
+import framework.engine.GLEngine;
+import framework.helpers.Draw;
+import framework.helpers.Point;
 import framework.managers.EntityManager;
 
 public class LightSystem  extends CoreSystem{

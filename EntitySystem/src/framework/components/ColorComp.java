@@ -1,7 +1,7 @@
 package framework.components;
 
-import helpers.Color;
 import framework.CoreComponent;
+import framework.helpers.Color;
 
 public class ColorComp extends CoreComponent {
 	

@@ -2,13 +2,9 @@ package framework.systems.render;
 
 import static org.lwjgl.opengl.GL11.glPopMatrix;
 import static org.lwjgl.opengl.GL11.glPushMatrix;
-import helpers.Color;
-import helpers.Draw;
-import helpers.Point;
 
 import org.lwjgl.opengl.GL11;
 
-import engine.GLEngine;
 import framework.CoreComponent;
 import framework.CoreEntity;
 import framework.CoreSystem;
@@ -24,6 +20,10 @@ import framework.components.ParentTransform;
 import framework.components.Position;
 import framework.components.Scale;
 import framework.components.Tex;
+import framework.engine.GLEngine;
+import framework.helpers.Color;
+import framework.helpers.Draw;
+import framework.helpers.Point;
 import framework.managers.EntityManager;
 
 public class RenderSystem extends CoreSystem {

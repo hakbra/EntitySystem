@@ -1,7 +1,7 @@
 package framework.components;
 
-import helpers.Time;
 import framework.CoreComponent;
+import framework.helpers.Time;
 
 
 

@@ -1,7 +1,7 @@
 package framework.components;
 
-import helpers.Point;
 import framework.CoreComponent;
+import framework.helpers.Point;
 
 public class ZombieSpawner extends CoreComponent{
 

@@ -1,14 +1,14 @@
 package framework.components;
 
-import helpers.Draw;
-import helpers.Color;
-import helpers.Point;
-import helpers.Time;
 
 import org.lwjgl.opengl.GL11;
 
 import framework.CoreComponent;
 import framework.CoreEntity;
+import framework.helpers.Color;
+import framework.helpers.Draw;
+import framework.helpers.Point;
+import framework.helpers.Time;
 import framework.managers.EntityManager;
 
 public class Gun extends CoreComponent{

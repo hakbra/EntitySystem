@@ -24,10 +24,10 @@ import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
 
-import engine.GLEngine;
 import framework.World;
+import framework.engine.GLEngine;
+import framework.helpers.MyFont;
 
-import helpers.MyFont;
 
 public class DataManager {
 	World world;

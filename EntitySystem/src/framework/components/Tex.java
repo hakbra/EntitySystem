@@ -1,8 +1,5 @@
 package framework.components;
 
-import helpers.Color;
-import helpers.Draw;
-import helpers.Point;
 
 import java.util.ArrayList;
 
@@ -12,6 +9,9 @@ import framework.CoreComponent;
 import framework.CoreEntity;
 import framework.World;
 import framework.enums.LayerEnum;
+import framework.helpers.Color;
+import framework.helpers.Draw;
+import framework.helpers.Point;
 import framework.managers.EntityManager;
 
 public class Tex extends CoreComponent{
