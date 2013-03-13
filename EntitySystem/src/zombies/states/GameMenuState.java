@@ -1,5 +1,7 @@
 package zombies.states;
 
+import zombies.systems.input.MouseInputSystem;
+import zombies.systems.render.RenderSystem;
 import framework.CoreEntity;
 import framework.World;
 import framework.components.Button;
@@ -9,9 +11,7 @@ import framework.components.Tex;
 import framework.components.Text;
 import framework.engine.GLEngine;
 import framework.enums.LayerEnum;
-import framework.helpers.Point;
-import framework.systems.input.MouseInputSystem;
-import framework.systems.render.RenderSystem;
+import framework.utils.Point;
 
 public class GameMenuState {
 

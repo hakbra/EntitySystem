@@ -26,7 +26,7 @@ import org.newdawn.slick.util.ResourceLoader;
 
 import framework.World;
 import framework.engine.GLEngine;
-import framework.helpers.MyFont;
+import framework.utils.MyFont;
 
 
 public class DataManager {

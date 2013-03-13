@@ -1,7 +1,7 @@
 package framework.events;
 
 import framework.enums.EventEnum;
-import framework.helpers.Time;
+import framework.utils.Time;
 
 public class StatusEvent extends Event{
 	public String text;

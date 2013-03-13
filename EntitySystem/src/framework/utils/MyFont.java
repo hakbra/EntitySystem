@@ -1,4 +1,4 @@
-package framework.helpers;
+package framework.utils;
 
 import java.awt.Color;
 import java.awt.Font;

@@ -1,4 +1,4 @@
-package framework.systems.render;
+package zombies.systems.render;
 
 import static org.lwjgl.opengl.GL11.glPopMatrix;
 import static org.lwjgl.opengl.GL11.glPushMatrix;
@@ -21,10 +21,10 @@ import framework.components.Position;
 import framework.components.Scale;
 import framework.components.Tex;
 import framework.engine.GLEngine;
-import framework.helpers.Color;
-import framework.helpers.Draw;
-import framework.helpers.Point;
 import framework.managers.EntityManager;
+import framework.utils.Color;
+import framework.utils.Draw;
+import framework.utils.Point;
 
 public class RenderSystem extends CoreSystem {
 	

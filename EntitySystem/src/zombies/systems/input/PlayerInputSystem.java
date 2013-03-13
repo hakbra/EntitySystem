@@ -1,4 +1,4 @@
-package framework.systems.input;
+package zombies.systems.input;
 
 
 import java.util.Random;
@@ -24,9 +24,9 @@ import framework.components.Tex;
 import framework.components.Timer;
 import framework.components.Velocity;
 import framework.enums.LayerEnum;
-import framework.helpers.Point;
-import framework.helpers.Time;
 import framework.managers.EntityManager;
+import framework.utils.Point;
+import framework.utils.Time;
 
 
 

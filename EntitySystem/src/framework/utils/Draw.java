@@ -1,4 +1,4 @@
-package framework.helpers;
+package framework.utils;
 
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL11.GL_POINTS;

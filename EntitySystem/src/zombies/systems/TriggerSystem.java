@@ -1,4 +1,4 @@
-package framework.systems;
+package zombies.systems;
 
 
 import org.lwjgl.input.Keyboard;
@@ -24,10 +24,10 @@ import framework.enums.StateEnum;
 import framework.events.Event;
 import framework.events.StatusEvent;
 import framework.events.TriggerEvent;
-import framework.helpers.Point;
 import framework.interfaces.EventListener;
 import framework.managers.EntityManager;
 import framework.managers.EventManager;
+import framework.utils.Point;
 
 
 public class TriggerSystem extends CoreSystem implements EventListener{

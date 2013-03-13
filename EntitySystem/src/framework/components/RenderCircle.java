@@ -3,9 +3,9 @@ package framework.components;
 import org.lwjgl.opengl.GL11;
 
 import framework.CoreComponent;
-import framework.helpers.Color;
-import framework.helpers.Draw;
-import framework.helpers.Point;
+import framework.utils.Color;
+import framework.utils.Draw;
+import framework.utils.Point;
 
 public class RenderCircle extends CoreComponent{
 

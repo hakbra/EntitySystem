@@ -1,4 +1,4 @@
-package framework.systems;
+package zombies.systems;
 
 import framework.CoreEntity;
 import framework.CoreSystem;
@@ -13,10 +13,10 @@ import framework.components.Timer;
 import framework.enums.EventEnum;
 import framework.events.CollisionEvent;
 import framework.events.Event;
-import framework.helpers.Point;
 import framework.interfaces.EventListener;
 import framework.managers.EntityManager;
 import framework.managers.EventManager;
+import framework.utils.Point;
 
 
 public class CollisionSystem extends CoreSystem implements EventListener{

@@ -6,6 +6,23 @@ import java.util.Random;
 
 import org.lwjgl.input.Keyboard;
 
+import zombies.systems.CameraSystem;
+import zombies.systems.CollisionSystem;
+import zombies.systems.DamageSystem;
+import zombies.systems.EmitterSystem;
+import zombies.systems.FollowerSystem;
+import zombies.systems.IntersectionSystem;
+import zombies.systems.LightSystem;
+import zombies.systems.PhysicsSystem;
+import zombies.systems.TimerSystem;
+import zombies.systems.TriggerSystem;
+import zombies.systems.ZombieSpawnSystem;
+import zombies.systems.input.KeyInputSystem;
+import zombies.systems.input.MouseInputSystem;
+import zombies.systems.input.PlayerInputSystem;
+import zombies.systems.render.RenderSystem;
+import zombies.systems.render.StatsSystem;
+
 import framework.CoreEntity;
 import framework.World;
 import framework.components.Acceleration;
@@ -34,25 +51,9 @@ import framework.components.Zombie;
 import framework.components.ZombieSpawner;
 import framework.engine.GLEngine;
 import framework.enums.LayerEnum;
-import framework.helpers.Color;
-import framework.helpers.Point;
 import framework.managers.DataManager;
-import framework.systems.CameraSystem;
-import framework.systems.CollisionSystem;
-import framework.systems.DamageSystem;
-import framework.systems.EmitterSystem;
-import framework.systems.FollowerSystem;
-import framework.systems.IntersectionSystem;
-import framework.systems.LightSystem;
-import framework.systems.PhysicsSystem;
-import framework.systems.TimerSystem;
-import framework.systems.TriggerSystem;
-import framework.systems.ZombieSpawnSystem;
-import framework.systems.input.KeyInputSystem;
-import framework.systems.input.MouseInputSystem;
-import framework.systems.input.PlayerInputSystem;
-import framework.systems.render.RenderSystem;
-import framework.systems.render.StatsSystem;
+import framework.utils.Color;
+import framework.utils.Point;
 
 public class Level1State {
 	

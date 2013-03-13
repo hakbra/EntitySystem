@@ -1,4 +1,4 @@
-package framework.systems;
+package zombies.systems;
 
 import static org.lwjgl.opengl.EXTFramebufferObject.GL_FRAMEBUFFER_EXT;
 import static org.lwjgl.opengl.EXTFramebufferObject.glBindFramebufferEXT;
@@ -21,9 +21,9 @@ import framework.components.Light;
 import framework.components.Position;
 import framework.components.Timer;
 import framework.engine.GLEngine;
-import framework.helpers.Draw;
-import framework.helpers.Point;
 import framework.managers.EntityManager;
+import framework.utils.Draw;
+import framework.utils.Point;
 
 public class LightSystem  extends CoreSystem{
 

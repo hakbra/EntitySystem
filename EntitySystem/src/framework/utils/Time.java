@@ -1,4 +1,4 @@
-package framework.helpers;
+package framework.utils;
 
 import org.lwjgl.Sys;
 import org.lwjgl.opengl.Display;

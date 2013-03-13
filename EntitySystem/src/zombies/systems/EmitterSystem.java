@@ -1,4 +1,4 @@
-package framework.systems;
+package zombies.systems;
 
 
 import java.util.Random;
@@ -15,10 +15,10 @@ import framework.components.RenderCircle;
 import framework.components.Timer;
 import framework.components.Velocity;
 import framework.enums.LayerEnum;
-import framework.helpers.Color;
-import framework.helpers.Point;
-import framework.helpers.Time;
 import framework.managers.EntityManager;
+import framework.utils.Color;
+import framework.utils.Point;
+import framework.utils.Time;
 
 public class EmitterSystem extends CoreSystem{
 

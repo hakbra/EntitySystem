@@ -1,21 +1,21 @@
-package framework.systems.input;
+package zombies.systems.input;
 
 
 import org.lwjgl.input.Mouse;
 
 import zombies.states.Level1State;
+import zombies.systems.EmitterSystem;
+import zombies.systems.LightSystem;
+import zombies.systems.PhysicsSystem;
+import zombies.systems.TimerSystem;
 import framework.CoreEntity;
 import framework.CoreSystem;
 import framework.components.Button;
 import framework.components.CollisionPolygon;
 import framework.engine.GLEngine;
 import framework.enums.StateEnum;
-import framework.helpers.Point;
 import framework.managers.EntityManager;
-import framework.systems.EmitterSystem;
-import framework.systems.LightSystem;
-import framework.systems.PhysicsSystem;
-import framework.systems.TimerSystem;
+import framework.utils.Point;
 
 public class MouseInputSystem extends CoreSystem{
 

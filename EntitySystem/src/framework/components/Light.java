@@ -7,11 +7,11 @@ import org.lwjgl.opengl.GL11;
 
 import framework.CoreComponent;
 import framework.CoreEntity;
-import framework.helpers.Color;
-import framework.helpers.Draw;
-import framework.helpers.Line;
-import framework.helpers.Point;
 import framework.managers.EntityManager;
+import framework.utils.Color;
+import framework.utils.Draw;
+import framework.utils.Line;
+import framework.utils.Point;
 
 public class Light extends CoreComponent{
 

@@ -2,7 +2,7 @@ package framework.misc;
 
 import framework.CoreComponent;
 import framework.components.CollisionPolygon;
-import framework.helpers.Point;
+import framework.utils.Point;
 
 public class Pathfinder{
 

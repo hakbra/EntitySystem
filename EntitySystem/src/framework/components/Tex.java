@@ -9,10 +9,10 @@ import framework.CoreComponent;
 import framework.CoreEntity;
 import framework.World;
 import framework.enums.LayerEnum;
-import framework.helpers.Color;
-import framework.helpers.Draw;
-import framework.helpers.Point;
 import framework.managers.EntityManager;
+import framework.utils.Color;
+import framework.utils.Draw;
+import framework.utils.Point;
 
 public class Tex extends CoreComponent{
 

@@ -4,8 +4,8 @@ package framework.components;
 import java.util.ArrayList;
 
 import framework.CoreComponent;
-import framework.helpers.Line;
-import framework.helpers.Point;
+import framework.utils.Line;
+import framework.utils.Point;
 
 public class CollisionPolygon extends CoreComponent{
 

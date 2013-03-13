@@ -1,4 +1,4 @@
-package framework.systems;
+package zombies.systems;
 
 
 import java.util.PriorityQueue;
@@ -13,12 +13,12 @@ import framework.components.Hero;
 import framework.components.Obstacle;
 import framework.components.Position;
 import framework.components.Velocity;
-import framework.helpers.Point;
-import framework.helpers.Time;
 import framework.managers.DataManager;
 import framework.managers.EntityManager;
 import framework.misc.Pathfinder;
 import framework.misc.Pathfinder.Node;
+import framework.utils.Point;
+import framework.utils.Time;
 
 public class FollowerSystem extends CoreSystem{
 	Pathfinder pf;

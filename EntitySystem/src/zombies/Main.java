@@ -5,8 +5,8 @@ import zombies.states.StartMenuState;
 import framework.World;
 import framework.engine.GLEngine;
 import framework.enums.StateEnum;
-import framework.helpers.Point;
-import framework.helpers.Time;
+import framework.utils.Point;
+import framework.utils.Time;
 
 public class Main
 {

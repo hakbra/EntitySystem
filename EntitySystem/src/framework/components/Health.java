@@ -7,9 +7,9 @@ import org.lwjgl.opengl.GL11;
 
 import framework.CoreComponent;
 import framework.CoreEntity;
-import framework.helpers.Color;
-import framework.helpers.Draw;
 import framework.managers.EntityManager;
+import framework.utils.Color;
+import framework.utils.Draw;
 
 
 

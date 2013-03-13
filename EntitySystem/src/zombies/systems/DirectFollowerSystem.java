@@ -1,4 +1,4 @@
-package framework.systems;
+package zombies.systems;
 
 import framework.CoreEntity;
 import framework.CoreSystem;
@@ -9,8 +9,8 @@ import framework.components.DirectFollower;
 import framework.components.Hero;
 import framework.components.Position;
 import framework.components.Velocity;
-import framework.helpers.Point;
 import framework.managers.EntityManager;
+import framework.utils.Point;
 
 
 public class DirectFollowerSystem extends CoreSystem{

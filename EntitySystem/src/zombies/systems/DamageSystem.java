@@ -1,4 +1,4 @@
-package framework.systems;
+package zombies.systems;
 
 import framework.CoreSystem;
 import framework.World;
@@ -12,10 +12,10 @@ import framework.enums.StateEnum;
 import framework.events.DamageEvent;
 import framework.events.Event;
 import framework.events.StatusEvent;
-import framework.helpers.Time;
 import framework.interfaces.EventListener;
 import framework.managers.EntityManager;
 import framework.managers.EventManager;
+import framework.utils.Time;
 
 
 public class DamageSystem extends CoreSystem implements EventListener{

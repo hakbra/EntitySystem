@@ -2,7 +2,7 @@ package framework.events;
 
 import framework.CoreEntity;
 import framework.enums.EventEnum;
-import framework.helpers.Point;
+import framework.utils.Point;
 
 public class CollisionEvent extends Event{
 	public CoreEntity collider;

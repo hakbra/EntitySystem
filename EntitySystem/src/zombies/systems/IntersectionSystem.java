@@ -1,4 +1,4 @@
-package framework.systems;
+package zombies.systems;
 
 
 import java.util.HashSet;
@@ -17,9 +17,9 @@ import framework.components.Trigger;
 import framework.events.CollisionEvent;
 import framework.events.DamageEvent;
 import framework.events.TriggerEvent;
-import framework.helpers.Point;
 import framework.managers.EntityManager;
 import framework.misc.CollisionMap;
+import framework.utils.Point;
 
 
 public class IntersectionSystem extends CoreSystem {

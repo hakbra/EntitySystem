@@ -1,4 +1,4 @@
-package framework.systems;
+package zombies.systems;
 
 import framework.CoreSystem;
 import framework.CoreEntity;
@@ -7,8 +7,8 @@ import framework.components.Hero;
 import framework.components.CollisionPolygon;
 import framework.components.Position;
 import framework.engine.GLEngine;
-import framework.helpers.Point;
 import framework.managers.EntityManager;
+import framework.utils.Point;
 
 public class CameraSystem extends CoreSystem{
 

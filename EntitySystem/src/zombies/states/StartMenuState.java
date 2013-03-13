@@ -1,5 +1,8 @@
 package zombies.states;
 
+import zombies.systems.LightSystem;
+import zombies.systems.input.MouseInputSystem;
+import zombies.systems.render.RenderSystem;
 import framework.CoreEntity;
 import framework.World;
 import framework.components.Button;
@@ -10,10 +13,7 @@ import framework.components.Text;
 import framework.engine.GLEngine;
 import framework.enums.LayerEnum;
 import framework.enums.StateEnum;
-import framework.helpers.Point;
-import framework.systems.LightSystem;
-import framework.systems.input.MouseInputSystem;
-import framework.systems.render.RenderSystem;
+import framework.utils.Point;
 
 public class StartMenuState {
 

@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 import framework.CoreEntity;
-import framework.helpers.Point;
+import framework.utils.Point;
 
 public class CollisionMap {
 	HashMap<Integer, HashMap<Integer, ArrayList<CoreEntity>>> map = new HashMap<Integer, HashMap<Integer,ArrayList<CoreEntity>>>();

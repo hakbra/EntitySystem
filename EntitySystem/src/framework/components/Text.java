@@ -2,9 +2,9 @@ package framework.components;
 
 import framework.CoreComponent;
 import framework.enums.LayerEnum;
-import framework.helpers.Color;
-import framework.helpers.Draw;
-import framework.helpers.Point;
+import framework.utils.Color;
+import framework.utils.Draw;
+import framework.utils.Point;
 
 public class Text extends CoreComponent{
 	public String text;

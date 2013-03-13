@@ -1,12 +1,12 @@
-package framework.systems;
+package zombies.systems;
 
 import framework.CoreSystem;
 import framework.CoreEntity;
 import framework.World;
 import framework.components.Light;
 import framework.components.Timer;
-import framework.helpers.Time;
 import framework.managers.EntityManager;
+import framework.utils.Time;
 
 public class TimerSystem extends CoreSystem{
 	

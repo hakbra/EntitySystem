@@ -2,7 +2,7 @@ package framework.components;
 
 import framework.CoreComponent;
 import framework.CoreEntity;
-import framework.helpers.Time;
+import framework.utils.Time;
 
 
 
