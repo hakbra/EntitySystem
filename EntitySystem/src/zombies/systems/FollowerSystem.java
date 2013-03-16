@@ -3,16 +3,17 @@ package zombies.systems;
 
 import java.util.PriorityQueue;
 
+import zombies.components.Angle;
+import zombies.components.AngleSpeed;
+import zombies.components.CollisionPolygon;
+import zombies.components.Follower;
+import zombies.components.Hero;
+import zombies.components.Obstacle;
+import zombies.components.Position;
+import zombies.components.Velocity;
+
 import framework.CoreEntity;
 import framework.CoreSystem;
-import framework.components.Angle;
-import framework.components.AngleSpeed;
-import framework.components.CollisionPolygon;
-import framework.components.Follower;
-import framework.components.Hero;
-import framework.components.Obstacle;
-import framework.components.Position;
-import framework.components.Velocity;
 import framework.managers.DataManager;
 import framework.managers.EntityManager;
 import framework.misc.Pathfinder;

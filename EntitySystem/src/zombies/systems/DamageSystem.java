@@ -1,12 +1,12 @@
 package zombies.systems;
 
+import zombies.components.Bullet;
+import zombies.components.Damage;
+import zombies.components.Health;
+import zombies.components.Hero;
+import zombies.components.Zombie;
 import framework.CoreSystem;
 import framework.World;
-import framework.components.Bullet;
-import framework.components.Damage;
-import framework.components.Health;
-import framework.components.Hero;
-import framework.components.Zombie;
 import framework.enums.EventEnum;
 import framework.enums.StateEnum;
 import framework.events.DamageEvent;

@@ -14,12 +14,13 @@ import static org.lwjgl.opengl.GL11.glEnable;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL14;
 
+import zombies.components.Light;
+import zombies.components.Position;
+import zombies.components.Timer;
+
 import framework.CoreSystem;
 import framework.CoreEntity;
 import framework.World;
-import framework.components.Light;
-import framework.components.Position;
-import framework.components.Timer;
 import framework.engine.GLEngine;
 import framework.managers.EntityManager;
 import framework.utils.Draw;

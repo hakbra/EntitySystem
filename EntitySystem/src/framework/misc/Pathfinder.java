@@ -1,7 +1,7 @@
 package framework.misc;
 
+import zombies.components.CollisionPolygon;
 import framework.CoreComponent;
-import framework.components.CollisionPolygon;
 import framework.utils.Point;
 
 public class Pathfinder{

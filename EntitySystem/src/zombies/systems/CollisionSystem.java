@@ -1,15 +1,15 @@
 package zombies.systems;
 
+import zombies.components.Collider;
+import zombies.components.CollisionCircle;
+import zombies.components.CollisionPolygon;
+import zombies.components.DestroyOnImpact;
+import zombies.components.Emitter;
+import zombies.components.EmitterOnImpact;
+import zombies.components.Position;
+import zombies.components.Timer;
 import framework.CoreEntity;
 import framework.CoreSystem;
-import framework.components.Collider;
-import framework.components.CollisionCircle;
-import framework.components.CollisionPolygon;
-import framework.components.DestroyOnImpact;
-import framework.components.Emitter;
-import framework.components.EmitterOnImpact;
-import framework.components.Position;
-import framework.components.Timer;
 import framework.enums.EventEnum;
 import framework.events.CollisionEvent;
 import framework.events.Event;

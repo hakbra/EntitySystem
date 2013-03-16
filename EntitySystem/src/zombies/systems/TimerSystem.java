@@ -1,10 +1,10 @@
 package zombies.systems;
 
+import zombies.components.Light;
+import zombies.components.Timer;
 import framework.CoreSystem;
 import framework.CoreEntity;
 import framework.World;
-import framework.components.Light;
-import framework.components.Timer;
 import framework.managers.EntityManager;
 import framework.utils.Time;
 

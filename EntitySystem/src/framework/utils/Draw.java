@@ -98,11 +98,6 @@ public class Draw {
 	{
 		glTranslatef((float) p.x, (float) p.y, 0f);
 	}
-
-	public static void translate(float f)
-	{
-		glTranslatef(0f, 0f, f);
-	}
 	
 	public static void circle(float r)
 	{

@@ -3,15 +3,16 @@ package zombies.systems;
 
 import java.util.Random;
 
+import zombies.components.Acceleration;
+import zombies.components.Angle;
+import zombies.components.AngleSpeed;
+import zombies.components.Position;
+import zombies.components.Scale;
+import zombies.components.Velocity;
+
 import framework.CoreEntity;
 import framework.CoreSystem;
 import framework.World;
-import framework.components.Acceleration;
-import framework.components.Angle;
-import framework.components.AngleSpeed;
-import framework.components.Position;
-import framework.components.Scale;
-import framework.components.Velocity;
 import framework.managers.EntityManager;
 import framework.utils.Point;
 import framework.utils.Time;

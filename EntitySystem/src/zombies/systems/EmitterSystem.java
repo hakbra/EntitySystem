@@ -3,17 +3,18 @@ package zombies.systems;
 
 import java.util.Random;
 
+import zombies.components.Collider;
+import zombies.components.CollisionCircle;
+import zombies.components.Emitter;
+import zombies.components.Particle;
+import zombies.components.Position;
+import zombies.components.RenderCircle;
+import zombies.components.Timer;
+import zombies.components.Velocity;
+
 import framework.CoreEntity;
 import framework.CoreSystem;
 import framework.World;
-import framework.components.Collider;
-import framework.components.CollisionCircle;
-import framework.components.Emitter;
-import framework.components.Particle;
-import framework.components.Position;
-import framework.components.RenderCircle;
-import framework.components.Timer;
-import framework.components.Velocity;
 import framework.enums.LayerEnum;
 import framework.managers.EntityManager;
 import framework.utils.Color;

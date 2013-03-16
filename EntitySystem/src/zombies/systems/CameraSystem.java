@@ -1,11 +1,11 @@
 package zombies.systems;
 
+import zombies.components.CollisionPolygon;
+import zombies.components.Hero;
+import zombies.components.Position;
 import framework.CoreSystem;
 import framework.CoreEntity;
 import framework.World;
-import framework.components.Hero;
-import framework.components.CollisionPolygon;
-import framework.components.Position;
 import framework.engine.GLEngine;
 import framework.managers.EntityManager;
 import framework.utils.Point;

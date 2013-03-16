@@ -1,14 +1,14 @@
 package zombies.systems;
 
+import zombies.components.Angle;
+import zombies.components.AngleSpeed;
+import zombies.components.DirectFollower;
+import zombies.components.Hero;
+import zombies.components.Position;
+import zombies.components.Velocity;
 import framework.CoreEntity;
 import framework.CoreSystem;
 import framework.World;
-import framework.components.Angle;
-import framework.components.AngleSpeed;
-import framework.components.DirectFollower;
-import framework.components.Hero;
-import framework.components.Position;
-import framework.components.Velocity;
 import framework.managers.EntityManager;
 import framework.utils.Point;
 

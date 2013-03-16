@@ -3,6 +3,8 @@ package zombies.systems.input;
 
 import org.lwjgl.input.Mouse;
 
+import zombies.components.Button;
+import zombies.components.CollisionPolygon;
 import zombies.states.Level1State;
 import zombies.systems.EmitterSystem;
 import zombies.systems.LightSystem;
@@ -10,8 +12,6 @@ import zombies.systems.PhysicsSystem;
 import zombies.systems.TimerSystem;
 import framework.CoreEntity;
 import framework.CoreSystem;
-import framework.components.Button;
-import framework.components.CollisionPolygon;
 import framework.engine.GLEngine;
 import framework.enums.StateEnum;
 import framework.managers.EntityManager;

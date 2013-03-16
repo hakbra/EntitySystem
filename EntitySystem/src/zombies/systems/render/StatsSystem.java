@@ -3,12 +3,13 @@ package zombies.systems.render;
 
 import java.util.ArrayList;
 
+import zombies.components.Health;
+import zombies.components.Hero;
+import zombies.components.Position;
+import zombies.components.Zombie;
+
 import framework.CoreEntity;
 import framework.CoreSystem;
-import framework.components.Health;
-import framework.components.Hero;
-import framework.components.Position;
-import framework.components.Zombie;
 import framework.engine.GLEngine;
 import framework.enums.EventEnum;
 import framework.events.Event;

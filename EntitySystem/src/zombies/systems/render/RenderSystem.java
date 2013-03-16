@@ -5,21 +5,22 @@ import static org.lwjgl.opengl.GL11.glPushMatrix;
 
 import org.lwjgl.opengl.GL11;
 
+import zombies.components.Angle;
+import zombies.components.Button;
+import zombies.components.CollisionCircle;
+import zombies.components.CollisionPolygon;
+import zombies.components.ColorComp;
+import zombies.components.Health;
+import zombies.components.Hero;
+import zombies.components.ParentTransform;
+import zombies.components.Position;
+import zombies.components.Scale;
+import zombies.components.Tex;
+
 import framework.CoreComponent;
 import framework.CoreEntity;
 import framework.CoreSystem;
 import framework.World;
-import framework.components.Angle;
-import framework.components.Button;
-import framework.components.CollisionCircle;
-import framework.components.CollisionPolygon;
-import framework.components.ColorComp;
-import framework.components.Health;
-import framework.components.Hero;
-import framework.components.ParentTransform;
-import framework.components.Position;
-import framework.components.Scale;
-import framework.components.Tex;
 import framework.engine.GLEngine;
 import framework.managers.EntityManager;
 import framework.utils.Color;

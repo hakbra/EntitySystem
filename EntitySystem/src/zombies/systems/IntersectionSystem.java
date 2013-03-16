@@ -3,17 +3,18 @@ package zombies.systems;
 
 import java.util.HashSet;
 
+import zombies.components.Collider;
+import zombies.components.CollisionCircle;
+import zombies.components.CollisionPolygon;
+import zombies.components.Damage;
+import zombies.components.Health;
+import zombies.components.Hero;
+import zombies.components.Obstacle;
+import zombies.components.Position;
+import zombies.components.Trigger;
+
 import framework.CoreEntity;
 import framework.CoreSystem;
-import framework.components.Collider;
-import framework.components.CollisionCircle;
-import framework.components.CollisionPolygon;
-import framework.components.Damage;
-import framework.components.Health;
-import framework.components.Hero;
-import framework.components.Obstacle;
-import framework.components.Position;
-import framework.components.Trigger;
 import framework.events.CollisionEvent;
 import framework.events.DamageEvent;
 import framework.events.TriggerEvent;
@@ -91,9 +92,8 @@ public class IntersectionSystem extends CoreSystem {
 		for (CoreEntity e2 : em.getEntityAll(CollisionPolygon.class))
 		{
 			CollisionPolygon poly = em.getComponent(e2, CollisionPolygon.class);
-			Point pos = em.getComponent(e2, Position.class).position;
-			Point polyMin = poly.min.add(pos);
-			Point polyMax = poly.max.add(pos);
+			Point polyMin = poly.getMin();
+			Point polyMax = poly.getMax();
 
 			pmap.add(e2, polyMin, polyMax);
 		}
