@@ -11,13 +11,13 @@ import zombies.components.Hero;
 import zombies.components.Obstacle;
 import zombies.components.Position;
 import zombies.components.Velocity;
+import zombies.misc.Pathfinder;
+import zombies.misc.Pathfinder.Node;
 
 import framework.CoreEntity;
 import framework.CoreSystem;
 import framework.managers.DataManager;
 import framework.managers.EntityManager;
-import framework.misc.Pathfinder;
-import framework.misc.Pathfinder.Node;
 import framework.utils.Point;
 import framework.utils.Time;
 

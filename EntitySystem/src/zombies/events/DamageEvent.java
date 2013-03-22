@@ -1,8 +1,8 @@
-package framework.events;
+package zombies.events;
 
 import framework.CoreEntity;
 import framework.enums.EventEnum;
-import framework.utils.Point;
+import framework.events.Event;
 
 public class DamageEvent extends Event{
 	public CoreEntity attacker;

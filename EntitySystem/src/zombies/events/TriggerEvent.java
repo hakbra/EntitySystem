@@ -1,7 +1,8 @@
-package framework.events;
+package zombies.events;
 
 import framework.CoreEntity;
 import framework.enums.EventEnum;
+import framework.events.Event;
 
 public class TriggerEvent extends Event{
 	public CoreEntity hero;

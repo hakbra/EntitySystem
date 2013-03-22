@@ -1,4 +1,6 @@
-package framework.utils;
+package zombies.utils;
+
+import framework.utils.Point;
 
 public class Line {
 	Point p1;

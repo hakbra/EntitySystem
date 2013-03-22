@@ -3,8 +3,9 @@ package zombies.components;
 
 import java.util.ArrayList;
 
+import zombies.utils.Line;
+
 import framework.CoreComponent;
-import framework.utils.Line;
 import framework.utils.Point;
 
 public class CollisionPolygon extends CoreComponent{

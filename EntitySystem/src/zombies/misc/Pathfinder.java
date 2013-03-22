@@ -1,4 +1,4 @@
-package framework.misc;
+package zombies.misc;
 
 import zombies.components.CollisionPolygon;
 import framework.CoreComponent;

@@ -2,7 +2,7 @@ package framework;
 
 import framework.enums.LayerEnum;
 
-public class CoreComponent implements Comparable {
+public class CoreComponent implements Comparable<CoreComponent> {
 	
 	protected String name;
 	public World world;
@@ -26,8 +26,8 @@ public class CoreComponent implements Comparable {
 	}
 
 	@Override
-	public int compareTo(Object o) {
-		return ((CoreComponent) o).layer.num.compareTo(this.layer.num) * -1;
+	public int compareTo(CoreComponent co) {
+		return co.layer.compareTo(this.layer) * -1;
 	}
 
 }

@@ -12,14 +12,14 @@ import zombies.components.Hero;
 import zombies.components.Obstacle;
 import zombies.components.Position;
 import zombies.components.Trigger;
+import zombies.events.CollisionEvent;
+import zombies.events.DamageEvent;
+import zombies.events.TriggerEvent;
+import zombies.misc.CollisionMap;
 
 import framework.CoreEntity;
 import framework.CoreSystem;
-import framework.events.CollisionEvent;
-import framework.events.DamageEvent;
-import framework.events.TriggerEvent;
 import framework.managers.EntityManager;
-import framework.misc.CollisionMap;
 import framework.utils.Point;
 
 

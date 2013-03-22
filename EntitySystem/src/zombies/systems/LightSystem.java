@@ -17,13 +17,13 @@ import org.lwjgl.opengl.GL14;
 import zombies.components.Light;
 import zombies.components.Position;
 import zombies.components.Timer;
+import zombies.utils.Draw;
 
 import framework.CoreSystem;
 import framework.CoreEntity;
 import framework.World;
 import framework.engine.GLEngine;
 import framework.managers.EntityManager;
-import framework.utils.Draw;
 import framework.utils.Point;
 
 public class LightSystem  extends CoreSystem{

@@ -1,4 +1,4 @@
-package framework.misc;
+package zombies.misc;
 
 
 import java.util.ArrayList;

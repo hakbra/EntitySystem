@@ -7,17 +7,17 @@ import zombies.components.Health;
 import zombies.components.Hero;
 import zombies.components.Position;
 import zombies.components.Zombie;
+import zombies.events.StatusEvent;
+import zombies.utils.Draw;
 
 import framework.CoreEntity;
 import framework.CoreSystem;
 import framework.engine.GLEngine;
 import framework.enums.EventEnum;
 import framework.events.Event;
-import framework.events.StatusEvent;
 import framework.interfaces.EventListener;
 import framework.managers.EntityManager;
 import framework.managers.EventManager;
-import framework.utils.Draw;
 import framework.utils.Point;
 import framework.utils.Time;
 

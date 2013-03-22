@@ -5,12 +5,13 @@ import java.util.ArrayList;
 
 import org.lwjgl.opengl.GL11;
 
+import zombies.utils.Color;
+import zombies.utils.Draw;
+import zombies.utils.Line;
+
 import framework.CoreComponent;
 import framework.CoreEntity;
 import framework.managers.EntityManager;
-import framework.utils.Color;
-import framework.utils.Draw;
-import framework.utils.Line;
 import framework.utils.Point;
 
 public class Light extends CoreComponent{

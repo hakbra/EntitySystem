@@ -1,4 +1,4 @@
-package framework.utils;
+package zombies.utils;
 
 public class Color {
 	public static Color BLACK = new Color(0, 0, 0);

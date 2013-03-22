@@ -4,7 +4,6 @@ package framework.managers;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import framework.CoreSystem;
 import framework.World;
 import framework.enums.EventEnum;
 import framework.events.Event;
