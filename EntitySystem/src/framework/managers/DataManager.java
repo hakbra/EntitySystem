@@ -26,13 +26,13 @@ import org.newdawn.slick.util.ResourceLoader;
 
 import framework.World;
 import framework.engine.GLEngine;
-import framework.utils.MyFont;
+import framework.utils.OpenGLFont;
 
 
 public class DataManager {
 	World world;
 	
-	public MyFont font;
+	public OpenGLFont font;
     public HashMap<String, Integer> textures = new HashMap<String, Integer>();
 	
 	public DataManager(World w)
@@ -40,7 +40,7 @@ public class DataManager {
 		this.world = w;
 
 		Font awtFont = new Font("Times New Roman", Font.BOLD, 24);
-		font = new MyFont(awtFont, false);
+		font = new OpenGLFont(awtFont, false);
 	}
 
 	public int getTexture(String name) {
@@ -60,28 +60,7 @@ public class DataManager {
 		}
 		return -1;
 	}
-
-	public void createLightTexture()
-	{
-		if (!GLContext.getCapabilities().GL_EXT_framebuffer_object) {
-			System.out.println("FBO not supported!!!");
-			System.exit(0);
-		}
-		else {
-			int lightBufID = glGenFramebuffersEXT();
-			int lightTexID = glGenTextures();
-
-			glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, lightBufID);
-
-			glBindTexture(GL_TEXTURE_2D, lightTexID);
-			glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, GLEngine.WIDTH, GLEngine.HEIGHT, 0,GL_RGBA, GL_INT, (java.nio.ByteBuffer) null);
-			glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT,GL_COLOR_ATTACHMENT0_EXT,GL_TEXTURE_2D, lightTexID, 0);
-
-			glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
-			
-			textures.put("lightTex", lightTexID);
-			textures.put("lightBuf", lightBufID);
-		}
+	public void setTexture(String name, int value) {
+		textures.put(name, value);
 	}
 }
