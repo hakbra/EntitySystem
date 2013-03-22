@@ -8,7 +8,6 @@ import zombies.components.Hero;
 import zombies.components.Position;
 import zombies.components.Zombie;
 import zombies.events.StatusEvent;
-import zombies.utils.Draw;
 import framework.CoreEntity;
 import framework.CoreSystem;
 import framework.DynEnum;
@@ -17,6 +16,7 @@ import framework.events.Event;
 import framework.interfaces.EventListener;
 import framework.managers.EntityManager;
 import framework.managers.EventManager;
+import framework.utils.Draw;
 import framework.utils.Point;
 import framework.utils.Time;
 

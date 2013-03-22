@@ -11,11 +11,11 @@ import zombies.components.Position;
 import zombies.components.RenderCircle;
 import zombies.components.Timer;
 import zombies.components.Velocity;
-import zombies.utils.Color;
 import framework.CoreEntity;
 import framework.CoreSystem;
 import framework.DynEnum;
 import framework.managers.EntityManager;
+import framework.utils.Color;
 import framework.utils.Point;
 import framework.utils.Time;
 

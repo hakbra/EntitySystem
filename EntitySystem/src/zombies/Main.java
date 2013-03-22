@@ -21,7 +21,7 @@ public class Main
 	public Main()
 	{
 		DynEnum.at("layer").addAll("null", "ground", "item", "mover", "light", "obstacle", "hud", "text");
-		DynEnum.at("state").addAll("null", "start_menu", "game_menu", "level1", "cutscene", "level2", "exit", "message");
+		DynEnum.at("state").addAll("null", "start_menu", "game_menu", "level1", "level2");
 		DynEnum.at("event").addAll("null", "trigger", "damage", "collision", "kill");
 		
 		GLEngine.init();

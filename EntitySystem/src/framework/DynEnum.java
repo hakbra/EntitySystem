@@ -44,7 +44,6 @@ public class DynEnum {
 			throw new RuntimeException("Enum " + name + " does already have value " + valname + "!");
 		
 		values.put(valname, counter);
-		System.out.println(valname + " added to " + name + " with value " + counter);
 		counter++;
 	}
 	public void addAll(String... values)

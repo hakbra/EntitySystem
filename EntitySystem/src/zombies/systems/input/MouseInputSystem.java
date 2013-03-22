@@ -55,7 +55,7 @@ public class MouseInputSystem extends CoreSystem{
 				}
 				else if (button.type == "Exit")
 				{
-					world.setState(DynEnum.at("state").get("exit"));
+					world.setState(DynEnum.at("state").get("null"));
 				}
 				else if (button.type == "Play")
 				{

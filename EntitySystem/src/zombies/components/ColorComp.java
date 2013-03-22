@@ -1,7 +1,7 @@
 package zombies.components;
 
-import zombies.utils.Color;
 import framework.CoreComponent;
+import framework.utils.Color;
 
 public class ColorComp extends CoreComponent {
 	

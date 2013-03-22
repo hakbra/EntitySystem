@@ -16,8 +16,6 @@ import zombies.components.ParentTransform;
 import zombies.components.Position;
 import zombies.components.Scale;
 import zombies.components.Tex;
-import zombies.utils.Color;
-import zombies.utils.Draw;
 
 import framework.CoreComponent;
 import framework.CoreEntity;
@@ -25,6 +23,8 @@ import framework.CoreSystem;
 import framework.World;
 import framework.engine.GLEngine;
 import framework.managers.EntityManager;
+import framework.utils.Color;
+import framework.utils.Draw;
 import framework.utils.Point;
 
 public class RenderSystem extends CoreSystem {

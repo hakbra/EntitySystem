@@ -46,11 +46,11 @@ import zombies.systems.input.MouseInputSystem;
 import zombies.systems.input.PlayerInputSystem;
 import zombies.systems.render.RenderSystem;
 import zombies.systems.render.StatsSystem;
-import zombies.utils.Color;
 import framework.CoreEntity;
 import framework.DynEnum;
 import framework.World;
 import framework.engine.GLEngine;
+import framework.utils.Color;
 import framework.utils.Point;
 
 public class Level2State {

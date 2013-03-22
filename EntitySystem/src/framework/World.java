@@ -37,7 +37,7 @@ public class World {
 
 	public boolean run()
 	{
-		return state != DynEnum.at("state").get("exit");
+		return state != DynEnum.at("state").get("null");
 	}
 
 	public void setStateAndClear(int s)
