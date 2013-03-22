@@ -7,11 +7,8 @@ import java.util.HashMap;
 
 import framework.CoreComponent;
 import framework.CoreEntity;
+import framework.DynEnum;
 import framework.World;
-import framework.enums.LayerEnum;
-import framework.enums.StateEnum;
-
-
 
 public class EntityManager{
 	
@@ -21,9 +18,9 @@ public class EntityManager{
     public ArrayList<CoreComponent> renders = new ArrayList<CoreComponent>();
     
     public World world;
-    public StateEnum state;
+    public int state;
     
-    public EntityManager(World w, StateEnum s)
+    public EntityManager(World w, int s)
     {
     	this.world = w;
     	this.state = s;
@@ -62,7 +59,7 @@ public class EntityManager{
 		component.parent = e;
 		component.world = this.world;
 
-		if (component.layer != LayerEnum.NOT)
+		if (component.layer != DynEnum.at("layer").get("null"))
 			addRender(component);
     }
     
@@ -161,14 +158,14 @@ public class EntityManager{
 			componentMap.put(e, c);
 			c.parent = e;
 			c.world = this.world;
-			if (c.layer != LayerEnum.NOT)
+			if (c.layer != DynEnum.at("layer").get("null"))
 				addRender(c);
 		}
 	}
 
 	private void addRender(CoreComponent e)
 	{
-		if (e.layer == LayerEnum.NOT)
+		if (e.layer == DynEnum.at("layer").get("null"))
 		{
 			System.out.println("You must specify layer - CoreEntity: " + e.toString());
 			System.exit(0);

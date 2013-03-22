@@ -9,11 +9,10 @@ import zombies.components.Position;
 import zombies.components.Zombie;
 import zombies.events.StatusEvent;
 import zombies.utils.Draw;
-
 import framework.CoreEntity;
 import framework.CoreSystem;
+import framework.DynEnum;
 import framework.engine.GLEngine;
-import framework.enums.EventEnum;
 import framework.events.Event;
 import framework.interfaces.EventListener;
 import framework.managers.EntityManager;
@@ -29,7 +28,7 @@ public class StatsSystem extends CoreSystem  implements EventListener{
 	public void init ()
 	{
 		EventManager em = world.getEventManager();
-		em.addListener(EventEnum.KILL, this);
+		em.addListener(DynEnum.at("event").get("kill"), this);
 		
 		events = new ArrayList<StatusEvent>();
 	}

@@ -1,8 +1,6 @@
 package framework;
 
-import java.util.*;
-
-import framework.enums.LayerEnum;
+import java.util.ArrayList;
 
 public class CoreEntity{
 	

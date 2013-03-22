@@ -10,7 +10,6 @@ import zombies.components.AngleSpeed;
 import zombies.components.Bullet;
 import zombies.components.Collider;
 import zombies.components.CollisionCircle;
-import zombies.components.CollisionPolygon;
 import zombies.components.Damage;
 import zombies.components.DestroyOnImpact;
 import zombies.components.EmitterOnImpact;
@@ -20,17 +19,12 @@ import zombies.components.Position;
 import zombies.components.Tex;
 import zombies.components.Timer;
 import zombies.components.Velocity;
-
 import framework.CoreEntity;
 import framework.CoreSystem;
-import framework.World;
-import framework.enums.LayerEnum;
+import framework.DynEnum;
 import framework.managers.EntityManager;
 import framework.utils.Point;
 import framework.utils.Time;
-
-
-
 
 public class PlayerInputSystem extends CoreSystem{
 	
@@ -83,7 +77,7 @@ public class PlayerInputSystem extends CoreSystem{
 					bullet.components.add(new Position(position));
 					bullet.components.add(new Velocity(new Point(angle.angle + deltaAngle), speed));
 					bullet.components.add(new CollisionCircle(5));
-					bullet.components.add(new Tex("bullet.png", new Point(10, 10)).setLayer(LayerEnum.MOVER));
+					bullet.components.add(new Tex("bullet.png", new Point(10, 10)).setLayer(DynEnum.at("layer").get("mover")));
 					bullet.components.add(new Timer(time));
 					bullet.components.add(new Angle(angle.angle + deltaAngle));
 					bullet.components.add(new Damage(gun.damage, e));

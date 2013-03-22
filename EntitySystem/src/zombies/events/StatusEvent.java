@@ -1,6 +1,6 @@
 package zombies.events;
 
-import framework.enums.EventEnum;
+import framework.DynEnum;
 import framework.events.Event;
 import framework.utils.Time;
 
@@ -10,7 +10,7 @@ public class StatusEvent extends Event{
 	
 	public StatusEvent(String t)
 	{
-		this.type = EventEnum.KILL;
+		this.type = DynEnum.at("event").get("kill");
 		this.text = t;
 		this.time = Time.getTime();
 	}

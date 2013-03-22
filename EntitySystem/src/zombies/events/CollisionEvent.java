@@ -1,7 +1,7 @@
 package zombies.events;
 
 import framework.CoreEntity;
-import framework.enums.EventEnum;
+import framework.DynEnum;
 import framework.events.Event;
 import framework.utils.Point;
 
@@ -17,6 +17,6 @@ public class CollisionEvent extends Event{
 		this.obstacle = b;
 		this.pointOfImpact = poi;
 		this.inside = i;
-		this.type = EventEnum.COLLISION;
+		this.type = DynEnum.at("event").get("collision");
 	}
 }

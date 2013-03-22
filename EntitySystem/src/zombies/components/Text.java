@@ -3,7 +3,6 @@ package zombies.components;
 import zombies.utils.Color;
 import zombies.utils.Draw;
 import framework.CoreComponent;
-import framework.enums.LayerEnum;
 import framework.utils.Point;
 
 public class Text extends CoreComponent{
@@ -15,10 +14,12 @@ public class Text extends CoreComponent{
 		this.name = "Text";
 	}
 	
+	/*
 	public LayerEnum getLayer()
 	{
 		return LayerEnum.TEXT;
 	}
+	*/
 	
 	public void render()
 	{

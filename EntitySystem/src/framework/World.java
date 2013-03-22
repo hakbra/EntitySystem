@@ -1,12 +1,9 @@
 package framework;
 
 
-
 import java.util.HashMap;
-import java.util.Stack;
+import java.util.Map;
 
-import framework.enums.EventEnum;
-import framework.enums.StateEnum;
 import framework.managers.DataManager;
 import framework.managers.EntityManager;
 import framework.managers.EventManager;
@@ -15,24 +12,24 @@ import framework.utils.Point;
 
 
 public class World {
-	private StateEnum state;
+	private int state;
 	
-	private HashMap<StateEnum, EntityManager> eManagers;
-	private HashMap<StateEnum, SystemManager> sManagers;
-	private HashMap<StateEnum, DataManager> dManagers;
-	private HashMap<StateEnum, EventManager> evManagers;
+	private Map<Integer, EntityManager> eManagers;
+	private Map<Integer, SystemManager> sManagers;
+	private Map<Integer, DataManager> dManagers;
+	private Map<Integer, EventManager> evManagers;
 	
 	public Point camera;
 	public Point mapdim;
 
 	public World()
 	{
-		this.state = StateEnum.NULL;
+		this.state = DynEnum.at("state").get("null");
 
-		this.dManagers = new HashMap<StateEnum, DataManager>();
-		this.sManagers = new HashMap<StateEnum, SystemManager>();
-		this.eManagers = new HashMap<StateEnum, EntityManager>();
-		this.evManagers = new HashMap<StateEnum, EventManager>();
+		this.dManagers = new HashMap<>();
+		this.sManagers = new HashMap<>();
+		this.eManagers = new HashMap<>();
+		this.evManagers = new HashMap<>();
 		
 		camera = new Point();
 		mapdim = new Point();
@@ -40,20 +37,20 @@ public class World {
 
 	public boolean run()
 	{
-		return state != StateEnum.EXIT;
+		return state != DynEnum.at("state").get("exit");
 	}
 
-	public void setStateAndClear(StateEnum s)
+	public void setStateAndClear(int s)
 	{
 		this.state = s;
 		this.clearState();
 	}
-	public void setState(StateEnum s)
+	public void setState(int s)
 	{
 		this.state = s;
 	}
 
-	private EntityManager getEntityManager(StateEnum s)
+	private EntityManager getEntityManager(int s)
 	{
 		EntityManager em = eManagers.get(s);
 		if (em == null)
@@ -69,7 +66,7 @@ public class World {
 		return getEntityManager(state);
 	}
 
-	private SystemManager getSystemManager(StateEnum s)
+	private SystemManager getSystemManager(int s)
 	{
 		SystemManager sm = sManagers.get(s);
 		if (sm == null)
@@ -85,7 +82,7 @@ public class World {
 		return getSystemManager(state);
 	}
 
-	private DataManager getDataManager(StateEnum s)
+	private DataManager getDataManager(int s)
 	{
 		DataManager dm = dManagers.get(s);
 		if (dm == null)
@@ -101,7 +98,7 @@ public class World {
 		return getDataManager(state);
 	}
 
-	private EventManager getEventManager(StateEnum s)
+	private EventManager getEventManager(int s)
 	{
 		EventManager em = evManagers.get(s);
 		if (em == null)

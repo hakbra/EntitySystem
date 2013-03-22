@@ -5,21 +5,20 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import framework.World;
-import framework.enums.EventEnum;
 import framework.events.Event;
 import framework.interfaces.EventListener;
 
 public class EventManager {
-	HashMap<EventEnum, ArrayList<EventListener>> listenerLists;
+	HashMap<Integer, ArrayList<EventListener>> listenerLists;
 	World world;
 	
 	public EventManager(World w)
 	{
 		this.world = w;
-		listenerLists = new HashMap<EventEnum, ArrayList<EventListener>>();
+		listenerLists = new HashMap<>();
 	}
 	
-	private ArrayList<EventListener> getListeners(EventEnum e)
+	private ArrayList<EventListener> getListeners(int e)
 	{
 		ArrayList<EventListener> listeners = listenerLists.get(e);
 		if (listeners == null)
@@ -30,7 +29,7 @@ public class EventManager {
 		return listeners;
 	}
 	
-	public void addListener(EventEnum ee, EventListener el)
+	public void addListener(int ee, EventListener el)
 	{
 		ArrayList<EventListener> listeners = getListeners(ee);
 		listeners.add(el);

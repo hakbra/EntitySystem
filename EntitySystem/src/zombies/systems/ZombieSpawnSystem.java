@@ -18,11 +18,9 @@ import zombies.components.Tex;
 import zombies.components.Velocity;
 import zombies.components.Zombie;
 import zombies.components.ZombieSpawner;
-
 import framework.CoreEntity;
 import framework.CoreSystem;
-import framework.World;
-import framework.enums.LayerEnum;
+import framework.DynEnum;
 import framework.managers.EntityManager;
 import framework.utils.Point;
 import framework.utils.Time;
@@ -69,7 +67,7 @@ public class ZombieSpawnSystem extends CoreSystem{
 				zombie.components.add(new Collider(4));
 				zombie.components.add(new Angle(0));
 				zombie.components.add(new AngleSpeed(0));
-				zombie.components.add(new Tex("zombie.png", new Point(40, 40)).setLayer(LayerEnum.MOVER));
+				zombie.components.add(new Tex("zombie.png", new Point(40, 40)).setLayer(DynEnum.at("layer").get("mover")));
 				em.addEntity(zombie);
 				
 				spawn.last = now;

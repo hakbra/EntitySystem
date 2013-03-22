@@ -12,11 +12,9 @@ import zombies.components.RenderCircle;
 import zombies.components.Timer;
 import zombies.components.Velocity;
 import zombies.utils.Color;
-
 import framework.CoreEntity;
 import framework.CoreSystem;
-import framework.World;
-import framework.enums.LayerEnum;
+import framework.DynEnum;
 import framework.managers.EntityManager;
 import framework.utils.Point;
 import framework.utils.Time;
@@ -46,7 +44,7 @@ public class EmitterSystem extends CoreSystem{
 				particle.name = "particle";
 				em.addComponent(particle, new Position(new Point(position)));
 				em.addComponent(particle, new Velocity(new Point(angle), speed));
-				em.addComponent(particle, new RenderCircle(size, c).setLayer(LayerEnum.MOVER));
+				em.addComponent(particle, new RenderCircle(size, c).setLayer(DynEnum.at("layer").get("mover")));
 				em.addComponent(particle, new CollisionCircle(size));
 				em.addComponent(particle, new Timer(time));
 				em.addComponent(particle, new Particle());

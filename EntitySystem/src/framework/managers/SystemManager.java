@@ -5,15 +5,14 @@ import java.util.HashMap;
 
 import framework.CoreSystem;
 import framework.World;
-import framework.enums.StateEnum;
 
 public class SystemManager {
 	World world;
-	public StateEnum state;
+	public int state;
 	public ArrayList<CoreSystem> systems;
 	public HashMap<Class, CoreSystem> systemMap = new HashMap<Class, CoreSystem>();
 	
-	public SystemManager(World w, StateEnum s)
+	public SystemManager(World w, int s)
 	{
 		this.world = w;
 		this.state = s;

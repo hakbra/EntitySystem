@@ -11,7 +11,7 @@ import zombies.components.Timer;
 import zombies.events.CollisionEvent;
 import framework.CoreEntity;
 import framework.CoreSystem;
-import framework.enums.EventEnum;
+import framework.DynEnum;
 import framework.events.Event;
 import framework.interfaces.EventListener;
 import framework.managers.EntityManager;
@@ -25,7 +25,7 @@ public class CollisionSystem extends CoreSystem implements EventListener{
 	public void init ()
 	{
 		EventManager em = world.getEventManager();
-		em.addListener(EventEnum.COLLISION, this);
+		em.addListener(DynEnum.at("event").get("collision"), this);
 	}
 
 	@Override

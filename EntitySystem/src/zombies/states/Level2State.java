@@ -30,7 +30,6 @@ import zombies.components.Trigger;
 import zombies.components.Velocity;
 import zombies.components.Zombie;
 import zombies.components.ZombieSpawner;
-import zombies.misc.Pathfinder;
 import zombies.systems.CameraSystem;
 import zombies.systems.CollisionSystem;
 import zombies.systems.DamageSystem;
@@ -48,12 +47,10 @@ import zombies.systems.input.PlayerInputSystem;
 import zombies.systems.render.RenderSystem;
 import zombies.systems.render.StatsSystem;
 import zombies.utils.Color;
-
 import framework.CoreEntity;
+import framework.DynEnum;
 import framework.World;
 import framework.engine.GLEngine;
-import framework.enums.LayerEnum;
-import framework.managers.DataManager;
 import framework.utils.Point;
 
 public class Level2State {
@@ -102,7 +99,7 @@ public class Level2State {
 		player.components.add(new Collider(4));
 		player.components.add(new Obstacle());
 		player.components.add(new Light(300));
-		player.components.add(new Tex("man.png", new Point(40, 40)).setLayer(LayerEnum.MOVER));
+		player.components.add(new Tex("man.png", new Point(40, 40)).setLayer(DynEnum.at("layer").get("mover")));
 		world.addEntity(player);
 		world.registerID(player);
 
@@ -110,7 +107,7 @@ public class Level2State {
 		ground.name = "ground";
 		ground.components.add(new Position( new Point(MAPWIDTH / 2, MAPHEIGHT / 2)));
 		ground.components.add(CollisionPolygon.centerRectangle(new Point(MAPWIDTH, MAPHEIGHT)));
-		ground.components.add(new Tex("bush.png", new Point(MAPWIDTH, MAPHEIGHT)).setScale(new Point(30, 19)).setLayer(LayerEnum.GROUND));
+		ground.components.add(new Tex("bush.png", new Point(MAPWIDTH, MAPHEIGHT)).setScale(new Point(30, 19)).setLayer(DynEnum.at("layer").get("ground")));
 		world.addEntity(ground);
 		world.registerID(ground);
 
@@ -118,7 +115,7 @@ public class Level2State {
 		light.name = "light";
 		light.components.add(new Position( new Point(MAPWIDTH / 2, MAPHEIGHT / 2)));
 		light.components.add(CollisionPolygon.centerRectangle(new Point(MAPWIDTH, MAPHEIGHT)));
-		light.components.add(new Tex("lightTex", new Point(MAPWIDTH, MAPHEIGHT)).setLayer(LayerEnum.LIGHT));
+		light.components.add(new Tex("lightTex", new Point(MAPWIDTH, MAPHEIGHT)).setLayer(DynEnum.at("layer").get("light")));
 		world.addEntity(light);
 
 		/*
@@ -161,7 +158,7 @@ public class Level2State {
 
 		health.components.add(new CollisionCircle(15));
 		health.components.add(new Position(new Point(MAPWIDTH * 0.75	, 	MAPHEIGHT - 75)));
-		health.components.add(new Tex("health.png", new Point(30, 30)).setLayer(LayerEnum.ITEM));
+		health.components.add(new Tex("health.png", new Point(30, 30)).setLayer(DynEnum.at("layer").get("item")));
 		health.components.add(new Trigger("health"));
 		health.components.add(new Angle(0));
 		health.components.add(new AngleSpeed(1));
@@ -173,7 +170,7 @@ public class Level2State {
 		gun.components.add(new Position(new Point(MAPWIDTH * 0.75, 75)));
 		gun.components.add(new CollisionCircle(30));
 		gun.components.add(new Trigger("gun"));
-		gun.components.add(new Tex("gun2.png", new Point(60, 60)).setLayer(LayerEnum.ITEM));
+		gun.components.add(new Tex("gun2.png", new Point(60, 60)).setLayer(DynEnum.at("layer").get("item")));
 		gun.components.add(new Gun(5, 10, 10, 400, 20, "gun2.png"));
 		gun.components.add(new Angle(0));
 		gun.components.add(new AngleSpeed(1));
@@ -185,7 +182,7 @@ public class Level2State {
 		gun2.components.add(new Position(new Point(1050, 200)));
 		gun2.components.add(new CollisionCircle(30));
 		gun2.components.add(new Trigger("gun"));
-		gun2.components.add(new Tex("gun3.png", new Point(60, 60)).setLayer(LayerEnum.ITEM));
+		gun2.components.add(new Tex("gun3.png", new Point(60, 60)).setLayer(DynEnum.at("layer").get("item")));
 		gun2.components.add(new Gun(5, 5, 10, 0, 50, "gun3.png"));
 		gun2.components.add(new Angle(0));
 		gun2.components.add(new AngleSpeed(1));
@@ -197,7 +194,7 @@ public class Level2State {
 		griffPart.components.add(new Position(new Point(MAPWIDTH - 150, 75)));
 		griffPart.components.add(new CollisionCircle(30));
 		griffPart.components.add(new Trigger("griff"));
-		griffPart.components.add(new Tex("part.png", new Point(60, 60)).setLayer(LayerEnum.ITEM));
+		griffPart.components.add(new Tex("part.png", new Point(60, 60)).setLayer(DynEnum.at("layer").get("item")));
 		griffPart.components.add(new GriffPart("Lion Head"));
 		griffPart.components.add(new Angle(0));
 		griffPart.components.add(new AngleSpeed(1));
@@ -212,7 +209,7 @@ public class Level2State {
 		rectangle.components.add(CollisionPolygon.centerRectangle(dim));
 		rectangle.components.add(new Angle(45));
 		rectangle.components.add(new AngleSpeed(0.2));
-		rectangle.components.add(new Tex("crate.png", dim).setScale(new Point(50, 50)).setLayer(LayerEnum.OBSTACLE));
+		rectangle.components.add(new Tex("crate.png", dim).setScale(new Point(50, 50)).setLayer(DynEnum.at("layer").get("obstacle")));
 		rectangle.components.add(new Position(new Point(MAPWIDTH / 2, MAPHEIGHT / 2)));
 		rectangle.components.add(new Obstacle());
 		world.addEntity(rectangle);
@@ -223,7 +220,7 @@ public class Level2State {
 		border.components.add(CollisionPolygon.centerRectangle(new Point(MAPWIDTH, MAPHEIGHT)).setInverted());
 		border.components.add(new Position(new Point(MAPWIDTH / 2, MAPHEIGHT / 2)));
 		border.components.add(new Obstacle());
-		border.components.add(RenderPolygon.centerRectangle(new Point(MAPWIDTH, MAPHEIGHT), new Color(0.3, 0.3, 0.3)).wireframe().setLayer(LayerEnum.OBSTACLE));
+		border.components.add(RenderPolygon.centerRectangle(new Point(MAPWIDTH, MAPHEIGHT), new Color(0.3, 0.3, 0.3)).wireframe().setLayer(DynEnum.at("layer").get("obstacle")));
 		world.addEntity(border);
 	}
 
@@ -235,8 +232,8 @@ public class Level2State {
 		exitButton2.components.add(CollisionPolygon.centerRectangle(new Point(100, 50)));
 		exitButton2.components.add(new Position(new Point(75, GLEngine.HEIGHT - 50), true));
 		exitButton2.components.add(new Button("Exit"));
-		exitButton2.components.add(new Text("Exit").setLayer(LayerEnum.TEXT));
-		exitButton2.components.add(new Tex("button.png", new Point(100, 50)).setLayer(LayerEnum.HUD));
+		exitButton2.components.add(new Text("Exit").setLayer(DynEnum.at("layer").get("text")));
+		exitButton2.components.add(new Tex("button.png", new Point(100, 50)).setLayer(DynEnum.at("layer").get("hud")));
 		world.addEntity(exitButton2);
 
 		CoreEntity menuButton = new CoreEntity();
@@ -245,8 +242,8 @@ public class Level2State {
 		menuButton.components.add(CollisionPolygon.centerRectangle(new Point(100, 50)));
 		menuButton.components.add(new Position(new Point(200, GLEngine.HEIGHT - 50), true));
 		menuButton.components.add(new Button("Menu"));
-		menuButton.components.add(new Text("Menu").setLayer(LayerEnum.TEXT));
-		menuButton.components.add(new Tex("button.png", new Point(100, 50)).setLayer(LayerEnum.HUD));
+		menuButton.components.add(new Text("Menu").setLayer(DynEnum.at("layer").get("text")));
+		menuButton.components.add(new Tex("button.png", new Point(100, 50)).setLayer(DynEnum.at("layer").get("hud")));
 		world.addEntity(menuButton);
 
 		CoreEntity screenButton = new CoreEntity();
@@ -255,8 +252,8 @@ public class Level2State {
 		screenButton.components.add(CollisionPolygon.centerRectangle(new Point(100, 50)));
 		screenButton.components.add(new Position(new Point(325, GLEngine.HEIGHT - 50), true));
 		screenButton.components.add(new Button("Screen"));
-		screenButton.components.add(new Text("Screen").setLayer(LayerEnum.TEXT));
-		screenButton.components.add(new Tex("button.png", new Point(100, 50)).setLayer(LayerEnum.HUD));
+		screenButton.components.add(new Text("Screen").setLayer(DynEnum.at("layer").get("text")));
+		screenButton.components.add(new Tex("button.png", new Point(100, 50)).setLayer(DynEnum.at("layer").get("hud")));
 		world.addEntity(screenButton);
 
 		CoreEntity restartButton = new CoreEntity();
@@ -264,8 +261,8 @@ public class Level2State {
 		restartButton.components.add(CollisionPolygon.centerRectangle(new Point(100, 50)));
 		restartButton.components.add(new Position(new Point(450, GLEngine.HEIGHT - 50), true));
 		restartButton.components.add(new Button("Restart"));
-		restartButton.components.add(new Text("Restart").setLayer(LayerEnum.TEXT));
-		restartButton.components.add(new Tex("button.png", new Point(100, 50)).setLayer(LayerEnum.HUD));
+		restartButton.components.add(new Text("Restart").setLayer(DynEnum.at("layer").get("text")));
+		restartButton.components.add(new Tex("button.png", new Point(100, 50)).setLayer(DynEnum.at("layer").get("hud")));
 		world.addEntity(restartButton);
 		
 		CoreEntity pauseButton = new CoreEntity();
@@ -273,8 +270,8 @@ public class Level2State {
 		pauseButton.components.add(CollisionPolygon.centerRectangle(new Point(100, 50)));
 		pauseButton.components.add(new Position(new Point(575, GLEngine.HEIGHT - 50), true));
 		pauseButton.components.add(new Button("Pause"));
-		pauseButton.components.add(new Text("Pause").setLayer(LayerEnum.TEXT));
-		pauseButton.components.add(new Tex("button.png", new Point(100, 50)).setLayer(LayerEnum.HUD));
+		pauseButton.components.add(new Text("Pause").setLayer(DynEnum.at("layer").get("text")));
+		pauseButton.components.add(new Tex("button.png", new Point(100, 50)).setLayer(DynEnum.at("layer").get("hud")));
 		world.addEntity(pauseButton);
 
 		CoreEntity lightButton = new CoreEntity();
@@ -282,8 +279,8 @@ public class Level2State {
 		lightButton.components.add(CollisionPolygon.centerRectangle(new Point(40, 40)));
 		lightButton.components.add(new Position(new Point(30, 30), true));
 		lightButton.components.add(new Button("Light"));
-		lightButton.components.add(new Text("O").setLayer(LayerEnum.TEXT));
-		lightButton.components.add(new Tex("button.png", new Point(40, 40)).setLayer(LayerEnum.HUD));
+		lightButton.components.add(new Text("O").setLayer(DynEnum.at("layer").get("text")));
+		lightButton.components.add(new Tex("button.png", new Point(40, 40)).setLayer(DynEnum.at("layer").get("hud")));
 		world.addEntity(lightButton);
 	}
 
@@ -329,7 +326,7 @@ public class Level2State {
 			zombie.components.add(new Collider(4));
 			zombie.components.add(new Angle(0));
 			zombie.components.add(new AngleSpeed(0));
-			zombie.components.add(new Tex("zombie.png", new Point(40, 40)).setLayer(LayerEnum.MOVER));
+			zombie.components.add(new Tex("zombie.png", new Point(40, 40)).setLayer(DynEnum.at("layer").get("mover")));
 			world.addEntity(zombie);
 		}
 

@@ -8,9 +8,7 @@ import zombies.components.Zombie;
 import zombies.events.DamageEvent;
 import zombies.events.StatusEvent;
 import framework.CoreSystem;
-import framework.World;
-import framework.enums.EventEnum;
-import framework.enums.StateEnum;
+import framework.DynEnum;
 import framework.events.Event;
 import framework.interfaces.EventListener;
 import framework.managers.EntityManager;
@@ -24,7 +22,7 @@ public class DamageSystem extends CoreSystem implements EventListener{
 	public void init ()
 	{
 		EventManager em = world.getEventManager();
-		em.addListener(EventEnum.DAMAGE, this);
+		em.addListener(DynEnum.at("event").get("damage"), this);
 	}
 
 	@Override
@@ -70,7 +68,7 @@ public class DamageSystem extends CoreSystem implements EventListener{
 			
 			if (em.hasComponent(de.receiver, Hero.class) && em.getEntity(Hero.class).size() == 1)
 			{
-				world.setState(StateEnum.START_MENU);
+				world.setState(DynEnum.at("state").get("start_menu"));
 			}
 			else if (em.hasComponent(de.attacker, Bullet.class))
 			{

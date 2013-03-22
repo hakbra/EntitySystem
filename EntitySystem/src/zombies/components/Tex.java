@@ -1,18 +1,11 @@
 package zombies.components;
 
 
-import java.util.ArrayList;
-
 import org.lwjgl.opengl.GL11;
 
 import zombies.utils.Color;
 import zombies.utils.Draw;
-
 import framework.CoreComponent;
-import framework.CoreEntity;
-import framework.World;
-import framework.enums.LayerEnum;
-import framework.managers.EntityManager;
 import framework.utils.Point;
 
 public class Tex extends CoreComponent{

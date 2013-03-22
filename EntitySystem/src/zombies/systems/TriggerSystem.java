@@ -19,10 +19,7 @@ import zombies.events.TriggerEvent;
 import zombies.states.Level2State;
 import framework.CoreEntity;
 import framework.CoreSystem;
-import framework.World;
-import framework.enums.EventEnum;
-import framework.enums.LayerEnum;
-import framework.enums.StateEnum;
+import framework.DynEnum;
 import framework.events.Event;
 import framework.interfaces.EventListener;
 import framework.managers.EntityManager;
@@ -36,7 +33,7 @@ public class TriggerSystem extends CoreSystem implements EventListener{
 	public void init ()
 	{
 		EventManager em = world.getEventManager();
-		em.addListener(EventEnum.TRIGGER, this);
+		em.addListener(DynEnum.at("event").get("trigger"), this);
 	}
 
 	@Override
@@ -59,7 +56,7 @@ public class TriggerSystem extends CoreSystem implements EventListener{
 				CoreEntity msg = new CoreEntity();
 				msg.components.add(new Position(new Point(pos)));
 				msg.components.add(new Velocity(new Point(0, 1), 1));
-				msg.components.add(new Text("You can't leave empty handed").setLayer(LayerEnum.TEXT));
+				msg.components.add(new Text("You can't leave empty handed").setLayer(DynEnum.at("layer").get("text")));
 				msg.components.add(new Timer(1000, "destruct"));
 				world.getEntityManager().addEntity(msg);
 				
@@ -67,7 +64,7 @@ public class TriggerSystem extends CoreSystem implements EventListener{
 			}
 			else if(em.getComponent(te.hero, Hero.class).parts >= 1)
 			{
-				world.setState(StateEnum.LEVEL2);
+				world.setState(DynEnum.at("state").get("level2"));
 				Level2State.init(world);
 				world.getEventManager().sendEvent(new StatusEvent(te.hero.name + " has descended"));
 			}
@@ -84,7 +81,7 @@ public class TriggerSystem extends CoreSystem implements EventListener{
 			CoreEntity msg = new CoreEntity();
 			msg.components.add(new Position(new Point(pos)));
 			msg.components.add(new Velocity(new Point(0, 1), 0.5));
-			msg.components.add(new Text("You found (" + name + ")").setLayer(LayerEnum.TEXT));
+			msg.components.add(new Text("You found (" + name + ")").setLayer(DynEnum.at("layer").get("text")));
 			msg.components.add(new Timer(1200, "destruct"));
 			world.getEntityManager().addEntity(msg);
 		}

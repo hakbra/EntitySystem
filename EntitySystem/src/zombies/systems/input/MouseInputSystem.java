@@ -12,8 +12,8 @@ import zombies.systems.PhysicsSystem;
 import zombies.systems.TimerSystem;
 import framework.CoreEntity;
 import framework.CoreSystem;
+import framework.DynEnum;
 import framework.engine.GLEngine;
-import framework.enums.StateEnum;
 import framework.managers.EntityManager;
 import framework.utils.Point;
 
@@ -51,24 +51,24 @@ public class MouseInputSystem extends CoreSystem{
 				}
 				else if (button.type == "Menu")
 				{
-					world.setState(StateEnum.GAME_MENU);
+					world.setState(DynEnum.at("state").get("game_menu"));
 				}
 				else if (button.type == "Exit")
 				{
-					world.setState(StateEnum.EXIT);
+					world.setState(DynEnum.at("state").get("exit"));
 				}
 				else if (button.type == "Play")
 				{
-					world.setStateAndClear(StateEnum.LEVEL1);
+					world.setStateAndClear(DynEnum.at("state").get("level1"));
 					Level1State.init(world);
 				}
 				else if (button.type == "Resume")
 				{
-					world.setState(StateEnum.LEVEL1);
+					world.setState(DynEnum.at("state").get("level1"));
 				}
 				else if (button.type == "Restart")
 				{
-					world.setStateAndClear(StateEnum.LEVEL1);
+					world.setStateAndClear(DynEnum.at("state").get("level1"));
 					Level1State.init(world);
 				}
 				else if (button.type == "Light")

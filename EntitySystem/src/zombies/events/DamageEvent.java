@@ -1,7 +1,7 @@
 package zombies.events;
 
 import framework.CoreEntity;
-import framework.enums.EventEnum;
+import framework.DynEnum;
 import framework.events.Event;
 
 public class DamageEvent extends Event{
@@ -12,6 +12,6 @@ public class DamageEvent extends Event{
 	{
 		this.attacker = a;
 		this.receiver = b;
-		this.type = EventEnum.DAMAGE;
+		this.type = DynEnum.at("event").get("damage");
 	}
 }

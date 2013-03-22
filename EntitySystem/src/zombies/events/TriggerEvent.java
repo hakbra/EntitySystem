@@ -1,7 +1,7 @@
 package zombies.events;
 
 import framework.CoreEntity;
-import framework.enums.EventEnum;
+import framework.DynEnum;
 import framework.events.Event;
 
 public class TriggerEvent extends Event{
@@ -12,6 +12,6 @@ public class TriggerEvent extends Event{
 	{
 		this.hero = a;
 		this.trigger = b;
-		this.type = EventEnum.TRIGGER;
+		this.type = DynEnum.at("event").get("trigger");
 	}
 }

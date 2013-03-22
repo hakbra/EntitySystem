@@ -2,10 +2,9 @@ package zombies;
 
 import zombies.states.GameMenuState;
 import zombies.states.StartMenuState;
+import framework.DynEnum;
 import framework.World;
 import framework.engine.GLEngine;
-import framework.enums.StateEnum;
-import framework.utils.Point;
 import framework.utils.Time;
 
 public class Main
@@ -21,12 +20,17 @@ public class Main
 
 	public Main()
 	{
+		DynEnum.at("layer").addAll("null", "ground", "item", "mover", "light", "obstacle", "hud", "text");
+		DynEnum.at("state").addAll("null", "start_menu", "game_menu", "level1", "cutscene", "level2", "exit", "message");
+		DynEnum.at("event").addAll("null", "trigger", "damage", "collision", "kill");
+		
 		GLEngine.init();
 		t = new Time();
 		world = new World();
-		world.setState(StateEnum.GAME_MENU);
+		
+		world.setState(DynEnum.at("state").get("game_menu"));
 		GameMenuState.init(world);
-		world.setState(StateEnum.START_MENU);
+		world.setState(DynEnum.at("state").get("start_menu"));
 		StartMenuState.init(world);
 	}
 
