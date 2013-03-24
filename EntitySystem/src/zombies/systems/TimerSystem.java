@@ -2,11 +2,11 @@ package zombies.systems;
 
 import zombies.components.Light;
 import zombies.components.Timer;
+import zombies.utils.Time;
 import framework.CoreSystem;
 import framework.CoreEntity;
 import framework.World;
 import framework.managers.EntityManager;
-import framework.utils.Time;
 
 public class TimerSystem extends CoreSystem{
 	

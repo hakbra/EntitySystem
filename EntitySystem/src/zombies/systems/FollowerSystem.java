@@ -13,13 +13,11 @@ import zombies.components.Position;
 import zombies.components.Velocity;
 import zombies.misc.Pathfinder;
 import zombies.misc.Pathfinder.Node;
-
+import zombies.utils.Time;
 import framework.CoreEntity;
 import framework.CoreSystem;
-import framework.managers.DataManager;
 import framework.managers.EntityManager;
 import framework.utils.Point;
-import framework.utils.Time;
 
 public class FollowerSystem extends CoreSystem{
 	Pathfinder pf;
@@ -27,7 +25,6 @@ public class FollowerSystem extends CoreSystem{
 	@Override
 	public void init()
 	{
-		DataManager dm = world.getDataManager();
 		pf = new Pathfinder(world.mapdim, 20);
 	}
 

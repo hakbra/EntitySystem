@@ -3,10 +3,11 @@ package zombies.components;
 
 import java.util.ArrayList;
 
+import zombies.utils.OpenGLFont;
+
 
 import framework.CoreComponent;
 import framework.utils.Line;
-import framework.utils.OpenGLFont;
 import framework.utils.Point;
 
 public class CollisionPolygon extends CoreComponent{

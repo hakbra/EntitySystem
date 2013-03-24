@@ -16,8 +16,6 @@ import static org.lwjgl.opengl.GL11.glBindTexture;
 import static org.lwjgl.opengl.GL11.glClear;
 import static org.lwjgl.opengl.GL11.glClearColor;
 import static org.lwjgl.opengl.GL11.glColorMask;
-import static org.lwjgl.opengl.GL11.glDisable;
-import static org.lwjgl.opengl.GL11.glEnable;
 import static org.lwjgl.opengl.GL11.glGenTextures;
 import static org.lwjgl.opengl.GL11.glTexImage2D;
 import static org.lwjgl.opengl.GL11.glTexParameterf;
@@ -27,16 +25,11 @@ import org.lwjgl.opengl.GL14;
 import org.lwjgl.opengl.GLContext;
 
 import zombies.components.Light;
-import zombies.components.Position;
-import zombies.components.Timer;
-
-import framework.CoreSystem;
+import zombies.utils.TextureManager;
 import framework.CoreEntity;
-import framework.World;
+import framework.CoreSystem;
 import framework.engine.GLEngine;
 import framework.managers.EntityManager;
-import framework.utils.Draw;
-import framework.utils.Point;
 
 public class LightSystem  extends CoreSystem{
 
@@ -60,8 +53,8 @@ public class LightSystem  extends CoreSystem{
 
 			glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
 
-			world.getDataManager().setTexture("lightTex", lightTexID);
-			world.getDataManager().setTexture("lightBuf", lightBufID);
+			TextureManager.setTexture("lightTex", lightTexID);
+			TextureManager.setTexture("lightBuf", lightBufID);
 		}
 	}
 
@@ -70,7 +63,7 @@ public class LightSystem  extends CoreSystem{
 		EntityManager em = world.getEntityManager();
 
 		glBindTexture(GL_TEXTURE_2D, 0);
-		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, world.getDataManager().getTexture("lightBuf")); 
+		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, TextureManager.getTexture("lightBuf")); 
 		glClearColor (0.1f, 0.1f, 0.1f, 1f);
 		glClear (GL_COLOR_BUFFER_BIT);
 
@@ -99,7 +92,7 @@ public class LightSystem  extends CoreSystem{
 	{
 		super.disable();
 		glBindTexture(GL_TEXTURE_2D, 0);
-		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, world.getDataManager().getTexture("lightBuf")); 
+		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, TextureManager.getTexture("lightBuf")); 
 		glClearColor (0.1f, 0.1f, 0.1f, 0f);
 		glClear (GL_COLOR_BUFFER_BIT);
 		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);

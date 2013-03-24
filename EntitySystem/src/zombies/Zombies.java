@@ -2,10 +2,10 @@ package zombies;
 
 import zombies.states.GameMenuState;
 import zombies.states.StartMenuState;
+import zombies.utils.Time;
 import framework.DynEnum;
 import framework.World;
 import framework.engine.GLEngine;
-import framework.utils.Time;
 
 public class Zombies
 {

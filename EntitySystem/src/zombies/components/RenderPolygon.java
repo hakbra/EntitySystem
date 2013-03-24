@@ -4,10 +4,11 @@ import java.util.ArrayList;
 
 import org.lwjgl.opengl.GL11;
 
+import zombies.utils.Draw;
+
 
 import framework.CoreComponent;
 import framework.utils.Color;
-import framework.utils.Draw;
 import framework.utils.Point;
 
 public class RenderPolygon extends CoreComponent{

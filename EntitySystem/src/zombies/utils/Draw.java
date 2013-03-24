@@ -1,4 +1,4 @@
-package framework.utils;
+package zombies.utils;
 
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL11.GL_POINTS;
@@ -15,6 +15,10 @@ import static org.lwjgl.opengl.GL11.glVertex3f;
 import java.util.ArrayList;
 
 import org.lwjgl.opengl.GL11;
+
+import framework.utils.Color;
+import framework.utils.Point;
+
 
 
 public class Draw {

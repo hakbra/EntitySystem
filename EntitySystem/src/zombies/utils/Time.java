@@ -1,7 +1,6 @@
-package framework.utils;
+package zombies.utils;
 
 import org.lwjgl.Sys;
-import org.lwjgl.opengl.Display;
 
 public class Time {
 

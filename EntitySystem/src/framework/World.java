@@ -4,7 +4,6 @@ package framework;
 import java.util.HashMap;
 import java.util.Map;
 
-import framework.managers.DataManager;
 import framework.managers.EntityManager;
 import framework.managers.EventManager;
 import framework.managers.SystemManager;
@@ -16,7 +15,6 @@ public class World {
 	
 	private Map<Integer, EntityManager> eManagers;
 	private Map<Integer, SystemManager> sManagers;
-	private Map<Integer, DataManager> dManagers;
 	private Map<Integer, EventManager> evManagers;
 	
 	public Point camera;
@@ -26,7 +24,6 @@ public class World {
 	{
 		this.state = DynEnum.at("state").get("null");
 
-		this.dManagers = new HashMap<>();
 		this.sManagers = new HashMap<>();
 		this.eManagers = new HashMap<>();
 		this.evManagers = new HashMap<>();
@@ -82,22 +79,6 @@ public class World {
 		return getSystemManager(state);
 	}
 
-	private DataManager getDataManager(int s)
-	{
-		DataManager dm = dManagers.get(s);
-		if (dm == null)
-		{
-			dm = new DataManager(this);
-			dManagers.put(s, dm);
-		}
-		return dm;
-	}
-
-	public DataManager getDataManager()
-	{
-		return getDataManager(state);
-	}
-
 	private EventManager getEventManager(int s)
 	{
 		EventManager em = evManagers.get(s);
@@ -141,7 +122,6 @@ public class World {
 	{
 		eManagers.remove(state);
 		sManagers.remove(state);
-		dManagers.remove(state);
 		evManagers.remove(state);
 	}
 }

@@ -1,4 +1,4 @@
-package framework.utils;
+package zombies.utils;
 
 import java.awt.Color;
 import java.awt.Font;

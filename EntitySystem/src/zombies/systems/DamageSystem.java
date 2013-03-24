@@ -7,13 +7,13 @@ import zombies.components.Hero;
 import zombies.components.Zombie;
 import zombies.events.DamageEvent;
 import zombies.events.StatusEvent;
+import zombies.utils.Time;
 import framework.CoreSystem;
 import framework.DynEnum;
 import framework.events.Event;
 import framework.interfaces.EventListener;
 import framework.managers.EntityManager;
 import framework.managers.EventManager;
-import framework.utils.Time;
 
 
 public class DamageSystem extends CoreSystem implements EventListener{

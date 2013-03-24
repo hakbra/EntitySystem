@@ -9,13 +9,13 @@ import zombies.components.AngleSpeed;
 import zombies.components.Position;
 import zombies.components.Scale;
 import zombies.components.Velocity;
+import zombies.utils.Time;
 
 import framework.CoreEntity;
 import framework.CoreSystem;
 import framework.World;
 import framework.managers.EntityManager;
 import framework.utils.Point;
-import framework.utils.Time;
 
 public class PhysicsSystem extends CoreSystem{
 	

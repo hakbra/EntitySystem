@@ -3,9 +3,10 @@ package zombies.components;
 
 import org.lwjgl.opengl.GL11;
 
+import zombies.utils.Draw;
+import zombies.utils.TextureManager;
 import framework.CoreComponent;
 import framework.utils.Color;
-import framework.utils.Draw;
 import framework.utils.Point;
 
 public class Tex extends CoreComponent{
@@ -57,7 +58,7 @@ public class Tex extends CoreComponent{
 		else if (button != null && button.active)
 			Draw.setColor(new Color(1, 1, 1, 0.75));
 		
-		GL11.glBindTexture(GL11.GL_TEXTURE_2D, world.getDataManager().getTexture(texture));
+		GL11.glBindTexture(GL11.GL_TEXTURE_2D, TextureManager.getTexture(texture));
 		GL11.glBegin(GL11.GL_QUADS);
 		GL11.glTexCoord2f(	0,		0);
 		GL11.glVertex2f(	(float)offset.x - w,		(float)offset.y -h);

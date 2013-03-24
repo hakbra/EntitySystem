@@ -1,8 +1,8 @@
 package zombies.events;
 
+import zombies.utils.Time;
 import framework.DynEnum;
 import framework.events.Event;
-import framework.utils.Time;
 
 public class StatusEvent extends Event{
 	public String text;

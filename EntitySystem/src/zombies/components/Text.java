@@ -1,8 +1,9 @@
 package zombies.components;
 
+import zombies.utils.Draw;
+import zombies.utils.FontManager;
 import framework.CoreComponent;
 import framework.utils.Color;
-import framework.utils.Draw;
 import framework.utils.Point;
 
 public class Text extends CoreComponent{
@@ -14,17 +15,10 @@ public class Text extends CoreComponent{
 		this.name = "Text";
 	}
 	
-	/*
-	public LayerEnum getLayer()
-	{
-		return LayerEnum.TEXT;
-	}
-	*/
-	
 	public void render()
 	{
 		Draw.setColor(Color.WHITE);
-		Draw.writeMid(world.getDataManager().getFont(24), new Point(), text);
+		Draw.writeMid(FontManager.getFont(24), new Point(), text);
 	}
 
 }

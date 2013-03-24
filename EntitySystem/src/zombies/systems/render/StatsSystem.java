@@ -8,6 +8,10 @@ import zombies.components.Hero;
 import zombies.components.Position;
 import zombies.components.Zombie;
 import zombies.events.StatusEvent;
+import zombies.utils.Draw;
+import zombies.utils.FontManager;
+import zombies.utils.OpenGLFont;
+import zombies.utils.Time;
 import framework.CoreEntity;
 import framework.CoreSystem;
 import framework.DynEnum;
@@ -16,10 +20,7 @@ import framework.events.Event;
 import framework.interfaces.EventListener;
 import framework.managers.EntityManager;
 import framework.managers.EventManager;
-import framework.utils.Draw;
-import framework.utils.OpenGLFont;
 import framework.utils.Point;
-import framework.utils.Time;
 
 public class StatsSystem extends CoreSystem  implements EventListener{
 	
@@ -38,7 +39,7 @@ public class StatsSystem extends CoreSystem  implements EventListener{
 	public void run()
 	{
 		EntityManager em = world.getEntityManager();
-		OpenGLFont font = world.getDataManager().getFont(24);
+		OpenGLFont font = FontManager.getFont(24);
 		
 		int i = 0;
 		for (CoreEntity hero : em.getEntity(Hero.class))

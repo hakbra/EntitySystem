@@ -1,7 +1,7 @@
 package zombies.components;
 
+import zombies.utils.Time;
 import framework.CoreComponent;
-import framework.utils.Time;
 
 
 
