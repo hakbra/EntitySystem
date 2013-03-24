@@ -14,11 +14,6 @@ public class Time {
 		lastFrame = -1;
 	}
  
-	/**
-	 * Get the accurate system time
-	 * 
-	 * @return The system time in milliseconds
-	 */
 	public static long getTime() {
 		return (Sys.getTime() * 1000) / Sys.getTimerResolution();
 	}

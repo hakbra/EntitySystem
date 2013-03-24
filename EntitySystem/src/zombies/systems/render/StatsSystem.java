@@ -17,6 +17,7 @@ import framework.interfaces.EventListener;
 import framework.managers.EntityManager;
 import framework.managers.EventManager;
 import framework.utils.Draw;
+import framework.utils.OpenGLFont;
 import framework.utils.Point;
 import framework.utils.Time;
 
@@ -37,6 +38,7 @@ public class StatsSystem extends CoreSystem  implements EventListener{
 	public void run()
 	{
 		EntityManager em = world.getEntityManager();
+		OpenGLFont font = world.getDataManager().getFont(24);
 		
 		int i = 0;
 		for (CoreEntity hero : em.getEntity(Hero.class))
@@ -46,18 +48,18 @@ public class StatsSystem extends CoreSystem  implements EventListener{
 			Hero h = em.getComponent(hero, Hero.class);
 
 			int p = (int) (100 * health.current / health.max);
-			Draw.writeMid(world.getDataManager().font, new Point(GLEngine.WIDTH - 100, GLEngine.HEIGHT - 40 -60*i), hero.name);
-			Draw.writeMid(world.getDataManager().font, new Point(GLEngine.WIDTH - 100, GLEngine.HEIGHT - 65 -60*i), "Health: " + p + "%");
-			Draw.writeMid(world.getDataManager().font, new Point(GLEngine.WIDTH - 100, GLEngine.HEIGHT - 90 -60*i), "Position: " + pos.intString());
-			Draw.writeMid(world.getDataManager().font, new Point(GLEngine.WIDTH - 100, GLEngine.HEIGHT - 115 -60*i), "Kills: " + h.kills);
-			Draw.writeMid(world.getDataManager().font, new Point(GLEngine.WIDTH - 100, GLEngine.HEIGHT - 140 -60*i), "Zombies: " + em.getEntity(Zombie.class).size());
+			Draw.writeMid(font, new Point(GLEngine.WIDTH - 100, GLEngine.HEIGHT - 40 -60*i), hero.name);
+			Draw.writeMid(font, new Point(GLEngine.WIDTH - 100, GLEngine.HEIGHT - 65 -60*i), "Health: " + p + "%");
+			Draw.writeMid(font, new Point(GLEngine.WIDTH - 100, GLEngine.HEIGHT - 90 -60*i), "Position: " + pos.intString());
+			Draw.writeMid(font, new Point(GLEngine.WIDTH - 100, GLEngine.HEIGHT - 115 -60*i), "Kills: " + h.kills);
+			Draw.writeMid(font, new Point(GLEngine.WIDTH - 100, GLEngine.HEIGHT - 140 -60*i), "Zombies: " + em.getEntity(Zombie.class).size());
 			i++;
 		}
 
 		for (int j = events.size()-1; j >= 0; j--)
 		{
 			StatusEvent ke = events.get(j);
-			Draw.write(world.getDataManager().font, new Point(25, 75 + 25*j), ke.text);
+			Draw.write(font, new Point(25, 75 + 25*j), ke.text);
 			if (Time.getTime() - ke.time > 3000)
 				events.remove(j);
 		}

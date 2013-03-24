@@ -7,25 +7,29 @@ import framework.World;
 import framework.engine.GLEngine;
 import framework.utils.Time;
 
-public class Main
+public class Zombies
 {
 	World world;
-	Time t;
+	Time timer;
 
 	public static void main(String[] args)
 	{
-		Main main = new Main();
+		Zombies main = new Zombies();
 		main.run();
 	}
-
-	public Main()
+	
+	public void initEnums()
 	{
 		DynEnum.at("layer").addAll("null", "ground", "item", "mover", "light", "obstacle", "hud", "text");
 		DynEnum.at("state").addAll("null", "start_menu", "game_menu", "level1", "level2");
 		DynEnum.at("event").addAll("null", "trigger", "damage", "collision", "kill");
-		
+	}
+
+	public Zombies()
+	{
+		initEnums();
 		GLEngine.init();
-		t = new Time();
+		timer = new Time();
 		world = new World();
 		
 		world.setState(DynEnum.at("state").get("game_menu"));
@@ -45,7 +49,7 @@ public class Main
 
 			GLEngine.endRender();
 
-			t.sync(30);
+			timer.sync(30);
 		}
 	}
 }

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import framework.CoreComponent;
 import framework.utils.Line;
+import framework.utils.OpenGLFont;
 import framework.utils.Point;
 
 public class CollisionPolygon extends CoreComponent{
@@ -104,7 +105,7 @@ public class CollisionPolygon extends CoreComponent{
 				min.y = p.y;
 		}
 
-		return min.add(getPosition());
+		return min;
 	}
 	
 	public Point getMax()
@@ -122,7 +123,7 @@ public class CollisionPolygon extends CoreComponent{
 			if (p.y > max.y)
 				max.y = p.y;
 		}
-		return max.add(getPosition());
+		return max;
 	}
 
 	public boolean isInside(Point p)
