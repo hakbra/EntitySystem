@@ -9,38 +9,33 @@ import framework.engine.GLEngine;
 
 public class Zombies
 {
-	World world;
-	Time timer;
+	World world = new World();
+	Time timer = new Time();
 
 	public static void main(String[] args)
 	{
-		Zombies main = new Zombies();
-		main.run();
+		Zombies zombies = new Zombies();
+		zombies.init();
+		zombies.run();
 	}
 	
-	public void initEnums()
+	public void init()
 	{
-		DynEnum.at("layer").addAll("null", "ground", "item", "mover", "light", "obstacle", "hud", "text");
-		DynEnum.at("state").addAll("null", "start_menu", "game_menu", "level1", "level2");
-		DynEnum.at("event").addAll("null", "trigger", "damage", "collision", "kill");
-	}
-
-	public Zombies()
-	{
-		initEnums();
-		GLEngine.init();
-		timer = new Time();
-		world = new World();
+		DynEnum.at("layer").addAll("ground", "item", "mover", "light", "obstacle", "hud", "text");
+		DynEnum.at("state").addAll("start_menu", "game_menu", "level1", "level2");
+		DynEnum.at("event").addAll("trigger", "damage", "collision", "kill");
 		
 		world.setState(DynEnum.at("state").get("game_menu"));
 		GameMenuState.init(world);
 		world.setState(DynEnum.at("state").get("start_menu"));
 		StartMenuState.init(world);
+		
+		GLEngine.init();
 	}
 
 	public void run()
 	{
-		while (GLEngine.running() && world.run())
+		while (GLEngine.run() && world.run())
 		{
 			GLEngine.clearState();
 			GLEngine.startRender();

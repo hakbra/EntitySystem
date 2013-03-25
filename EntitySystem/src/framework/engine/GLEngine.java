@@ -58,7 +58,7 @@ public class GLEngine {
 		glLoadIdentity();
 	}
 	
-	public static boolean running()
+	public static boolean run()
 	{
 		return !Display.isCloseRequested() && !Keyboard.isKeyDown(Keyboard.KEY_ESCAPE);
 	}

@@ -18,6 +18,7 @@ public class DynEnum {
 	{
 		DynEnum newEnum = new DynEnum(name);
 		enums.put(name, newEnum);
+		newEnum.add("null");
 		return newEnum;
 	}
 	
