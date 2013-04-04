@@ -9,7 +9,7 @@ import framework.CoreComponent;
 import framework.utils.Color;
 import framework.utils.Point;
 
-public class Tex extends CoreComponent{
+public class Tex extends RenderComponent{
 
 	public String texture;
 	Point dim;

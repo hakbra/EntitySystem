@@ -6,26 +6,14 @@ import static org.lwjgl.opengl.GL11.glPushMatrix;
 import org.lwjgl.opengl.GL11;
 
 import zombies.components.Angle;
-import zombies.components.Button;
-import zombies.components.CollisionCircle;
-import zombies.components.CollisionPolygon;
-import zombies.components.ColorComp;
-import zombies.components.Health;
-import zombies.components.Hero;
 import zombies.components.ParentTransform;
 import zombies.components.Position;
+import zombies.components.RenderComponent;
 import zombies.components.Scale;
-import zombies.components.Tex;
 import zombies.utils.Draw;
-
-import framework.CoreComponent;
 import framework.CoreEntity;
 import framework.CoreSystem;
-import framework.World;
-import framework.engine.GLEngine;
 import framework.managers.EntityManager;
-import framework.utils.Color;
-import framework.utils.Point;
 
 public class RenderSystem extends CoreSystem {
 	
@@ -61,7 +49,7 @@ public class RenderSystem extends CoreSystem {
 	public void run()
 	{
 		EntityManager em = world.getEntityManager();
-		for (CoreComponent c: em.renders)
+		for (RenderComponent c: em.renders)
 		{
 			glPushMatrix();
 

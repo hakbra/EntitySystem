@@ -9,7 +9,7 @@ import framework.CoreComponent;
 import framework.utils.Color;
 import framework.utils.Point;
 
-public class RenderCircle extends CoreComponent{
+public class RenderCircle extends RenderComponent{
 
 	public float radius;
 	public Color color;
@@ -19,7 +19,7 @@ public class RenderCircle extends CoreComponent{
 	{
 		this.radius = r;
 		this.color = c;
-		this.name = "CollisionCircle";
+		this.name = "RenderCircle";
 		this.wireframe = false;
 	}
 	

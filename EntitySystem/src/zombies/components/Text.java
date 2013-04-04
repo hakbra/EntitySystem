@@ -6,7 +6,7 @@ import framework.CoreComponent;
 import framework.utils.Color;
 import framework.utils.Point;
 
-public class Text extends CoreComponent{
+public class Text extends RenderComponent{
 	public String text;
 	
 	public Text(String t)

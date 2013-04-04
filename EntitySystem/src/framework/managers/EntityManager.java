@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 
+import zombies.components.RenderComponent;
 import framework.CoreComponent;
 import framework.CoreEntity;
 import framework.DynEnum;
@@ -13,9 +14,9 @@ import framework.World;
 public class EntityManager{
 	
     public HashMap<Class<?>, HashMap<CoreEntity, ? extends CoreComponent>> entities = new HashMap<Class<?>, HashMap<CoreEntity, ? extends CoreComponent>>();
-    public HashMap<String, CoreEntity> stringIDs = new HashMap<String, CoreEntity>();
-    private ArrayList<CoreEntity> deleties = new ArrayList<CoreEntity>();
-    public ArrayList<CoreComponent> renders = new ArrayList<CoreComponent>();
+    public HashMap<String, CoreEntity> stringIDs = new HashMap<>();
+    private ArrayList<CoreEntity> deleties = new ArrayList<>();
+    public ArrayList<RenderComponent> renders = new ArrayList<>();
     
     public World world;
     public int state;
@@ -47,28 +48,51 @@ public class EntityManager{
     	return stringIDs.get(s);
     }
 
-    public <T extends CoreComponent> void addComponent(CoreEntity e, T component) {
+    private <T extends CoreComponent> void registerSuperComponent(CoreEntity e, T component)
+    {
+		HashMap<CoreEntity, T> componentMap = (HashMap<CoreEntity, T>) entities.get(component.getClass().getSuperclass());
+		if (componentMap == null) {
+			componentMap = new HashMap<CoreEntity, T>();
+			entities.put(component.getClass().getSuperclass(), componentMap);
+		}
+		componentMap.put(e, component);
+    }
+    private <T extends CoreComponent> void registerComponent(CoreEntity e, T component)
+    {
 		HashMap<CoreEntity, T> componentMap = (HashMap<CoreEntity, T>) entities.get(component.getClass());
 		if (componentMap == null) {
 			componentMap = new HashMap<CoreEntity, T>();
 			entities.put(component.getClass(), componentMap);
 		}
 		componentMap.put(e, component);
-		
-		e.components.add(component);
-		component.parent = e;
-		component.world = this.world;
+    }
 
-		if (component.layer != DynEnum.at("layer").get("null"))
-			addRender(component);
+    public <T extends CoreComponent> void addComponent(CoreEntity e, T component) {
+    	component.parent = e;
+    	component.world = this.world;
+		registerComponent(e, component);
+		Class sup = component.getClass().getSuperclass();
+		if (sup != null && CoreComponent.class != sup)
+			registerSuperComponent(e, component);
+		if (!e.components.contains(component))
+			e.components.add(component);
+
+		if (sup == RenderComponent.class)
+			addRender((RenderComponent) component);
     }
     
     public <T> void removeComponent(CoreEntity e, T component) {
-		HashMap<CoreEntity, T> HashMap = (HashMap<CoreEntity, T>) entities.get(component.getClass());
-		HashMap.remove(e);
+		HashMap<CoreEntity, T> hashMap = (HashMap<CoreEntity, T>) entities.get(component.getClass());
+		hashMap.remove(e);
+		
+		Class sup = component.getClass().getSuperclass();
+		if (sup != null && CoreComponent.class != sup) {
+			HashMap<CoreEntity, T> superHashMap = (HashMap<CoreEntity, T>) entities.get(component.getClass().getSuperclass());
+			superHashMap.remove(e);
+		}
+		
 		if (entities.get(component.getClass()).isEmpty())
 			entities.remove(component.getClass());
-
 		
 		e.components.remove(component);
     }
@@ -149,21 +173,10 @@ public class EntityManager{
 
 	public void addEntity(CoreEntity e) {
 		for (CoreComponent c : e.components)
-		{
-			HashMap<CoreEntity, CoreComponent> componentMap = (HashMap<CoreEntity, CoreComponent>) entities.get(c.getClass());
-			if (componentMap == null) {
-				componentMap = new HashMap<CoreEntity, CoreComponent>();
-				entities.put(c.getClass(), componentMap);
-			}
-			componentMap.put(e, c);
-			c.parent = e;
-			c.world = this.world;
-			if (c.layer != DynEnum.at("layer").get("null"))
-				addRender(c);
-		}
+			addComponent(e, c);
 	}
 
-	private void addRender(CoreComponent e)
+	private void addRender(RenderComponent e)
 	{
 		if (e.layer == DynEnum.at("layer").get("null"))
 		{

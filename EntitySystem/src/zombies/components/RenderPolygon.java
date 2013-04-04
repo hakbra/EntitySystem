@@ -11,7 +11,7 @@ import framework.CoreComponent;
 import framework.utils.Color;
 import framework.utils.Point;
 
-public class RenderPolygon extends CoreComponent{
+public class RenderPolygon extends RenderComponent{
 
 	public ArrayList<Point> points;
 	public Color color;

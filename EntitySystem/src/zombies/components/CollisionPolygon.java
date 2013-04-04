@@ -10,7 +10,7 @@ import framework.CoreComponent;
 import framework.utils.Line;
 import framework.utils.Point;
 
-public class CollisionPolygon extends CoreComponent{
+public class CollisionPolygon extends CollisionComponent{
 
 	public ArrayList<Point> localPoints;
 	public Point mid;
@@ -93,7 +93,7 @@ public class CollisionPolygon extends CoreComponent{
 	public Point getMin()
 	{
 		if (!world.getEntityManager().hasComponent(parent, Angle.class))
-			return min.add(getPosition());
+			return min;
 		
 		Point min = null;
 		for(Point p : getPoints())
@@ -106,13 +106,13 @@ public class CollisionPolygon extends CoreComponent{
 				min.y = p.y;
 		}
 
-		return min;
+		return min.sub(getPosition());
 	}
 	
 	public Point getMax()
 	{
 		if (!world.getEntityManager().hasComponent(parent, Angle.class))
-			return max.add(getPosition());
+			return max;
 		
 		Point max = null;
 		for(Point p : getPoints())
@@ -124,7 +124,7 @@ public class CollisionPolygon extends CoreComponent{
 			if (p.y > max.y)
 				max.y = p.y;
 		}
-		return max;
+		return max.sub(getPosition());
 	}
 
 	public boolean isInside(Point p)

@@ -5,6 +5,7 @@ import java.util.HashSet;
 
 import zombies.components.Collider;
 import zombies.components.CollisionCircle;
+import zombies.components.CollisionComponent;
 import zombies.components.CollisionPolygon;
 import zombies.components.Damage;
 import zombies.components.Health;
@@ -24,8 +25,7 @@ import framework.utils.Point;
 
 
 public class IntersectionSystem extends CoreSystem {
-	CollisionMap cmap = new CollisionMap();
-	CollisionMap pmap = new CollisionMap();
+	CollisionMap collisionMap = new CollisionMap();
 
 	@Override
 	public void run()
@@ -35,40 +35,27 @@ public class IntersectionSystem extends CoreSystem {
 		EntityManager em = world.getEntityManager();
 		for (CoreEntity e1 : em.getEntity(Collider.class))
 		{
-			Point circle1pos = em.getComponent(e1, Position.class).position;
+			Point pos1 = em.getComponent(e1, Position.class).position;
 			CollisionCircle circle1 = em.getComponent(e1, CollisionCircle.class);
-			Point radVec = new Point(circle1.radius, circle1.radius);
 
-			HashSet<CoreEntity> cCands = cmap.get(circle1pos.sub(radVec), circle1pos.add(radVec));
+			HashSet<CoreEntity> cCands = collisionMap.get(pos1.add(circle1.getMin()), pos1.add(circle1.getMax()));
 			for (CoreEntity e2 : cCands)
 			{
 				if (e1 == e2)
 					continue;
 
-				CollisionCircle circle2 = em.getComponent(e2, CollisionCircle.class);
+				CollisionComponent col2 = em.getComponent(e2, CollisionComponent.class);
 				
-				if (circle2 == null)
+				if (col2 == null)
+				{
+					System.out.println("is null");
 					continue;
+				}
 
-				Point col = circle2.getClosest(circle1pos);
-				boolean inside = circle2.isInside(circle1pos);
+				Point col = col2.getClosest(pos1);
+				boolean inside = col2.isInside(pos1);
 
-				if (circle1pos.dist(col) < circle1.getRadius() || inside)
-					handleCollision( em, new CollisionEvent(e1, e2, col, inside) );
-			}
-
-			HashSet<CoreEntity> pCands = pmap.get(circle1pos.sub(radVec), circle1pos.add(radVec));
-			for (CoreEntity e2 : pCands)
-			{
-				CollisionPolygon poly = em.getComponent(e2, CollisionPolygon.class);
-				
-				if (poly == null)
-					continue;
-
-				Point col = poly.getClosest(circle1pos);
-				boolean inside = poly.isInside(circle1pos);
-
-				if (circle1pos.dist(col) < circle1.getRadius() || inside)
+				if (pos1.dist(col) < circle1.getRadius() || inside)
 					handleCollision( em, new CollisionEvent(e1, e2, col, inside) );
 			}
 		}
@@ -77,25 +64,14 @@ public class IntersectionSystem extends CoreSystem {
 	private void loadCollisionMap() {
 		EntityManager em = world.getEntityManager();
 		
-		cmap.clear();
-		pmap.clear();
+		collisionMap.clear();
 
-		for (CoreEntity e1 : em.getEntityAll(CollisionCircle.class))
+		for (CoreEntity e1 : em.getEntityAll(CollisionComponent.class))
 		{	
-			double rad = em.getComponent(e1, CollisionCircle.class).radius;
+			CollisionComponent col = em.getComponent(e1, CollisionComponent.class);
 			Point pos = em.getComponent(e1, Position.class).position;
-			Point radVec = new Point(rad, rad);
 
-			cmap.add(e1, pos.sub(radVec), pos.add(radVec));
-		}
-
-		for (CoreEntity e2 : em.getEntityAll(CollisionPolygon.class))
-		{
-			CollisionPolygon poly = em.getComponent(e2, CollisionPolygon.class);
-			Point polyMin = poly.getMin();
-			Point polyMax = poly.getMax();
-
-			pmap.add(e2, polyMin, polyMax);
+			collisionMap.add(e1, pos.add(col.getMin()), pos.add(col.getMax()));
 		}
 	}
 

@@ -1,9 +1,8 @@
 package zombies.components;
 
-import framework.CoreComponent;
 import framework.utils.Point;
 
-public class CollisionCircle extends CoreComponent{
+public class CollisionCircle extends CollisionComponent{
 
 	public float radius;
 	
@@ -42,5 +41,15 @@ public class CollisionCircle extends CoreComponent{
 		Point pos = getPosition();
 		Point dir = p.sub(pos).norm();
 		return pos.add(dir.mult(this.radius*getScale()));
+	}
+
+	@Override
+	public Point getMin() {
+		return new Point(-radius, -radius);
+	}
+
+	@Override
+	public Point getMax() {
+		return new Point(radius, radius);
 	}
 }

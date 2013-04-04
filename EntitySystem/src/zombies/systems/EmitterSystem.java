@@ -41,7 +41,7 @@ public class EmitterSystem extends CoreSystem{
 				int time = 150 + r.nextInt(100);
 
 				CoreEntity particle = new CoreEntity();
-				particle.name = "particle";
+				particle.name = "particle" + i;
 				em.addComponent(particle, new Position(new Point(position)));
 				em.addComponent(particle, new Velocity(new Point(angle), speed));
 				em.addComponent(particle, new RenderCircle(size, c).setLayer(DynEnum.at("layer").get("mover")));
