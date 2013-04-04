@@ -14,14 +14,12 @@ public class Tex extends RenderComponent{
 	public String texture;
 	Point dim;
 	Point scale;
-	Point offset;
 
 	public Tex(String name, Point c)
 	{
 		this.texture = name;
 		this.dim = c;
 		this.scale = new Point(0, 0);
-		this.offset = new Point(0, 0);
 		this.name = "Texture";
 	}
 	
@@ -30,14 +28,9 @@ public class Tex extends RenderComponent{
 		this.scale = s;
 		return this;
 	}
-	public Tex setOffset(Point o)
-	{
-		this.offset = o;
-		return this;
-	}
 
 	@Override
-	public void render()
+	public void renderSub()
 	{
 		float w = (float) dim.x / 2;
 		float h = (float) dim.y / 2;
@@ -61,16 +54,16 @@ public class Tex extends RenderComponent{
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, TextureManager.getTexture(texture));
 		GL11.glBegin(GL11.GL_QUADS);
 		GL11.glTexCoord2f(	0,		0);
-		GL11.glVertex2f(	(float)offset.x - w,		(float)offset.y -h);
+		GL11.glVertex2f(	(float)-w,		(float)-h);
 		
 		GL11.glTexCoord2f(	u,		0);
-		GL11.glVertex2f(	(float)offset.x + w,		(float)offset.y -h);
+		GL11.glVertex2f(	(float)+w,		(float)-h);
 		
 		GL11.glTexCoord2f(	u,		v);
-		GL11.glVertex2f(	(float)offset.x + w,		(float)offset.y + h);
+		GL11.glVertex2f(	(float)+w,		(float)+h);
 		
 		GL11.glTexCoord2f(	0,		v);
-		GL11.glVertex2f(	(float)offset.x -w,		(float)offset.y + h);
+		GL11.glVertex2f(	(float)-w,		(float)+h);
 		GL11.glEnd();
 	}
 }

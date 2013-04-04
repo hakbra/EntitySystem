@@ -15,7 +15,7 @@ public class Text extends RenderComponent{
 		this.name = "Text";
 	}
 	
-	public void render()
+	public void renderSub()
 	{
 		Draw.setColor(Color.WHITE);
 		Draw.writeMid(FontManager.getFont(24), new Point(), text);

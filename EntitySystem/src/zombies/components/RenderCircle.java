@@ -29,7 +29,7 @@ public class RenderCircle extends RenderComponent{
 		return this;
 	}
 	
-	public void render()
+	public void renderSub()
 	{
 		GL11.glDisable(GL11.GL_TEXTURE_2D);
 		Draw.setColor(this.color);
