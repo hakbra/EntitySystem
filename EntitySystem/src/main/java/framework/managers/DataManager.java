@@ -49,7 +49,8 @@ public class DataManager {
 			return t;
 		try
 		{
-			Texture tex = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream(name));
+			Texture tex = TextureLoader.getTexture(
+					"PNG", ResourceLoader.getResourceAsStream("textures/"+name));
 			textures.put(name, tex.getTextureID());
 			return tex.getTextureID();
 		}

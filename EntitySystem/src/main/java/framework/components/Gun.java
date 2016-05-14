@@ -15,14 +15,14 @@ public class Gun extends CoreComponent{
 	
 	public float damage;
 	public float spread;
-	public float delay;
+	public long delay;
 	public float speed;
 	public int bullets;
 	public String tex;
 	
 	public long lastFired;
 	
-	public Gun(float damage, float spread, float speed, float delay, int bullets, String texture)
+	public Gun(float damage, float spread, float speed, long delay, int bullets, String texture)
 	{
 		this.damage = damage;
 		this.spread = spread;
@@ -35,8 +35,10 @@ public class Gun extends CoreComponent{
 	
 	public boolean canFire()
 	{
-		if (Time.getTime() - delay > lastFired)
+		long now = Time.getTime();
+		if (now - delay > lastFired){
 			return true;
+		}
 		return false;
 	}
 }
