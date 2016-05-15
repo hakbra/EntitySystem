@@ -43,6 +43,10 @@ public class World {
 		return state != StateEnum.EXIT;
 	}
 
+	public StateEnum getState() {
+		return state;
+	}
+
 	public void setStateAndClear(StateEnum s)
 	{
 		this.state = s;

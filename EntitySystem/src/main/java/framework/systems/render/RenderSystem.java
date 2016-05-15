@@ -9,6 +9,7 @@ import helpers.Point;
 import org.lwjgl.opengl.GL11;
 
 import engine.GLEngine;
+import framework.enums.StateEnum;
 import framework.CoreComponent;
 import framework.CoreEntity;
 import framework.CoreSystem;
@@ -27,7 +28,7 @@ import framework.components.Tex;
 import framework.managers.EntityManager;
 
 public class RenderSystem extends CoreSystem {
-	
+
 	private void transform(CoreEntity e)
 	{
 		EntityManager em = world.getEntityManager();

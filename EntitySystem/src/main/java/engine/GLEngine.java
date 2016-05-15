@@ -20,15 +20,15 @@ import org.lwjgl.opengl.GL11;
 
 public class GLEngine {
 	// Default settings
-	public static final int WIDTH = 1280;
-	public static final int HEIGHT = 720;
+	public static int WIDTH = 1920;
+	public static int HEIGHT = 1080;
 	
 	public static void init()
 	{
 		try
 		{
 			//Display
-			setWindow(false);
+			setWindow();
 			Display.setVSyncEnabled(true);
 			Display.setTitle("entitySystem");
 			System.setProperty("org.lwjgl.opengl.Window.undecorated","true");
@@ -80,41 +80,28 @@ public class GLEngine {
 
 		Display.update();
 	}
-	
-	public static void setWindow(boolean fullscreen)
+
+	public static void setWindow()
 	{
 		try {
-			DisplayMode targetDisplayMode = null;
-			
-			if (fullscreen) {
-				DisplayMode[] modes = Display.getAvailableDisplayModes();
-				targetDisplayMode = modes[0];
-				for (int i = 0; i < modes.length; i++) {
-					DisplayMode c = modes[i];
-					if (c.getWidth() == WIDTH && c.getHeight() == HEIGHT &&
-						c.getBitsPerPixel() == 32 && c.getFrequency() == 59)
-					{
-						targetDisplayMode = c;
-					}
+
+			DisplayMode[] modes = Display.getAvailableDisplayModes();
+			DisplayMode targetDisplayMode = modes[0];
+			for (int i = 0; i < modes.length; i++) {
+				DisplayMode c = modes[i];
+				if (c.getWidth() > targetDisplayMode.getWidth())
+				{
+					targetDisplayMode = c;
 				}
-			} else
-			{
-				targetDisplayMode = new DisplayMode(WIDTH,HEIGHT);
 			}
+			
+			WIDTH = targetDisplayMode.getWidth();
+			HEIGHT = targetDisplayMode.getHeight();
 
 			Display.setDisplayMode(targetDisplayMode);
-			Display.setFullscreen(fullscreen);
+			Display.setFullscreen(true);
 			
 		} catch (LWJGLException e) {
 		}
 	}
-	
-	public static void switchFullscreen()
-	{
-		if (Display.isFullscreen())
-			setWindow(false);
-		else
-			setWindow(true);
-	}
-
 }

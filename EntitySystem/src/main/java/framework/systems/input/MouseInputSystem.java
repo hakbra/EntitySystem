@@ -45,11 +45,7 @@ public class MouseInputSystem extends CoreSystem{
 			    if (!Mouse.getEventButtonState())
 			    	continue;
 			    	
-				if (button.type == "Screen")
-				{
-					GLEngine.switchFullscreen();
-				}
-				else if (button.type == "Menu")
+				if (button.type == "Menu")
 				{
 					world.setState(StateEnum.GAME_MENU);
 				}

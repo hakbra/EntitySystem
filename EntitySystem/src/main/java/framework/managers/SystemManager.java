@@ -58,8 +58,9 @@ public class SystemManager {
 		for (int i = 0; i < systems.size(); i++)
 		{
 			CoreSystem sys = systems.get(i);
-			if (sys.enabled)
+			if (sys.enabled) {
 				sys.run();
+			}
 		}
 	}
 }

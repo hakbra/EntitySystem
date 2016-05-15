@@ -25,4 +25,9 @@ public class Position extends CoreComponent {
 		local = true;
 		return this;
 	}
+
+	@Override
+	public String toString() {
+		return "[" + position.x + ", " + position.y + "]";
+	}
 }

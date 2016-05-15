@@ -5,6 +5,7 @@ import static org.lwjgl.opengl.EXTFramebufferObject.GL_FRAMEBUFFER_EXT;
 import static org.lwjgl.opengl.EXTFramebufferObject.glBindFramebufferEXT;
 import static org.lwjgl.opengl.EXTFramebufferObject.glFramebufferTexture2DEXT;
 import static org.lwjgl.opengl.EXTFramebufferObject.glGenFramebuffersEXT;
+import static org.lwjgl.opengl.EXTFramebufferObject.glDeleteFramebuffersEXT;
 import static org.lwjgl.opengl.GL11.GL_INT;
 import static org.lwjgl.opengl.GL11.GL_LINEAR;
 import static org.lwjgl.opengl.GL11.GL_RGBA;
@@ -13,6 +14,7 @@ import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
 import static org.lwjgl.opengl.GL11.GL_TEXTURE_MIN_FILTER;
 import static org.lwjgl.opengl.GL11.glBindTexture;
 import static org.lwjgl.opengl.GL11.glGenTextures;
+import static org.lwjgl.opengl.GL11.glDeleteTextures;
 import static org.lwjgl.opengl.GL11.glTexImage2D;
 import static org.lwjgl.opengl.GL11.glTexParameterf;
 
@@ -34,6 +36,7 @@ public class DataManager {
 	
 	public MyFont font;
     public HashMap<String, Integer> textures = new HashMap<String, Integer>();
+	boolean lightTexturesCreated = false;
 	
 	public DataManager(World w)
 	{
@@ -47,6 +50,12 @@ public class DataManager {
 		Integer t = textures.get(name);
 		if (t != null)
 			return t;
+
+		if (name == "lighBuf" || name == "lightTex") {
+			createLightTexture();
+			return textures.get(name);
+		}
+
 		try
 		{
 			Texture tex = TextureLoader.getTexture(
@@ -60,6 +69,21 @@ public class DataManager {
 			System.exit(0);
 		}
 		return -1;
+	}
+
+	public void deleteLightTexture() {
+		if (!lightTexturesCreated)
+			return;
+
+		System.out.println("Deleting light textures");
+
+		int lightBufID = textures.get("lightTex");
+		int lightTexID = textures.get("lightBuf");
+
+		glDeleteTextures(lightTexID);
+		glDeleteFramebuffersEXT(lightBufID);
+
+		lightTexturesCreated = false;
 	}
 
 	public void createLightTexture()
@@ -83,6 +107,8 @@ public class DataManager {
 			
 			textures.put("lightTex", lightTexID);
 			textures.put("lightBuf", lightBufID);
+
+			lightTexturesCreated = true;
 		}
 	}
 }

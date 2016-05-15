@@ -248,16 +248,6 @@ public class Level2State {
 		menuButton.components.add(new Tex("button.png", new Point(100, 50)).setLayer(LayerEnum.HUD));
 		world.addEntity(menuButton);
 
-		CoreEntity screenButton = new CoreEntity();
-		screenButton.name = "screenButton";
-
-		screenButton.components.add(CollisionPolygon.centerRectangle(new Point(100, 50)));
-		screenButton.components.add(new Position(new Point(325, GLEngine.HEIGHT - 50), true));
-		screenButton.components.add(new Button("Screen"));
-		screenButton.components.add(new Text("Screen").setLayer(LayerEnum.TEXT));
-		screenButton.components.add(new Tex("button.png", new Point(100, 50)).setLayer(LayerEnum.HUD));
-		world.addEntity(screenButton);
-
 		CoreEntity restartButton = new CoreEntity();
 		restartButton.name = "restartButton";
 		restartButton.components.add(CollisionPolygon.centerRectangle(new Point(100, 50)));
